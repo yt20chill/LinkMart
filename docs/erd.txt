@@ -1,6 +1,6 @@
 user
 -
-id int PK
+id ulid PK
 email varchar(255) unique
 hash_password char(60)
 username varchar(255) unique
@@ -12,7 +12,7 @@ updated_at timestamp
 provider_verification
 -
 id int PK
-user_id FK >- user.id
+user_id ulid FK >- user.id
 id_document varchar(255) unique
 address_document varchar(255) unique
 status_id FK >- status.id
@@ -82,6 +82,7 @@ category_id FK >- category.id
 created_at timestamp
 updated_at timestamp
 
+
 category
 -
 id int PK
@@ -98,7 +99,6 @@ category_id FK >- category.id
 name varchar(255)
 created_at timestamp
 updated_at timestamp
-
 
 # for drop down
 category_field_option
@@ -119,12 +119,6 @@ status_id FK >- status.id
 created_at timestamp
 updated_at timestamp
 
-# pending | inProgress | shipping | received
-order_status
--
-id int PK
-name varchar(255)
-created_at timestamp
 
 order
 -
@@ -136,6 +130,12 @@ shipping_order_no varchar(255)
 created_at timestamp
 updated_at timestamp
 
+# pending | inProgress | shipping | received
+order_status
+-
+id int PK
+name varchar(255)
+created_at timestamp
 
 logistic_company
 -
@@ -163,3 +163,24 @@ handler ulid FK >- admin.id
 status_id int FK >- status.id
 created_at timestamp
 updated_at timestamp
+
+# user (677, 36)
+# provider_verification (393, 649)
+# provider (47, 137)
+# admin (860, -104)
+# status (221, -108)
+# locale (741, 655)
+# user_address (-62, 633)
+# user_payment_method (-66, 398)
+# request (179, 388)
+# category (892, 544)
+# category_field (418, -112)
+# category_field_option (513, 532)
+# offer (707, 216)
+# order (438, 220)
+# logistic_company (651, 394)
+# review (224, 23)
+# report_case (-89, -84)
+# view: (138, 128)
+# zoom: 0.900
+# order_status (1, 273)
