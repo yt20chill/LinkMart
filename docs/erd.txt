@@ -1,0 +1,165 @@
+user
+-
+id int PK
+email varchar(255) unique
+hash_password char(60)
+username varchar(255) unique
+dob date
+notification_id FK >- notification.id
+created_at timestamp
+updated_at timestamp
+
+provider_verification
+-
+id int PK
+user_id FK >- user.id
+id_document varchar(255) unique
+address_document varchar(255) unique
+status_id FK >- status.id
+created_at timestamp
+updated_at timestamp
+
+provider
+-
+id int PK
+user_id FK >- user.id
+locale_id FK >- locale.id
+created_at timestamp
+updated_at timestamp
+
+admin
+-
+id ulid PK
+username varchar(255) unique
+hash_password char(60)
+created_at timestamp
+updated_at timestamp
+
+# pending | accepted | rejected | closed
+status
+-
+id int PK
+name varchar(16)
+created_at timestamp
+
+locale
+-
+id int PK
+name varchar(255) unique
+created_at timestamp
+
+user_address
+-
+id int PK
+user_id FK >- user.id
+address text
+is_primary boolean
+created_at timestamp
+updated_at timestamp
+
+user_payment_method
+-
+id int PK
+user_id FK >- user.id
+method varchar(255)
+card_no varchar(16) nullable
+card_holder_name varchar(255)
+expiry_date date
+created_at timestamp
+updated_at timestamp
+
+request
+-
+id ulid PK
+created_by FK >- user.id
+item text
+image varchar(255)
+qty int
+locale_id int FK >- locale.id
+remarks text
+offer_price decimal nullable
+category_id FK >- category.id
+created_at timestamp
+updated_at timestamp
+
+category
+-
+id int PK
+name varchar(255)
+created_at timestamp
+updated_at timestamp
+
+
+# AI classification
+category_field
+-
+id int PK
+category_id FK >- category.id
+name varchar(255)
+created_at timestamp
+updated_at timestamp
+
+
+# for drop down
+category_field_option
+-
+id int PK
+category_field_id FK >- category_field.id
+option varchar(255)
+created_at timestamp
+
+offer
+-
+id ulid PK
+request_id ulid FK >- request.id
+estimated_process_time int
+price decimal
+remarks text
+status_id FK >- status.id
+created_at timestamp
+updated_at timestamp
+
+# pending | inProgress | shipping | received
+order_status
+-
+id int PK
+name varchar(255)
+created_at timestamp
+
+order
+-
+id ulid PK
+offer_id ulid FK >- offer.id
+order_status_id int FK >- order_status.id
+logistic_company_id FK >- logistic_company.id nullable
+shipping_order_no varchar(255)
+created_at timestamp
+updated_at timestamp
+
+
+logistic_company
+-
+id int PK
+company_name varchar(255)
+company_url varchar(255)
+created_at timestamp
+updated_at timestamp
+
+review
+-
+id int PK
+order_id ulid FK >- order.id
+efficiency int
+attitude int
+remarks text
+created_at timestamp
+updated_at timestamp
+
+report_case
+-
+id ulid PK
+order_id ulid FK >- order.id
+handler ulid FK >- admin.id
+status_id int FK >- status.id
+created_at timestamp
+updated_at timestamp
