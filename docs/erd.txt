@@ -1,152 +1,179 @@
+# Visualize on https://erd.surge.sh
+# or https://quick-erd.surge.sh
+#
+# Relationship Types
+#  -    - one to one
+#  -<   - one to many
+#  >-   - many to one
+#  >-<  - many to many
+#  -0   - one to zero or one
+#  0-   - zero or one to one
+#  0-0  - zero or one to zero or one
+#  -0<  - one to zero or many
+#  >0-  - zero or many to one
+#
+////////////////////////////////////
+
+
 user
--
+----
 id ulid PK
 email varchar(255) unique
 hash_password char(60)
 username varchar(255) unique
 dob date
-notification_id FK >- notification.id
+notification_id integer FK >- notification.id
 created_at timestamp
 updated_at timestamp
 
+
 provider_verification
--
+---------------------
 id int PK
 user_id ulid FK >- user.id
 id_document varchar(255) unique
 address_document varchar(255) unique
-status_id FK >- status.id
+status_id integer FK >- status.id
 created_at timestamp
 updated_at timestamp
+
 
 provider
--
-id int PK
-user_id FK >- user.id
-locale_id FK >- locale.id
+--------
+id ulid PK
+user_id integer FK >- user.id
+locale_id integer FK >- locale.id
 created_at timestamp
 updated_at timestamp
 
+
 admin
--
+-----
 id ulid PK
 username varchar(255) unique
 hash_password char(60)
 created_at timestamp
 updated_at timestamp
 
-# pending | accepted | rejected | closed
+
 status
--
+------
 id int PK
 name varchar(16)
 created_at timestamp
 
+
 locale
--
+------
 id int PK
 name varchar(255) unique
 created_at timestamp
 
+
 user_address
--
+------------
 id int PK
-user_id FK >- user.id
+user_id integer FK >- user.id
 address text
 is_primary boolean
 created_at timestamp
 updated_at timestamp
 
+
 user_payment_method
--
+-------------------
 id int PK
-user_id FK >- user.id
+user_id integer FK >- user.id
 method varchar(255)
-card_no varchar(16) nullable
+card_no varchar(16)
 card_holder_name varchar(255)
 expiry_date date
 created_at timestamp
 updated_at timestamp
 
+
 request
--
+-------
 id ulid PK
-created_by FK >- user.id
+created_by integer FK >- user.id
 item text
 image varchar(255)
 qty int
 locale_id int FK >- locale.id
 remarks text
-offer_price decimal nullable
-category_id FK >- category.id
+offer_price decimal
+category_id integer FK >- category.id
 created_at timestamp
 updated_at timestamp
 
 
 category
--
+--------
 id int PK
 name varchar(255)
 created_at timestamp
 updated_at timestamp
 
 
-# AI classification
 category_field
--
+--------------
 id int PK
-category_id FK >- category.id
+category_id integer FK >- category.id
 name varchar(255)
 created_at timestamp
 updated_at timestamp
 
-# for drop down
+
 category_field_option
--
+---------------------
 id int PK
-category_field_id FK >- category_field.id
+category_field_id integer FK >- category_field.id
 option varchar(255)
 created_at timestamp
 
+
 offer
--
+-----
 id ulid PK
 request_id ulid FK >- request.id
+provider_id ulid FK >- provider.id
 estimated_process_time int
 price decimal
 remarks text
-status_id FK >- status.id
+status_id integer FK >- status.id
 created_at timestamp
 updated_at timestamp
 
 
 order
--
+-----
 id ulid PK
 offer_id ulid FK >- offer.id
 order_status_id int FK >- order_status.id
-logistic_company_id FK >- logistic_company.id nullable
+logistic_company_id integer FK >- logistic_company.id nullable.id
 shipping_order_no varchar(255)
 created_at timestamp
 updated_at timestamp
 
-# pending | inProgress | shipping | received
+
 order_status
--
+------------
 id int PK
 name varchar(255)
 created_at timestamp
 
+
 logistic_company
--
+----------------
 id int PK
 company_name varchar(255)
 company_url varchar(255)
 created_at timestamp
 updated_at timestamp
 
+
 review
--
+------
 id int PK
 order_id ulid FK >- order.id
 efficiency int
@@ -155,8 +182,9 @@ remarks text
 created_at timestamp
 updated_at timestamp
 
+
 report_case
--
+-----------
 id ulid PK
 order_id ulid FK >- order.id
 handler ulid FK >- admin.id
@@ -164,6 +192,15 @@ status_id int FK >- status.id
 created_at timestamp
 updated_at timestamp
 
+
+# zoom: 0.900
+# view: (138, 128)
+# text-bg: #6495ed
+# text-color: #000000
+# diagram-bg: #f5f5f5
+# diagram-text: #000000
+# table-bg: #ffffff
+# table-text: #000000
 # user (677, 36)
 # provider_verification (393, 649)
 # provider (47, 137)
@@ -178,9 +215,7 @@ updated_at timestamp
 # category_field_option (513, 532)
 # offer (707, 216)
 # order (438, 220)
+# order_status (1, 273)
 # logistic_company (651, 394)
 # review (224, 23)
 # report_case (-89, -84)
-# view: (138, 128)
-# zoom: 0.900
-# order_status (1, 273)
