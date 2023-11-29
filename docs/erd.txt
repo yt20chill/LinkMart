@@ -21,7 +21,7 @@ id ulid PK
 email varchar(255) unique
 hash_password char(60)
 username varchar(255) unique
-dob date
+birth_date date
 notification_id integer FK >- notification.id
 created_at timestamp
 updated_at timestamp
@@ -98,6 +98,7 @@ id ulid PK
 created_by integer FK >- user.id
 item text
 image varchar(255)
+url varchar(255)
 qty int
 locale_id int FK >- locale.id
 remarks text
@@ -105,6 +106,7 @@ offer_price decimal
 category_id integer FK >- category.id
 created_at timestamp
 updated_at timestamp
+     
 
 
 category
@@ -188,34 +190,35 @@ report_case
 id ulid PK
 order_id ulid FK >- order.id
 handler ulid FK >- admin.id
+description text
 status_id int FK >- status.id
 created_at timestamp
 updated_at timestamp
 
 
-# zoom: 0.990
-# view: (546, 93)
+# zoom: 0.500
+# view: (500, 556)
 # text-bg: #6495ed
 # text-color: #000000
 # diagram-bg: #f5f5f5
 # diagram-text: #000000
 # table-bg: #ffffff
 # table-text: #000000
-# user (325, 108)
-# provider_verification (595, 109)
-# provider (871, 106)
-# admin (575, 492)
-# status (575, 364)
-# locale (876, 265)
-# user_address (120, 109)
-# user_payment_method (53, 288)
-# request (-264, 704)
-# category (-265, 534)
-# category_field (-267, 351)
-# category_field_option (-264, 186)
-# offer (-26, 703)
-# order (265, 705)
-# order_status (266, 561)
-# logistic_company (554, 709)
-# review (858, 684)
-# report_case (854, 449)
+# user (-203, -426)
+# provider_verification (-3, -317)
+# provider (-383, -245)
+# admin (169, -176)
+# status (-14, 496)
+# locale (348, 10)
+# user_address (-184, -251)
+# user_payment_method (-29, 599)
+# request (-302, 273)
+# category (-320, 36)
+# category_field (-326, -106)
+# category_field_option (-328, 129)
+# offer (-305, 597)
+# order (-306, 468)
+# order_status (55, 404)
+# logistic_company (40, 96)
+# review (96, 225)
+# report_case (-63, -32)
