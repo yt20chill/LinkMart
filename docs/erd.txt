@@ -20,8 +20,9 @@ user
 id ulid PK
 email varchar(255) unique
 hash_password char(60)
-username varchar(255) unique
-dob date
+user_username varchar(255) unique
+birth_date date
+notification_id integer FK >- notification.id
 created_at timestamp
 updated_at timestamp
 
@@ -32,6 +33,7 @@ id int PK
 user_id ulid FK >- user.id
 id_document varchar(255) unique
 address_document varchar(255) unique
+handler ulid FK >- admin.id
 status_id integer FK >- status.id
 created_at timestamp
 updated_at timestamp
@@ -41,7 +43,7 @@ provider
 --------
 id ulid PK
 user_id integer FK >- user.id
-locale_id integer FK >- locale.id
+location_id integer FK >- location.id
 created_at timestamp
 updated_at timestamp
 
@@ -49,13 +51,13 @@ updated_at timestamp
 admin
 -----
 id ulid PK
-username varchar(255) unique
+admin_username varchar(255) unique
 hash_password char(60)
 created_at timestamp
 updated_at timestamp
 
 
-user_notification_settings
+user_notification_setting
 --------------------------
 id integer PK
 user_id ulid FK >- user.id
@@ -67,14 +69,14 @@ updated_at timestamp
 status
 ------
 id int PK
-name varchar(16)
+general_status_name varchar(16)
 created_at timestamp
 
 
-locale
+location
 ------
 id int PK
-name varchar(255) unique
+location_name varchar(255) unique
 created_at timestamp
 
 
@@ -104,15 +106,17 @@ request
 -------
 id ulid PK
 created_by integer FK >- user.id
-item text
-image varchar(255)
-qty int
-locale_id int FK >- locale.id
+request_item text
+request_image varchar(255)
+request_url varchar(255)
+request_qty int
+location_id int FK >- location.id
 remarks text
-offer_price decimal
+request_price decimal
 category_id integer FK >- category.id
 created_at timestamp
 updated_at timestamp
+     
 
 
 category
@@ -146,8 +150,8 @@ id ulid PK
 request_id ulid FK >- request.id
 provider_id ulid FK >- provider.id
 estimated_process_time int
-price decimal
-remarks text
+offer_price decimal
+offer_remark text
 status_id integer FK >- status.id
 created_at timestamp
 updated_at timestamp
@@ -167,7 +171,7 @@ updated_at timestamp
 order_status
 ------------
 id int PK
-name varchar(255)
+order_status_name varchar(255)
 created_at timestamp
 
 
@@ -186,7 +190,7 @@ id int PK
 order_id ulid FK >- order.id
 efficiency int
 attitude int
-remarks text
+review_remark text
 created_at timestamp
 updated_at timestamp
 
@@ -196,35 +200,35 @@ report_case
 id ulid PK
 order_id ulid FK >- order.id
 handler ulid FK >- admin.id
+description text
 status_id int FK >- status.id
 created_at timestamp
 updated_at timestamp
 
 
-# zoom: 0.990
-# view: (546, 93)
+# zoom: 0.666
+# view: (518, 662)
 # text-bg: #6495ed
 # text-color: #000000
 # diagram-bg: #f5f5f5
 # diagram-text: #000000
 # table-bg: #ffffff
 # table-text: #000000
-# user (290, 89)
-# provider_verification (595, 109)
-# provider (871, 106)
-# admin (575, 492)
-# user_notification_settings (286, 294)
-# status (575, 364)
-# locale (876, 265)
-# user_address (20, 96)
-# user_payment_method (17, 288)
-# request (-264, 704)
-# category (-265, 534)
-# category_field (-267, 351)
-# category_field_option (-264, 186)
-# offer (-26, 703)
-# order (265, 705)
-# order_status (266, 561)
-# logistic_company (554, 709)
-# review (858, 684)
-# report_case (854, 449)
+# user (-434, -365)
+# provider_verification (31, -397)
+# provider (-483, -143)
+# admin (350, -163)
+# user_address (-187, -176)
+# user_payment_method (201, 639)
+# request (-454, 153)
+# category (-100, -2)
+# category_field (-366, -4)
+# category_field_option (-232, 170)
+# offer (-436, 404)
+# order (-401, 608)
+# order_status (-101, 636)
+# logistic_company (80, 136)
+# review (337, 243)
+# report_case (44, -218)
+# location (355, 56)
+# status (344, 470)
