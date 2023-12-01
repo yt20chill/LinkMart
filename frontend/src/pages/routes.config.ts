@@ -1,8 +1,4 @@
-import {
-	AdminSignInPage,
-	AdminTaskDetailsPage,
-	AdminTasksPage,
-} from "../pages/admin";
+import { AdminSignInPage, AdminTaskDetailsPage, AdminTasksPage } from "./admin";
 import {
 	DashboardPage,
 	OfferDetailsPage,
@@ -10,21 +6,21 @@ import {
 	ProviderProfilePage,
 	TaskDetailsPage,
 	TaskPage,
-} from "../pages/provider";
+} from "./provider";
 import {
 	HomePage,
 	NotFoundPage,
 	RequestsPage,
 	SignInPage,
 	SignUpPage,
-} from "../pages/public";
+} from "./public";
 import {
 	OrderDetailsPage,
 	ProfilePage,
 	RequestDetailsPage,
 	UserOrderPage,
 	UserRequestsPage,
-} from "../pages/user";
+} from "./user";
 
 import { AuthorizeLevel } from "../types/authModels";
 

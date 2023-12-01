@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { routeConfig } from "./features/routes.config";
+import { routeConfig } from "./pages/routes.config";
 
 function App() {
 	return (
