@@ -1,22 +1,31 @@
-import AdminSignInPage from "../pages/admin/AdminSignInPage";
-import AdminTaskDetailsPage from "../pages/admin/AdminTaskDetailsPage";
-import AdminTasksPage from "../pages/admin/AdminTasksPage";
-import DashboardPage from "../pages/provider/DashboardPage";
-import OfferDetailsPage from "../pages/provider/OfferDetailsPage";
-import OfferPage from "../pages/provider/OfferPage";
-import ProviderProfilePage from "../pages/provider/ProviderProfilePage";
-import TaskDetailsPage from "../pages/provider/TaskDetailsPage";
-import TaskPage from "../pages/provider/TaskPage";
-import HomePage from "../pages/public/HomePage";
-import NotFoundPage from "../pages/public/NotFoundPage";
-import RequestsPage from "../pages/public/RequestsPage";
-import SignInPage from "../pages/public/SignInPage";
-import SignUpPage from "../pages/public/SignUpPage";
-import OrderDetailsPage from "../pages/user/OrderDetailsPage";
-import ProfilePage from "../pages/user/ProfilePage";
-import RequestDetailsPage from "../pages/user/RequestDetailsPage";
-import UserOrderPage from "../pages/user/UserOrderPage";
-import UserRequestsPage from "../pages/user/UserRequestsPage";
+import {
+	AdminSignInPage,
+	AdminTaskDetailsPage,
+	AdminTasksPage,
+} from "../pages/admin";
+import {
+	DashboardPage,
+	OfferDetailsPage,
+	OfferPage,
+	ProviderProfilePage,
+	TaskDetailsPage,
+	TaskPage,
+} from "../pages/provider";
+import {
+	HomePage,
+	NotFoundPage,
+	RequestsPage,
+	SignInPage,
+	SignUpPage,
+} from "../pages/public";
+import {
+	OrderDetailsPage,
+	ProfilePage,
+	RequestDetailsPage,
+	UserOrderPage,
+	UserRequestsPage,
+} from "../pages/user";
+
 import { AuthorizeLevel } from "../types/authModels";
 
 interface TRouteConfig {
