@@ -17,19 +17,13 @@ import ProfilePage from "../pages/user/ProfilePage";
 import RequestDetailsPage from "../pages/user/RequestDetailsPage";
 import UserOrderPage from "../pages/user/UserOrderPage";
 import UserRequestsPage from "../pages/user/UserRequestsPage";
+import { AuthorizeLevel } from "../types/authModels";
 
 interface TRouteConfig {
 	name: string;
 	path: string;
 	component: JSX.ElementType;
 	authorizeLevel: AuthorizeLevel;
-}
-
-enum AuthorizeLevel {
-	PUBLIC,
-	USER,
-	PROVIDER,
-	ADMIN,
 }
 
 export const routeConfig: TRouteConfig[] = [
