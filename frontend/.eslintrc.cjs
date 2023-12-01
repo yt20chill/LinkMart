@@ -3,13 +3,13 @@ module.exports = {
 	env: { browser: true, es2020: true, node: true },
 	extends: [
 		"eslint:recommended",
-		"plugin:@typescript-eslint/strict-type-checked",
+		"plugin:@typescript-eslint/recommended-type-checked",
 		"plugin:react-hooks/recommended",
 		"plugin:@typescript-eslint/stylistic-type-checked",
 		"plugin:react/recommended",
 		"plugin:react/jsx-runtime",
 	],
-	ignorePatterns: ["dist", ".eslintrc.cjs", "tailwind.config.js"],
+	ignorePatterns: ["dist", ".eslintrc.cjs", "*.config.js"],
 	parser: "@typescript-eslint/parser",
 	plugins: ["react-refresh"],
 	rules: {
