@@ -1,5 +1,7 @@
+import SignInForm from "../../features/forms/SignInForm";
+
 function SignInPage() {
-	return <div>SignInPage</div>;
+	return <SignInForm />;
 }
 
 export default SignInPage;
