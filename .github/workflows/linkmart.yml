@@ -1,0 +1,50 @@
+name: linkmart
+
+on:
+  push:
+    branches:
+      - "production"
+  workflow_dispatch:
+
+jobs:
+  build-react:
+    runs-on: ubuntu-latest
+    container: node:lts-alpine
+    steps:
+      - uses: actions/@checkout@v3
+      - name: Build react app
+        working-directory: frontend
+        env:
+          VITE_NODE_ENV: production
+        run: |
+          npm install
+          npm run build
+      - name: Archive built files
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: frontend/dist
+
+  deploy-react:
+    needs: build-react
+    runs-on: ubuntu-latest
+    container: python:3.9
+    steps:
+      - uses: actions/checkout@v3
+      - name: Restore frontend files
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: frontend/dist
+      - name: Deploy to S3
+        working-directory: frontend
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        run: |
+          pip install awscli
+          aws s3 sync ./dist s3://${{ env.AWS_S3_BUCKET }} --delete
+          aws cloudfront create-invalidation --distribution-id ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
