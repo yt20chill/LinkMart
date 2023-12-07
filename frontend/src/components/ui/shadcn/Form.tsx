@@ -15,8 +15,8 @@ import { camelToTitleCase, cn } from "@/lib/utils";
 import {
 	FormFieldContext,
 	FormItemContext,
-	useFormField,
-} from "../../../features/hooks/useFormField";
+} from "../../../features/forms/formContext";
+import { useFormField } from "../../../features/hooks/useFormField";
 import {
 	FormFieldContextValue,
 	FormInputType,
@@ -24,10 +24,6 @@ import {
 import { Input } from "./Input";
 
 const Form = FormProvider;
-
-// const FormFieldContext = React.createContext<FormFieldContextValue>(
-// 	{} as FormFieldContextValue
-// );
 
 const FormField = <
 	TFieldValues extends FieldValues = FieldValues,
@@ -41,10 +37,6 @@ const FormField = <
 		</FormFieldContext.Provider>
 	);
 };
-
-// const FormItemContext = React.createContext<FormItemContextValue>(
-// 	{} as FormItemContextValue
-// );
 
 const FormItem = React.forwardRef<
 	HTMLDivElement,

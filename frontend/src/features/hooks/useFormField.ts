@@ -1,18 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import {
-	FormFieldContextValue,
-	FormItemContextValue,
-} from "../../types/formModels";
-
-//TODO: change it to useState
-export const FormFieldContext = React.createContext<FormFieldContextValue>(
-	{} as FormFieldContextValue
-);
-
-export const FormItemContext = React.createContext<FormItemContextValue>(
-	{} as FormItemContextValue
-);
+import { FormFieldContext, FormItemContext } from "../forms/formContext";
 
 export const useFormField = () => {
 	const fieldContext = React.useContext(FormFieldContext);

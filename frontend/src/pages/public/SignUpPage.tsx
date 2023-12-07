@@ -1,5 +1,11 @@
+import SignUpForm from "../../features/forms/SignUpForm";
+
 function SignUpPage() {
-	return <div>SignUpPage</div>;
+	return (
+		<>
+			<SignUpForm />
+		</>
+	);
 }
 
 export default SignUpPage;
