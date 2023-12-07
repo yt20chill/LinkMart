@@ -2,29 +2,32 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 import {
+	Control,
 	Controller,
 	ControllerProps,
 	FieldPath,
 	FieldValues,
 	FormProvider,
-	useFormContext,
 } from "react-hook-form";
 
-import { Label } from "@/components/ui/Label";
-import { cn } from "@/lib/utils";
+import { Label } from "@/components/ui/shadcn/Label";
+import { camelToTitleCase, cn } from "@/lib/utils";
+import {
+	FormFieldContext,
+	FormItemContext,
+	useFormField,
+} from "../../../features/hooks/useFormField";
+import {
+	FormFieldContextValue,
+	FormInputType,
+} from "../../../types/formModels";
+import { Input } from "./Input";
 
 const Form = FormProvider;
 
-type FormFieldContextValue<
-	TFieldValues extends FieldValues = FieldValues,
-	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> = {
-	name: TName;
-};
-
-const FormFieldContext = React.createContext<FormFieldContextValue>(
-	{} as FormFieldContextValue
-);
+// const FormFieldContext = React.createContext<FormFieldContextValue>(
+// 	{} as FormFieldContextValue
+// );
 
 const FormField = <
 	TFieldValues extends FieldValues = FieldValues,
@@ -39,36 +42,9 @@ const FormField = <
 	);
 };
 
-const useFormField = () => {
-	const fieldContext = React.useContext(FormFieldContext);
-	const itemContext = React.useContext(FormItemContext);
-	const { getFieldState, formState } = useFormContext();
-
-	const fieldState = getFieldState(fieldContext.name, formState);
-
-	if (!fieldContext) {
-		throw new Error("useFormField should be used within <FormField>");
-	}
-
-	const { id } = itemContext;
-
-	return {
-		id,
-		name: fieldContext.name,
-		formItemId: `${id}-form-item`,
-		formDescriptionId: `${id}-form-item-description`,
-		formMessageId: `${id}-form-item-message`,
-		...fieldState,
-	};
-};
-
-type FormItemContextValue = {
-	id: string;
-};
-
-const FormItemContext = React.createContext<FormItemContextValue>(
-	{} as FormItemContextValue
-);
+// const FormItemContext = React.createContext<FormItemContextValue>(
+// 	{} as FormItemContextValue
+// );
 
 const FormItem = React.forwardRef<
 	HTMLDivElement,
@@ -165,13 +141,51 @@ const FormMessage = React.forwardRef<
 });
 FormMessage.displayName = "FormMessage";
 
+interface FormInputFieldProps<TFieldValues extends FieldValues = FieldValues> {
+	formControl: Control<
+		TFieldValues,
+		React.Context<FormFieldContextValue<FieldValues, string>>
+	>;
+	fieldName: FieldPath<TFieldValues>;
+	label?: string;
+	inputType?: FormInputType;
+	placeHolder?: string;
+}
+
+const FormInput = <T extends FieldValues = FieldValues>({
+	formControl,
+	fieldName,
+	label = camelToTitleCase(fieldName.toString()),
+	inputType = "text",
+	placeHolder = fieldName
+		.toString()
+		.replace(/^[a-z]/, (char) => char.toUpperCase()),
+}: FormInputFieldProps<T>) => {
+	return (
+		<FormField
+			control={formControl}
+			name={fieldName}
+			render={({ field }) => (
+				<FormItem>
+					<FormLabel>{label}</FormLabel>
+					<FormControl>
+						{/* TODO: how to add a visible password toggle? */}
+						<Input type={inputType} placeholder={placeHolder} {...field} />
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			)}
+		/>
+	);
+};
+
 export {
 	Form,
 	FormControl,
 	FormDescription,
 	FormField,
+	FormInput,
 	FormItem,
 	FormLabel,
 	FormMessage,
-	useFormField,
 };

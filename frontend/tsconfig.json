@@ -25,6 +25,8 @@
 		"noFallthroughCasesInSwitch": true,
 		"strictNullChecks": true
 	},
-	// "include": ["src"],
-	"references": [{ "path": "./tsconfig.node.json" }]
+	"include": ["src"],
+	"exclude": ["node_modules", "build", "dist", "coverage", "scripts", "public"],
+	"references": [{ "path": "./tsconfig.node.json" }],
+	"ts-node": { "esm": true }
 }
