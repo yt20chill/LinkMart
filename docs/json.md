@@ -227,7 +227,7 @@
     "message" : invalid username or password
 }
 ```
-##4.3 User Personal Info
+##4.3 Check provider for user
 ###[GET] /api/user
 ###request body: 
 ```
@@ -238,8 +238,27 @@
 ```
 [200] OK
 {
+    "provider_id" : 
+}
+```
+```
+[400] BAD REQUEST
+{
+    "message" : can't get provider
+}
+```
+##4.3 User Personal Info
+###[GET] /api/user/info
+###request body: 
+```
+{
+}
+```
+###response body:
+```
+[200] OK
+{
     "user_email" :
-    "password" : 
     "username" :
     "birth_date" : 
 }
@@ -250,7 +269,6 @@
     "message" : missing username or password
 }
 ```
-
 ##4.4 User Address Info
 ###[GET] /api/user/address
 ###request body: 
