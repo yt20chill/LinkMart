@@ -1,8 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/ui/shadcn/Button";
 import { Form, FormInput } from "../../components/ui/shadcn/Form";
+import { FetchError } from "../../lib/apiUtils";
+import { routeConfigMap } from "../../pages/routes.config";
 import { SignUpDto, signUpSchema } from "../../types/authModels";
+import { signUpAJAX } from "../api/authApi";
 
 function SignUpForm() {
 	const form = useForm<SignUpDto>({
@@ -15,8 +20,27 @@ function SignUpForm() {
 		mode: "onBlur",
 	});
 
+	const {
+		mutate: signUp,
+		isLoading: isLoadingSignUp,
+		error: signUpError,
+		isSuccess: isSuccessSignUp,
+	} = useMutation({
+		mutationFn: (signUpDto: Omit<SignUpDto, "confirmPassword">) =>
+			signUpAJAX(signUpDto),
+		onSuccess: (jwt) => {
+			window.localStorage.setItem("access_token", jwt);
+		},
+	});
+	const navigate = useNavigate();
 	const onSubmit = (formData: SignUpDto) => {
-		console.log(formData);
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const { confirmPassword, ...rest } = formData;
+		signUp(rest);
+		form.reset();
+		if (isSuccessSignUp) {
+			navigate(routeConfigMap.get("requests")!.path, { replace: true });
+		}
 	};
 
 	return (
@@ -33,8 +57,16 @@ function SignUpForm() {
 					fieldName="confirmPassword"
 					inputType="password"
 				/>
-				<Button type="submit">Sign Up</Button>
+				<Button type="submit" disabled={isLoadingSignUp}>
+					Sign Up
+				</Button>
 			</form>
+			{isLoadingSignUp && (
+				<span className="loading loading-spinner loading-lg"></span>
+			)}
+			{signUpError instanceof FetchError && (
+				<p className="text-red-500">{signUpError.message}</p>
+			)}
 		</Form>
 	);
 }

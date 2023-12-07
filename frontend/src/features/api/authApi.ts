@@ -15,7 +15,7 @@ type SignUpResult = BaseFetchResult & {
 
 type GetAuthResult = BaseFetchResult & {
 	username: string;
-	role: string;
+	role: AuthorizeLevel;
 };
 
 export const signInAJAX = async (signInDto: SignInDto) => {
@@ -30,7 +30,7 @@ export const signInAJAX = async (signInDto: SignInDto) => {
 
 export const signUpAJAX = async (
 	signUpDto: Omit<SignUpDto, "confirmPassword">
-) => {
+): Promise<string> => {
 	const { jwt } = await axiosWrapper<typeof signUpDto, SignUpResult>(
 		authApiRoutes.SIGN_UP,
 		"post",
@@ -40,7 +40,7 @@ export const signUpAJAX = async (
 	throw new FetchError(500, "invalid token");
 };
 
-export const getAuthAJAX = async () => {
+export const getAuthAJAX = async (): Promise<GetAuthResult> => {
 	const { username, role } = await axiosWrapper<void, GetAuthResult>(
 		authApiRoutes.GET_AUTH
 	);
