@@ -1,23 +1,26 @@
 #[1. Category Route]
-##1.1 Category
-###[GET] /api/category
-###request body: 
+##1.1 Category ###[GET] /api/category
+###request body:
+
 ```
 {
-    
+
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
     "success" : true,
-    "data" : 
+    "data" :
     {
         "category_name" : string
     }
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
@@ -25,26 +28,30 @@
     "message" : failed to get category item
 }
 ```
-##1.2 Category_field
-###[GET] /api/category_field
-###request body: 
+
+##1.2 Category_field ###[GET] /api/category_field
+###request body:
+
 ```
 {
-    
+
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
     "success" : true,
-    "data" : 
+    "data" :
     {
         "category_id" : number,
         "category_field_name" : string
     }
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
@@ -52,26 +59,30 @@
     "message" : failed to get category field name
 }
 ```
-##1.3 Category_field
-###[GET] /api/category_field_option
-###request body: 
+
+##1.3 Category_field ###[GET] /api/category_field_option
+###request body:
+
 ```
 {
-    
+
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
     "success" : true,
-    "data" : 
+    "data" :
     {
         "category_field_id" : number,
         "category_field_option" : string
     }
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
@@ -81,26 +92,29 @@
 ```
 
 #[2. Status Route]
-##2.1 Status
-###[GET] /api/status
-###request body: 
+##2.1 Status ###[GET] /api/status
+###request body:
+
 ```
 {
-    
+
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
     "success" : true,
-    "data" : 
+    "data" :
     {
         "status_id" : int
         "status_name" : string
     }
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
@@ -110,26 +124,29 @@
 ```
 
 #[3. Order Status Route]
-##3.1 Order Status
-###[GET] /api/orderStatus
-###request body: 
+##3.1 Order Status ###[GET] /api/orderStatus
+###request body:
+
 ```
 {
-    
+
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
     "success" : true,
-    "data" : 
+    "data" :
     {
         "order_status_id" : int
         "order_status_name" : string
     }
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
@@ -139,20 +156,22 @@
 ```
 
 #[4. Logistic Company Route]
-##4.1 Logistic Company
-###[GET] /api/logistic_company
-###request body: 
+##4.1 Logistic Company ###[GET] /api/logistic_company
+###request body:
+
 ```
 {
-    
+
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
     "success" : true,
-    "data" : 
+    "data" :
     {
         "logistic_company_id" : int,
         "logistic_company_name" : string,
@@ -160,6 +179,7 @@
     }
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
@@ -169,16 +189,18 @@
 ```
 
 #[4. User Route]
-##4.1 User Registration
-###[POST] /api/user/registration
-###request body: 
+##4.1 User Registration ###[POST] /api/user/registration
+###request body:
+
 ```
 {
     "email" : string
     "password" : string
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
@@ -186,64 +208,40 @@
     "message" : Sign up successfully
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
     "message" : missing information
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
     "message" : failed to sign up
 }
 ```
-##4.2 User Login
-###[POST] /api/user/login
-###request body: 
+
+##4.2 User Login ###[POST] /api/user/login
+###request body:
+
 ```
 {
     "email" : string
     "password" : string
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
     "jwt" : string
 }
 ```
-```
-[400] BAD REQUEST
-{
-    "message" : missing username or password
-}
-```
-```
-[400] BAD REQUEST
-{
-    "success" : false,
-    "message" : invalid username or password
-}
-```
-##4.3 User Personal Info
-###[GET] /api/user
-###request body: 
-```
-{
-}
-```
-###response body:
-```
-[200] OK
-{
-    "user_email" :
-    "password" : 
-    "username" :
-    "birth_date" : 
-}
-```
+
 ```
 [400] BAD REQUEST
 {
@@ -251,14 +249,57 @@
 }
 ```
 
-##4.4 User Address Info
-###[GET] /api/user/address
-###request body: 
+```
+[400] BAD REQUEST
+{
+    "success" : false,
+    "message" : invalid username or password
+}
+```
+
+##4.3 User Personal Info ###[GET] /api/user
+###request body:
+
 ```
 {
 }
 ```
+
 ###response body:
+
+```
+[200] OK
+{
+    "success" : true,
+    "message" : login successfully
+}
+```
+
+```
+[204] No Content
+{
+    "success" : false,
+    "message" : missing username or password
+}
+```
+
+```
+[400] BAD REQUEST
+{
+    "message" : missing username or password
+}
+```
+
+##4.4 User Address Info ###[GET] /api/user/address
+###request body:
+
+```
+{
+}
+```
+
+###response body:
+
 ```
 [200] OK
 [{
@@ -267,14 +308,16 @@
 },...]
 ```
 
-##4.4 User Address Info
-###[GET] /api/user/payment
-###request body: 
+##4.4 User Address Info ###[GET] /api/user/payment
+###request body:
+
 ```
 {
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 [{
@@ -287,9 +330,9 @@
 ```
 
 #[5. Request Route]
-##5.1 User Request
-###[POST] /api/request
-###request body: 
+##5.1 User Request ###[POST] /api/request
+###request body:
+
 ```
 {
     "created_by" : int(user.user_id),
@@ -300,10 +343,12 @@
     "url" : string,
     "quality" : int,
     "offer_price" : int
-    "jwt" : 
+    "jwt" :
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
@@ -323,6 +368,7 @@
     ]
 }
 ```
+
 ```
 [204] No Content
 {
@@ -330,6 +376,7 @@
     "message" : missing information
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
@@ -337,10 +384,11 @@
     "message" : fail to post request
 }
 ```
+
 #[6. Offer Route]
-##6.1 Provider Offer
-###[POST] /api/offer
-###request body: 
+##6.1 Provider Offer ###[POST] /api/offer
+###request body:
+
 ```
 {
     "request_id" : int(request.request_id),
@@ -348,10 +396,12 @@
     "status" : int(status.status_id),
     "price" : int,
     "offer_remark" : string
-    "jwt" : 
+    "jwt" :
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
@@ -363,6 +413,7 @@
     ]
 }
 ```
+
 ```
 [204] No Content
 {
@@ -370,6 +421,7 @@
     "message" : missing information
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
@@ -377,15 +429,18 @@
     "message" : fail to post offer
 }
 ```
-##6.2 Get Provider Offer (user side)
-###[GET] /api/get_offer
-###request body: 
+
+##6.2 Get Provider Offer (user side) ###[GET] /api/get_offer
+###request body:
+
 ```
 {
-    "jwt" : 
+    "jwt" :
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
@@ -400,6 +455,7 @@
     ]
 }
 ```
+
 ```
 [204] No Content
 {
@@ -407,6 +463,7 @@
     "message" : missing information
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
@@ -414,16 +471,19 @@
     "message" : fail to post offer
 }
 ```
-##6.3 Get Specific Provider Offer (user side)
-###[GET] /api/get_offer/:id
-###request body: 
+
+##6.3 Get Specific Provider Offer (user side) ###[GET] /api/get_offer/:id
+###request body:
+
 ```
 {
     "offer_id" : int
-    "jwt" : 
+    "jwt" :
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
@@ -438,6 +498,7 @@
     ]
 }
 ```
+
 ```
 [204] No Content
 {
@@ -445,6 +506,7 @@
     "message" : missing information
 }
 ```
+
 ```
 [400] BAD REQUEST
 {
@@ -452,20 +514,23 @@
     "message" : fail to post offer
 }
 ```
+
 #[7. Order Route]
-##7.1 Order Request
-###[POST] /api/order
-###request body: 
+##7.1 Order Request ###[POST] /api/order
+###request body:
+
 ```
 {
     "offer_id" : int(offer.offer_id),
     "order_status_id" : int(order_status.order_status_id),
     "logistic_company_id" : int(logistic_company.logistic_company_id),
     "shipping_order_no": int
-    "jwt" : 
+    "jwt" :
 }
 ```
+
 ###response body:
+
 ```
 [200] OK
 {
@@ -480,6 +545,7 @@
     ]
 }
 ```
+
 ```
 [204] No Content
 {
@@ -487,6 +553,7 @@
     "message" : missing information
 }
 ```
+
 ```
 [400] BAD REQUEST
 {

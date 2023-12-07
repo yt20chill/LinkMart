@@ -12,18 +12,16 @@ function SignUpForm() {
 			password: "",
 			confirmPassword: "",
 		},
+		mode: "onBlur",
 	});
-	const submit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		form.handleSubmit((formData) => onSubmit(formData));
-	};
+
 	const onSubmit = (formData: SignUpDto) => {
 		console.log(formData);
 	};
 
 	return (
 		<Form {...form}>
-			<form onSubmit={submit} className="space-y-8">
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 				<FormInput formControl={form.control} fieldName="email" />
 				<FormInput
 					formControl={form.control}

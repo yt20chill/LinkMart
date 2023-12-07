@@ -17,6 +17,7 @@ import {
 import {
 	OrderDetailsPage,
 	ProfilePage,
+	ProviderRegisterPage,
 	RequestDetailsPage,
 	UserOrderPage,
 	UserRequestsPage,
@@ -79,15 +80,21 @@ export const routeConfig: TRouteConfig[] = [
 	},
 	{
 		name: "userOrder",
-		path: "order",
+		path: "/order",
 		authorizeLevel: AuthorizeLevel.USER,
 		component: UserOrderPage,
 	},
 	{
 		name: "orderDetail",
-		path: "order-detail/:id",
+		path: "/order-detail/:id",
 		authorizeLevel: AuthorizeLevel.USER,
 		component: OrderDetailsPage,
+	},
+	{
+		name: "Provider Registration",
+		path: "/provider/register",
+		authorizeLevel: AuthorizeLevel.USER,
+		component: ProviderRegisterPage,
 	},
 	{
 		name: "profile",
@@ -98,37 +105,37 @@ export const routeConfig: TRouteConfig[] = [
 	{
 		// offer management
 		name: "myOffer",
-		path: "offer",
+		path: "/offer",
 		authorizeLevel: AuthorizeLevel.PROVIDER,
 		component: OfferPage,
 	},
 	{
 		name: "offerDetail",
-		path: "offer-detail/:id",
+		path: "/offer-detail/:id",
 		authorizeLevel: AuthorizeLevel.PROVIDER,
 		component: OfferDetailsPage,
 	},
 	{
 		name: "task",
-		path: "task",
+		path: "/task",
 		authorizeLevel: AuthorizeLevel.PROVIDER,
 		component: TaskPage,
 	},
 	{
 		name: "taskDetail",
-		path: "task-detail/:id",
+		path: "/task-detail/:id",
 		authorizeLevel: AuthorizeLevel.PROVIDER,
 		component: TaskDetailsPage,
 	},
 	{
 		name: "dashboard",
-		path: "dashboard",
+		path: "/dashboard",
 		authorizeLevel: AuthorizeLevel.PROVIDER,
 		component: DashboardPage,
 	},
 	{
 		name: "adminSignIn",
-		path: "admin/sign-in",
+		path: "/admin/sign-in",
 		authorizeLevel: AuthorizeLevel.ADMIN,
 		component: AdminSignInPage,
 	},
