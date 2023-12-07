@@ -176,29 +176,25 @@
 {
     "email" : string
     "password" : string
-    "user_username" : string
-    "birth_date" : string
 }
 ```
 ###response body:
 ```
 [200] OK
 {
-    "success" : true,
+    "jwt" : String
     "message" : Sign up successfully
 }
 ```
 ```
-[204] No Content
+[400] BAD REQUEST
 {
-    "success" : false,
     "message" : missing information
 }
 ```
 ```
 [400] BAD REQUEST
 {
-    "success" : false,
     "message" : failed to sign up
 }
 ```
@@ -215,14 +211,12 @@
 ```
 [200] OK
 {
-    "success" : true,
-    "token" : string
+    "jwt" : string
 }
 ```
 ```
-[204] No Content
+[400] BAD REQUEST
 {
-    "success" : false,
     "message" : missing username or password
 }
 ```
@@ -233,36 +227,65 @@
     "message" : invalid username or password
 }
 ```
-##4.3 User Logout
-###[POST] /api/user/logout
+##4.3 User Personal Info
+###[GET] /api/user
 ###request body: 
 ```
 {
-    "user_id" : string
 }
 ```
 ###response body:
 ```
 [200] OK
 {
-    "success" : true,
-    "message" : login successfully
-}
-```
-```
-[204] No Content
-{
-    "success" : false,
-    "message" : missing username or password
+    "user_email" :
+    "password" : 
+    "username" :
+    "birth_date" : 
 }
 ```
 ```
 [400] BAD REQUEST
 {
-    "success" : false,
-    "message" : invalid username or password
+    "message" : missing username or password
 }
 ```
+
+##4.4 User Address Info
+###[GET] /api/user/address
+###request body: 
+```
+{
+}
+```
+###response body:
+```
+[200] OK
+[{
+    "address" :
+    "is_primary" :
+},...]
+```
+
+##4.4 User Address Info
+###[GET] /api/user/payment
+###request body: 
+```
+{
+}
+```
+###response body:
+```
+[200] OK
+[{
+    "payment_method" :
+    "card_no" :
+    "card_holder" :
+    "card_holder_name" :
+    "expiry_date" :
+},...]
+```
+
 #[5. Request Route]
 ##5.1 User Request
 ###[POST] /api/request
