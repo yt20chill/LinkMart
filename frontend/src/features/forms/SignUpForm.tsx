@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/ui/shadcn/Button";
 import { Form, FormInput } from "../../components/ui/shadcn/Form";
 import { FetchError } from "../../lib/apiUtils";
-import { routeConfigMap } from "../../pages/routes.config";
+import routeConfigMap from "../../pages/routes.config";
 import { SignUpDto, signUpSchema } from "../../types/authModels";
 import { signUpAJAX } from "../api/authApi";
 

@@ -32,7 +32,7 @@ interface TRouteConfig {
 	authorizeLevel: AuthorizeLevel;
 }
 
-export const routeConfigMap = new Map<string, TRouteConfig>();
+const routeConfigMap = new Map<string, TRouteConfig>();
 routeConfigMap
 	.set("home", {
 		name: "home",
@@ -158,4 +158,7 @@ routeConfigMap
 		component: NotFoundPage,
 	});
 
-export const routeConfigArray = Array.from(routeConfigMap.values());
+export const routeConfigArray = Object.freeze(
+	Array.from(routeConfigMap.values())
+);
+export default Object.freeze(routeConfigMap);
