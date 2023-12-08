@@ -20,7 +20,6 @@ import { useFormField } from "../../../features/hooks/useFormField";
 import {
 	FormFieldContextValue,
 	FormInputType,
-	FormSelectProps,
 } from "../../../types/formModels";
 import { Input } from "./Input";
 import {
@@ -180,8 +179,8 @@ const FormInput = <T extends FieldValues = FieldValues>({
 };
 
 type TSelectItem = {
-	value: string;
-	label: string;
+	id: string;
+	name: string;
 };
 
 interface FormSelectProps<TFieldValues extends FieldValues = FieldValues> {
@@ -199,8 +198,8 @@ const FormSelect = <T extends FieldValues = FieldValues>({
 	formControl,
 	fieldName,
 	items,
-	label = fieldName,
-	placeholder = label,
+	label = camelToTitleCase(fieldName),
+	placeholder = `Select ${label}`,
 }: FormSelectProps<T>) => {
 	return (
 		<FormField
@@ -209,7 +208,7 @@ const FormSelect = <T extends FieldValues = FieldValues>({
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>{label}</FormLabel>
-					<Select onValueChange={field.onChange} defaultValue={items[0].value}>
+					<Select onValueChange={field.onChange} defaultValue={items[0].id}>
 						<FormControl>
 							<SelectTrigger>
 								<SelectValue placeholder={placeholder} />
@@ -217,8 +216,8 @@ const FormSelect = <T extends FieldValues = FieldValues>({
 						</FormControl>
 						<SelectContent>
 							{items.map((item) => (
-								<SelectItem key={item.value} value={item.value}>
-									{item.label}
+								<SelectItem key={item.id} value={item.id}>
+									{item.name}
 								</SelectItem>
 							))}
 						</SelectContent>
