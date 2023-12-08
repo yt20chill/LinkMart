@@ -21,6 +21,7 @@ export const authApiRoutes = Object.freeze({
 export const requestApiRoutes = Object.freeze({
 	CATEGORY: `/categories`,
 	LOCATION: `/locations`,
+	REQUEST: `/request`,
 });
 
 export class FetchError extends Error {

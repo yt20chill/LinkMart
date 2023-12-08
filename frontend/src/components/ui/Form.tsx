@@ -10,17 +10,14 @@ import {
 	FormProvider,
 } from "react-hook-form";
 
-import { Label } from "@/components/ui/shadcn/Label";
+import { Label } from "@/components/ui/Label";
 import { camelToTitleCase, cn } from "@/lib/utils";
 import {
 	FormFieldContext,
 	FormItemContext,
-} from "../../../features/forms/formContext";
-import { useFormField } from "../../../features/hooks/useFormField";
-import {
-	FormFieldContextValue,
-	FormInputType,
-} from "../../../types/formModels";
+} from "../../features/forms/formContext";
+import { useFormField } from "../../features/hooks/useFormField";
+import { FormFieldContextValue, FormInputType } from "../../types/formModels";
 import { Input } from "./Input";
 import {
 	Select,
@@ -156,7 +153,7 @@ const FormInput = <T extends FieldValues = FieldValues>({
 	fieldName,
 	label = camelToTitleCase(fieldName.toString()),
 	inputType = "text",
-	placeHolder = fieldName
+	placeHolder = label
 		.toString()
 		.replace(/^[a-z]/, (char) => char.toUpperCase()),
 }: FormInputFieldProps<T>) => {
@@ -208,7 +205,7 @@ const FormSelect = <T extends FieldValues = FieldValues>({
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>{label}</FormLabel>
-					<Select onValueChange={field.onChange} defaultValue={items[0].id}>
+					<Select onValueChange={field.onChange} defaultValue={undefined}>
 						<FormControl>
 							<SelectTrigger>
 								<SelectValue placeholder={placeholder} />

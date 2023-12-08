@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import { Button } from "../../components/ui/shadcn/Button";
-import { Form, FormInput } from "../../components/ui/shadcn/Form";
+import { Button } from "../../components/ui/Button";
+import { Form, FormInput } from "../../components/ui/Form";
 import { FetchError, queryKey } from "../../lib/apiUtils";
 import { SignUpDto } from "../../types/authModels";
 import { signUpAJAX } from "../api/authApi";
