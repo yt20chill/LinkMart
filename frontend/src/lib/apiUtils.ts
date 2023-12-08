@@ -36,6 +36,7 @@ export const axiosWrapper = async <PayloadType, ResultType>(
 	data?: PayloadType
 ): Promise<ResultType> => {
 	try {
+		//TODO: remove this after testing
 		console.log(`${method}ing ${url}...`);
 		const result = await axios<ResultType>({
 			method,
