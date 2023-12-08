@@ -1,6 +1,5 @@
 import { axiosWrapper, requestApiRoutes } from "../../lib/apiUtils";
 import { BaseFetchResult } from "../../types/fetchModels";
-import { RequestDto } from "../../types/requestModels";
 
 type CategoryResult = BaseFetchResult & {
 	id: number;
@@ -20,8 +19,8 @@ export const getLocation = async () => {
 	return await axiosWrapper<void, LocationResult[]>(requestApiRoutes.LOCATION);
 };
 
-export const postRequestAJAX = async (formData: RequestDto) => {
-	return await axiosWrapper<RequestDto, void>(
+export const postRequestAJAX = async (formData: FormData) => {
+	return await axiosWrapper<FormData, void>(
 		requestApiRoutes.REQUEST,
 		"post",
 		formData

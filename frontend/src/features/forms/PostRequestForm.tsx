@@ -2,11 +2,32 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { Button } from "../../components/ui/Button";
-import { Form, FormInput, FormSelect } from "../../components/ui/Form";
+import {
+	Form,
+	FormFileInput,
+	FormInput,
+	FormSelect,
+} from "../../components/ui/Form";
 import { queryKey } from "../../lib/apiUtils";
+import { appendFormData } from "../../lib/formUtils";
 import { RequestForm } from "../../types/requestModels";
 import { postRequestAJAX } from "../api/requestApi";
 import { requestSchema } from "./schema/requestSchema";
+
+const categories = [
+	{
+		id: 1,
+		name: "Clothes",
+	},
+	{ id: 2, name: "Computer" },
+];
+const locations = [
+	{
+		id: 1,
+		name: "Japan",
+	},
+	{ id: 2, name: "United Kingdom" },
+];
 
 const PostRequestForm = () => {
 	const form = useForm<RequestForm>({
@@ -15,14 +36,15 @@ const PostRequestForm = () => {
 			location: "",
 			category: "",
 			item: "",
-			image: null,
+			images: null,
 			url: "",
-			qty: "",
+			qty: "1",
 			remarks: "",
 			price: "",
 		},
 		mode: "onBlur",
 	});
+
 	const queryClient = useQueryClient();
 	// const { data: categories } = useQuery({
 	// 	queryKey: [queryKey.REQUEST, "categories"],
@@ -36,37 +58,24 @@ const PostRequestForm = () => {
 	// });
 
 	const postRequest = useMutation({
-		mutationFn: (formData: RequestForm) => {
-			const requestDto = requestSchema.parse(formData);
-			console.log(requestDto);
-			return postRequestAJAX(requestDto);
+		mutationFn: (formData: FormData) => {
+			return postRequestAJAX(formData);
 		},
 		onSuccess: async () => {
 			await queryClient.invalidateQueries(queryKey.REQUEST);
 		},
 	});
-	const categories = [
-		{
-			id: 1,
-			name: "Clothes",
-		},
-		{ id: 2, name: "Computer" },
-	];
-	const locations = [
-		{
-			id: 1,
-			name: "Japan",
-		},
-		{ id: 2, name: "United Kingdom" },
-	];
-	const onSubmit = (formData: RequestForm) => {
+
+	const onSubmit = (data: RequestForm) => {
+		const formData = appendFormData(data);
+
 		postRequest.mutate(formData);
 	};
 	if (!categories || !locations)
 		return <span className="loading loading-spinner loading-lg"></span>;
 	return (
 		<Form {...form}>
-			<form onSubmit={() => form.handleSubmit(onSubmit)}>
+			<form onSubmit={form.handleSubmit(onSubmit)}>
 				<FormInput
 					formControl={form.control}
 					fieldName="item"
@@ -92,13 +101,11 @@ const PostRequestForm = () => {
 					}))}
 				/>
 				{/* // TODO: change it to drag and drop */}
-				{/* <FormInput
+				<FormFileInput
 					formControl={form.control}
-					fieldName="image"
-					label="Image*"
-					inputType="file"
-					placeHolder="Item Image"
-				/> */}
+					fieldName="images"
+					label="Images*"
+				/>
 				<FormInput
 					formControl={form.control}
 					fieldName="url"
@@ -116,13 +123,13 @@ const PostRequestForm = () => {
 					label="Price (in HKD) "
 					placeHolder="1000"
 				/>
+				<Button type="submit" disabled={postRequest.isLoading}>
+					Submit
+					{postRequest.isLoading && (
+						<span className="loading loading-spinner loading-lg"></span>
+					)}
+				</Button>
 			</form>
-			<Button type="submit" disabled={postRequest.isLoading}>
-				Submit
-				{postRequest.isLoading && (
-					<span className="loading loading-spinner loading-lg"></span>
-				)}
-			</Button>
 		</Form>
 	);
 };
