@@ -20,8 +20,16 @@ import { useFormField } from "../../../features/hooks/useFormField";
 import {
 	FormFieldContextValue,
 	FormInputType,
+	FormSelectProps,
 } from "../../../types/formModels";
 import { Input } from "./Input";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "./Select";
 
 const Form = FormProvider;
 
@@ -171,6 +179,57 @@ const FormInput = <T extends FieldValues = FieldValues>({
 	);
 };
 
+type TSelectItem = {
+	value: string;
+	label: string;
+};
+
+interface FormSelectProps<TFieldValues extends FieldValues = FieldValues> {
+	formControl: Control<
+		TFieldValues,
+		React.Context<FormFieldContextValue<FieldValues, string>>
+	>;
+	fieldName: FieldPath<TFieldValues>;
+	items: Array<TSelectItem>;
+	label?: string;
+	placeholder?: string;
+}
+
+const FormSelect = <T extends FieldValues = FieldValues>({
+	formControl,
+	fieldName,
+	items,
+	label = fieldName,
+	placeholder = label,
+}: FormSelectProps<T>) => {
+	return (
+		<FormField
+			control={formControl}
+			name={fieldName}
+			render={({ field }) => (
+				<FormItem>
+					<FormLabel>{label}</FormLabel>
+					<Select onValueChange={field.onChange} defaultValue={items[0].value}>
+						<FormControl>
+							<SelectTrigger>
+								<SelectValue placeholder={placeholder} />
+							</SelectTrigger>
+						</FormControl>
+						<SelectContent>
+							{items.map((item) => (
+								<SelectItem key={item.value} value={item.value}>
+									{item.label}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
+					<FormMessage />
+				</FormItem>
+			)}
+		/>
+	);
+};
+
 export {
 	Form,
 	FormControl,
@@ -180,4 +239,5 @@ export {
 	FormItem,
 	FormLabel,
 	FormMessage,
+	FormSelect,
 };
