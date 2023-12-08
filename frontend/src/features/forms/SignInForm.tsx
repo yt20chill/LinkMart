@@ -34,7 +34,7 @@ function SignInForm() {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<form onSubmit={() => form.handleSubmit(onSubmit)} className="space-y-8">
 				<FormInput formControl={form.control} fieldName="email" />
 				<FormInput
 					formControl={form.control}
@@ -46,11 +46,11 @@ function SignInForm() {
 				)}
 				<Button type="submit" disabled={signIn.isLoading}>
 					Sign In
+					{signIn.isLoading && (
+						<span className="loading loading-spinner loading-lg"></span>
+					)}
 				</Button>
 			</form>
-			{signIn.isLoading && (
-				<span className="loading loading-spinner loading-lg"></span>
-			)}
 		</Form>
 	);
 }
