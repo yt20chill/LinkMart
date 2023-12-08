@@ -1,8 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
 import { Button } from "../../components/ui/shadcn/Button";
 import { Form, FormInput } from "../../components/ui/shadcn/Form";
+import { FetchError, queryKey } from "../../lib/apiUtils";
 import { SignInDto, signInSchema } from "../../types/authModels";
+import { signInAJAX } from "../api/authApi";
+import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
 
 function SignInForm() {
 	const form = useForm<SignInDto>({
@@ -12,10 +16,20 @@ function SignInForm() {
 			password: "",
 		},
 	});
+	const navigatePrev = useNavigateToPreviousPage();
+	const queryClient = useQueryClient();
+	const signIn = useMutation({
+		mutationFn: (formData: SignInDto) => signInAJAX(formData),
+		onSuccess: async (jwt) => {
+			window.localStorage.setItem("access_token", jwt);
+			await queryClient.invalidateQueries(queryKey.AUTH);
+			navigatePrev();
+		},
+	});
 
 	const onSubmit = (formData: SignInDto) => {
-		// useMutation here
-		console.log(formData);
+		signIn.mutate(formData);
+		form.reset();
 	};
 
 	return (
@@ -27,8 +41,16 @@ function SignInForm() {
 					fieldName="password"
 					inputType="password"
 				/>
-				<Button type="submit">Sign In</Button>
+				{signIn.error instanceof FetchError && (
+					<p className="text-red-500">{signIn.error.message}</p>
+				)}
+				<Button type="submit" disabled={signIn.isLoading}>
+					Sign In
+				</Button>
 			</form>
+			{signIn.isLoading && (
+				<span className="loading loading-spinner loading-lg"></span>
+			)}
 		</Form>
 	);
 }
