@@ -1,10 +1,10 @@
+import { RouteEnum, siteMap } from "@/pages/routes.config";
 import { useLocation, useNavigate } from "react-router-dom";
-import routeConfigMap from "../../pages/routes.config";
 
 type LocationState = {
-	from: {
-		pathname: string;
-	};
+  from: {
+    pathname: string;
+  };
 };
 
 /**
@@ -15,13 +15,9 @@ type LocationState = {
  */
 
 export const useNavigateToPreviousPage = () => {
-	const navigate = useNavigate();
-	const locationState = useLocation().state as LocationState;
+  const navigate = useNavigate();
+  const locationState = useLocation().state as LocationState;
 
-	return () =>
-		navigate(
-			locationState?.from.pathname ??
-				routeConfigMap.get("requests")?.path ??
-				"/"
-		);
+  return () =>
+    navigate(locationState?.from.pathname ?? siteMap(RouteEnum.Requests));
 };

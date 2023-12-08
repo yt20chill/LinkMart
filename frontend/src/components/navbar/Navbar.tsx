@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/features/stores/authStore";
-import routesConfig, { RouteEnum } from "@/pages/routes.config";
+import { siteMap, RouteEnum } from "@/pages/routes.config";
+import { AuthorizeLevel } from "@/types/authModels";
 import { Link } from "react-router-dom";
 
 export function Navbar() {
@@ -8,17 +9,17 @@ export function Navbar() {
     <nav className="flex justify-between p-5">
       {/* logo -> home page*/}
       <div className="flex gap-5">
-        <Link to={routesConfig.get(RouteEnum.Home)?.path ?? "/"}>
+        <Link to={siteMap(RouteEnum.Home)}>
           <div className="Logo">LOGO</div>
         </Link>
         {/* nav_link_buttons */}
-        <Link to="/requests">
+        <Link to={siteMap(RouteEnum.Requests)}>
           <div className="">Explore</div>
         </Link>
-        <Link to="/user/request">
+        <Link to={siteMap(RouteEnum.UserRequests)}>
           <div className="">Request</div>
         </Link>
-        <Link to="/Order">
+        <Link to={siteMap(RouteEnum.UserOrder)}>
           <div className="">Order</div>
         </Link>
       </div>
@@ -26,12 +27,14 @@ export function Navbar() {
       <div>
         {userInfo.isAuthenticated ? (
           <>
-            <Link to="/user/profile">
+            <Link to={siteMap(RouteEnum.Profile)}>
               <div className="">Profile</div>
             </Link>
-            <Link to="/user/profile">
-              <div className="">Profile</div>
-            </Link>
+            {userInfo.role === AuthorizeLevel.PROVIDER && (
+              <Link to={siteMap(RouteEnum.ProviderProfile)}>
+                <div className="">Provider</div>
+              </Link>
+            )}
           </>
         ) : (
           //Should be a dropdown list
