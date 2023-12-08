@@ -4,11 +4,12 @@ import { useMutation, useQueryClient } from "react-query";
 import { Button } from "../../components/ui/shadcn/Button";
 import { Form, FormInput } from "../../components/ui/shadcn/Form";
 import { FetchError, queryKey } from "../../lib/apiUtils";
-import { SignInDto, signInSchema } from "../../types/authModels";
+import { SignInDto } from "../../types/authModels";
 import { signInAJAX } from "../api/authApi";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
+import { signInSchema } from "./schema/authSchema";
 
-function SignInForm() {
+const SignInForm = () => {
 	const form = useForm<SignInDto>({
 		resolver: zodResolver(signInSchema),
 		defaultValues: {
@@ -53,6 +54,6 @@ function SignInForm() {
 			</form>
 		</Form>
 	);
-}
+};
 
 export default SignInForm;

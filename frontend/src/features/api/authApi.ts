@@ -1,9 +1,6 @@
 import { FetchError, authApiRoutes, axiosWrapper } from "../../lib/apiUtils";
 import { AuthorizeLevel, SignInDto, SignUpDto } from "../../types/authModels";
-
-type BaseFetchResult = {
-	message?: string;
-};
+import { BaseFetchResult } from "../../types/fetchModels";
 
 type SignInResult = BaseFetchResult & {
 	jwt: string;

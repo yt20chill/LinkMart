@@ -13,9 +13,14 @@ axios.defaults.headers.common["Authorization"] =
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
 export const authApiRoutes = Object.freeze({
-	SIGN_IN: `/api/user/login`,
-	SIGN_UP: `/api/user/registration`,
-	GET_AUTH: `/api/user`,
+	SIGN_IN: `/user/login`,
+	SIGN_UP: `/user/registration`,
+	GET_AUTH: `/user`,
+});
+
+export const requestApiRoutes = Object.freeze({
+	CATEGORY: `/categories`,
+	LOCATION: `/locations`,
 });
 
 export class FetchError extends Error {
@@ -36,6 +41,7 @@ export const axiosWrapper = async <PayloadType, ResultType>(
 	data?: PayloadType
 ): Promise<ResultType> => {
 	try {
+		//TODO: remove this after testing
 		console.log(`${method}ing ${url}...`);
 		const result = await axios<ResultType>({
 			method,
@@ -44,7 +50,8 @@ export const axiosWrapper = async <PayloadType, ResultType>(
 		});
 		return result.data;
 	} catch (error) {
-		if (isAxiosError(error)) throw new FetchError(error.status, error.code);
+		if (isAxiosError(error))
+			throw new FetchError(error.status, error.message ?? error.code);
 		throw new FetchError();
 	}
 };
