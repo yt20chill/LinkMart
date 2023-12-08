@@ -8,10 +8,11 @@ module.exports = {
 		"plugin:react-hooks/recommended",
 		"plugin:react/recommended",
 		"plugin:react/jsx-runtime",
+		"plugin:sonarjs/recommended",
 	],
 	ignorePatterns: ["dist", ".eslintrc.cjs", "*.config.js", "vite.config.ts"],
 	parser: "@typescript-eslint/parser",
-	plugins: ["react-refresh"],
+	plugins: ["react-refresh", "sonarjs"],
 	rules: {
 		"react-refresh/only-export-components": [
 			"warn",

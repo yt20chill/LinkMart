@@ -1,33 +1,29 @@
-import { createStore } from "@udecode/zustood";
+import { create } from "zustand";
+import { createSelectors } from "../../lib/utils";
 import { AuthorizeLevel } from "../../types/authModels";
 
 type AuthState = {
-	user: { id: string; username: string } | null;
+	username: string | null;
 	isAuthenticated: boolean | null;
 	role: AuthorizeLevel;
 };
 
+type AuthActions = {
+	login: (username: string, role: AuthorizeLevel) => void;
+	reset: () => void;
+};
+
 const initAuthState: AuthState = Object.freeze({
-	user: null,
+	username: null,
 	isAuthenticated: false,
 	role: AuthorizeLevel.PUBLIC,
 });
 
-export const authStore = createStore("auth")<AuthState>(
-	{
-		...initAuthState,
-	},
-	{ middlewares: ["immer", "devtools", "persist"] }
-)
-	.extendActions((set) => ({
-		setUser: (userId: string, username: string) => {
-			set.user({ id: userId, username });
-		},
-	}))
-	.extendActions((set) => ({
-		reset: () => {
-			set.user(null);
-			set.isAuthenticated(false);
-			set.role(AuthorizeLevel.PUBLIC);
-		},
-	}));
+const useAuthStoreBase = create<AuthState & AuthActions>()((set) => ({
+	...initAuthState,
+	login: (username: string, role: AuthorizeLevel) =>
+		set({ username, isAuthenticated: true, role }),
+	reset: () => set(initAuthState),
+}));
+
+export const useAuthStore = createSelectors(useAuthStoreBase);

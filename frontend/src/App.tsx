@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import { routeConfig } from "./pages/routes.config";
+import { routeConfigArray } from "./pages/routes.config";
 
 function App() {
 	return (
 		<>
 			<div className=" text-5xl font-bold text-red">Header</div>
 			<Routes>
-				{routeConfig.map((route) => (
+				{routeConfigArray.map((route) => (
 					<Route
 						key={route.path}
 						path={route.path}

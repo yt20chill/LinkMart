@@ -27,11 +27,9 @@ export const signUpSchema = z
 			}),
 		confirmPassword: z.string(),
 	})
-	.refine(
-		(input) => {
-			input.password === input.confirmPassword;
-		},
-		{ message: "Passwords do not match", path: ["confirmPassword"] }
-	);
+	.refine((input) => input.password === input.confirmPassword, {
+		message: "Passwords do not match",
+		path: ["confirmPassword"],
+	});
 
 export type SignUpDto = z.infer<typeof signUpSchema>;
