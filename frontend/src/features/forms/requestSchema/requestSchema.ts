@@ -45,13 +45,17 @@ export const getRequestsQuerySchema = z.object({
 });
 export type GetRequestsQuery = z.infer<typeof getRequestsQuerySchema>;
 
-export const getRequestDetailsParamsSchema = z.object({
+export const requestIdSchema = z.object({
 	requestId: z.string().ulid(),
 });
 
-export type GetRequestDetailsParams = z.infer<
-	typeof getRequestDetailsParamsSchema
->;
+export type RequestIdParams = z.infer<typeof requestIdSchema>;
+
+export const deleteImageParamsSchema = z.object({
+	imageId: z.number().int().positive(),
+});
+
+export type DeleteImageParams = z.infer<typeof deleteImageParamsSchema>;
 
 type PostRequestDto = z.infer<typeof postRequestSchema>;
 export type RequestForm = Record<

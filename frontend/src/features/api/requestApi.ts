@@ -1,5 +1,5 @@
 import { axiosWrapper, requestApiRoutes } from "../../lib/apiUtils";
-import { GetRequestDetailsParams } from "../forms/requestSchema";
+import { DeleteImageParams, RequestIdParams } from "../forms/requestSchema";
 
 import {
 	CategoriesDto,
@@ -25,7 +25,7 @@ export const getLocation = async () => {
 };
 
 export const postRequestAJAX = async (formData: FormData) => {
-	return await axiosWrapper<FormData, void>(requestApiRoutes.REQUEST, {
+	return await axiosWrapper<FormData>(requestApiRoutes.REQUEST, {
 		method: "post",
 		data: formData,
 	});
@@ -43,11 +43,36 @@ export const getAllRequestsAJAX = async (searchParams?: string) => {
 	);
 };
 
-export const getRequestDetailsAJAX = async (
-	params: GetRequestDetailsParams
-) => {
+export const getRequestDetailsAJAX = async ({ requestId }: RequestIdParams) => {
 	return await axiosWrapper<void, RequestDetailsDto>(
-		`${requestApiRoutes.REQUEST}/${params.requestId}`,
+		`${requestApiRoutes.REQUEST}/${requestId}`,
 		{ schema: requestDetailsResponseSchema }
 	);
+};
+
+export const putRequestAJAX = async (
+	{ requestId }: RequestIdParams,
+	formData: FormData
+) => {
+	return await axiosWrapper<FormData>(
+		`${requestApiRoutes.REQUEST}/${requestId}`,
+		{
+			method: "put",
+			data: formData,
+		}
+	);
+};
+
+export const deleteRequestAJAX = async ({ requestId }: RequestIdParams) => {
+	return await axiosWrapper(`${requestApiRoutes.REQUEST}/${requestId}`, {
+		method: "delete",
+	});
+};
+
+export const deleteRequestImageAJAX = async ({
+	imageId,
+}: DeleteImageParams) => {
+	return await axiosWrapper(`${requestApiRoutes.IMAGE}/${imageId}`, {
+		method: "delete",
+	});
 };

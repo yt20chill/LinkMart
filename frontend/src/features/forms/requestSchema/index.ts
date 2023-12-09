@@ -1,25 +1,29 @@
 import { SignInDto, SignUpDto, signInSchema, signUpSchema } from "./authSchema";
 import {
-	GetRequestDetailsParams,
+	DeleteImageParams,
 	GetRequestsQuery,
 	RequestForm,
-	getRequestDetailsParamsSchema,
+	RequestIdParams,
+	deleteImageParamsSchema,
 	getRequestsQuerySchema,
 	postRequestSchema,
+	requestIdSchema,
 } from "./requestSchema";
 
 export {
-	getRequestDetailsParamsSchema,
+	deleteImageParamsSchema,
 	getRequestsQuerySchema,
 	postRequestSchema,
+	requestIdSchema,
 	signInSchema,
 	signUpSchema,
 };
 
 export type {
-	GetRequestDetailsParams,
+	DeleteImageParams,
 	GetRequestsQuery,
 	RequestForm,
+	RequestIdParams,
 	SignInDto,
 	SignUpDto,
 };
