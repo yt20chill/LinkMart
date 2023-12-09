@@ -357,11 +357,13 @@
     "categoryName" : string,
     "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
     "item" : string,
-    "images" : List<string>, (images' url)
+    "images" : List<string> (images url),
     "url" : string | null,
     "quantity" : int,
     "requestRemark" : string | null,
     "offerPrice" : float | null,
+    "createdBy" : string(username),
+    "createdAt" : Date,
     "updatedAt" : Date
 }
 🔴 [400]
