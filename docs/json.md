@@ -341,8 +341,38 @@
     "message" : "fail to get request"
 }
 ```
+### 📍 5.3 Get One (by request id)
 
-### 📍 5.3 User delete request image
+| [GET] | /api/request/:requestId |
+| -------- | --------------------------- |
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]
+{
+    "locationId" : int(location.location_id),
+    "locationName": string,
+    "categoryId" : int(category.category_id),
+    "categoryName" : string,
+    "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
+    "item" : string,
+    "images" : List<string> (images url),
+    "url" : string | null,
+    "quantity" : int,
+    "requestRemark" : string | null,
+    "offerPrice" : float | null,
+    "createdBy" : string(username),
+    "createdAt" : Date,
+    "updatedAt" : Date
+}
+🔴 [400]
+{
+    "message" : "delete fail"
+}
+```
+
+### 📍 5.4 User delete request image
 
 | [DELETE] | /api/request/image/:imageId |
 | -------- | --------------------------- |
@@ -366,7 +396,7 @@
 }
 ```
 
-### 📍 5.4 User Request
+### 📍 5.5 Update User Request
 
 | [PUT] | /api/request/:requestId |
 | ----- | ----------------------- |
@@ -387,7 +417,7 @@
 }
 ```
 
-### 📍 5.5 User Request
+### 📍 5.6 Delete User Request
 
 | [DELETE] | /api/request/:requestId |
 | -------- | ----------------------- |
