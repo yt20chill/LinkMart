@@ -586,3 +586,12 @@ limit 30
     "message" : fail to post order
 }
 ```
+#[8. Location Route]
+##8.1 Order Request ### [GET] /api/location
+### response body:
+```
+[{
+    id: int,
+    location_name: string
+},...]
+```
