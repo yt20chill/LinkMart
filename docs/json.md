@@ -1,55 +1,30 @@
 #[1. Category Route]
-##1.1 Category ###[GET] /api/category
-###request body:
-
-```
-{
-
-}
-```
-
-###response body:
-
+##1.1 Category ### [GET] /api/category
+### response body:
 ```
 [200] OK
-{
-    "success" : true,
-    "data" :
-    {
-        "category_name" : string
-    }
-}
+[{
+    "id": int,
+    "category_name": string
+},...]
 ```
-
 ```
 [400] BAD REQUEST
 {
-    "success" : false,
     "message" : failed to get category item
 }
 ```
 
-##1.2 Category_field ###[GET] /api/category_field
-###request body:
-
-```
-{
-
-}
-```
-
-###response body:
+##1.2 Category_field ### [GET] /api/category/:categoryId
+### response body:
 
 ```
 [200] OK
-{
-    "success" : true,
-    "data" :
-    {
-        "category_id" : number,
-        "category_field_name" : string
-    }
-}
+[{
+    "category_field_name" : string
+    "category_field_is_option": boolean
+    "category_field_option"?: string[]
+},...more]
 ```
 
 ```
@@ -60,8 +35,8 @@
 }
 ```
 
-##1.3 Category_field ###[GET] /api/category_field_option
-###request body:
+##1.3 Category_field ### [GET] /api/category_field_option
+### request body:
 
 ```
 {
@@ -69,7 +44,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -92,8 +67,8 @@
 ```
 
 #[2. Status Route]
-##2.1 Status ###[GET] /api/status
-###request body:
+##2.1 Status ### [GET] /api/status
+### request body:
 
 ```
 {
@@ -101,7 +76,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -124,8 +99,8 @@
 ```
 
 #[3. Order Status Route]
-##3.1 Order Status ###[GET] /api/orderStatus
-###request body:
+##3.1 Order Status ### [GET] /api/orderStatus
+### request body:
 
 ```
 {
@@ -133,7 +108,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -156,8 +131,8 @@
 ```
 
 #[4. Logistic Company Route]
-##4.1 Logistic Company ###[GET] /api/logistic_company
-###request body:
+##4.1 Logistic Company ### [GET] /api/logistic_company
+### request body:
 
 ```
 {
@@ -165,7 +140,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -189,8 +164,8 @@
 ```
 
 #[4. User Route]
-##4.1 User Registration ###[POST] /api/user/registration
-###request body:
+##4.1 User Registration ### [POST] /api/user/registration
+### request body:
 
 ```
 {
@@ -199,7 +174,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -223,8 +198,8 @@
 }
 ```
 
-##4.2 User Login ###[POST] /api/user/login
-###request body:
+##4.2 User Login ### [POST] /api/user/login
+### request body:
 
 ```
 {
@@ -233,7 +208,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -249,15 +224,15 @@
 }
 ```
 
-##4.4 User Address Info ###[GET] /api/user/address
-###request body:
+##4.4 User Address Info ### [GET] /api/user/address
+### request body:
 
 ```
 {
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -282,15 +257,15 @@
 }
 ```
 
-##4.4 User Address Info ###[GET] /api/user/address
-###request body:
+##4.4 User Address Info ### [GET] /api/user/address
+### request body:
 
 ```
 {
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -300,15 +275,15 @@
 },...]
 ```
 
-##4.4 User Address Info ###[GET] /api/user/payment
-###request body:
+##4.4 User Address Info ### [GET] /api/user/payment
+### request body:
 
 ```
 {
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -322,64 +297,122 @@
 ```
 
 #[5. Request Route]
-##5.1 User Request ###[POST] /api/request
-###request body:
+##5.1 User Request ### [POST] /api/request
+### request body:
 
 ```
+//with JWT header
+//format: FormData
 {
-    "created_by" : int(user.user_id),
     "location_id" : int(location.location_id),
     "category_id" : int(category.category_id),
+    "item_detail": JSON {category_field.name: category_field_value/option_name, ...}
     "item" : string,
-    "image" : string,
-    "url" : string,
-    "quality" : int,
-    "offer_price" : int
-    "jwt" :
+    "image_file" : string, (multiple)
+    "url" : string | null,
+    "quantity" : int,
+    "request_remark" : string | null,
+    "offer_price" : float | null,
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
 {
-    "success" : true,
-    "data" : [
-        {
-        "request_id" : int
-        "created_by" : int(user.user_id),
-        "location_id" : int,
-        "category_id" : int,
-        "item" : string,
-        "image" : string,
-        "url" : string,
-        "quality" : int,
-        "offer_price" : int
-        }
-    ]
-}
-```
-
-```
-[204] No Content
-{
-    "success" : false,
-    "message" : missing information
+    message: success
 }
 ```
 
 ```
 [400] BAD REQUEST
 {
-    "success" : false,
     "message" : fail to post request
 }
 ```
+##5.2 Get All Requests (Limit 30) ### [Get] /api/request
+##5.2 Get All Requests (with queries) ### [Get] /api/request?p=<page>&category=<category>&location=<location>
+## 5.2.1 Get All Requests by userId (created by) ### [Get] /api/user/request (userId in jwt header)
+### request body:
 
+```
+
+{
+}
+```
+
+### response body:
+sort by updated_at desc && isActive === true
+limit 30
+```
+[200] OK
+[{
+    "location_id" : int(location.location_id),
+    "location_name" : string(location.name),
+    "item" : string,
+    "image" : string
+    "offer_price"? : float,
+    "created_by": string(user.username)
+    "updated_at": DateTime
+},...]
+```
+
+```
+[400] BAD REQUEST
+{
+    "message" : "fail to get request"
+}
+```
+##5.3 User delete request image ### [DELETE] /api/request/image/:imageId
+### request body:
+```
+//with JWT header
+```
+### response body:
+```
+[200]
+{
+    "message" : "delete success"
+}
+[400]
+{
+    "message" : "delete fail"
+}
+```
+##5.4 User Request ### [PUT] /api/request/:requestId
+### request body:
+```
+//with JWT header
+//format: FormData
+{
+    "item_detail": JSON {category_field.name: category_field_value/option_name, ...}
+    "item" : string,
+    "image_file"? : string, (multiple)
+    "url" : string | null,
+    "quantity" : int,
+    "request_remark" : string | null,
+    "offer_price" : float | null,
+}
+```
+
+##5.5 User Request ### [DELETE] /api/request/:requestId
+### response body:
+```
+[200] OK
+{
+    "message" : "success"
+}
+```
+```
+[400] BAD REQUEST
+{
+    "message" : "fail to put request"
+}
+```
 #[6. Offer Route]
-##6.1 Provider Offer ###[POST] /api/offer
-###request body:
+##6.1 Provider Offer ### [POST] /api/offer
+### request body:
 
 ```
 {
@@ -392,7 +425,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -422,8 +455,8 @@
 }
 ```
 
-##6.2 Get Provider Offer (user side) ###[GET] /api/get_offer
-###request body:
+##6.2 Get Provider Offer (user side) ### [GET] /api/get_offer
+### request body:
 
 ```
 {
@@ -431,7 +464,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -464,8 +497,8 @@
 }
 ```
 
-##6.3 Get Specific Provider Offer (user side) ###[GET] /api/get_offer/:id
-###request body:
+##6.3 Get Specific Provider Offer (user side) ### [GET] /api/get_offer/:id
+### request body:
 
 ```
 {
@@ -474,7 +507,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -508,8 +541,8 @@
 ```
 
 #[7. Order Route]
-##7.1 Order Request ###[POST] /api/order
-###request body:
+##7.1 Order Request ### [POST] /api/order
+### request body:
 
 ```
 {
@@ -521,7 +554,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -552,4 +585,13 @@
     "success" : false,
     "message" : fail to post order
 }
+```
+#[8. Location Route]
+##8.1 Order Request ### [GET] /api/location
+### response body:
+```
+[{
+    id: int,
+    location_name: string
+},...]
 ```
