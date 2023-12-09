@@ -1,44 +1,33 @@
-import { FetchError, authApiRoutes, axiosWrapper } from "../../lib/apiUtils";
+import { authApiRoutes, axiosWrapper } from "../../lib/apiUtils";
 import { AuthorizeLevel, SignInDto, SignUpDto } from "../../types/authModels";
-import { BaseFetchResult } from "../../types/fetchModels";
+import {
+	SignInResult,
+	SignUpResult,
+	UserResult,
+} from "../../types/fetchModels";
+import { signInResponseSchema, signUpResponseSchema } from "./responseSchema";
 
-type SignInResult = BaseFetchResult & {
-	jwt: string;
-};
-
-type SignUpResult = BaseFetchResult & {
-	jwt: string;
-};
-
-type GetAuthResult = BaseFetchResult & {
-	username: string;
-	role: AuthorizeLevel;
-};
-
-export const signInAJAX = async (signInDto: SignInDto) => {
-	const { jwt } = await axiosWrapper<SignInDto, SignInResult>(
-		authApiRoutes.SIGN_IN,
-		"post",
-		signInDto
-	);
-	if (jwt) return jwt;
-	throw new FetchError(500, "invalid token");
+export const signInAJAX = async (
+	signInDto: SignInDto
+): Promise<SignInResult> => {
+	return await axiosWrapper<SignInDto, SignInResult>(authApiRoutes.SIGN_IN, {
+		method: "post",
+		data: signInDto,
+		schema: signInResponseSchema,
+	});
 };
 
 export const signUpAJAX = async (
 	signUpDto: Omit<SignUpDto, "confirmPassword">
-): Promise<string> => {
-	const { jwt } = await axiosWrapper<typeof signUpDto, SignUpResult>(
+): Promise<SignUpResult> => {
+	return await axiosWrapper<typeof signUpDto, SignUpResult>(
 		authApiRoutes.SIGN_UP,
-		"post",
-		signUpDto
+		{ method: "post", data: signUpDto, schema: signUpResponseSchema }
 	);
-	if (jwt) return jwt;
-	throw new FetchError(500, "invalid token");
 };
 
-export const getAuthAJAX = async (): Promise<GetAuthResult> => {
-	const { username, role } = await axiosWrapper<void, GetAuthResult>(
+export const getAuthAJAX = async (): Promise<UserResult> => {
+	const { username, role } = await axiosWrapper<void, UserResult>(
 		authApiRoutes.GET_AUTH
 	);
 	if (role === null) return { username, role: AuthorizeLevel.USER };

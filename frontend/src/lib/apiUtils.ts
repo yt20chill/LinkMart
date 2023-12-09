@@ -36,23 +36,33 @@ export class FetchError extends Error {
 }
 
 type ApiMethod = "get" | "post" | "put" | "delete";
+type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
+	OptionsType extends {
+		schema: ZodType<ResultType>;
+	}
+		? ResultType
+		: void
+>;
 
 export const axiosWrapper = async <PayloadType, ResultType>(
 	url: string,
-	method: ApiMethod = "get",
-	data?: PayloadType,
-	schema?: ZodType<ResultType>
-): Promise<typeof schema extends undefined ? void : ResultType> => {
+	options?: {
+		method?: ApiMethod;
+		data?: PayloadType;
+		schema?: ZodType<ResultType>;
+	}
+): AxiosWrapperReturnType<ResultType, typeof options> => {
 	try {
+		const method = options?.method ?? "get";
 		//TODO: remove this after testing
 		console.log(`${method}ing ${url}...`);
 		const response = await axios<ResultType>({
 			method,
 			url,
-			data,
+			data: options?.data,
 		});
-		if (!schema) return undefined as ResultType;
-		return schema.parse(response.data);
+		//TODO: how to fix?
+		return options?.schema ? options.schema.parse(response.data) : undefined;
 	} catch (error) {
 		if (isAxiosError(error))
 			throw new FetchError(error.status, error.message ?? error.code);

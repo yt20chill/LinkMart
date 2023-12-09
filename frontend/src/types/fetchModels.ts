@@ -8,7 +8,7 @@ import {
 	signInResponseSchema,
 	signUpResponseSchema,
 	userResponseSchema,
-} from "../features/api/schema";
+} from "../features/api/responseSchema";
 type BaseFetchResult = z.infer<typeof baseResponseSchema>;
 type CategoriesResult = z.infer<typeof categoriesResponseSchema>;
 type CategoryFieldsResult = z.infer<typeof categoryFieldsResponseSchema>;
