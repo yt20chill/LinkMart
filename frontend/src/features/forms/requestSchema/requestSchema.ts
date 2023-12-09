@@ -7,7 +7,7 @@ import {
 
 const allowedFileTypes = ["image/png", "image/jpeg"];
 
-export const requestSchema = z.object({
+export const postRequestSchema = z.object({
 	locationId: requiredId,
 	categoryId: requiredId,
 	imageFile: z
@@ -37,3 +37,26 @@ export const requestSchema = z.object({
 		z.number().positive().nullable()
 	),
 });
+
+export const getRequestsQuerySchema = z.object({
+	page: z.number().int().positive().optional(),
+	category: z.string().optional(),
+	location: z.string().optional(),
+});
+export type GetRequestsQuery = z.infer<typeof getRequestsQuerySchema>;
+
+export const getRequestDetailsParamsSchema = z.object({
+	requestId: z.string().ulid(),
+});
+
+export type GetRequestDetailsParams = z.infer<
+	typeof getRequestDetailsParamsSchema
+>;
+
+type PostRequestDto = z.infer<typeof postRequestSchema>;
+export type RequestForm = Record<
+	Exclude<keyof PostRequestDto, "imageFile">,
+	string | null
+> & {
+	imageFile: File[] | null;
+};

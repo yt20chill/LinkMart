@@ -7,7 +7,7 @@ import { FetchError, queryKey } from "../../lib/apiUtils";
 import { SignUpDto } from "../../types/authModels";
 import { signUpAJAX } from "../api/authApi";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
-import { signUpSchema } from "./schema/authSchema";
+import { signUpSchema } from "./requestSchema/authSchema";
 
 function SignUpForm() {
 	const form = useForm<SignUpDto>({

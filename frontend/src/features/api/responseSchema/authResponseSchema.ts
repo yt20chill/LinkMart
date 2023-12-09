@@ -1,9 +1,7 @@
 import { z } from "zod";
 
-export const signUpResponseSchema = z.object({
+export const authResponseSchema = z.object({
 	jwt: z.string().min(1),
 });
 
-export const signInResponseSchema = z.object({
-	jwt: z.string().min(1),
-});
+export type AuthDto = z.infer<typeof authResponseSchema>;

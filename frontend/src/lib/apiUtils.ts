@@ -8,10 +8,15 @@ export const queryKey = Object.freeze({
 	AUTH: "auth",
 });
 
+const setCommonContentTypeHeaders = (set = true) => {
+	return set
+		? (axios.defaults.headers.common["Content-Type"] = "application/json")
+		: delete axios.defaults.headers.common["Content-Type"];
+};
+setCommonContentTypeHeaders();
 axios.defaults.baseURL = import.meta.env.VITE_API_URL as string;
 axios.defaults.headers.common["Authorization"] =
 	`Bearer ${localStorage.getItem("token")}` ?? undefined;
-axios.defaults.headers.common["Content-Type"] = "application/json";
 
 export const authApiRoutes = Object.freeze({
 	SIGN_IN: `/user/login`,
@@ -56,7 +61,7 @@ export const axiosWrapper = async <PayloadType, ResultType>(
 	try {
 		const method = options?.method ?? "get";
 		const isFormData = options?.data instanceof FormData;
-		if (isFormData) delete axios.defaults.headers.common["Content-Type"];
+		if (isFormData) setCommonContentTypeHeaders(false);
 		//TODO: remove this after testing
 		console.log(`${method}ing ${url}...`);
 		const response = await axios<ResultType>({
@@ -64,8 +69,7 @@ export const axiosWrapper = async <PayloadType, ResultType>(
 			url,
 			data: options?.data,
 		});
-		if (isFormData)
-			axios.defaults.headers.common["Content-Type"] = "application/json";
+		if (isFormData) setCommonContentTypeHeaders();
 		//TODO: how to fix?
 		return options?.schema
 			? options.schema.parse(response.data)
@@ -73,7 +77,14 @@ export const axiosWrapper = async <PayloadType, ResultType>(
 	} catch (error) {
 		if (isAxiosError(error))
 			throw new FetchError(error.status, error.message ?? error.code);
-		if (error instanceof ZodError) throw new FetchError(400, error.message);
+		if (error instanceof ZodError)
+			throw new FetchError(
+				400,
+				JSON.stringify({
+					path: error.errors[0].path,
+					message: error.errors[0].message,
+				})
+			);
 		throw new FetchError();
 	}
 };

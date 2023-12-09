@@ -1,23 +1,37 @@
+import { AuthDto, authResponseSchema } from "./authResponseSchema";
+import { BaseResponseDto, baseResponseSchema } from "./baseResponseSchema";
 import {
-	signInResponseSchema,
-	signUpResponseSchema,
-} from "./authResponseSchema";
-import { baseResponseSchema } from "./baseResponseSchema";
-import {
+	CategoriesDto,
+	CategoryFieldsDto,
+	LocationsDto,
+	RequestDetailsDto,
+	RequestsDto,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
 	locationsResponseSchema,
+	requestDetailsResponseSchema,
 	requestsResponseSchema,
 } from "./requestResponseSchema";
-import { userResponseSchema } from "./userResponseSchema";
+import { UserDto, userResponseSchema } from "./userResponseSchema";
 
 export {
+	authResponseSchema,
 	baseResponseSchema,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
 	locationsResponseSchema,
+	requestDetailsResponseSchema,
 	requestsResponseSchema,
-	signInResponseSchema,
-	signUpResponseSchema,
 	userResponseSchema,
+};
+
+export type {
+	AuthDto,
+	BaseResponseDto,
+	CategoriesDto,
+	CategoryFieldsDto,
+	LocationsDto,
+	RequestDetailsDto,
+	RequestsDto,
+	UserDto,
 };

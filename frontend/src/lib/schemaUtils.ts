@@ -23,3 +23,10 @@ export const requiredId = z
 
 export const resultId = z.number().int().positive();
 export const resultUlid = z.string().ulid();
+
+const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
+type Literal = z.infer<typeof literalSchema>;
+type Json = Literal | { [key: string]: Json } | Json[];
+export const zodJson: z.ZodType<Json> = z.lazy(() =>
+	z.union([literalSchema, z.array(zodJson), z.record(zodJson)])
+);

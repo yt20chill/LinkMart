@@ -13,7 +13,7 @@ import { appendFormData } from "../../lib/formUtils";
 import { CategoriesResult, LocationsResult } from "../../types/fetchModels";
 import { RequestForm } from "../../types/requestModels";
 import { postRequestAJAX } from "../api/requestApi";
-import { requestSchema } from "./schema/requestSchema";
+import { postRequestSchema } from "./requestSchema";
 
 const categories: CategoriesResult = [
 	{
@@ -32,7 +32,7 @@ const locations: LocationsResult = [
 
 const PostRequestForm = () => {
 	const form = useForm<RequestForm>({
-		resolver: zodResolver(requestSchema),
+		resolver: zodResolver(postRequestSchema),
 		defaultValues: {
 			locationId: "",
 			categoryId: "",
