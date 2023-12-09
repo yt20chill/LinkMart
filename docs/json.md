@@ -437,7 +437,6 @@ limit 30
     "message" : "fail to put request"
 }
 ```
-
 #[6. Offer Route]
 ##6.1 Provider Offer ### [POST] /api/offer
 ### request body:
