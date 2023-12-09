@@ -1,6 +1,6 @@
 import z from "zod";
 import {
-	emptyStringToUndefined,
+	emptyStringToNull,
 	requiredId,
 	stringToPositiveNumber,
 } from "../../../lib/schemaUtils";
@@ -8,11 +8,12 @@ import {
 const allowedFileTypes = ["image/png", "image/jpeg"];
 
 export const requestSchema = z.object({
-	location: requiredId,
-	category: requiredId,
-	images: z
+	location_id: requiredId,
+	category_id: requiredId,
+	image_file: z
 		.instanceof(Array<File>)
-		.refine((files) => files.length > 0, { message: "required" })
+		.or(z.instanceof(File))
+		.transform((file) => (Array.isArray(file) ? file : [file]))
 		.refine(
 			(files) => {
 				for (const file of files) {
@@ -25,14 +26,14 @@ export const requestSchema = z.object({
 			}
 		),
 	item: z.string().min(1, { message: "required" }),
-	url: emptyStringToUndefined.pipe(
-		z.string().url({ message: "invalid url" }).optional()
+	url: emptyStringToNull.pipe(
+		z.string().url({ message: "invalid url" }).nullable()
 	),
-	qty: stringToPositiveNumber().pipe(
+	quantity: stringToPositiveNumber().pipe(
 		z.number().int().positive({ message: "invalid quantity" })
 	),
-	remarks: emptyStringToUndefined.optional(),
-	price: stringToPositiveNumber({ isFloat: true }).pipe(
-		z.number().positive().optional()
+	request_remark: emptyStringToNull.nullable(),
+	offer_price: stringToPositiveNumber({ isFloat: true }).pipe(
+		z.number().positive().nullable()
 	),
 });

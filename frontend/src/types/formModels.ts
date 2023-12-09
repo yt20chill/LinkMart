@@ -1,12 +1,6 @@
 import { FieldPath, FieldValues } from "react-hook-form";
 
-export type FormInputType =
-	| "text"
-	| "email"
-	| "password"
-	| "number"
-	| "radio"
-	| "file";
+export type FormInputType = "text" | "email" | "password" | "number" | "radio";
 
 export type FormFieldContextValue<
 	TFieldValues extends FieldValues = FieldValues,

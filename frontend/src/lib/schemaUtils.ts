@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-export const emptyStringToUndefined = z
+export const emptyStringToNull = z
 	.string()
-	.transform((value) => (value ? value : undefined));
+	.transform((value) => (value ? value : null));
 
 export const stringToPositiveNumber = (
 	option: { isFloat: boolean } = { isFloat: false }
@@ -10,11 +10,11 @@ export const stringToPositiveNumber = (
 	z
 		.string()
 		.transform((value) => {
-			if (value === "") return undefined;
+			if (value === "") return null;
 			if (option.isFloat) return parseFloat(value);
 			return parseInt(value);
 		})
-		.pipe(z.number().positive({ message: "invalid number" }).optional());
+		.pipe(z.number().positive({ message: "invalid number" }).nullable());
 
 export const requiredId = z
 	.string()
