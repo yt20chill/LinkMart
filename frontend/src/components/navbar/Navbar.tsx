@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 export function Navbar() {
   const userInfo = useAuthStore((state) => state);
   return (
-    <nav className="flex justify-between px-8 py-5 shadow-md border-b-8 border-primary text-slate-500">
+    <nav className="flex justify-between px-8 py-5 shadow-md border-b-8 border-orange-500 text-slate-500">
       {/* logo -> home page*/}
       <div className="flex gap-10 items-center">
         <Link to={siteMap(RouteEnum.Home)}>
-          <div className="text-primary text-3xl font-bold flex items-center">
+          <div className="text-orange-300 text-3xl font-bold flex items-center">
             <span className="material-symbols-rounded text-5xl font-bold">
               shopping_cart_checkout
             </span>
@@ -19,19 +19,21 @@ export function Navbar() {
         </Link>
         {/* nav_link_buttons */}
         <Link to={siteMap(RouteEnum.Requests)}>
-          <div className="flex items-center p-3 rounded-lg hover:bg-slate-200 transition duration-300 [&>span]:hover:text-accent">
+          <div className="flex items-center p-3 rounded-lg hover:bg-slate-200 transition-all duration-300 [&>span]:hover:text-orange-500 hover:text-orange-950 hover:scale-105 ">
             <span className="material-symbols-rounded mx-1">storefront</span>
             Explore
           </div>
         </Link>
         <Link to={siteMap(RouteEnum.UserRequests)}>
-          <div className="flex items-center p-3 rounded-lg hover:bg-slate-200 transition duration-300 [&>span]:hover:text-accent">
+          <div className="flex items-center p-3 rounded-lg hover:bg-slate-200 transition-all duration-300 [&>span]:hover:text-orange-500 hover:text-orange-950 hover:scale-105">
+            {" "}
             <span className="material-symbols-rounded mx-1 ">receipt_long</span>
             Request
           </div>
         </Link>
         <Link to={siteMap(RouteEnum.UserOrder)}>
-          <div className="flex items-center p-3 rounded-lg hover:bg-slate-200 transition duration-300 [&>span]:hover:text-accent">
+          <div className="flex items-center p-3 rounded-lg hover:bg-slate-200 transition-all duration-300 [&>span]:hover:text-orange-500 hover:text-orange-950 hover:scale-105">
+            {" "}
             <span className="material-symbols-rounded mx-1">all_inbox</span>
             Order
           </div>
@@ -52,8 +54,11 @@ export function Navbar() {
           </>
         ) : (
           //Should be a dropdown list
-          <Link to="/sign-in">
-            <div className="">Sign-in</div>
+          <Link to={siteMap(RouteEnum.SignIn)}>
+            <div className="flex items-center p-3 rounded-lg hover:bg-slate-200 transition-all duration-300 [&>span]:hover:text-orange-500 hover:text-orange-950 hover:scale-105">
+              <span className="material-symbols-rounded mx-1">login</span>
+              Sign in
+            </div>
           </Link>
         )}
       </div>
