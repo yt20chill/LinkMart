@@ -483,7 +483,6 @@
 ```js
 🔴 [400] BAD REQUEST
 {
-    "success" : false,
     "message" : fail to post offer
 }
 ```
@@ -496,9 +495,10 @@
 > ⬇️ Req Body:
 
 ```js
+//with JWT Header
+//Body
 {
     "offerId" : int
-    "jwt" :
 }
 ```
 
@@ -506,23 +506,19 @@
 
 ```js
 🟢 [200]  OK
-{
-    "success" : true,
-    "data" : [
+[{
     "orderId" : int(order.order_id)
     "requestId" : int(request.request_id),
     "providerId" : int(provider.provider_id),
     "status" : int(status.status_id),
     "price" : int,
     "offerRemark" : string
-    ]
-}
+},...]
 ```
 
 ```js
 🔴 [400] BAD REQUEST
 {
-    "success" : false,
     "message" : fail to post offer
 }
 ```
@@ -548,23 +544,17 @@
 
 ```js
 🟢 [200]  OK
-{
-    "success" : true,
-    "data" : [
-        {
+[{
     "offerId" : int(offer.offer_id),
     "orderStatusId" : int(order_status.order_status_id),
     "logisticCompanyId" : int(logistic_company.logistic_company_id),
     "shippingOrderNo": int
-        }
-    ]
-}
+},...]
 ```
 
 ```js
 🔴 [400] BAD REQUEST
 {
-    "success" : false,
     "message" : fail to post order
 }
 ```
