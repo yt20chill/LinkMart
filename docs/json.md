@@ -350,8 +350,6 @@ limit 30
 [{
     "location_id" : int(location.location_id),
     "location_name" : string(location.name),
-    "category_id" : int(category.category_id),
-    "category_name" : string(category.name),
     "item" : string,
     "image" : string
     "offer_price"? : float,
