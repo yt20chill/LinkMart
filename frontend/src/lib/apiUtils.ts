@@ -50,7 +50,7 @@ type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
 		: void
 >;
 
-export const axiosWrapper = async <PayloadType, ResultType>(
+export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 	url: string,
 	options?: {
 		method?: ApiMethod;
