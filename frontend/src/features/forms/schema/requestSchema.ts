@@ -8,9 +8,9 @@ import {
 const allowedFileTypes = ["image/png", "image/jpeg"];
 
 export const requestSchema = z.object({
-	location_id: requiredId,
-	category_id: requiredId,
-	image_file: z
+	locationId: requiredId,
+	categoryId: requiredId,
+	imageFile: z
 		.instanceof(Array<File>)
 		.or(z.instanceof(File))
 		.transform((file) => (Array.isArray(file) ? file : [file]))
@@ -32,8 +32,8 @@ export const requestSchema = z.object({
 	quantity: stringToPositiveNumber().pipe(
 		z.number().int().positive({ message: "invalid quantity" })
 	),
-	request_remark: emptyStringToNull.nullable(),
-	offer_price: stringToPositiveNumber({ isFloat: true }).pipe(
+	requestRemark: emptyStringToNull.nullable(),
+	offerPrice: stringToPositiveNumber({ isFloat: true }).pipe(
 		z.number().positive().nullable()
 	),
 });

@@ -10,37 +10,38 @@ import {
 } from "../../components/ui/Form";
 import { queryKey } from "../../lib/apiUtils";
 import { appendFormData } from "../../lib/formUtils";
+import { CategoriesResult, LocationsResult } from "../../types/fetchModels";
 import { RequestForm } from "../../types/requestModels";
 import { postRequestAJAX } from "../api/requestApi";
 import { requestSchema } from "./schema/requestSchema";
 
-const categories = [
+const categories: CategoriesResult = [
 	{
-		id: 1,
-		name: "Clothes",
+		categoryId: 1,
+		categoryName: "Clothes",
 	},
-	{ id: 2, name: "Computer" },
+	{ categoryId: 2, categoryName: "Computer" },
 ];
-const locations = [
+const locations: LocationsResult = [
 	{
-		id: 1,
-		name: "Japan",
+		locationId: 1,
+		locationName: "Japan",
 	},
-	{ id: 2, name: "United Kingdom" },
+	{ locationId: 2, locationName: "United Kingdom" },
 ];
 
 const PostRequestForm = () => {
 	const form = useForm<RequestForm>({
 		resolver: zodResolver(requestSchema),
 		defaultValues: {
-			location: "",
-			category: "",
+			locationId: "",
+			categoryId: "",
 			item: "",
-			images: null,
+			imageFile: null,
 			url: "",
-			qty: "1",
-			remarks: "",
-			price: "",
+			quantity: "1",
+			requestRemark: "",
+			offerPrice: "",
 		},
 		mode: "onBlur",
 	});
@@ -84,26 +85,26 @@ const PostRequestForm = () => {
 				/>
 				<FormSelect
 					formControl={form.control}
-					fieldName="category"
+					fieldName="categoryId"
 					label="Category*"
 					items={categories.map((category) => ({
-						id: category.id + "",
-						name: category.name,
+						id: category.categoryId + "",
+						name: category.categoryName,
 					}))}
 				/>
 				<FormSelect
 					formControl={form.control}
-					fieldName="location"
+					fieldName="locationId"
 					label="Location*"
 					items={locations.map((location) => ({
-						id: location.id + "",
-						name: location.name,
+						id: location.locationId + "",
+						name: location.locationName,
 					}))}
 				/>
 				{/* // TODO: change it to drag and drop */}
 				<FormFileInput
 					formControl={form.control}
-					fieldName="images"
+					fieldName="imageFile"
 					label="Images*"
 				/>
 				<FormInput
@@ -111,15 +112,19 @@ const PostRequestForm = () => {
 					fieldName="url"
 					placeHolder="Item URL"
 				/>
-				<FormInput formControl={form.control} fieldName="qty" placeHolder="1" />
 				<FormInput
 					formControl={form.control}
-					fieldName="remarks"
+					fieldName="quantity"
+					placeHolder="1"
+				/>
+				<FormInput
+					formControl={form.control}
+					fieldName="requestRemark"
 					placeHolder="Urgent"
 				/>
 				<FormInput
 					formControl={form.control}
-					fieldName="price"
+					fieldName="offerPrice"
 					label="Price (in HKD) "
 					placeHolder="1000"
 				/>

@@ -20,3 +20,6 @@ export const requiredId = z
 	.string()
 	.transform((value) => parseInt(value))
 	.pipe(z.number().int().positive({ message: "invalid option" }));
+
+export const resultId = z.number().int().positive();
+export const resultUlid = z.string().ulid();

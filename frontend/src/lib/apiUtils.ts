@@ -1,4 +1,5 @@
 import axios, { isAxiosError } from "axios";
+import { ZodError, ZodType } from "zod";
 
 export const queryKey = Object.freeze({
 	REQUEST: "request",
@@ -39,20 +40,23 @@ type ApiMethod = "get" | "post" | "put" | "delete";
 export const axiosWrapper = async <PayloadType, ResultType>(
 	url: string,
 	method: ApiMethod = "get",
-	data?: PayloadType
-): Promise<ResultType> => {
+	data?: PayloadType,
+	schema?: ZodType<ResultType>
+): Promise<typeof schema extends undefined ? void : ResultType> => {
 	try {
 		//TODO: remove this after testing
 		console.log(`${method}ing ${url}...`);
-		const result = await axios<ResultType>({
+		const response = await axios<ResultType>({
 			method,
 			url,
 			data,
 		});
-		return result.data;
+		if (!schema) return undefined as ResultType;
+		return schema.parse(response.data);
 	} catch (error) {
 		if (isAxiosError(error))
 			throw new FetchError(error.status, error.message ?? error.code);
+		if (error instanceof ZodError) throw new FetchError(400, error.message);
 		throw new FetchError();
 	}
 };
