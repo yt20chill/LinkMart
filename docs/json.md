@@ -331,12 +331,13 @@
 {
     "location_id" : int(location.location_id),
     "category_id" : int(category.category_id),
+    "item_detail": JSON {category_field.name: category_field_value/option_name, ...}
     "item" : string,
-    "image_file" : string,
-    "url" : string,
-    "quality" : int,
-    "request_remark" : string
-    "offer_price" : int,
+    "image_file" : string, (multiple)
+    "url"? : string,
+    "quantity" : int,
+    "request_remark"? : string,
+    "offer_price"? : float,
 }
 ```
 
@@ -345,38 +346,51 @@
 ```
 [200] OK
 {
-    "success" : true,
-    "data" : [
-        {
-        "request_id" : int
-        "created_by" : int(user.user_id),
-        "location_id" : int,
-        "category_id" : int,
-        "item" : string,
-        "image" : string,
-        "url" : string,
-        "quality" : int,
-        "offer_price" : int
-        }
-    ]
-}
-```
-
-```
-[204] No Content
-{
-    "success" : false,
-    "message" : missing information
+    message: success
 }
 ```
 
 ```
 [400] BAD REQUEST
 {
-    "success" : false,
     "message" : fail to post request
 }
 ```
+##5.2 Get All Requests (Limit 30) ### [Get] /api/request
+##5.2 Get All Requests (with queries) ### [Get] /api/request?p=<page>&category=<category>&location=<location>
+### request body:
+
+```
+
+{
+}
+```
+
+### response body:
+sort by updated_at desc
+limit 30
+```
+[200] OK
+[{
+    "location_id" : int(location.location_id),
+    "location_name" : string(location.name),
+    "category_id" : int(category.category_id),
+    "category_name" : string(category.name),
+    "item" : string,
+    "image" : string
+    "offer_price"? : float,
+    "created_by": string(user.username)
+    "updated_at": DateTime
+},...]
+```
+
+```
+[400] BAD REQUEST
+{
+    "message" : fail to get request
+}
+```
+
 
 #[6. Offer Route]
 ##6.1 Provider Offer ### [POST] /api/offer
