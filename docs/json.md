@@ -334,10 +334,10 @@
     "item_detail": JSON {category_field.name: category_field_value/option_name, ...}
     "item" : string,
     "image_file" : string, (multiple)
-    "url"? : string,
+    "url" : string | null,
     "quantity" : int,
-    "request_remark"? : string,
-    "offer_price"? : float,
+    "request_remark" : string | null,
+    "offer_price" : float | null,
 }
 ```
 
@@ -388,46 +388,55 @@ limit 30
 ```
 [400] BAD REQUEST
 {
-    "message" : fail to get request
+    "message" : "fail to get request"
 }
 ```
-
-##5.2 Get Request detail by request id  ### [Get] /api/request/:requestId
+##5.3 User delete request image ### [DELETE] /api/request/image/:imageId
 ### request body:
-
 ```
+//with JWT header
+```
+### response body:
+```
+[200]
 {
+    "message" : "delete success"
+}
+[400]
+{
+    "message" : "delete fail"
+}
+```
+##5.4 User Request ### [PUT] /api/request/:requestId
+### request body:
+```
+//with JWT header
+//format: FormData
+{
+    "item_detail": JSON {category_field.name: category_field_value/option_name, ...}
+    "item" : string,
+    "image_file"? : string, (multiple)
+    "url" : string | null,
+    "quantity" : int,
+    "request_remark" : string | null,
+    "offer_price" : float | null,
 }
 ```
 
+##5.5 User Request ### [DELETE] /api/request/:requestId
 ### response body:
-
 ```
 [200] OK
 {
-    "location_id" : int(location.location_id),
-    "location_name" : string(location.name),
-    "category_id" : int(category.category_id),
-    "category_name" : string(category.name),
-    "item" : string,
-    "item_detail": JSON {field_name: value, ...},
-    "images" : string[], (image.image_path)
-    "url": string | null,
-    "request_remark": string | null
-    "offer_price"? : float,
-    "created_by": string(user.username)
-    "created_at": DateTime
-    "updated_at": DateTime
+    "message" : "success"
 }
 ```
-
 ```
 [400] BAD REQUEST
 {
-    "message" : fail to get request detail
+    "message" : "fail to put request"
 }
 ```
-
 
 #[6. Offer Route]
 ##6.1 Provider Offer ### [POST] /api/offer
