@@ -1,6 +1,6 @@
 #[1. Category Route]
-##1.1 Category ###[GET] /api/category
-###request body:
+##1.1 Category ### [GET] /api/category
+### request body:
 
 ```
 {
@@ -8,7 +8,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -29,8 +29,8 @@
 }
 ```
 
-##1.2 Category_field ###[GET] /api/category_field
-###request body:
+##1.2 Category_field ### [GET] /api/category_field
+### request body:
 
 ```
 {
@@ -38,7 +38,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -60,8 +60,8 @@
 }
 ```
 
-##1.3 Category_field ###[GET] /api/category_field_option
-###request body:
+##1.3 Category_field ### [GET] /api/category_field_option
+### request body:
 
 ```
 {
@@ -69,7 +69,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -92,8 +92,8 @@
 ```
 
 #[2. Status Route]
-##2.1 Status ###[GET] /api/status
-###request body:
+##2.1 Status ### [GET] /api/status
+### request body:
 
 ```
 {
@@ -101,7 +101,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -124,8 +124,8 @@
 ```
 
 #[3. Order Status Route]
-##3.1 Order Status ###[GET] /api/orderStatus
-###request body:
+##3.1 Order Status ### [GET] /api/orderStatus
+### request body:
 
 ```
 {
@@ -133,7 +133,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -156,8 +156,8 @@
 ```
 
 #[4. Logistic Company Route]
-##4.1 Logistic Company ###[GET] /api/logistic_company
-###request body:
+##4.1 Logistic Company ### [GET] /api/logistic_company
+### request body:
 
 ```
 {
@@ -165,7 +165,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -189,8 +189,8 @@
 ```
 
 #[4. User Route]
-##4.1 User Registration ###[POST] /api/user/registration
-###request body:
+##4.1 User Registration ### [POST] /api/user/registration
+### request body:
 
 ```
 {
@@ -199,7 +199,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -223,8 +223,8 @@
 }
 ```
 
-##4.2 User Login ###[POST] /api/user/login
-###request body:
+##4.2 User Login ### [POST] /api/user/login
+### request body:
 
 ```
 {
@@ -233,7 +233,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -249,15 +249,15 @@
 }
 ```
 
-##4.4 User Address Info ###[GET] /api/user/address
-###request body:
+##4.4 User Address Info ### [GET] /api/user/address
+### request body:
 
 ```
 {
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -282,15 +282,15 @@
 }
 ```
 
-##4.4 User Address Info ###[GET] /api/user/address
-###request body:
+##4.4 User Address Info ### [GET] /api/user/address
+### request body:
 
 ```
 {
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -300,15 +300,15 @@
 },...]
 ```
 
-##4.4 User Address Info ###[GET] /api/user/payment
-###request body:
+##4.4 User Address Info ### [GET] /api/user/payment
+### request body:
 
 ```
 {
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -322,24 +322,25 @@
 ```
 
 #[5. Request Route]
-##5.1 User Request ###[POST] /api/request
-###request body:
+##5.1 User Request ### [POST] /api/request
+### request body:
 
 ```
+//with JWT header
+//format: FormData
 {
-    "created_by" : int(user.user_id),
     "location_id" : int(location.location_id),
     "category_id" : int(category.category_id),
     "item" : string,
-    "image" : string,
+    "image_file" : string,
     "url" : string,
     "quality" : int,
-    "offer_price" : int
-    "jwt" :
+    "request_remark" : string
+    "offer_price" : int,
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -378,8 +379,8 @@
 ```
 
 #[6. Offer Route]
-##6.1 Provider Offer ###[POST] /api/offer
-###request body:
+##6.1 Provider Offer ### [POST] /api/offer
+### request body:
 
 ```
 {
@@ -392,7 +393,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -422,8 +423,8 @@
 }
 ```
 
-##6.2 Get Provider Offer (user side) ###[GET] /api/get_offer
-###request body:
+##6.2 Get Provider Offer (user side) ### [GET] /api/get_offer
+### request body:
 
 ```
 {
@@ -431,7 +432,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -464,8 +465,8 @@
 }
 ```
 
-##6.3 Get Specific Provider Offer (user side) ###[GET] /api/get_offer/:id
-###request body:
+##6.3 Get Specific Provider Offer (user side) ### [GET] /api/get_offer/:id
+### request body:
 
 ```
 {
@@ -474,7 +475,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
@@ -508,8 +509,8 @@
 ```
 
 #[7. Order Route]
-##7.1 Order Request ###[POST] /api/order
-###request body:
+##7.1 Order Request ### [POST] /api/order
+### request body:
 
 ```
 {
@@ -521,7 +522,7 @@
 }
 ```
 
-###response body:
+### response body:
 
 ```
 [200] OK
