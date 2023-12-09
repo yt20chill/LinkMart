@@ -51,7 +51,7 @@ export const axiosWrapper = async <PayloadType, ResultType>(
 		data?: PayloadType;
 		schema?: ZodType<ResultType>;
 	}
-): AxiosWrapperReturnType<ResultType, typeof options> => {
+): Promise<ResultType> /*AxiosWrapperReturnType<ResultType, typeof options> */ => {
 	try {
 		const method = options?.method ?? "get";
 		//TODO: remove this after testing
@@ -62,7 +62,9 @@ export const axiosWrapper = async <PayloadType, ResultType>(
 			data: options?.data,
 		});
 		//TODO: how to fix?
-		return options?.schema ? options.schema.parse(response.data) : undefined;
+		return options?.schema
+			? options.schema.parse(response.data)
+			: (undefined as ResultType);
 	} catch (error) {
 		if (isAxiosError(error))
 			throw new FetchError(error.status, error.message ?? error.code);

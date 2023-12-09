@@ -5,7 +5,11 @@ import {
 	SignUpResult,
 	UserResult,
 } from "../../types/fetchModels";
-import { signInResponseSchema, signUpResponseSchema } from "./responseSchema";
+import {
+	signInResponseSchema,
+	signUpResponseSchema,
+	userResponseSchema,
+} from "./responseSchema";
 
 export const signInAJAX = async (
 	signInDto: SignInDto
@@ -26,10 +30,11 @@ export const signUpAJAX = async (
 	);
 };
 
-export const getAuthAJAX = async (): Promise<UserResult> => {
-	const { username, role } = await axiosWrapper<void, UserResult>(
-		authApiRoutes.GET_AUTH
+export const getAuthAJAX = async () => {
+	const { username, providerId } = await axiosWrapper<void, UserResult>(
+		authApiRoutes.GET_AUTH,
+		{ schema: userResponseSchema }
 	);
-	if (role === null) return { username, role: AuthorizeLevel.USER };
+	if (!providerId) return { username, role: AuthorizeLevel.USER };
 	return { username, role: AuthorizeLevel.PROVIDER };
 };
