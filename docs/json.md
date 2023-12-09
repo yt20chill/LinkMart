@@ -1,55 +1,30 @@
 #[1. Category Route]
 ##1.1 Category ### [GET] /api/category
-### request body:
-
-```
-{
-
-}
-```
-
 ### response body:
-
 ```
 [200] OK
-{
-    "success" : true,
-    "data" :
-    {
-        "category_name" : string
-    }
-}
+[{
+    "id": int,
+    "category_name": string
+},...]
 ```
-
 ```
 [400] BAD REQUEST
 {
-    "success" : false,
     "message" : failed to get category item
 }
 ```
 
-##1.2 Category_field ### [GET] /api/category_field
-### request body:
-
-```
-{
-
-}
-```
-
+##1.2 Category_field ### [GET] /api/category/:categoryId
 ### response body:
 
 ```
 [200] OK
-{
-    "success" : true,
-    "data" :
-    {
-        "category_id" : number,
-        "category_field_name" : string
-    }
-}
+[{
+    "category_field_name" : string
+    "category_field_is_option": boolean
+    "category_field_option"?: string[]
+},...more]
 ```
 
 ```
