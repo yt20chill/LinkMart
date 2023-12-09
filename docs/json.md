@@ -358,6 +358,7 @@
 ```
 ##5.2 Get All Requests (Limit 30) ### [Get] /api/request
 ##5.2 Get All Requests (with queries) ### [Get] /api/request?p=<page>&category=<category>&location=<location>
+## 5.2.1 Get All Requests by userId (created by) ### [Get] /api/user/request (userId in jwt header)
 ### request body:
 
 ```
@@ -367,7 +368,7 @@
 ```
 
 ### response body:
-sort by updated_at desc
+sort by updated_at desc && isActive === true
 limit 30
 ```
 [200] OK
@@ -388,6 +389,42 @@ limit 30
 [400] BAD REQUEST
 {
     "message" : fail to get request
+}
+```
+
+##5.2 Get Request detail by request id  ### [Get] /api/request/:requestId
+### request body:
+
+```
+{
+}
+```
+
+### response body:
+
+```
+[200] OK
+{
+    "location_id" : int(location.location_id),
+    "location_name" : string(location.name),
+    "category_id" : int(category.category_id),
+    "category_name" : string(category.name),
+    "item" : string,
+    "item_detail": JSON {field_name: value, ...},
+    "images" : string[], (image.image_path)
+    "url": string | null,
+    "request_remark": string | null
+    "offer_price"? : float,
+    "created_by": string(user.username)
+    "created_at": DateTime
+    "updated_at": DateTime
+}
+```
+
+```
+[400] BAD REQUEST
+{
+    "message" : fail to get request detail
 }
 ```
 
