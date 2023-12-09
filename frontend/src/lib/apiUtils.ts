@@ -20,9 +20,10 @@ export const authApiRoutes = Object.freeze({
 });
 
 export const requestApiRoutes = Object.freeze({
-	CATEGORY: `/categories`,
-	LOCATION: `/locations`,
-	REQUEST: `/request`,
+	CATEGORY: `/api/category`,
+	LOCATION: `/api/location`,
+	REQUEST: `/api/request`,
+	IMAGE: `/api/request/image`,
 });
 
 export class FetchError extends Error {
@@ -54,6 +55,8 @@ export const axiosWrapper = async <PayloadType, ResultType>(
 ): Promise<ResultType> /*AxiosWrapperReturnType<ResultType, typeof options> */ => {
 	try {
 		const method = options?.method ?? "get";
+		const isFormData = options?.data instanceof FormData;
+		if (isFormData) delete axios.defaults.headers.common["Content-Type"];
 		//TODO: remove this after testing
 		console.log(`${method}ing ${url}...`);
 		const response = await axios<ResultType>({
@@ -61,6 +64,8 @@ export const axiosWrapper = async <PayloadType, ResultType>(
 			url,
 			data: options?.data,
 		});
+		if (isFormData)
+			axios.defaults.headers.common["Content-Type"] = "application/json";
 		//TODO: how to fix?
 		return options?.schema
 			? options.schema.parse(response.data)
