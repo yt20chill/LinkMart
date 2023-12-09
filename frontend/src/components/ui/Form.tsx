@@ -175,6 +175,49 @@ const FormInput = <T extends FieldValues = FieldValues>({
 	);
 };
 
+interface FormFileInputProps<TFieldValues extends FieldValues = FieldValues> {
+	formControl: Control<
+		TFieldValues,
+		React.Context<FormFieldContextValue<FieldValues, string>>
+	>;
+	fieldName: FieldPath<TFieldValues>;
+	label?: string;
+	placeHolder?: string;
+	accept?: string;
+}
+
+const FormFileInput = <T extends FieldValues = FieldValues>({
+	formControl,
+	fieldName,
+	label = camelToTitleCase(fieldName),
+	accept = ".png, .jpg, .jpeg",
+}: FormFileInputProps<T>) => {
+	return (
+		<FormField
+			control={formControl}
+			name={fieldName}
+			render={({ field }) => (
+				<FormItem>
+					<FormLabel>{label}</FormLabel>
+					<FormControl>
+						<Input
+							multiple={true}
+							accept={accept}
+							type="file"
+							onChange={(e) =>
+								field.onChange(
+									e.target.files ? Array.from(e.target.files) : null
+								)
+							}
+						/>
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			)}
+		/>
+	);
+};
+
 type TSelectItem = {
 	id: string;
 	name: string;
@@ -231,6 +274,7 @@ export {
 	FormControl,
 	FormDescription,
 	FormField,
+	FormFileInput,
 	FormInput,
 	FormItem,
 	FormLabel,
