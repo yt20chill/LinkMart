@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { createSelectors } from "../../lib/utils";
 import { AuthorizeLevel } from "../../types/authModels";
 
-type AuthState = {
+export type AuthState = {
 	username: string | null;
 	isAuthenticated: boolean | null;
 	role: AuthorizeLevel;

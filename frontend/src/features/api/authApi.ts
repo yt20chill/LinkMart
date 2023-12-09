@@ -5,6 +5,7 @@ import {
 	SignUpResult,
 	UserResult,
 } from "../../types/fetchModels";
+import { AuthState } from "../stores/authStore";
 import {
 	signInResponseSchema,
 	signUpResponseSchema,
@@ -30,7 +31,9 @@ export const signUpAJAX = async (
 	);
 };
 
-export const getAuthAJAX = async () => {
+export const getAuthAJAX = async (): Promise<
+	Omit<AuthState, "isAuthenticated">
+> => {
 	const { username, providerId } = await axiosWrapper<void, UserResult>(
 		authApiRoutes.GET_AUTH,
 		{ schema: userResponseSchema }
