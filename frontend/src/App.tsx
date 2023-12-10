@@ -12,6 +12,7 @@ function App() {
 				autoClose={5000}
 				closeOnClick
 				pauseOnHover
+				pauseOnFocusLoss={false}
 				theme="light"
 			/>
 			<div className=" text-5xl font-bold text-red">Header</div>
