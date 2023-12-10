@@ -16,6 +16,7 @@ import {
 	FormFieldContext,
 	FormItemContext,
 } from "../../features/forms/formContext";
+import { allowedFileTypes } from "../../features/forms/requestSchema/requestSchema";
 import { useFormField } from "../../features/hooks/useFormField";
 import { FormFieldContextValue, FormInputType } from "../../types/formModels";
 import { Input } from "./Input";
@@ -190,7 +191,7 @@ const FormFileInput = <T extends FieldValues = FieldValues>({
 	formControl,
 	fieldName,
 	label = camelToTitleCase(fieldName),
-	accept = ".png, .jpg, .jpeg",
+	accept = allowedFileTypes.join(","),
 }: FormFileInputProps<T>) => {
 	return (
 		<FormField
@@ -205,9 +206,7 @@ const FormFileInput = <T extends FieldValues = FieldValues>({
 							accept={accept}
 							type="file"
 							onChange={(e) =>
-								field.onChange(
-									e.target.files ? Array.from(e.target.files) : null
-								)
+								field.onChange(e.target.files ? Array.from(e.target.files) : [])
 							}
 						/>
 					</FormControl>

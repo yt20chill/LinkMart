@@ -1,4 +1,5 @@
 import axios, { isAxiosError } from "axios";
+import { toast } from "react-toastify";
 import { ZodError, ZodType } from "zod";
 
 export const queryKey = Object.freeze({
@@ -75,6 +76,7 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 			? options.schema.parse(response.data)
 			: (undefined as ResultType);
 	} catch (error) {
+		toast.error("Something went wrong");
 		if (isAxiosError(error))
 			throw new FetchError(error.status, error.message ?? error.code);
 		if (error instanceof ZodError)

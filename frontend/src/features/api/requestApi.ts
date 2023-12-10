@@ -1,4 +1,5 @@
 import { axiosWrapper, requestApiRoutes } from "../../lib/apiUtils";
+import { printFormData } from "../../lib/formUtils";
 import { DeleteImageParams, RequestIdParams } from "../forms/requestSchema";
 
 import {
@@ -25,6 +26,7 @@ export const getLocation = async () => {
 };
 
 export const postRequestAJAX = async (formData: FormData) => {
+	printFormData(formData);
 	return await axiosWrapper<FormData>(requestApiRoutes.REQUEST, {
 		method: "post",
 		data: formData,

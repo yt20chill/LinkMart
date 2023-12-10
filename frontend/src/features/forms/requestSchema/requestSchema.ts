@@ -12,8 +12,6 @@ export const postRequestSchema = z.object({
 	categoryId: requiredId,
 	imageFile: z
 		.instanceof(Array<File>)
-		.or(z.instanceof(File))
-		.transform((file) => (Array.isArray(file) ? file : [file]))
 		.refine(
 			(files) => {
 				for (const file of files) {
@@ -24,7 +22,8 @@ export const postRequestSchema = z.object({
 			{
 				message: "image must be in png or jpeg format",
 			}
-		),
+		)
+		.refine((files) => files.length > 0, { message: "required" }),
 	item: z.string().min(1, { message: "required" }),
 	url: emptyStringToNull.pipe(
 		z.string().url({ message: "invalid url" }).nullable()
@@ -62,5 +61,5 @@ export type RequestForm = Record<
 	Exclude<keyof PostRequestDto, "imageFile">,
 	string | null
 > & {
-	imageFile: File[] | null;
+	imageFile: File[];
 };

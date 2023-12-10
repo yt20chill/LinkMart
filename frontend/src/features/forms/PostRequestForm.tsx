@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 import { Button } from "../../components/ui/Button";
 import {
 	Form,
@@ -42,15 +43,17 @@ const locations: LocationDto[] = [
 
 type PostRequestFormProps = RequestDetailsDto & RequestId;
 
-const PostRequestForm = (props: PostRequestFormProps | undefined) => {
+const PostRequestForm = (
+	props: PostRequestFormProps | Record<string, never>
+) => {
 	const requestId = props?.requestId;
 	const defaultValues: RequestForm =
-		props === undefined
+		Object.keys(props).length === 0
 			? {
 					locationId: "",
 					categoryId: "",
 					item: "",
-					imageFile: null,
+					imageFile: [],
 					url: "",
 					quantity: "1",
 					requestRemark: "",
@@ -60,7 +63,7 @@ const PostRequestForm = (props: PostRequestFormProps | undefined) => {
 					locationId: props.locationId + "",
 					categoryId: props.categoryId + "",
 					item: props.item,
-					imageFile: null,
+					imageFile: [],
 					url: props.url,
 					quantity: props.quantity + "",
 					requestRemark: props.requestRemark,
@@ -69,7 +72,7 @@ const PostRequestForm = (props: PostRequestFormProps | undefined) => {
 	const form = useForm<RequestForm>({
 		resolver: zodResolver(postRequestSchema),
 		defaultValues,
-		mode: "onTouched",
+		mode: "onSubmit",
 	});
 	const queryClient = useQueryClient();
 	// const { data: categories } = useQuery({
@@ -88,11 +91,8 @@ const PostRequestForm = (props: PostRequestFormProps | undefined) => {
 			return postRequestAJAX(formData);
 		},
 		onSuccess: async () => {
-			//TODO: add toast
+			toast.success("Request posted!");
 			await queryClient.invalidateQueries([queryKey.REQUEST]);
-		},
-		onError: () => {
-			//TODO: add toast
 		},
 	});
 	const { mutateAsync: editRequest, isLoading: isEditing } = useMutation({
@@ -101,9 +101,9 @@ const PostRequestForm = (props: PostRequestFormProps | undefined) => {
 			return putRequestAJAX(requestId, formData);
 		},
 		onSuccess: async () => {
+			toast.success("edited");
 			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
 		},
-		onError: () => {},
 	});
 	const { newImages, onDelete } = usePreviewFormImages(
 		form.watch,
@@ -113,10 +113,8 @@ const PostRequestForm = (props: PostRequestFormProps | undefined) => {
 	const { mutateAsync: deleteImage } = useMutation({
 		mutationFn: deleteRequestImageAJAX,
 		onSuccess: async () => {
+			toast.success("image deleted");
 			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
-		},
-		onError: () => {
-			//TODO: add toast
 		},
 	});
 	const onSubmit = async (data: RequestForm) => {

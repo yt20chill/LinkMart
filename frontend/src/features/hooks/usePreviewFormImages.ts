@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
 	FieldPath,
 	FieldValues,
@@ -6,6 +6,7 @@ import {
 	UseFormSetValue,
 	UseFormWatch,
 } from "react-hook-form";
+import { toast } from "react-toastify";
 import { isFileExists, removeFileFromArray } from "../../lib/formUtils";
 import { toDataURLAsync } from "../../lib/utils";
 import { allowedFileTypes } from "../forms/requestSchema/requestSchema";
@@ -17,21 +18,21 @@ export const usePreviewFormImages = <T extends FieldValues>(
 	path: FieldPath<T>,
 	setValue: UseFormSetValue<T>
 ) => {
-	const imageFiles = watch(path) as File[] | null;
+	const imageFiles = watch(path) as File[];
 	const [newImages, setNewImages] = useState<NewImage[]>([]);
 	const [pendingImages, setPendingImages] = useState<File[]>([]);
-
+	const memoizedImages = useMemo(() => newImages, [newImages]);
 	// on change
 	useEffect(() => {
-		if (!imageFiles) return;
 		setPendingImages(() =>
 			imageFiles.filter(
 				(file) =>
-					allowedFileTypes.includes(file.type) && !isFileExists(newImages, file)
+					allowedFileTypes.includes(file.type) &&
+					!isFileExists(memoizedImages, file)
 			)
 		);
 		return () => setPendingImages([]);
-	}, [imageFiles, newImages]);
+	}, [imageFiles, memoizedImages]);
 
 	useEffect(() => {
 		if (pendingImages.length === 0) return;
@@ -45,23 +46,23 @@ export const usePreviewFormImages = <T extends FieldValues>(
 				setNewImages((prevImages) => [...prevImages, ...images]);
 			})
 			.catch(() => {
-				//TODO: add toast
+				toast.error("Something went wrong");
 			});
 	}, [pendingImages]);
 
 	const onDelete = (options: { name: string }) => {
-		setNewImages(
+		setNewImages((newImages) =>
 			newImages.filter((newImage) => newImage.name !== options.name)
 		);
-		if (imageFiles)
-			setValue(
-				path,
-				removeFileFromArray(imageFiles, options.name) as PathValue<
-					T,
-					FieldPath<T>
-				>
-			);
+
+		setValue<typeof path>(
+			path,
+			removeFileFromArray(imageFiles, options.name) as PathValue<
+				T,
+				FieldPath<T>
+			>
+		);
 	};
 
-	return { newImages, onDelete };
+	return { newImages: memoizedImages, onDelete };
 };

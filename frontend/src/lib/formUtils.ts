@@ -21,7 +21,7 @@ export const printFormData = (formData: FormData) => {
 };
 
 export const removeFileFromArray = (files: File[], name: string) => {
-	if (files.length <= 1) return null;
+	if (files.length <= 1) return [];
 	return files.filter((file) => file.name !== name);
 };
 
