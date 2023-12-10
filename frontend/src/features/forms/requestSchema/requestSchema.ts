@@ -3,6 +3,7 @@ import {
 	emptyStringToNull,
 	requiredId,
 	stringToPositiveNumber,
+	zodJson,
 } from "../../../lib/schemaUtils";
 
 export const allowedFileTypes = ["image/png", "image/jpeg"];
@@ -35,6 +36,7 @@ export const postRequestSchema = z.object({
 	offerPrice: stringToPositiveNumber({ isFloat: true }).pipe(
 		z.number().positive().nullable()
 	),
+	itemDetail: zodJson,
 });
 
 export const getRequestsQuerySchema = z.object({
@@ -48,7 +50,12 @@ export const requestIdSchema = z.object({
 	requestId: z.string().ulid(),
 });
 
+export const categoryIdSchema = z.object({
+	categoryId: z.number().int().positive(),
+});
+
 export type RequestId = z.infer<typeof requestIdSchema>;
+export type CategoryId = z.infer<typeof categoryIdSchema>;
 
 export const deleteImageParamsSchema = z.object({
 	imageId: z.number().int().positive(),
