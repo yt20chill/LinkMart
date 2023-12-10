@@ -2,10 +2,12 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Navbar } from "./components/navbar/Navbar";
 import { routeConfigArray } from "./pages/routes.config";
+import { AnimatedBG } from "./features/animatedBackground/AnimatedBG";
 
 function App() {
   return (
     <>
+      <AnimatedBG />
       <Navbar />
       <ToastContainer
         position="top-center"
