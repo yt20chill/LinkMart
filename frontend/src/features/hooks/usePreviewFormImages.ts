@@ -24,14 +24,13 @@ export const usePreviewFormImages = <T extends FieldValues>(
 	// on change
 	useEffect(() => {
 		if (!imageFiles) return;
-		setPendingImages(
+		setPendingImages(() =>
 			imageFiles.filter(
 				(file) =>
 					allowedFileTypes.includes(file.type) && !isFileExists(newImages, file)
 			)
 		);
-
-		return setPendingImages([]);
+		return () => setPendingImages([]);
 	}, [imageFiles, newImages]);
 
 	useEffect(() => {
@@ -42,9 +41,9 @@ export const usePreviewFormImages = <T extends FieldValues>(
 				src: await toDataURLAsync(image),
 			}))
 		)
-			.then((images) =>
-				setNewImages((prevImages) => [...prevImages, ...images])
-			)
+			.then((images) => {
+				setNewImages((prevImages) => [...prevImages, ...images]);
+			})
 			.catch(() => {
 				//TODO: add toast
 			});

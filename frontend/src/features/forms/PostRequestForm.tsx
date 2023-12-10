@@ -8,6 +8,7 @@ import {
 	FormInput,
 	FormSelect,
 } from "../../components/ui/Form";
+import ImagePreview from "../../components/ui/ImagePreview";
 import { FetchError, queryKey } from "../../lib/apiUtils";
 import { appendFormData } from "../../lib/formUtils";
 import { postRequestAJAX, putRequestAJAX } from "../api/requestApi";
@@ -105,7 +106,6 @@ const PostRequestForm = (props: PostRequestFormProps | undefined) => {
 		"imageFile",
 		form.setValue
 	);
-	console.log(newImages.length);
 	const onSubmit = async (data: RequestForm) => {
 		const formData = appendFormData(data);
 		requestId ? await editRequest(formData) : await postRequest(formData);
@@ -169,10 +169,10 @@ const PostRequestForm = (props: PostRequestFormProps | undefined) => {
 					label="Price (in HKD) "
 					placeHolder="1000"
 				/>
-				{/* {newImages &&
+				{newImages &&
 					newImages.map((image) => (
 						<ImagePreview key={image.name} onDelete={onDelete} {...image} />
-					))} */}
+					))}
 				<Button type="submit" disabled={isEditing || isPosting}>
 					Submit
 					{(isEditing || isPosting) && (
