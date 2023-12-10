@@ -52,12 +52,11 @@
 ```js
 🟢 [200]  OK
 [{
+    "categoryFieldId" : int,
     "categoryFieldName" : string,
-    "categoryFieldIsOption": boolean,
-    "categoryFieldOption"?: {
-        "categoryFieldOptionId" : id,
+    "categoryFieldOption": [{ //
         "categoryFieldOptionName": string,
-    }
+    },...]
 }, ... /* array */ ]
 ```
 
@@ -263,7 +262,7 @@
 
 ## 📎 5. Request Route
 
-### 📍 5.1 User Request
+### 📍 5.1 Create Request
 
 | [POST] | /api/request |
 | ------ | ------------ |
@@ -307,12 +306,12 @@
 | [Get] | /api/request |
 | ----- | ------------ |
 
-##### 📍 5.2.1 with queries
+##### 📍 5.2.1 Get All - with queries
 
 | [Get] | /api/request?p={page}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
 
-##### 📍 5.2.2 Get All Requests by userId (via created_by)
+##### 📍 5.2.2 Get All - by userId (via created_by)
 
 | [Get] | /api/user/request (userId in jwt header) |
 | ----- | ---------------------------------------- |
@@ -325,7 +324,7 @@
 ```js
 🟢 [200]  OK
 [{
-    "requestId" : int,
+    "requestId" : string (ulid),
     "locationId" : int(location.location_id),
     "locationName" : string(location.name),
     "item" : string,
@@ -353,6 +352,7 @@
 ```js
 🟢 [200]
 {
+    "requestId" : string (ulid),
     "locationId" : int(location.location_id),
     "locationName": string,
     "categoryId" : int(category.category_id),
@@ -445,7 +445,7 @@
 
 ## 📎 6. Offer Route
 
-### 📍 6.1 Provider Offer
+### 📍 6.1 Create New Offer
 
 | [POST] | /api/offer |
 | ------ | ---------- |
@@ -454,8 +454,8 @@
 
 ```js
 {
-    "requestId" : int(request.request_id),
-    "providerId" : int(provider.provider_id),
+    "requestId" : ulid(request.request_id),
+    "providerId" : ulid(provider.provider_id),
     "status" : int(status.status_id),
     "price" : int,
     "offerRemark" : string
