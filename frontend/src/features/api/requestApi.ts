@@ -1,25 +1,35 @@
 import { axiosWrapper, requestApiRoutes } from "../../lib/apiUtils";
 import { printFormData } from "../../lib/formUtils";
-import { DeleteImageParams, RequestIdParams } from "../forms/requestSchema";
+import { DeleteImageParams } from "../forms/requestSchema";
+import { CategoryId, RequestId } from "../forms/requestSchema/requestSchema";
 
 import {
 	CategoryDto,
+	CategoryFieldDto,
 	LocationDto,
 	RequestDetailsDto,
 	RequestDto,
 	categoriesResponseSchema,
+	categoryFieldsResponseSchema,
 	locationsResponseSchema,
 	requestDetailsResponseSchema,
 	requestsResponseSchema,
 } from "./responseSchema";
 
-export const getCategory = async () => {
+export const getAllCategories = async () => {
 	return await axiosWrapper<void, CategoryDto[]>(requestApiRoutes.CATEGORY, {
 		schema: categoriesResponseSchema,
 	});
 };
 
-export const getLocation = async () => {
+export const getCategoryFields = async ({ categoryId }: CategoryId) => {
+	return await axiosWrapper<number, CategoryFieldDto[]>(
+		`${requestApiRoutes.CATEGORY}/${categoryId}`,
+		{ schema: categoryFieldsResponseSchema }
+	);
+};
+
+export const getAllLocations = async () => {
 	return await axiosWrapper<void, LocationDto[]>(requestApiRoutes.LOCATION, {
 		schema: locationsResponseSchema,
 	});
@@ -45,7 +55,7 @@ export const getAllRequestsAJAX = async (searchParams?: string) => {
 	);
 };
 
-export const getRequestDetailsAJAX = async ({ requestId }: RequestIdParams) => {
+export const getRequestDetailsAJAX = async ({ requestId }: RequestId) => {
 	return await axiosWrapper<void, RequestDetailsDto>(
 		`${requestApiRoutes.REQUEST}/${requestId}`,
 		{ schema: requestDetailsResponseSchema }
@@ -62,7 +72,7 @@ export const putRequestAJAX = async (requestId: string, formData: FormData) => {
 	);
 };
 
-export const deleteRequestAJAX = async ({ requestId }: RequestIdParams) => {
+export const deleteRequestAJAX = async ({ requestId }: RequestId) => {
 	return await axiosWrapper(`${requestApiRoutes.REQUEST}/${requestId}`, {
 		method: "delete",
 	});

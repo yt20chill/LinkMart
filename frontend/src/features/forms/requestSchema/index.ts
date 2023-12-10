@@ -1,9 +1,11 @@
 import { SignInDto, SignUpDto, signInSchema, signUpSchema } from "./authSchema";
 import {
+	CategoryId,
 	DeleteImageParams,
 	GetRequestsQuery,
 	RequestForm,
 	RequestId,
+	categoryIdSchema,
 	deleteImageParamsSchema,
 	getRequestsQuerySchema,
 	postRequestSchema,
@@ -11,6 +13,7 @@ import {
 } from "./requestSchema";
 
 export {
+	categoryIdSchema,
 	deleteImageParamsSchema,
 	getRequestsQuerySchema,
 	postRequestSchema,
@@ -20,10 +23,11 @@ export {
 };
 
 export type {
+	CategoryId,
 	DeleteImageParams,
 	GetRequestsQuery,
 	RequestForm,
-	RequestId as RequestIdParams,
+	RequestId,
 	SignInDto,
 	SignUpDto,
 };

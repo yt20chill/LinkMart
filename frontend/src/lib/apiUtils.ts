@@ -51,6 +51,13 @@ type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
 		: void
 >;
 
+/**
+ * <PayloadType, ResultType>
+ * Schema must be provided if ResultType is not void
+ * @param url
+ * @param options
+ * @returns Promise<ResultType> after parsing schema if provided
+ */
 export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 	url: string,
 	options?: {

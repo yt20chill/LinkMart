@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
+import ImagePreview from "../../components/form/ImagePreview";
 import { Button } from "../../components/ui/Button";
 import {
 	Form,
@@ -9,7 +10,6 @@ import {
 	FormInput,
 	FormSelect,
 } from "../../components/ui/Form";
-import ImagePreview from "../../components/ui/ImagePreview";
 import { FetchError, queryKey } from "../../lib/apiUtils";
 import { appendFormData } from "../../lib/formUtils";
 import {
