@@ -325,6 +325,7 @@
 ```js
 🟢 [200]  OK
 [{
+    "requestId" : int,
     "locationId" : int(location.location_id),
     "locationName" : string(location.name),
     "item" : string,
