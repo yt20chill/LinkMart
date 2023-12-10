@@ -1,7 +1,7 @@
 import PostRequestForm from "../../features/forms/PostRequestForm";
 
-function UserPostRequestPage() {
+const PostRequestPage = () => {
 	return <PostRequestForm />;
-}
+};
 
-export default UserPostRequestPage;
+export default PostRequestPage;

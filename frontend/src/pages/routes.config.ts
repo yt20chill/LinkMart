@@ -24,6 +24,7 @@ import {
 } from "./user";
 
 import { AuthorizeLevel } from "../types/authModels";
+import PostRequestPage from "./user/PostRequestPage";
 
 interface TRouteConfig {
 	name: string;
@@ -39,6 +40,7 @@ export enum RouteEnum {
 	Requests,
 	Profile,
 	UserRequests,
+	PostRequest,
 	RequestDetail,
 	UserOrder,
 	OrderDetail,
@@ -101,6 +103,12 @@ routeConfigMap
 		authorizeLevel: AuthorizeLevel.USER,
 		component: RequestDetailsPage,
 	})
+	.set(RouteEnum.PostRequest, {
+		name: "New Request",
+		path: "/request/post",
+		authorizeLevel: AuthorizeLevel.USER,
+		component: PostRequestPage,
+	})
 	.set(RouteEnum.UserOrder, {
 		name: "My Order",
 		path: "/order",
@@ -121,7 +129,7 @@ routeConfigMap
 	})
 	.set(RouteEnum.ProviderProfile, {
 		name: "Profile",
-		path: "provider/profile",
+		path: "/provider/profile",
 		authorizeLevel: AuthorizeLevel.PROVIDER,
 		component: ProviderProfilePage,
 	})
