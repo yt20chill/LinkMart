@@ -11,7 +11,11 @@ import {
 import ImagePreview from "../../components/ui/ImagePreview";
 import { FetchError, queryKey } from "../../lib/apiUtils";
 import { appendFormData } from "../../lib/formUtils";
-import { postRequestAJAX, putRequestAJAX } from "../api/requestApi";
+import {
+	deleteRequestImageAJAX,
+	postRequestAJAX,
+	putRequestAJAX,
+} from "../api/requestApi";
 import {
 	CategoryDto,
 	LocationDto,
@@ -65,7 +69,7 @@ const PostRequestForm = (props: PostRequestFormProps | undefined) => {
 	const form = useForm<RequestForm>({
 		resolver: zodResolver(postRequestSchema),
 		defaultValues,
-		mode: "onBlur",
+		mode: "onTouched",
 	});
 	const queryClient = useQueryClient();
 	// const { data: categories } = useQuery({
@@ -106,6 +110,15 @@ const PostRequestForm = (props: PostRequestFormProps | undefined) => {
 		"imageFile",
 		form.setValue
 	);
+	const { mutateAsync: deleteImage } = useMutation({
+		mutationFn: deleteRequestImageAJAX,
+		onSuccess: async () => {
+			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
+		},
+		onError: () => {
+			//TODO: add toast
+		},
+	});
 	const onSubmit = async (data: RequestForm) => {
 		const formData = appendFormData(data);
 		requestId ? await editRequest(formData) : await postRequest(formData);
@@ -169,6 +182,15 @@ const PostRequestForm = (props: PostRequestFormProps | undefined) => {
 					label="Price (in HKD) "
 					placeHolder="1000"
 				/>
+				{requestId &&
+					props.images.map((image) => (
+						<ImagePreview
+							key={image.imageId}
+							imageId={image.imageId}
+							src={image.imagePath}
+							onDelete={deleteImage}
+						/>
+					))}
 				{newImages &&
 					newImages.map((image) => (
 						<ImagePreview key={image.name} onDelete={onDelete} {...image} />

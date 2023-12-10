@@ -8,7 +8,7 @@ type BaseImagePreviewProps = {
 
 type ExistingImagePreviewProps = BaseImagePreviewProps & {
 	imageId: number;
-	onDelete: (options: { imageId: number }) => void;
+	onDelete: (options: { imageId: number }) => Promise<void>;
 };
 
 type NewImagePreviewProps = BaseImagePreviewProps & {
@@ -19,21 +19,21 @@ type NewImagePreviewProps = BaseImagePreviewProps & {
 const ImagePreview = (
 	props: ExistingImagePreviewProps | NewImagePreviewProps
 ) => {
-	const showAlert = () => {
-		withReactContent(SweetAlert)
-			.fire({
+	const showAlert = async () => {
+		try {
+			const option = await withReactContent(SweetAlert).fire({
 				titleText: "Confirm Delete?",
 				text: "Are you sure you want to delete this image?",
 				icon: "warning",
 				showCancelButton: true,
-			})
-			.then((result) => {
-				if (!result.isConfirmed) return;
-				if (isObjOfType<ExistingImagePreviewProps>(props, "imageId"))
-					props.onDelete({ imageId: props.imageId });
-				else props.onDelete({ name: props.name });
-			})
-			.catch(() => alert("something went wrong")); //TODO: add toast
+			});
+			if (!option.isConfirmed) return;
+			isObjOfType<ExistingImagePreviewProps>(props, "imageId")
+				? await props.onDelete({ imageId: props.imageId })
+				: props.onDelete({ name: props.name });
+		} catch (error) {
+			// TODO: add toast
+		}
 	};
 
 	return (
