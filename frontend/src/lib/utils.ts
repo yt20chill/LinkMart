@@ -30,3 +30,16 @@ export function camelToTitleCase(input: string): string {
 		input.slice(1).replace(/[A-Z]/g, (char) => " " + char)
 	);
 }
+
+export const toDataURLAsync = (file: File): Promise<string> => {
+	if (!file.type.startsWith("image/")) throw new Error("Not an image");
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.onload = () => resolve(reader.result as string);
+		reader.onerror = (err) => reject(err);
+		reader.readAsDataURL(file);
+	});
+};
+
+export const isObjOfType = <T>(obj: unknown, key: keyof T): obj is T =>
+	!!(obj as T)[key];

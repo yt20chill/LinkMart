@@ -5,7 +5,7 @@ import {
 	stringToPositiveNumber,
 } from "../../../lib/schemaUtils";
 
-const allowedFileTypes = ["image/png", "image/jpeg"];
+export const allowedFileTypes = ["image/png", "image/jpeg"];
 
 export const postRequestSchema = z.object({
 	locationId: requiredId,
