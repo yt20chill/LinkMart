@@ -19,3 +19,15 @@ export const printFormData = (formData: FormData) => {
 		console.log(`${k}:`, v);
 	}
 };
+
+export const removeFileFromArray = (files: File[], name: string) => {
+	if (files.length <= 1) return null;
+	return files.filter((file) => file.name !== name);
+};
+
+export const isFileExists = <T extends { name: string }>(
+	files: T[],
+	file: File
+) => {
+	return files.some((f) => f.name === file.name);
+};

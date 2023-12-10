@@ -43,3 +43,8 @@ export const toDataURLAsync = (file: File): Promise<string> => {
 
 export const isObjOfType = <T>(obj: unknown, key: keyof T): obj is T =>
 	!!(obj as T)[key];
+
+export const isShallowEqual = <T>(arg1: T, arg2: T): boolean => {
+	if (arg1 === arg2) return true;
+	return JSON.stringify(arg1) === JSON.stringify(arg2);
+};

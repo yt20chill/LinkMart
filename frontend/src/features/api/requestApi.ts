@@ -50,10 +50,7 @@ export const getRequestDetailsAJAX = async ({ requestId }: RequestIdParams) => {
 	);
 };
 
-export const putRequestAJAX = async (
-	{ requestId }: RequestIdParams,
-	formData: FormData
-) => {
+export const putRequestAJAX = async (requestId: string, formData: FormData) => {
 	return await axiosWrapper<FormData>(
 		`${requestApiRoutes.REQUEST}/${requestId}`,
 		{

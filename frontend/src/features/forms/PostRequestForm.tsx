@@ -8,21 +8,26 @@ import {
 	FormInput,
 	FormSelect,
 } from "../../components/ui/Form";
-import { queryKey } from "../../lib/apiUtils";
+import { FetchError, queryKey } from "../../lib/apiUtils";
 import { appendFormData } from "../../lib/formUtils";
-import { CategoriesResult, LocationsResult } from "../../types/fetchModels";
-import { RequestForm } from "../../types/requestModels";
-import { postRequestAJAX } from "../api/requestApi";
-import { postRequestSchema } from "./requestSchema";
+import { postRequestAJAX, putRequestAJAX } from "../api/requestApi";
+import {
+	CategoryDto,
+	LocationDto,
+	RequestDetailsDto,
+} from "../api/responseSchema";
+import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
+import { RequestForm, postRequestSchema } from "./requestSchema";
+import { RequestId } from "./requestSchema/requestSchema";
 
-const categories: CategoriesResult = [
+const categories: CategoryDto[] = [
 	{
 		categoryId: 1,
 		categoryName: "Clothes",
 	},
 	{ categoryId: 2, categoryName: "Computer" },
 ];
-const locations: LocationsResult = [
+const locations: LocationDto[] = [
 	{
 		locationId: 1,
 		locationName: "Japan",
@@ -30,22 +35,37 @@ const locations: LocationsResult = [
 	{ locationId: 2, locationName: "United Kingdom" },
 ];
 
-const PostRequestForm = () => {
+type PostRequestFormProps = RequestDetailsDto & RequestId;
+
+const PostRequestForm = (props: PostRequestFormProps | undefined) => {
+	const requestId = props?.requestId;
+	const defaultValues: RequestForm =
+		props === undefined
+			? {
+					locationId: "",
+					categoryId: "",
+					item: "",
+					imageFile: null,
+					url: "",
+					quantity: "1",
+					requestRemark: "",
+					offerPrice: "",
+			  }
+			: {
+					locationId: props.locationId + "",
+					categoryId: props.categoryId + "",
+					item: props.item,
+					imageFile: null,
+					url: props.url,
+					quantity: props.quantity + "",
+					requestRemark: props.requestRemark,
+					offerPrice: props.offerPrice + "",
+			  };
 	const form = useForm<RequestForm>({
 		resolver: zodResolver(postRequestSchema),
-		defaultValues: {
-			locationId: "",
-			categoryId: "",
-			item: "",
-			imageFile: null,
-			url: "",
-			quantity: "1",
-			requestRemark: "",
-			offerPrice: "",
-		},
+		defaultValues,
 		mode: "onBlur",
 	});
-
 	const queryClient = useQueryClient();
 	// const { data: categories } = useQuery({
 	// 	queryKey: [queryKey.REQUEST, "categories"],
@@ -58,25 +78,46 @@ const PostRequestForm = () => {
 	// 	cacheTime: Infinity,
 	// });
 
-	const postRequest = useMutation({
+	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
 		mutationFn: (formData: FormData) => {
 			return postRequestAJAX(formData);
 		},
 		onSuccess: async () => {
-			await queryClient.invalidateQueries(queryKey.REQUEST);
+			//TODO: add toast
+			await queryClient.invalidateQueries([queryKey.REQUEST]);
+		},
+		onError: () => {
+			//TODO: add toast
 		},
 	});
-
-	const onSubmit = (data: RequestForm) => {
+	const { mutateAsync: editRequest, isLoading: isEditing } = useMutation({
+		mutationFn: (formData: FormData) => {
+			if (!requestId) throw new FetchError(400, "invalid request id");
+			return putRequestAJAX(requestId, formData);
+		},
+		onSuccess: async () => {
+			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
+		},
+		onError: () => {},
+	});
+	const { newImages, onDelete } = usePreviewFormImages(
+		form.watch,
+		"imageFile",
+		form.setValue
+	);
+	console.log(newImages.length);
+	const onSubmit = async (data: RequestForm) => {
 		const formData = appendFormData(data);
-
-		postRequest.mutate(formData);
+		requestId ? await editRequest(formData) : await postRequest(formData);
 	};
 	if (!categories || !locations)
 		return <span className="loading loading-spinner loading-lg"></span>;
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)}>
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="flex flex-col space-y-8 mx-10"
+			>
 				<FormInput
 					formControl={form.control}
 					fieldName="item"
@@ -128,9 +169,13 @@ const PostRequestForm = () => {
 					label="Price (in HKD) "
 					placeHolder="1000"
 				/>
-				<Button type="submit" disabled={postRequest.isLoading}>
+				{/* {newImages &&
+					newImages.map((image) => (
+						<ImagePreview key={image.name} onDelete={onDelete} {...image} />
+					))} */}
+				<Button type="submit" disabled={isEditing || isPosting}>
 					Submit
-					{postRequest.isLoading && (
+					{(isEditing || isPosting) && (
 						<span className="loading loading-spinner loading-lg"></span>
 					)}
 				</Button>

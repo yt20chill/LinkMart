@@ -55,15 +55,18 @@ const imageSchema = z.object({
 
 type ImageDto = z.infer<typeof imageSchema>;
 
-const requestDetailsResponseSchema = requestResponseSchema.extend({
-	itemDetail: zodJson,
-	categoryId: resultId,
-	categoryName: z.string().min(1),
-	images: z.array(imageSchema),
-	quantity: z.number().int().positive(),
-	requestRemark: z.string().nullable(),
-	createdAt: z.string().datetime(),
-});
+const requestDetailsResponseSchema = requestResponseSchema
+	.extend({
+		itemDetail: zodJson,
+		categoryId: resultId,
+		categoryName: z.string().min(1),
+		images: z.array(imageSchema),
+		url: z.string().url().nullable(),
+		quantity: z.number().int().positive(),
+		requestRemark: z.string().nullable(),
+		createdAt: z.string().datetime(),
+	})
+	.omit({ image: true });
 
 type RequestDetailsDto = z.infer<typeof requestDetailsResponseSchema>;
 

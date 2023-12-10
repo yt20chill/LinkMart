@@ -49,7 +49,7 @@ export const requestIdSchema = z.object({
 	requestId: z.string().ulid(),
 });
 
-export type RequestIdParams = z.infer<typeof requestIdSchema>;
+export type RequestId = z.infer<typeof requestIdSchema>;
 
 export const deleteImageParamsSchema = z.object({
 	imageId: z.number().int().positive(),

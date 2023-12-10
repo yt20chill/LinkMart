@@ -83,9 +83,16 @@ routeConfigMap
 		authorizeLevel: AuthorizeLevel.PUBLIC,
 		component: RequestsPage,
 	})
+	.set(RouteEnum.RequestDetail, {
+		// providers or other users to see
+		name: "Request Detail",
+		path: "/request-detail/:id",
+		authorizeLevel: AuthorizeLevel.PUBLIC,
+		component: RequestDetailsPage,
+	})
 	.set(RouteEnum.Profile, {
 		name: "profile",
-		path: "/user/profile",
+		path: "/profile",
 		authorizeLevel: AuthorizeLevel.USER,
 		component: ProfilePage,
 	})
@@ -95,13 +102,6 @@ routeConfigMap
 		path: "/user/requests",
 		authorizeLevel: AuthorizeLevel.USER,
 		component: UserRequestsPage,
-	})
-	.set(RouteEnum.RequestDetail, {
-		// providers or other users to see
-		name: "Request Detail",
-		path: "/request-detail/:id",
-		authorizeLevel: AuthorizeLevel.USER,
-		component: RequestDetailsPage,
 	})
 	.set(RouteEnum.PostRequest, {
 		name: "New Request",

@@ -3,7 +3,7 @@ import {
 	DeleteImageParams,
 	GetRequestsQuery,
 	RequestForm,
-	RequestIdParams,
+	RequestId,
 	deleteImageParamsSchema,
 	getRequestsQuerySchema,
 	postRequestSchema,
@@ -23,7 +23,7 @@ export type {
 	DeleteImageParams,
 	GetRequestsQuery,
 	RequestForm,
-	RequestIdParams,
+	RequestId as RequestIdParams,
 	SignInDto,
 	SignUpDto,
 };
