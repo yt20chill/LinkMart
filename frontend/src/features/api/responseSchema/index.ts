@@ -1,11 +1,12 @@
 import { AuthDto, authResponseSchema } from "./authResponseSchema";
 import { BaseResponseDto, baseResponseSchema } from "./baseResponseSchema";
 import {
-	CategoriesDto,
-	CategoryFieldsDto,
-	LocationsDto,
+	CategoryDto,
+	CategoryFieldDto,
+	ImageDto,
+	LocationDto,
 	RequestDetailsDto,
-	RequestsDto,
+	RequestDto,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
 	locationsResponseSchema,
@@ -28,10 +29,11 @@ export {
 export type {
 	AuthDto,
 	BaseResponseDto,
-	CategoriesDto,
-	CategoryFieldsDto,
-	LocationsDto,
+	CategoryDto,
+	CategoryFieldDto,
+	ImageDto,
+	LocationDto,
 	RequestDetailsDto,
-	RequestsDto,
+	RequestDto,
 	UserDto,
 };

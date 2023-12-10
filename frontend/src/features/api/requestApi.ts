@@ -2,10 +2,10 @@ import { axiosWrapper, requestApiRoutes } from "../../lib/apiUtils";
 import { DeleteImageParams, RequestIdParams } from "../forms/requestSchema";
 
 import {
-	CategoriesDto,
-	LocationsDto,
+	CategoryDto,
+	LocationDto,
 	RequestDetailsDto,
-	RequestsDto,
+	RequestDto,
 	categoriesResponseSchema,
 	locationsResponseSchema,
 	requestDetailsResponseSchema,
@@ -13,13 +13,13 @@ import {
 } from "./responseSchema";
 
 export const getCategory = async () => {
-	return await axiosWrapper<void, CategoriesDto>(requestApiRoutes.CATEGORY, {
+	return await axiosWrapper<void, CategoryDto[]>(requestApiRoutes.CATEGORY, {
 		schema: categoriesResponseSchema,
 	});
 };
 
 export const getLocation = async () => {
-	return await axiosWrapper<void, LocationsDto>(requestApiRoutes.LOCATION, {
+	return await axiosWrapper<void, LocationDto[]>(requestApiRoutes.LOCATION, {
 		schema: locationsResponseSchema,
 	});
 };
@@ -37,7 +37,7 @@ export const postRequestAJAX = async (formData: FormData) => {
  * @returns brief info of requests, limit = 30
  */
 export const getAllRequestsAJAX = async (searchParams?: string) => {
-	return await axiosWrapper<void, RequestsDto>(
+	return await axiosWrapper<void, RequestDto[]>(
 		`${requestApiRoutes.REQUEST}?${searchParams ?? ""}`,
 		{ schema: requestsResponseSchema }
 	);

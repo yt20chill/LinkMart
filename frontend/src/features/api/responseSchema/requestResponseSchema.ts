@@ -8,7 +8,7 @@ const categoryResponseSchema = z.object({
 
 const categoriesResponseSchema = z.array(categoryResponseSchema);
 
-type CategoriesDto = z.infer<typeof categoriesResponseSchema>;
+type CategoryDto = z.infer<typeof categoryResponseSchema>;
 
 const locationResponseSchema = z.object({
 	locationId: resultId,
@@ -17,7 +17,7 @@ const locationResponseSchema = z.object({
 
 const locationsResponseSchema = z.array(locationResponseSchema);
 
-type LocationsDto = z.infer<typeof locationsResponseSchema>;
+type LocationDto = z.infer<typeof locationResponseSchema>;
 
 const categoryFieldOptionResponseSchema = z.object({
 	categoryFieldOptionId: resultId,
@@ -32,7 +32,7 @@ const categoryFieldResponseSchema = z.object({
 
 const categoryFieldsResponseSchema = z.array(categoryFieldResponseSchema);
 
-type CategoryFieldsDto = z.infer<typeof categoryFieldsResponseSchema>;
+type CategoryFieldDto = z.infer<typeof categoryFieldResponseSchema>;
 
 const requestResponseSchema = z.object({
 	locationId: resultId,
@@ -46,13 +46,20 @@ const requestResponseSchema = z.object({
 
 const requestsResponseSchema = z.array(requestResponseSchema);
 
-type RequestsDto = z.infer<typeof requestsResponseSchema>;
+type RequestDto = z.infer<typeof requestResponseSchema>;
+
+const imageSchema = z.object({
+	imageId: resultId,
+	imagePath: z.string().url(),
+});
+
+type ImageDto = z.infer<typeof imageSchema>;
 
 const requestDetailsResponseSchema = requestResponseSchema.extend({
 	itemDetail: zodJson,
 	categoryId: resultId,
 	categoryName: z.string().min(1),
-	images: z.array(z.string().url()),
+	images: z.array(imageSchema),
 	quantity: z.number().int().positive(),
 	requestRemark: z.string().nullable(),
 	createdAt: z.string().datetime(),
@@ -69,9 +76,10 @@ export {
 };
 
 export type {
-	CategoriesDto,
-	CategoryFieldsDto,
-	LocationsDto,
+	CategoryDto,
+	CategoryFieldDto,
+	ImageDto,
+	LocationDto,
 	RequestDetailsDto,
-	RequestsDto,
+	RequestDto,
 };
