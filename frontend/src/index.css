@@ -8,6 +8,11 @@
 	font-family: "Ubuntu", sans-serif;
 }
 
+b.emo {
+	font-family: "Noto Color Emoji", sans-serif !important;
+	;
+}
+
 .material-symbols-rounded {
 	font-variation-settings: "FILL" 0, "wght" 400;
 	transition: all 0.3s ease;
@@ -87,8 +92,26 @@
 	* {
 		@apply border-border;
 	}
+}
 
-	body {
-		@apply bg-background text-foreground;
+.bg-animate {
+	animation: loopRouteBG 6s linear infinite;
+	transform: rotate(0) translate(150px) rotate(0);
+}
+
+.bg-animate-reverse {
+	animation: loopRouteBGReverse 12s linear infinite;
+	transform: rotate(0) translate(-150px) rotate(0);
+}
+
+@keyframes loopRouteBG {
+	100% {
+		transform: rotate(1turn) translate(150px) rotate(-1turn) scale(1);
+	}
+}
+
+@keyframes loopRouteBGReverse {
+	100% {
+		transform: rotate(-1turn) translate(-150px) rotate(1turn);
 	}
 }
