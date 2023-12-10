@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { resultId, zodJson } from "../../../lib/schemaUtils";
+import { resultId, resultUlid, zodJson } from "../../../lib/schemaUtils";
 
 const categoryResponseSchema = z.object({
 	categoryId: resultId,
@@ -20,14 +20,13 @@ const locationsResponseSchema = z.array(locationResponseSchema);
 type LocationDto = z.infer<typeof locationResponseSchema>;
 
 const categoryFieldOptionResponseSchema = z.object({
-	categoryFieldOptionId: resultId,
 	categoryFieldOptionName: z.string().min(1),
 });
 
 const categoryFieldResponseSchema = z.object({
+	categoryFieldId: resultId,
 	categoryFieldName: z.string().min(1),
-	categoryFieldIsOption: z.boolean(),
-	categoryFieldOption: z.array(categoryFieldOptionResponseSchema).nullable(),
+	categoryFieldOption: z.array(categoryFieldOptionResponseSchema),
 });
 
 const categoryFieldsResponseSchema = z.array(categoryFieldResponseSchema);
@@ -35,6 +34,7 @@ const categoryFieldsResponseSchema = z.array(categoryFieldResponseSchema);
 type CategoryFieldDto = z.infer<typeof categoryFieldResponseSchema>;
 
 const requestResponseSchema = z.object({
+	requestId: resultUlid,
 	locationId: resultId,
 	locationName: z.string().min(1),
 	item: z.string().min(1),
