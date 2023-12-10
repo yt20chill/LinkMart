@@ -278,7 +278,7 @@
     "categoryId" : int(category.category_id),
     "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
     "item" : string,
-    "imageFile" : string, (multiple)
+    "imageFile" : [string, ...(FormData Files)]
     "url" : string | null,
     "quantity" : int,
     "requestRemark" : string | null,
@@ -341,10 +341,11 @@
     "message" : "fail to get request"
 }
 ```
+
 ### 📍 5.3 Get One (by request id)
 
 | [GET] | /api/request/:requestId |
-| -------- | --------------------------- |
+| ----- | ----------------------- |
 
 > ⬆️ Resp:
 
@@ -357,7 +358,10 @@
     "categoryName" : string,
     "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
     "item" : string,
-    "images" : List<string> (images url),
+    "images" : [{
+        "imageId" : int,
+        "imagePath" : string
+    },.../*images*/]
     "url" : string | null,
     "quantity" : int,
     "requestRemark" : string | null,
