@@ -1,6 +1,6 @@
 export function RequestCardSkeleton() {
   return (
-    <div className="icn-hvr-fill p-1 rounded-lg shadow-2xl transition-all bg-base/75 backdrop-blur-lg pointer-events-none border border-base-200/75">
+    <div className="icn-hvr-fill p-1 rounded-lg shadow transition-all bg-base-100/25 backdrop-blur-lg pointer-events-none border border-base-200/75">
       <figure className="rounded-md h-48 flex justify-center items-center bg-gray-300 animate-pulse">
         <span className="material-symbols-rounded text-[128px] text-base-100">
           image
