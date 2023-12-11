@@ -28,7 +28,7 @@
 ```js
 🟢 [200]  OK
 [{
-    "id": int,
+    "categoryId": int,
     "categoryName": string
 },...]
 ```
