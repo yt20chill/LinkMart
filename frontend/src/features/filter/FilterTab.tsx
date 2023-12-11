@@ -14,7 +14,7 @@ export type FilterTabProps = {
 
 export function FilterTab(props: FilterTabProps) {
   return (
-    <div className="dropdown dropdown-hover ">
+    <div className="dropdown dropdown-hover">
       <div
         tabIndex={0}
         role="button"
@@ -31,7 +31,7 @@ export function FilterTab(props: FilterTabProps) {
           <li key={item.id}>
             <Link
               to={item.itemLink}
-              className="bg-transparent hover:bg-orange-100 hover:scale-95 transition-all flex items-center rounded-md p-2"
+              className="bg-transparent hover:bg-base-100/50 hover:scale-95 transition-all flex items-center rounded-md p-2 text-orange-950 hover:text-orange-500"
             >
               <b className="emo me-1 text-lg">{item.itemIcon}</b>{" "}
               {item.itemName}
