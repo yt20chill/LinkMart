@@ -8,11 +8,11 @@ import { signUpAJAX } from "../api/authApi";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
 import { SignUpDto, signUpSchema } from "./requestSchema/authSchema";
 
-const defaultValues: SignUpDto = {
+const defaultValues: SignUpDto = Object.freeze({
 	email: "",
 	password: "",
 	confirmPassword: "",
-};
+});
 
 function SignUpForm() {
 	const {

@@ -1,27 +1,31 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import { Button } from "../../components/ui/Button";
-import { Form, FormInput } from "../../components/ui/Form";
-import { FetchError, queryKey } from "../../lib/apiUtils";
-import { SignInDto } from "../../types/authModels";
+import FormInput from "../../components/form/FormInput";
+import { queryKey } from "../../lib/apiUtils";
 import { signInAJAX } from "../api/authApi";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
-import { signInSchema } from "./requestSchema/authSchema";
+import { SignInDto, signInSchema } from "./requestSchema/authSchema";
+
+const defaultValues = Object.freeze({
+	email: "",
+	password: "",
+});
 
 const SignInForm = () => {
-	const form = useForm<SignInDto>({
+	const {
+		register,
+		formState: { errors },
+		handleSubmit,
+	} = useForm<SignInDto>({
 		resolver: zodResolver(signInSchema),
-		defaultValues: {
-			email: "",
-			password: "",
-		},
+		defaultValues,
 	});
 	const navigatePrev = useNavigateToPreviousPage();
 	const queryClient = useQueryClient();
 	const signIn = useMutation({
 		mutationFn: (formData: SignInDto) => signInAJAX(formData),
-		onSuccess: async (jwt) => {
+		onSuccess: async ({ jwt }) => {
 			window.localStorage.setItem("access_token", jwt);
 			await queryClient.invalidateQueries(queryKey.AUTH);
 			navigatePrev();
@@ -30,29 +34,20 @@ const SignInForm = () => {
 
 	const onSubmit = (formData: SignInDto) => {
 		signIn.mutate(formData);
-		form.reset();
 	};
 
 	return (
-		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-				<FormInput formControl={form.control} fieldName="email" />
+		<form onSubmit={handleSubmit(onSubmit)}>
+			{Object.keys(defaultValues).map((name) => (
 				<FormInput
-					formControl={form.control}
-					fieldName="password"
-					inputType="password"
+					key={name}
+					type={/password/i.test(name) ? "password" : "text"}
+					name={name as keyof SignInDto}
+					register={register}
+					errors={errors}
 				/>
-				{signIn.error instanceof FetchError && (
-					<p className="text-red-500">{signIn.error.message}</p>
-				)}
-				<Button type="submit" disabled={signIn.isLoading}>
-					Sign In
-					{signIn.isLoading && (
-						<span className="loading loading-spinner loading-lg"></span>
-					)}
-				</Button>
-			</form>
-		</Form>
+			))}
+		</form>
 	);
 };
 
