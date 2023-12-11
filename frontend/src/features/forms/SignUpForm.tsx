@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
+import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
-import { Button } from "../../components/ui/Button";
 import { FetchError, queryKey } from "../../lib/apiUtils";
 import { signUpAJAX } from "../api/authApi";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
@@ -54,14 +54,18 @@ function SignUpForm() {
 					errors={errors}
 				/>
 			))}
-			<Button type="submit" disabled={signUp.isLoading}>
+			<button
+				className="btn btn-warning"
+				type="submit"
+				disabled={signUp.isLoading}
+			>
 				Sign Up
 				{signUp.isLoading && (
 					<span className="loading loading-spinner loading-lg"></span>
 				)}
-			</Button>
+			</button>
 			{signUp.error instanceof FetchError && (
-				<p className="text-red-500">{signUp.error.message}</p>
+				<ErrorMessage message={signUp.error.message} />
 			)}
 		</form>
 	);

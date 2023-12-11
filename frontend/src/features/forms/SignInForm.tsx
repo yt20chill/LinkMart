@@ -1,8 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
+import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
-import { queryKey } from "../../lib/apiUtils";
+import { FetchError, queryKey } from "../../lib/apiUtils";
 import { signInAJAX } from "../api/authApi";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
 import { SignInDto, signInSchema } from "./requestSchema/authSchema";
@@ -47,6 +48,16 @@ const SignInForm = () => {
 					errors={errors}
 				/>
 			))}
+			{signIn.error instanceof FetchError && (
+				<ErrorMessage message={signIn.error.message} />
+			)}
+			<button
+				type="submit"
+				onClick={handleSubmit(onSubmit)}
+				className="btn btn-warning"
+			>
+				SignIn
+			</button>
 		</form>
 	);
 };
