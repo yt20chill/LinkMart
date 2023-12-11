@@ -7,7 +7,7 @@ export function Navbar() {
   const userInfo = useAuthStore((state) => state);
   return (
     <nav className="py-5 shadow-md border-b-8 border-orange-500 text-slate-500 bg-base-100">
-      <div className="flex justify-between max-w-7xl mx-auto">
+      <div className="flex justify-between max-w-7xl max-xl:px-2 mx-auto">
         {/* logo -> home page*/}
         <div className="flex gap-10 items-center">
           <Link to={siteMap(RouteEnum.Home)}>
