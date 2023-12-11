@@ -16,20 +16,20 @@ import {
 	requestsResponseSchema,
 } from "./responseSchema";
 
-export const getAllCategories = async () => {
+export const getAllCategoriesAJAX = async () => {
 	return await axiosWrapper<void, CategoryDto[]>(requestApiRoutes.CATEGORY, {
 		schema: categoriesResponseSchema,
 	});
 };
 
-export const getCategoryFields = async ({ categoryId }: CategoryId) => {
+export const getCategoryFieldsAJAX = async ({ categoryId }: CategoryId) => {
 	return await axiosWrapper<number, CategoryFieldDto[]>(
 		`${requestApiRoutes.CATEGORY}/${categoryId}`,
 		{ schema: categoryFieldsResponseSchema }
 	);
 };
 
-export const getAllLocations = async () => {
+export const getAllLocationsAJAX = async () => {
 	return await axiosWrapper<void, LocationDto[]>(requestApiRoutes.LOCATION, {
 		schema: locationsResponseSchema,
 	});
