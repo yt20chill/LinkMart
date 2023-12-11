@@ -1,5 +1,15 @@
-export const appendFormData = <T extends object>(data: T): FormData => {
-	const formData = new FormData();
+import {
+	FieldErrors,
+	FieldPath,
+	FieldValues,
+	UseFormRegister,
+} from "react-hook-form";
+
+export const appendFormData = <T extends object>(
+	data: T,
+	oldFormData?: FormData
+): FormData => {
+	const formData = oldFormData ?? new FormData();
 	for (const key in data) {
 		const value = data[key];
 		if (formData.has(key)) continue;
@@ -30,4 +40,22 @@ export const isFileExists = <T extends { name: string }>(
 	file: File
 ) => {
 	return files.some((f) => f.name === file.name);
+};
+
+export type BaseFormInputProps<T extends FieldValues = FieldValues> = {
+	name: FieldPath<T>;
+	register: UseFormRegister<T>;
+	label?: string;
+	placeholder?: string;
+	defaultValue?: string;
+	errors: FieldErrors<T>;
+};
+
+export const dtoToString = <T extends Record<string, unknown>>(
+	dto: Record<keyof T, unknown>
+) => {
+	return Object.entries(dto).reduce((acc, [key, value]) => {
+		acc[key as keyof T] = value?.toString() ?? "";
+		return acc;
+	}, {} as Record<keyof T, string>);
 };

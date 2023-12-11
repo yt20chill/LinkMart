@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import PostRequestForm from "../../features/forms/PostRequestForm";
 
 const NotFoundPage = () => {
 	const navigate = useNavigate();
@@ -10,6 +11,7 @@ const NotFoundPage = () => {
 				<p className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
 					Uh-oh!
 				</p>
+				<PostRequestForm />
 				<p className="mt-4 text-gray-500">We can&apos;t find that page.</p>
 				<p
 					onClick={() => {

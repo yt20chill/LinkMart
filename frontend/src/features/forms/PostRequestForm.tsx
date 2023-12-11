@@ -1,91 +1,58 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
+import CategoryFieldsForm from "../../components/form/CategoryFields";
+import FormFileInput from "../../components/form/FormFileInput";
+import FormInput from "../../components/form/FormInput";
+import FormSelect from "../../components/form/FormSelect";
 import ImagePreview from "../../components/form/ImagePreview";
-import { Button } from "../../components/ui/Button";
-import {
-	Form,
-	FormFileInput,
-	FormInput,
-	FormSelect,
-} from "../../components/ui/Form";
 import { FetchError, queryKey } from "../../lib/apiUtils";
-import { appendFormData } from "../../lib/formUtils";
+import { appendFormData, printFormData } from "../../lib/formUtils";
 import {
 	deleteRequestImageAJAX,
 	postRequestAJAX,
 	putRequestAJAX,
 } from "../api/requestApi";
-import {
-	CategoryDto,
-	LocationDto,
-	RequestDetailsDto,
-} from "../api/responseSchema";
 import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
-import { RequestForm, postRequestSchema } from "./requestSchema";
-import { RequestId } from "./requestSchema/requestSchema";
+import { useUpdateRequestForm } from "../hooks/useUpdateForm";
+import {
+	RequestForm,
+	allowedFileTypes,
+	postRequestSchema,
+} from "./requestSchema";
 
-const categories: CategoryDto[] = [
-	{
-		categoryId: 1,
-		categoryName: "Clothes",
-	},
-	{ categoryId: 2, categoryName: "Computer" },
-];
-const locations: LocationDto[] = [
-	{
-		locationId: 1,
-		locationName: "Japan",
-	},
-	{ locationId: 2, locationName: "United Kingdom" },
+const categories = [
+	{ categoryId: 1, categoryName: "Clothes" },
+	{ categoryId: 2, categoryName: "Shoes" },
 ];
 
-type PostRequestFormProps = RequestDetailsDto & RequestId;
+const locations = [
+	{ locationId: 1, locationName: "Singapore" },
+	{ locationId: 2, locationName: "Malaysia" },
+];
 
-const PostRequestForm = (
-	props: PostRequestFormProps | Record<string, never>
-) => {
-	const requestId = props?.requestId;
-	const defaultValues: RequestForm =
-		Object.keys(props).length === 0
-			? {
-					locationId: "",
-					categoryId: "",
-					item: "",
-					imageFile: [],
-					url: "",
-					quantity: "1",
-					requestRemark: "",
-					offerPrice: "",
-			  }
-			: {
-					locationId: props.locationId + "",
-					categoryId: props.categoryId + "",
-					item: props.item,
-					imageFile: [],
-					url: props.url,
-					quantity: props.quantity + "",
-					requestRemark: props.requestRemark,
-					offerPrice: props.offerPrice + "",
-			  };
-	const form = useForm<RequestForm>({
-		resolver: zodResolver(postRequestSchema),
+type PostRequestFormProps = { requestId?: string };
+
+const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
+	const {
+		defaultValuesByField: { text },
 		defaultValues,
-		mode: "onSubmit",
-	});
-	const queryClient = useQueryClient();
+		images,
+	} = useUpdateRequestForm(requestId);
 	// const { data: categories } = useQuery({
 	// 	queryKey: [queryKey.REQUEST, "categories"],
-	// 	queryFn: getCategory,
+	// 	queryFn: getAllCategories,
 	// 	cacheTime: Infinity,
 	// });
 	// const { data: locations } = useQuery({
 	// 	queryKey: [queryKey.REQUEST, "locations"],
-	// 	queryFn: getLocation,
+	// 	queryFn: getAllLocations,
 	// 	cacheTime: Infinity,
 	// });
-
+	const [formData, setFormData] = useState<FormData>(new FormData());
+	const queryClient = useQueryClient();
 	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
 		mutationFn: (formData: FormData) => {
 			return postRequestAJAX(formData);
@@ -105,11 +72,6 @@ const PostRequestForm = (
 			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
 		},
 	});
-	const { newImages, onDelete } = usePreviewFormImages(
-		form.watch,
-		"imageFile",
-		form.setValue
-	);
 	const { mutateAsync: deleteImage } = useMutation({
 		mutationFn: deleteRequestImageAJAX,
 		onSuccess: async () => {
@@ -117,90 +79,111 @@ const PostRequestForm = (
 			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
 		},
 	});
-	const onSubmit = async (data: RequestForm) => {
-		const formData = appendFormData(data);
+
+	const {
+		register,
+		handleSubmit,
+		watch,
+		formState: { errors },
+		setValue,
+	} = useForm<RequestForm>({
+		resolver: zodResolver(postRequestSchema),
+		defaultValues,
+		mode: "onSubmit",
+	});
+	const categoryForm = useForm<Record<string, string>>({
+		defaultValues: defaultValues.itemDetail,
+	});
+	const categoryId = watch("categoryId");
+	const { base64Images, onDelete } = usePreviewFormImages(
+		watch,
+		"imageFile",
+		setValue
+	);
+	console.log({ base64Images, file: watch("imageFile") });
+	const onSubmitBaseForm = async (data: RequestForm) => {
+		// setFormData((formData) => appendFormData(data, formData));
+		setFormData((formData) =>
+			appendFormData(
+				{ itemDetail: JSON.stringify(categoryForm.getValues()) },
+				formData
+			)
+		);
+		setFormData((formData) => appendFormData(data, formData));
+		printFormData(formData);
 		requestId ? await editRequest(formData) : await postRequest(formData);
 	};
-	if (!categories || !locations)
-		return <span className="loading loading-spinner loading-lg"></span>;
 	return (
-		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className="flex flex-col space-y-8 mx-10"
-			>
-				<FormInput
-					formControl={form.control}
-					fieldName="item"
-					label="Item Name*"
-					placeHolder="Item"
-				/>
-				<FormSelect
-					formControl={form.control}
-					fieldName="categoryId"
-					label="Category*"
-					items={categories.map((category) => ({
-						id: category.categoryId + "",
-						name: category.categoryName,
-					}))}
-				/>
-				<FormSelect
-					formControl={form.control}
-					fieldName="locationId"
-					label="Location*"
-					items={locations.map((location) => ({
-						id: location.locationId + "",
-						name: location.locationName,
-					}))}
-				/>
-				{/* // TODO: change it to drag and drop */}
+		<>
+			<form onSubmit={handleSubmit(onSubmitBaseForm)}>
+				{categories && (
+					<FormSelect
+						register={register}
+						required={true}
+						errors={errors}
+						name="categoryId"
+						label="Category"
+						optionItems={categories.map((category) => ({
+							value: category.categoryId + "",
+							displayValue: category.categoryName,
+						}))}
+					/>
+				)}
+				{locations && (
+					<FormSelect
+						register={register}
+						required={true}
+						errors={errors}
+						name="locationId"
+						label="Location"
+						optionItems={locations.map((location) => ({
+							value: location.locationId + "",
+							displayValue: location.locationName,
+						}))}
+					/>
+				)}
 				<FormFileInput
-					formControl={form.control}
-					fieldName="imageFile"
-					label="Images*"
+					name="imageFile"
+					register={register}
+					setValue={setValue}
+					errors={errors}
+					multiple={true}
+					accept={allowedFileTypes.join(",")}
 				/>
-				<FormInput
-					formControl={form.control}
-					fieldName="url"
-					placeHolder="Item URL"
-				/>
-				<FormInput
-					formControl={form.control}
-					fieldName="quantity"
-					placeHolder="1"
-				/>
-				<FormInput
-					formControl={form.control}
-					fieldName="requestRemark"
-					placeHolder="Urgent"
-				/>
-				<FormInput
-					formControl={form.control}
-					fieldName="offerPrice"
-					label="Price (in HKD) "
-					placeHolder="1000"
-				/>
-				{requestId &&
-					props.images.map((image) => (
+				{images.length > 0 &&
+					images.map((img) => (
 						<ImagePreview
-							key={image.imageId}
-							imageId={image.imageId}
-							src={image.imagePath}
+							key={img.imageId}
+							imageId={img.imageId}
+							src={img.imagePath}
 							onDelete={deleteImage}
 						/>
 					))}
-				{newImages &&
-					newImages.map((image) => (
-						<ImagePreview key={image.name} onDelete={onDelete} {...image} />
+				{base64Images.length > 0 &&
+					base64Images.map((img) => (
+						<ImagePreview key={img.name} {...img} onDelete={onDelete} />
 					))}
-				<Button type="submit" disabled={isEditing || isPosting}>
-					Submit
-					{(isEditing || isPosting) && (
-						<span className="loading loading-spinner loading-lg"></span>
-					)}
-				</Button>
+				{Object.keys(text).map((field) => (
+					<FormInput
+						key={field}
+						name={field as keyof RequestForm}
+						register={register}
+						errors={errors}
+					/>
+				))}
+				{categoryId && (
+					<CategoryFieldsForm
+						register={categoryForm.register}
+						errors={categoryForm.formState.errors}
+						categoryId={+categoryId}
+					/>
+				)}
+				<input type="submit" value="Submit" disabled={isEditing || isPosting} />
+				{(isEditing || isPosting) && (
+					<span className="loading loading-spinner loading-lg"></span>
+				)}
 			</form>
-		</Form>
+		</>
 	);
 };
 

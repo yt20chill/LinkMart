@@ -3,7 +3,6 @@ import {
 	emptyStringToNull,
 	requiredId,
 	stringToPositiveNumber,
-	zodJson,
 } from "../../../lib/schemaUtils";
 
 export const allowedFileTypes = ["image/png", "image/jpeg"];
@@ -12,7 +11,8 @@ export const postRequestSchema = z.object({
 	locationId: requiredId,
 	categoryId: requiredId,
 	imageFile: z
-		.instanceof(Array<File>)
+		.instanceof(FileList)
+		.transform((files) => Array.from(files))
 		.refine(
 			(files) => {
 				for (const file of files) {
@@ -30,13 +30,13 @@ export const postRequestSchema = z.object({
 		z.string().url({ message: "invalid url" }).nullable()
 	),
 	quantity: stringToPositiveNumber().pipe(
-		z.number().int().positive({ message: "invalid quantity" })
+		z.number().int().positive({ message: "invalid quantity" }).default(1)
 	),
 	requestRemark: emptyStringToNull.nullable(),
 	offerPrice: stringToPositiveNumber({ isFloat: true }).pipe(
 		z.number().positive().nullable()
 	),
-	itemDetail: zodJson,
+	itemDetail: z.record(z.string()),
 });
 
 export const getRequestsQuerySchema = z.object({
@@ -65,8 +65,9 @@ export type DeleteImageParams = z.infer<typeof deleteImageParamsSchema>;
 
 type PostRequestDto = z.infer<typeof postRequestSchema>;
 export type RequestForm = Record<
-	Exclude<keyof PostRequestDto, "imageFile">,
-	string | null
+	Exclude<keyof PostRequestDto, "imageFile" | "itemDetail">,
+	string
 > & {
 	imageFile: File[];
+	itemDetail: Record<string, string>;
 };

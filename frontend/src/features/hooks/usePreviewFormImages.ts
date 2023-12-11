@@ -1,68 +1,78 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	FieldPath,
 	FieldValues,
-	PathValue,
 	UseFormSetValue,
 	UseFormWatch,
 } from "react-hook-form";
 import { toast } from "react-toastify";
-import { isFileExists, removeFileFromArray } from "../../lib/formUtils";
 import { toDataURLAsync } from "../../lib/utils";
-import { allowedFileTypes } from "../forms/requestSchema/requestSchema";
 
-type NewImage = { name: string; src: string };
+type Base64Image = { name: string; src: string };
 
 export const usePreviewFormImages = <T extends FieldValues>(
 	watch: UseFormWatch<T>,
 	path: FieldPath<T>,
 	setValue: UseFormSetValue<T>
 ) => {
-	const imageFiles = watch(path) as File[];
-	const [newImages, setNewImages] = useState<NewImage[]>([]);
-	const [pendingImages, setPendingImages] = useState<File[]>([]);
-	const memoizedImages = useMemo(() => newImages, [newImages]);
+	const imageFiles = watch(path) as FileList;
+	const [imageArray, setImageArray] = useState<File[]>([]);
+	const [base64Images, setBase64Images] = useState<Base64Image[]>([]);
+	useEffect(() => {
+		setImageArray(() => Array.from(imageFiles));
+	}, [imageFiles]);
 	// on change
-	useEffect(() => {
-		setPendingImages(() =>
-			imageFiles.filter(
-				(file) =>
-					allowedFileTypes.includes(file.type) &&
-					!isFileExists(memoizedImages, file)
-			)
-		);
-		return () => setPendingImages([]);
-	}, [imageFiles, memoizedImages]);
+	// FIXME: bug, cannot delete image
+	// useEffect(() => {
+	// 	if (imageArray.length === memoizedImages.length) return;
+	// 	setPendingImages(() =>
+	// 		imageArray.filter(
+	// 			(file) =>
+	// 				allowedFileTypes.includes(file.type) &&
+	// 				!isFileExists(memoizedImages, file)
+	// 		)
+	// 	);
+	// 	return () => setPendingImages([]);
+	// }, [imageArray, memoizedImages]);
 
+	// useEffect(() => {
+	// 	if (pendingImages.length === 0) return;
+	// 	Promise.all(
+	// 		pendingImages.map(async (image) => ({
+	// 			name: image.name,
+	// 			src: await toDataURLAsync(image),
+	// 		}))
+	// 	)
+	// 		.then((images) => {
+	// 			setNewImages((prevImages) => [...prevImages, ...images]);
+	// 		})
+	// 		.catch(() => {
+	// 			toast.error("Something went wrong");
+	// 		});
+	// }, [pendingImages]);
 	useEffect(() => {
-		if (pendingImages.length === 0) return;
+		if (imageArray.length === 0) {
+			setBase64Images([]);
+			return;
+		}
 		Promise.all(
-			pendingImages.map(async (image) => ({
-				name: image.name,
-				src: await toDataURLAsync(image),
-			}))
-		)
-			.then((images) => {
-				setNewImages((prevImages) => [...prevImages, ...images]);
+			imageArray.map(async (image) => {
+				const dataUrl = await toDataURLAsync(image);
+				return { name: image.name, src: dataUrl };
 			})
-			.catch(() => {
-				toast.error("Something went wrong");
-			});
-	}, [pendingImages]);
-
+		)
+			.then((images) => setBase64Images(() => images))
+			.catch(() => toast.error("Something went wrong"));
+	}, [imageArray]);
 	const onDelete = (options: { name: string }) => {
-		setNewImages((newImages) =>
-			newImages.filter((newImage) => newImage.name !== options.name)
+		setBase64Images((base64Images) =>
+			base64Images.filter((newImage) => newImage.name !== options.name)
 		);
-
-		setValue<typeof path>(
+		setValue(
 			path,
-			removeFileFromArray(imageFiles, options.name) as PathValue<
-				T,
-				FieldPath<T>
-			>
+			imageArray.filter((file) => file.name !== options.name)
 		);
 	};
 
-	return { newImages: memoizedImages, onDelete };
+	return { base64Images, onDelete };
 };

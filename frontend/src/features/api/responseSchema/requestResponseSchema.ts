@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { resultId, resultUlid, zodJson } from "../../../lib/schemaUtils";
+import { resultId, resultUlid } from "../../../lib/schemaUtils";
 
 const categoryResponseSchema = z.object({
 	categoryId: resultId,
@@ -57,7 +57,7 @@ type ImageDto = z.infer<typeof imageSchema>;
 
 const requestDetailsResponseSchema = requestResponseSchema
 	.extend({
-		itemDetail: zodJson,
+		itemDetail: z.record(z.string()),
 		categoryId: resultId,
 		categoryName: z.string().min(1),
 		images: z.array(imageSchema),

@@ -51,7 +51,7 @@ const FormItem = React.forwardRef<
 
 	return (
 		<FormItemContext.Provider value={{ id }}>
-			<div ref={ref} className={cn("space-y-2 mx-20", className)} {...props} />
+			<div ref={ref} className={cn("space-y-2", className)} {...props} />
 		</FormItemContext.Provider>
 	);
 });
@@ -166,7 +166,7 @@ const FormInput = <T extends FieldValues = FieldValues>({
 				<FormItem>
 					<FormLabel>{label}</FormLabel>
 					<FormControl>
-						{/* TODO: how to add a visible password toggle? */}
+						{/* TODO: add a visible password toggle? */}
 						<Input type={inputType} placeholder={placeHolder} {...field} />
 					</FormControl>
 					<FormMessage />
@@ -217,29 +217,32 @@ const FormFileInput = <T extends FieldValues = FieldValues>({
 	);
 };
 
-type TSelectItem = {
-	id: string;
-	name: string;
-};
-
-interface FormSelectProps<TFieldValues extends FieldValues = FieldValues> {
+interface BaseFormSelectProps<TFieldValues extends FieldValues = FieldValues> {
 	formControl: Control<
 		TFieldValues,
 		React.Context<FormFieldContextValue<FieldValues, string>>
 	>;
 	fieldName: FieldPath<TFieldValues>;
-	items: Array<TSelectItem>;
 	label?: string;
 	placeholder?: string;
 }
 
-const FormSelect = <T extends FieldValues = FieldValues>({
+type TSelectItem = {
+	id: string;
+	name: string;
+};
+interface FormSelectWithIdProps<TFieldValues extends FieldValues = FieldValues>
+	extends BaseFormSelectProps<TFieldValues> {
+	items: Array<TSelectItem>;
+}
+
+const FormSelectWithId = <T extends FieldValues = FieldValues>({
 	formControl,
 	fieldName,
 	items,
 	label = camelToTitleCase(fieldName),
 	placeholder = `Select ${label}`,
-}: FormSelectProps<T>) => {
+}: FormSelectWithIdProps<T>) => {
 	return (
 		<FormField
 			control={formControl}
@@ -268,6 +271,49 @@ const FormSelect = <T extends FieldValues = FieldValues>({
 	);
 };
 
+interface FormSelectWithStringProps<
+	TFieldValues extends FieldValues = FieldValues
+> extends BaseFormSelectProps<TFieldValues> {
+	items: Array<string>;
+	defaultValue?: string;
+}
+
+const FormSelectWithString = <T extends FieldValues = FieldValues>({
+	formControl,
+	fieldName,
+	items,
+	defaultValue,
+	label = camelToTitleCase(fieldName),
+	placeholder = `Select ${label}`,
+}: FormSelectWithStringProps<T>) => {
+	return (
+		<FormField
+			control={formControl}
+			name={fieldName}
+			render={({ field }) => (
+				<FormItem>
+					<FormLabel>{label}</FormLabel>
+					<Select onValueChange={field.onChange} defaultValue={defaultValue}>
+						<FormControl>
+							<SelectTrigger>
+								<SelectValue placeholder={placeholder} />
+							</SelectTrigger>
+						</FormControl>
+						<SelectContent>
+							{items.map((item) => (
+								<SelectItem key={item} value={item}>
+									{item}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
+					<FormMessage />
+				</FormItem>
+			)}
+		/>
+	);
+};
+
 export {
 	Form,
 	FormControl,
@@ -278,5 +324,6 @@ export {
 	FormItem,
 	FormLabel,
 	FormMessage,
-	FormSelect,
+	FormSelectWithId,
+	FormSelectWithString,
 };

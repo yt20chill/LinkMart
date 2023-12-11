@@ -5,6 +5,7 @@ import {
 	GetRequestsQuery,
 	RequestForm,
 	RequestId,
+	allowedFileTypes,
 	categoryIdSchema,
 	deleteImageParamsSchema,
 	getRequestsQuerySchema,
@@ -13,6 +14,7 @@ import {
 } from "./requestSchema";
 
 export {
+	allowedFileTypes,
 	categoryIdSchema,
 	deleteImageParamsSchema,
 	getRequestsQuerySchema,

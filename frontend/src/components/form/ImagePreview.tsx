@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import SweetAlert from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { isObjOfType } from "../../lib/utils";
@@ -32,7 +33,8 @@ const ImagePreview = (
 				? await props.onDelete({ imageId: props.imageId })
 				: props.onDelete({ name: props.name });
 		} catch (error) {
-			// TODO: add toast
+			console.error(error);
+			toast.error("Something went wrong");
 		}
 	};
 
