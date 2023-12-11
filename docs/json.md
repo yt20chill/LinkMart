@@ -193,32 +193,10 @@
 }
 ```
 
----
-
-### 📍 4.3 Get user address info
-
-| [GET] | /api/user/address |
-| ----- | ----------------- |
-
-> ⬆️ Resp:
-
-```js
-🟢 [200]  OK
-{
-    "message" : login successfully
-}
-```
-
-```js
-🔴 [400] BAD REQUEST
-{
-    "message" : missing username or password
-}
-```
 
 ---
 
-### 📍 4.4 User Address Info
+### 📍 4.3 User Address Info
 
 | [GET] | /api/user/address |
 | ----- | ----------------- |
@@ -235,7 +213,7 @@
 
 ---
 
-### 📍 4.5 Get user payment method
+### 📍 4.4 Get user payment method
 
 | [GET] | /api/user/payment |
 | ----- | ----------------- |
