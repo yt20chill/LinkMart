@@ -34,7 +34,7 @@ export function Filter() {
   const [categoryList] = useState<TabItem[]>(initCategoryList);
   const [countryList] = useState<TabItem[]>(initCountryList);
   return (
-    <div className="max-w-full bg-gradient-to-r from-orange-200 to-orange-400 text-orange-800">
+    <div className="max-w-full bg-gradient-to-r from-orange-50 to-orange-100/75 text-slate-600 shadow">
       <div className="max-w-7xl mx-auto">
         <FilterTab
           tabName="Category"
