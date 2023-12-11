@@ -234,6 +234,24 @@
 
 ---
 
+### 📍 4.5 Get user
+
+| [GET] | /api/user |
+| ----- | ----------------- |
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+** HOLD **
+// [{
+//     "username" :
+//     "provider_id" :
+// },...]
+```
+
+---
+
 ## 📎 5. Request Route
 
 ### 📍 5.1 Create Request
