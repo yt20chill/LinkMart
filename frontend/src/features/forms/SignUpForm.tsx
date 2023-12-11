@@ -1,22 +1,28 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
+import FormInput from "../../components/form/FormInput";
 import { Button } from "../../components/ui/Button";
-import { Form, FormInput } from "../../components/ui/Form";
 import { FetchError, queryKey } from "../../lib/apiUtils";
-import { SignUpDto } from "../../types/authModels";
 import { signUpAJAX } from "../api/authApi";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
-import { signUpSchema } from "./requestSchema/authSchema";
+import { SignUpDto, signUpSchema } from "./requestSchema/authSchema";
+
+const defaultValues: SignUpDto = {
+	email: "",
+	password: "",
+	confirmPassword: "",
+};
 
 function SignUpForm() {
-	const form = useForm<SignUpDto>({
+	const {
+		handleSubmit,
+		register,
+		formState: { errors },
+		setError,
+	} = useForm<SignUpDto>({
 		resolver: zodResolver(signUpSchema),
-		defaultValues: {
-			email: "",
-			password: "",
-			confirmPassword: "",
-		},
+		defaultValues,
 		mode: "onTouched",
 	});
 	const navigatePrev = useNavigateToPreviousPage();
@@ -24,44 +30,40 @@ function SignUpForm() {
 	const signUp = useMutation({
 		mutationFn: (signUpDto: Omit<SignUpDto, "confirmPassword">) =>
 			signUpAJAX(signUpDto),
-		onSuccess: async (jwt) => {
+		onSuccess: async ({ jwt }) => {
 			window.localStorage.setItem("access_token", jwt);
 			await queryClient.invalidateQueries(queryKey.AUTH);
 			navigatePrev();
 		},
 	});
 	const onSubmit = (formData: SignUpDto) => {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const { confirmPassword, ...rest } = formData;
+		if (rest.password !== confirmPassword)
+			setError("confirmPassword", { message: "Passwords do not match" });
 		signUp.mutate(rest);
-		form.reset();
 	};
 
 	return (
-		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-				<FormInput formControl={form.control} fieldName="email" />
+		<form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+			{Object.keys(defaultValues).map((name) => (
 				<FormInput
-					formControl={form.control}
-					fieldName="password"
-					inputType="password"
+					key={name}
+					type={/password/i.test(name) ? "password" : "text"}
+					name={name as keyof SignUpDto}
+					register={register}
+					errors={errors}
 				/>
-				<FormInput
-					formControl={form.control}
-					fieldName="confirmPassword"
-					inputType="password"
-				/>
-				{signUp.error instanceof FetchError && (
-					<p className="text-red-500">{signUp.error.message}</p>
+			))}
+			<Button type="submit" disabled={signUp.isLoading}>
+				Sign Up
+				{signUp.isLoading && (
+					<span className="loading loading-spinner loading-lg"></span>
 				)}
-				<Button type="submit" disabled={signUp.isLoading}>
-					Sign Up
-					{signUp.isLoading && (
-						<span className="loading loading-spinner loading-lg"></span>
-					)}
-				</Button>
-			</form>
-		</Form>
+			</Button>
+			{signUp.error instanceof FetchError && (
+				<p className="text-red-500">{signUp.error.message}</p>
+			)}
+		</form>
 	);
 }
 
