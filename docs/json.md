@@ -20,7 +20,7 @@
 
 ### 📍 1.1 Get all category
 
-| [GET] | /api/category |
+| [GET] | /category |
 | ----- | ------------- |
 
 > ⬆️ Resp:
@@ -44,7 +44,7 @@
 
 ### 📍 1.2 Category_field
 
-| [GET] | /api/category/:categoryId |
+| [GET] | /category/:categoryId |
 | ----- | ------------------------- |
 
 > ⬆️ Resp:
@@ -73,7 +73,7 @@
 
 ### 📍 2.1 Status
 
-| [GET] | /api/status |
+| [GET] | /status |
 | ----- | ----------- |
 
 > ⬆️ Resp:
@@ -99,7 +99,7 @@
 
 ### 📍 3.1 Order Status
 
-| [GET] | /api/orderStatus |
+| [GET] | /orderStatus |
 | ----- | ---------------- |
 
 > ⬆️ Resp:
@@ -590,7 +590,7 @@
 
 ### 8.1 Order Request
 
-| [GET] | /api/location |
+| [GET] | /location |
 | ----- | ------------- |
 
 > ⬆️ Resp:
@@ -606,7 +606,7 @@
 
 ### 📍 9.1 Logistic Company
 
-| [GET] | /api/logistic_company |
+| [GET] | /logistic_company |
 | ----- | --------------------- |
 
 > ⬆️ Resp:
