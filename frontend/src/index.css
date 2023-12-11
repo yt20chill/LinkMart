@@ -96,8 +96,8 @@ b.emo {
 }
 
 .bg-animate {
-	animation: loopRouteBG 6s linear infinite;
-	transform: rotate(0) translate(150px) rotate(0);
+	animation: loopRouteBG 12s linear infinite;
+	transform: rotate(0) translate(350px) rotate(0);
 }
 
 .bg-animate-reverse {
@@ -107,7 +107,7 @@ b.emo {
 
 @keyframes loopRouteBG {
 	100% {
-		transform: rotate(1turn) translate(150px) rotate(-1turn) scale(1);
+		transform: rotate(1turn) translate(350px) rotate(-1turn) scale(1);
 	}
 }
 

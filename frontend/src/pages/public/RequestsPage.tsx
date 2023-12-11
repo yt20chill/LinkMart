@@ -89,10 +89,10 @@ function RequestsPage() {
         ))}
         <RequestCardSkeleton />
       </div>
-      <div className="absolute text-base-100 bottom-16 right-16">
-        <div className="flex justify-center items-center bg-gradient-to-r from-orange-300 to-orange-500 p-4 rounded-badge shadow">
-          <span className="material-symbols-rounded me-1">add_circle</span>
-          Create Request
+      <div className="fixed text-base-100 bottom-0 right-0 mb-3 mr-3 md:mb-12 md:mr-12">
+        <div className="flex justify-center items-center bg-gradient-to-r from-amber-300 to-orange-500 p-4 gap-1 rounded-badge shadow">
+          <span className="material-symbols-rounded">add_circle</span>
+          <span className="max-md:hidden">Create Request</span>
         </div>
       </div>
     </>

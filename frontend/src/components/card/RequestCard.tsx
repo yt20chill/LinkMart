@@ -24,7 +24,7 @@ export function RequestCard(props: RequestDto) {
         </div>
 
         {props.offerPrice ? (
-          <div className="flex justify-end items-baseline text-2xl h-6 text-orange-800">
+          <div className="flex justify-end items-baseline text-2xl h-6 text-amber-800">
             <span className="text-sm">Offer $</span>
             {props.offerPrice}
           </div>
