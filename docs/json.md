@@ -107,12 +107,8 @@
 ```js
 🟢 [200]  OK
 {
-    "success" : true,
-    "data" :
-    {
-        "orderStatusId" : int
-        "orderStatusName" : string
-    }
+    "orderStatusId" : int
+    "orderStatusName" : string
 }
 ```
 

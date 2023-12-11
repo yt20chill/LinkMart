@@ -7,7 +7,7 @@ export function RequestCard(props: RequestDto) {
   return (
     <Link
       to={`/request-detail/${props.requestId}`}
-      className="icn-hvr-fill p-1 rounded-lg shadow-2xl hover:scale-105 transition-all bg-base-100/25 backdrop-blur-lg min-h-[340px] border border-base-200/75"
+      className="icn-hvr-fill p-1 rounded-lg shadow hover:shadow-2xl hover:scale-105 transition-all bg-base-100/25 backdrop-blur-lg min-h-[340px] border border-base-200/75"
     >
       <figure className="rounded-md h-48 flex justify-center bg-slate-300 overflow-hidden border border-gray-200">
         <img
@@ -24,7 +24,7 @@ export function RequestCard(props: RequestDto) {
         </div>
 
         {props.offerPrice ? (
-          <div className="flex justify-end items-baseline text-2xl h-6 text-orange-800">
+          <div className="flex justify-end items-baseline text-2xl h-6 text-amber-800">
             <span className="text-sm">Offer $</span>
             {props.offerPrice}
           </div>
