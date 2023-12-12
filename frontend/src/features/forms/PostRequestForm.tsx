@@ -23,6 +23,7 @@ import {
 import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 import { useUpdateRequestForm } from "../hooks/useUpdateForm";
+import SkeletonForm from "./SkeletonForm";
 
 type PostRequestFormProps = { requestId?: string };
 
@@ -97,74 +98,82 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 	};
 	return (
 		<>
-			<form onSubmit={handleSubmit(onSubmitBaseForm)}>
-				{categories && (
-					<FormSelect
+			{categories && locations ? (
+				<form onSubmit={handleSubmit(onSubmitBaseForm)}>
+					{categories && (
+						<FormSelect
+							register={register}
+							required={true}
+							errors={errors}
+							name="categoryId"
+							label="Category"
+							optionItems={categories.map((category) => ({
+								value: category.categoryId + "",
+								displayValue: category.categoryName,
+							}))}
+						/>
+					)}
+					{locations && (
+						<FormSelect
+							register={register}
+							required={true}
+							errors={errors}
+							name="locationId"
+							label="Location"
+							optionItems={locations.map((location) => ({
+								value: location.locationId + "",
+								displayValue: location.locationName,
+							}))}
+						/>
+					)}
+					<FormFileInput
+						name="imageFile"
 						register={register}
-						required={true}
+						setValue={setValue}
 						errors={errors}
-						name="categoryId"
-						label="Category"
-						optionItems={categories.map((category) => ({
-							value: category.categoryId + "",
-							displayValue: category.categoryName,
-						}))}
+						multiple={true}
+						accept={allowedFileTypes.join(",")}
 					/>
-				)}
-				{locations && (
-					<FormSelect
-						register={register}
-						required={true}
-						errors={errors}
-						name="locationId"
-						label="Location"
-						optionItems={locations.map((location) => ({
-							value: location.locationId + "",
-							displayValue: location.locationName,
-						}))}
-					/>
-				)}
-				<FormFileInput
-					name="imageFile"
-					register={register}
-					setValue={setValue}
-					errors={errors}
-					multiple={true}
-					accept={allowedFileTypes.join(",")}
-				/>
-				{images.length > 0 &&
-					images.map((img) => (
-						<ImagePreview
-							key={img.imageId}
-							imageId={img.imageId}
-							src={img.imagePath}
-							onDelete={deleteImage}
+					{images.length > 0 &&
+						images.map((img) => (
+							<ImagePreview
+								key={img.imageId}
+								imageId={img.imageId}
+								src={img.imagePath}
+								onDelete={deleteImage}
+							/>
+						))}
+					{base64Images.length > 0 &&
+						base64Images.map((img) => (
+							<ImagePreview key={img.name} {...img} onDelete={onDelete} />
+						))}
+					{Object.keys(text).map((field) => (
+						<FormInput
+							key={field}
+							name={field as keyof RequestForm}
+							register={register}
+							errors={errors}
 						/>
 					))}
-				{base64Images.length > 0 &&
-					base64Images.map((img) => (
-						<ImagePreview key={img.name} {...img} onDelete={onDelete} />
-					))}
-				{Object.keys(text).map((field) => (
-					<FormInput
-						key={field}
-						name={field as keyof RequestForm}
-						register={register}
-						errors={errors}
+					{categoryId && (
+						<CategoryFieldsForm
+							register={categoryForm.register}
+							errors={categoryForm.formState.errors}
+							categoryId={+categoryId}
+						/>
+					)}
+					<input
+						type="submit"
+						value="Submit"
+						disabled={isEditing || isPosting}
 					/>
-				))}
-				{categoryId && (
-					<CategoryFieldsForm
-						register={categoryForm.register}
-						errors={categoryForm.formState.errors}
-						categoryId={+categoryId}
-					/>
-				)}
-				<input type="submit" value="Submit" disabled={isEditing || isPosting} />
-				{(isEditing || isPosting) && (
-					<span className="loading loading-spinner loading-lg"></span>
-				)}
-			</form>
+					{(isEditing || isPosting) && (
+						<span className="loading loading-spinner loading-lg"></span>
+					)}
+				</form>
+			) : (
+				<SkeletonForm />
+			)}
 		</>
 	);
 };

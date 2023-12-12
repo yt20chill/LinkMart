@@ -6,12 +6,13 @@ export function useQueryContainer() {
 	const getAllCategories = useQuery({
 		queryKey: [queryKey.REQUEST, "categories"],
 		queryFn: getAllCategoriesAJAX,
-		cacheTime: Infinity,
+		// staleTime tells you how fresh you data is. infinity means it will never refetch
+		staleTime: Infinity,
 	});
 	const getAllLocations = useQuery({
 		queryKey: [queryKey.REQUEST, "locations"],
 		queryFn: getAllLocationsAJAX,
-		cacheTime: Infinity,
+		staleTime: Infinity,
 	});
 
 	return { getAllCategories, getAllLocations };
