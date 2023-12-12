@@ -19,14 +19,10 @@ const locationsResponseSchema = z.array(locationResponseSchema);
 
 type LocationDto = z.infer<typeof locationResponseSchema>;
 
-const categoryFieldOptionResponseSchema = z.object({
-	categoryFieldOptionName: z.string().min(1),
-});
-
 const categoryFieldResponseSchema = z.object({
 	categoryFieldId: resultId,
 	categoryFieldName: z.string().min(1),
-	categoryFieldOption: z.array(categoryFieldOptionResponseSchema),
+	categoryFieldOptions: z.array(z.string()),
 });
 
 const categoryFieldsResponseSchema = z.array(categoryFieldResponseSchema);

@@ -24,16 +24,6 @@ import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 import { useUpdateRequestForm } from "../hooks/useUpdateForm";
 
-// const categories = [
-//   { categoryId: 1, categoryName: "Clothes" },
-//   { categoryId: 2, categoryName: "Shoes" },
-// ];
-
-// const locations = [
-//   { locationId: 1, locationName: "Singapore" },
-//   { locationId: 2, locationName: "Malaysia" },
-// ];
-
 type PostRequestFormProps = { requestId?: string };
 
 const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
@@ -93,7 +83,6 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 		"imageFile",
 		setValue
 	);
-	console.log({ base64Images, file: watch(["imageFile"]) });
 	const onSubmitBaseForm = async (data: RequestForm) => {
 		// setFormData((formData) => appendFormData(data, formData));
 		setFormData((formData) =>

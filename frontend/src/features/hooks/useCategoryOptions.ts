@@ -4,14 +4,7 @@ import { queryKey } from "../../lib/apiUtils";
 import { CategoryFieldDto } from "../../schemas/responseSchema";
 import { getCategoryFieldsAJAX } from "../api/requestApi";
 
-const mockDropDownFields = [{ size: ["XS", "S"] }, { color: ["Red", "Blue"] }];
-const mockTextFields = ["Brand", "Material"];
 export const useCategoryOptions = (categoryId: number) => {
-	return {
-		dropDownFields: mockDropDownFields,
-		textFields: mockTextFields,
-		defaultEmptyValues: { size: "", color: "", Brand: "", Material: "" },
-	};
 	if (!categoryId || isNaN(categoryId))
 		throw new Error("categoryId is invalid");
 	const { data: categoryFields } = useQuery<CategoryFieldDto[]>({
@@ -29,20 +22,18 @@ export const useCategoryOptions = (categoryId: number) => {
 
 	useEffect(() => {
 		if (!categoryFields) return;
-		const dropDownMap = categoryFields
-			.filter((field) => field.categoryFieldOption.length > 0)
+		const dropDownMap: Record<string, string[]>[] = categoryFields
+			.filter((field) => field.categoryFieldOptions.length > 0)
 			.reduce((acc, field) => {
 				acc.push({
-					[field.categoryFieldName]: field.categoryFieldOption.map(
-						(option) => option.categoryFieldOptionName
-					),
+					[field.categoryFieldName]: field.categoryFieldOptions,
 				});
 				return acc;
 			}, [] as Array<Record<string, string[]>>);
 		setDropDownFields(() => dropDownMap);
 		setTextFields(() =>
 			categoryFields
-				.filter((field) => field.categoryFieldOption.length === 0)
+				.filter((field) => field.categoryFieldOptions.length === 0)
 				.map((field) => field.categoryFieldName)
 		);
 		setDefaultEmptyValues(
