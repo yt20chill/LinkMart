@@ -1,14 +1,12 @@
-import { useState } from "react";
-import { UseSearchParamsWrapperReturnType } from "../../features/hooks/useSearchParamsWrapper";
+import { memo, useState } from "react";
+import { FilterKeyProps } from "../../types/sharePropsModel";
 
-type FilterKeyProps = {
-	name: string;
-	value: string;
-	searchParamWrapper: UseSearchParamsWrapperReturnType;
-};
-
-const FilterKey = ({ name, value, searchParamWrapper }: FilterKeyProps) => {
-	const { hasSearchParams, toggleSearchParams } = searchParamWrapper;
+export const FilterKey = ({
+	name,
+	value,
+	searchParamsWrapper,
+}: FilterKeyProps) => {
+	const { hasSearchParams, toggleSearchParams } = searchParamsWrapper;
 	const [isChecked, setIsChecked] = useState<boolean>(
 		hasSearchParams(name, value)
 	);
@@ -17,7 +15,7 @@ const FilterKey = ({ name, value, searchParamWrapper }: FilterKeyProps) => {
 		toggleSearchParams(name, value);
 	};
 	return (
-		<div className="form-control">
+		<li className="form-control">
 			<label className="label cursor-pointer">
 				<span className="label-text">{value}</span>
 				<input
@@ -27,8 +25,8 @@ const FilterKey = ({ name, value, searchParamWrapper }: FilterKeyProps) => {
 					onChange={onChange}
 				/>
 			</label>
-		</div>
+		</li>
 	);
 };
 
-export default FilterKey;
+export default memo(FilterKey);

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import FilterDrawer from "../../features/filter/FilterDrawer";
 
 const NotFoundPage = () => {
 	const navigate = useNavigate();
@@ -13,7 +12,6 @@ const NotFoundPage = () => {
 						Uh-oh!
 					</p>
 					<p className="mt-4 text-gray-500">We can&apos;t find that page.</p>
-					<FilterDrawer />
 					<p
 						onClick={() => {
 							navigate("/");
