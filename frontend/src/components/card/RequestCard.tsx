@@ -28,7 +28,7 @@ export function RequestCard(props: RequestDto) {
         <div>
           <Link
             to={siteMap(RouteEnum.PostRequest)}
-            className="hidden flex-col justify-center rounded-lg border border-base-300/75 bg-base-200/10 backdrop-blur-md [&>span]:hover:text-2xl w-12 h-12 hover:w-24 hover:h-16 [&_div]:hover:flex [&_div]:hover:max-h-24 transition-all text-slate-500 overflow-hidden hover:ring-2 ring-orange-500/25 hover:bg-orange-500 hover:text-slate-100"
+            className="hidden flex-col justify-center rounded-lg border border-base-300/75 bg-base-200/10 backdrop-blur-md [&>span]:hover:text-2xl w-12 h-12 hover:w-24 hover:h-16 [&_div]:hover:flex [&_div]:hover:max-h-24 transition-all text-slate-500 overflow-hidden hover:ring-2 ring-orange-500/25 hover:bg-base-200/50 hover:text-orange-500 hover:shadow-lg hover:rounded-3xl"
           >
             <span className="material-symbols-rounded text-lg mx-1 flex items-center justify-center">
               add_shopping_cart
