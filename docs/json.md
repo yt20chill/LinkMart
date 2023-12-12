@@ -20,7 +20,7 @@
 
 ### 📍 1.1 Get all category
 
-| [GET] | /api/category |
+| [GET] | /category |
 | ----- | ------------- |
 
 > ⬆️ Resp:
@@ -44,7 +44,7 @@
 
 ### 📍 1.2 Category_field
 
-| [GET] | /api/category/:categoryId |
+| [GET] | /category/:categoryId |
 | ----- | ------------------------- |
 
 > ⬆️ Resp:
@@ -73,7 +73,7 @@
 
 ### 📍 2.1 Status
 
-| [GET] | /api/status |
+| [GET] | /status |
 | ----- | ----------- |
 
 > ⬆️ Resp:
@@ -99,7 +99,7 @@
 
 ### 📍 3.1 Order Status
 
-| [GET] | /api/orderStatus |
+| [GET] | /orderStatus |
 | ----- | ---------------- |
 
 > ⬆️ Resp:
@@ -193,32 +193,10 @@
 }
 ```
 
----
-
-### 📍 4.3 Get user address info
-
-| [GET] | /api/user/address |
-| ----- | ----------------- |
-
-> ⬆️ Resp:
-
-```js
-🟢 [200]  OK
-{
-    "message" : login successfully
-}
-```
-
-```js
-🔴 [400] BAD REQUEST
-{
-    "message" : missing username or password
-}
-```
 
 ---
 
-### 📍 4.4 User Address Info
+### 📍 4.3 User Address Info
 
 | [GET] | /api/user/address |
 | ----- | ----------------- |
@@ -235,7 +213,7 @@
 
 ---
 
-### 📍 4.5 Get user payment method
+### 📍 4.4 Get user payment method
 
 | [GET] | /api/user/payment |
 | ----- | ----------------- |
@@ -252,6 +230,24 @@
 //     "card_holder_name" :
 //     "expiry_date" :
 // },...]
+```
+
+---
+
+### 📍 4.5 Get user
+
+| [GET] | /api/user |
+| ----- | ----------------- |
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+** HOLD **
+// [{
+//     "username" :
+//     "provider_id" :
+// }]
 ```
 
 ---
@@ -594,7 +590,7 @@
 
 ### 8.1 Order Request
 
-| [GET] | /api/location |
+| [GET] | /location |
 | ----- | ------------- |
 
 > ⬆️ Resp:
@@ -610,7 +606,7 @@
 
 ### 📍 9.1 Logistic Company
 
-| [GET] | /api/logistic_company |
+| [GET] | /logistic_company |
 | ----- | --------------------- |
 
 > ⬆️ Resp:
