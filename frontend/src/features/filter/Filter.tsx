@@ -38,7 +38,7 @@ export function Filter() {
 
   return (
     <>
-      <div className="max-w-full bg-gradient-to-r from-orange-300 to-amber-300/75 text-base-100 shadow">
+      <div className="max-w-full bg-gradient-to-r fr  om-orange-300 to-amber-300/75 text-base-100 shadow">
         <div className="max-w-7xl mx-auto">
           {categories ? (
             <FilterTab
@@ -46,9 +46,9 @@ export function Filter() {
               tabIcon="category"
               filterKey="category"
               onClick={onClick}
-              tabItemList={categories.map((c) => ({
-                id: c.categoryId,
-                name: c.categoryName,
+              tabItemList={categories.map((category) => ({
+                id: category.categoryId,
+                name: category.categoryName,
               }))}
             />
           ) : (
@@ -60,9 +60,9 @@ export function Filter() {
               tabIcon="public"
               filterKey="location"
               onClick={onClick}
-              tabItemList={locations.map((l) => ({
-                id: l.locationId,
-                name: l.locationName,
+              tabItemList={locations.map((location) => ({
+                id: location.locationId,
+                name: location.locationName,
               }))}
             />
           ) : (
