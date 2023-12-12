@@ -7,7 +7,7 @@ import { Filter } from "../../features/filter/Filter";
 import { useSearchParamsWrapper } from "../../features/hooks/useSearchParamsWrapper";
 import { queryKey } from "../../lib/apiUtils";
 import { getAllRequestsAJAX } from "../../services/api/requestApi";
-import { RouteEnum, siteMap } from "../routes.config";
+import { RouteEnum, siteMap } from "../../services/routes.config";
 
 const fakeRequestList: RequestDto[] = [
 	{

@@ -1,4 +1,4 @@
-import { RouteEnum, siteMap } from "@/pages/routes.config";
+import { RouteEnum, siteMap } from "@/services/routes.config";
 import { useAuthStore } from "@/services/stores/authStore";
 import { AuthorizeLevel } from "@/types/authModels";
 import { Link } from "react-router-dom";

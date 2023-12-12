@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Navbar } from "./components/navbar/Navbar";
 import { AnimatedBG } from "./features/animatedBackground/AnimatedBG";
-import { routeConfigArray } from "./pages/routes.config";
+import { routeConfigArray } from "./services/routes.config";
 
 function App() {
 	return (
@@ -11,7 +11,7 @@ function App() {
 			<Navbar />
 			<ToastContainer
 				position="top-center"
-				autoClose={5000}
+				autoClose={2000}
 				closeOnClick
 				pauseOnHover
 				pauseOnFocusLoss={false}
