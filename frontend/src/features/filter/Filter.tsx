@@ -1,29 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import FilterGroup from "../../components/search/FilterGroup";
-import { CategoryDto, LocationDto } from "../../schemas/responseSchema";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 import { useSearchParamsWrapper } from "../hooks/useSearchParamsWrapper";
-
-const categories: CategoryDto[] = [
-	{
-		categoryId: 1,
-		categoryName: "Clothes",
-	},
-	{
-		categoryId: 2,
-		categoryName: "Figure",
-	},
-];
-const locations: LocationDto[] = [
-	{
-		locationId: 1,
-		locationName: "Japan",
-	},
-	{
-		locationId: 2,
-		locationName: "Korea",
-	},
-];
 
 export function Filter() {
 	const { categories, locations } = useQueryContainer();
