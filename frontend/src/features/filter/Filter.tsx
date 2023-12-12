@@ -1,11 +1,13 @@
-import { useSearchParams } from "react-router-dom";
 import FilterGroup from "../../components/search/FilterGroup";
 import { useQueryContainer } from "../hooks/useQueryContainer";
-import { useSearchParamsWrapper } from "../hooks/useSearchParamsWrapper";
+import { UseSearchParamsWrapperReturnType } from "../hooks/useSearchParamsWrapper";
 
-export function Filter() {
+type FilterProps = {
+	searchParamsWrapper: UseSearchParamsWrapperReturnType;
+};
+
+export function Filter({ searchParamsWrapper }: FilterProps) {
 	const { categories, locations } = useQueryContainer();
-	const searchParamsWrapper = useSearchParamsWrapper(useSearchParams());
 
 	return (
 		<>

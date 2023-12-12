@@ -1,10 +1,13 @@
 import { RequestCard } from "@/components/card/RequestCard";
 import { RequestCardSkeleton } from "@/components/card/RequestCardSkeleton";
 import { RequestDto } from "@/schemas/responseSchema";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useInfiniteQuery } from "react-query";
+import { Link, useSearchParams } from "react-router-dom";
 import { Filter } from "../../features/filter/Filter";
-import { RouteEnum, siteMap } from "../routes.config";
+import { useSearchParamsWrapper } from "../../features/hooks/useSearchParamsWrapper";
+import { getAllRequestsAJAX } from "../../services/api/requestApi";
+import { queryKey } from "../../services/query.config";
+import { RouteEnum, siteMap } from "../../services/routes.config";
 
 const fakeRequestList: RequestDto[] = [
 	{
@@ -75,20 +78,37 @@ const fakeRequestList: RequestDto[] = [
 ];
 
 function RequestsPage() {
-	const [requestList] = useState<RequestDto[]>(fakeRequestList);
-	//const [page, setPage] = useState(1);
-	//const requestList = getAllRequestsAJAX()
+	const limit = 15;
+	const searchParamsWrapper = useSearchParamsWrapper(useSearchParams());
+	const { searchParams } = searchParamsWrapper;
+	const { data: requests, isFetchingNextPage } = useInfiniteQuery<RequestDto[]>(
+		{
+			queryKey: [queryKey.REQUEST, { searchParams: searchParams.toString() }],
+			queryFn: ({ pageParam = 1 }) => {
+				searchParams.set("p", (pageParam as number).toString());
+				searchParams.set("limit", limit.toString());
+				return getAllRequestsAJAX(searchParams);
+			},
+			getNextPageParam: (lastPage, allPages): number | undefined => {
+				return lastPage.length === limit ? allPages.length + 1 : undefined;
+			},
+		}
+	);
+
 	return (
 		<>
-			<Filter />
+			<Filter searchParamsWrapper={searchParamsWrapper} />
 			<div className="mt-5 max-w-7xl max-xl:px-2 mx-auto ">
 				<h1 className="text-black text-xl "></h1>
 			</div>
 			<div className="mt-5 max-w-7xl max-xl:px-2 mx-auto grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-				{requestList.map((item) => (
-					<RequestCard key={item.requestId} {...item} />
-				))}
-				<RequestCardSkeleton />
+				{requests ? (
+					requests.pages.map((data) =>
+						data.map((item) => <RequestCard key={item.requestId} {...item} />)
+					)
+				) : (
+					<RequestCardSkeleton />
+				)}
 			</div>
 			<Link
 				to={siteMap(RouteEnum.PostRequest)}
@@ -99,6 +119,9 @@ function RequestsPage() {
 					<span className="max-md:hidden">Create Request</span>
 				</div>
 			</Link>
+			{isFetchingNextPage && (
+				<span className="loading loading-dots loading-lg"></span>
+			)}
 		</>
 	);
 }

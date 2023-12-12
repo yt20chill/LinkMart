@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import SignInForm from "../../features/forms/SignInForm";
-import { RouteEnum, siteMap } from "../routes.config";
+import { RouteEnum, siteMap } from "../../services/routes.config";
 
 function SignInPage() {
 	return (

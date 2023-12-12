@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { queryKey } from "../../lib/apiUtils";
 import { dtoToString } from "../../lib/formUtils";
 import { RequestForm } from "../../schemas/requestSchema";
 import { getRequestDetailsAJAX } from "../../services/api/requestApi";
+import { queryKey } from "../../services/query.config";
 
 // type Identifiers = { requestId: string } | { orderId: string };
 

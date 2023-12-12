@@ -1,4 +1,8 @@
-import { AdminSignInPage, AdminTaskDetailsPage, AdminTasksPage } from "./admin";
+import {
+	AdminSignInPage,
+	AdminTaskDetailsPage,
+	AdminTasksPage,
+} from "../pages/admin";
 import {
 	DashboardPage,
 	OfferDetailsPage,
@@ -6,14 +10,14 @@ import {
 	ProviderProfilePage,
 	TaskDetailsPage,
 	TaskPage,
-} from "./provider";
+} from "../pages/provider";
 import {
 	HomePage,
 	NotFoundPage,
 	RequestsPage,
 	SignInPage,
 	SignUpPage,
-} from "./public";
+} from "../pages/public";
 import {
 	OrderDetailsPage,
 	ProfilePage,
@@ -21,10 +25,10 @@ import {
 	RequestDetailsPage,
 	UserOrderPage,
 	UserRequestsPage,
-} from "./user";
+} from "../pages/user";
 
+import PostRequestPage from "../pages/user/PostRequestPage";
 import { AuthorizeLevel } from "../types/authModels";
-import PostRequestPage from "./user/PostRequestPage";
 
 interface TRouteConfig {
 	name: string;
