@@ -11,6 +11,7 @@ const FilterKey = ({ name, value }: FilterKeyProps) => {
 	// only modify searchParams. Manage fetch data on the page component
 	useEffect(() => {}, [isChecked]);
 	const [searchParams, setSearchParams] = useSearchParams();
+
 	return (
 		<div className="form-control">
 			<label className="label cursor-pointer">
@@ -19,7 +20,7 @@ const FilterKey = ({ name, value }: FilterKeyProps) => {
 					type="checkbox"
 					className="checkbox checkbox-primary"
 					checked={isChecked}
-					onClick={() => setIsChecked(!isChecked)}
+					onChange={(e) => setIsChecked(e.target.checked)}
 				/>
 			</label>
 		</div>
