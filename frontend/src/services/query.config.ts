@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { QueryClient } from "react-query";
 import { FetchError } from "../lib/apiUtils";
 
@@ -21,14 +22,22 @@ export const requestApiRoutes = Object.freeze({
 	IMAGE: `/request/image`,
 });
 
+const errorCodeAbandonRetry = [401, 403, 404, 500];
+
 export const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			retry: (failureCount, error) => {
-				return (
-					(error instanceof FetchError && error.status === 500) ||
-					failureCount > 2
-				);
+				// if failureCount > 3, always return false
+				return failureCount > 3
+					? false
+					: // else check network error
+					  error instanceof AxiosError &&
+							error.code === "ERR_NETWORK" &&
+							!(
+								error instanceof FetchError &&
+								errorCodeAbandonRetry.includes(error.status)
+							);
 			},
 		},
 	},
