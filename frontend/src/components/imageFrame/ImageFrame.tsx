@@ -3,9 +3,9 @@ export function ImageFrame(props: {
   onClickFn: (e: React.MouseEvent) => void;
 }) {
   return (
-    <div className="hover:scale-105 hover:z-10 flex aspect-square overflow-hidden rounded border border-base-200/50 hover:ring-2 ring-0 hover:ring-offset-4 ring-offset-0 ring-orange-200 transition-all">
+    <div className="hover:scale-110 z-[1] hover:z-10 flex aspect-square overflow-hidden hover:shadow rounded hover:ring-2 ring-slate-800/50 transition-all cursor-pointer">
       <img
-        title="fake"
+        title={props.path}
         className="object-cover"
         src={props.path}
         onClick={(e) => props.onClickFn(e)}

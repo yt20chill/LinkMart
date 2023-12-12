@@ -29,7 +29,7 @@ function RequestDetailsPage() {
               onMouseLeave={(e) => imageHoverEnd(e)}
             />
           </div>
-          <div className="mt-3 grid grid-cols-5 relative">
+          <div className="mt-2 grid grid-cols-5 relative gap-2">
             {fakeImgList.map((itm) => (
               <ImageFrame
                 key={itm.path}
