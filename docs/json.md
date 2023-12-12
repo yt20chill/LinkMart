@@ -315,7 +315,9 @@
 
 ```js
 🟢 [200]  OK
-[{
+{totalNumberRequest: 100(Total Record),
+[
+{
     "requestId" : string (ulid),
     "locationId" : int(location.location_id),
     "locationName" : string(location.name),
@@ -325,6 +327,7 @@
     "createdBy": string(user.username)
     "updatedAt": DateTime
 },.../* Max 30Requests */]
+}
 ```
 
 ```js
