@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { UseSearchParamsWrapperReturnType } from "../../features/hooks/useSearchParamsWrapper";
 
 type FilterKeyProps = {
 	name: string;
 	value: string;
+	searchParamWrapper: UseSearchParamsWrapperReturnType;
 };
 
-const FilterKey = ({ name, value }: FilterKeyProps) => {
-	const [isChecked, setIsChecked] = useState<boolean>(false);
-	// only modify searchParams. Manage fetch data on the page component
-	useEffect(() => {}, [isChecked]);
-	const [searchParams, setSearchParams] = useSearchParams();
-
+const FilterKey = ({ name, value, searchParamWrapper }: FilterKeyProps) => {
+	const { hasSearchParams, toggleSearchParams } = searchParamWrapper;
+	const [isChecked, setIsChecked] = useState<boolean>(
+		hasSearchParams(name, value)
+	);
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setIsChecked(e.target.checked);
+		toggleSearchParams(name, value);
+	};
 	return (
 		<div className="form-control">
 			<label className="label cursor-pointer">
@@ -20,7 +24,7 @@ const FilterKey = ({ name, value }: FilterKeyProps) => {
 					type="checkbox"
 					className="checkbox checkbox-primary"
 					checked={isChecked}
-					onChange={(e) => setIsChecked(e.target.checked)}
+					onChange={onChange}
 				/>
 			</label>
 		</div>
