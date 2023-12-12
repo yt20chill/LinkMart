@@ -38,7 +38,7 @@ export function Filter() {
 
   return (
     <>
-      <div className="max-w-full bg-gradient-to-r fr  om-orange-300 to-amber-300/75 text-base-100 shadow">
+      <div className="max-w-full bg-gradient-to-r from-orange-300 to-amber-300/75 text-base-100 shadow">
         <div className="max-w-7xl mx-auto">
           {categories ? (
             <FilterTab
