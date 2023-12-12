@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { resultId, resultUlid } from "../../../lib/schemaUtils";
+import { resultId, resultUlid } from "../../lib/schemaUtils";
 
 const categoryResponseSchema = z.object({
 	categoryId: resultId,

@@ -1,5 +1,5 @@
-import { RequestDto } from "@/features/api/responseSchema";
 import { mapDate } from "@/lib/utils";
+import { RequestDto } from "@/schemas/responseSchema";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 

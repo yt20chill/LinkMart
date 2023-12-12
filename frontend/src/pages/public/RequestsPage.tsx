@@ -1,11 +1,8 @@
-import { Filter } from "@/features/filter/Filter";
-import { getAllRequestsAJAX } from "@/features/api/requestApi";
-import { RequestDto } from "@/features/api/responseSchema";
-import { useState } from "react";
 import { RequestCard } from "@/components/card/RequestCard";
 import { RequestCardSkeleton } from "@/components/card/RequestCardSkeleton";
-import { Link } from "react-router-dom";
-import { RouteEnum, siteMap } from "../routes.config";
+import { Filter } from "@/features/filter/Filter";
+import { RequestDto } from "@/schemas/responseSchema";
+import { useState } from "react";
 
 const fakeRequestList: RequestDto[] = [
   {
@@ -91,15 +88,12 @@ function RequestsPage() {
         ))}
         <RequestCardSkeleton />
       </div>
-      <Link
-        to={siteMap(RouteEnum.NotFound)}
-        className="fixed text-base-100 bottom-0 right-0 mb-3 mr-3 md:mb-12 md:mr-12"
-      >
+      <div className="fixed text-base-100 bottom-0 right-0 mb-3 mr-3 md:mb-12 md:mr-12">
         <div className="flex justify-center items-center bg-gradient-to-r from-amber-300 to-orange-500 p-4 gap-1 rounded-badge shadow">
           <span className="material-symbols-rounded">add_circle</span>
           <span className="max-md:hidden">Create Request</span>
         </div>
-      </Link>
+      </div>
     </>
   );
 }

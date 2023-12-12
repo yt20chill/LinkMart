@@ -1,7 +1,7 @@
 import { FieldValues, UseFormSetValue } from "react-hook-form";
-import { allowedFileTypes } from "../../features/forms/requestSchema";
 import { BaseFormInputProps } from "../../lib/formUtils";
 import { camelToTitleCase } from "../../lib/utils";
+import { allowedFileTypes } from "../../schemas/requestSchema";
 import ErrorMessage from "./ErrorMessage";
 
 type FormFileInputProps<T extends FieldValues> = BaseFormInputProps<T> & {

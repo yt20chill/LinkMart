@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { queryKey } from "../../lib/apiUtils";
-import { getCategoryFields } from "../api/requestApi";
-import { CategoryFieldDto } from "../api/responseSchema";
+import { CategoryFieldDto } from "../../schemas/responseSchema";
+import { getCategoryFieldsAJAX } from "../api/requestApi";
 
 const mockDropDownFields = [{ size: ["XS", "S"] }, { color: ["Red", "Blue"] }];
 const mockTextFields = ["Brand", "Material"];
@@ -16,7 +16,7 @@ export const useCategoryOptions = (categoryId: number) => {
 		throw new Error("categoryId is invalid");
 	const { data: categoryFields } = useQuery<CategoryFieldDto[]>({
 		queryKey: [queryKey.REQUEST, { categoryId }],
-		queryFn: () => getCategoryFields({ categoryId }),
+		queryFn: () => getCategoryFieldsAJAX({ categoryId }),
 		cacheTime: Infinity,
 	});
 	const [dropDownFields, setDropDownFields] = useState<
