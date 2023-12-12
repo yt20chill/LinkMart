@@ -46,9 +46,9 @@ export function Filter() {
 							tabIcon="category"
 							filterKey="category"
 							onClick={onClick}
-							tabItemList={categories.map((c) => ({
-								id: c.categoryId,
-								name: c.categoryName,
+							tabItemList={categories.map((category) => ({
+								id: category.categoryId,
+								name: category.categoryName,
 							}))}
 						/>
 					) : (
@@ -60,9 +60,9 @@ export function Filter() {
 							tabIcon="public"
 							filterKey="location"
 							onClick={onClick}
-							tabItemList={locations.map((l) => ({
-								id: l.locationId,
-								name: l.locationName,
+							tabItemList={locations.map((location) => ({
+								id: location.locationId,
+								name: location.locationName,
 							}))}
 						/>
 					) : (

@@ -20,16 +20,16 @@ axios.defaults.headers.common["Authorization"] =
 	`Bearer ${localStorage.getItem("token")}` ?? undefined;
 
 export const authApiRoutes = Object.freeze({
-	SIGN_IN: `/user/login`,
-	SIGN_UP: `/user/registration`,
-	GET_AUTH: `/user`,
+	SIGN_IN: `/login`,
+	SIGN_UP: `/signup`,
+	GET_AUTH: `/api/user`,
 });
 
 export const requestApiRoutes = Object.freeze({
-	CATEGORY: `/api/category`,
-	LOCATION: `/api/location`,
-	REQUEST: `/api/request`,
-	IMAGE: `/api/request/image`,
+	CATEGORY: `/category`,
+	LOCATION: `/location`,
+	REQUEST: `/request`,
+	IMAGE: `/request/image`,
 });
 
 export class FetchError extends Error {
@@ -84,8 +84,13 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 			: (undefined as ResultType);
 	} catch (error) {
 		toast.error("Something went wrong");
-		if (isAxiosError(error))
-			throw new FetchError(error.status, error.message ?? error.code);
+		if (isAxiosError(error)) {
+			console.error(error);
+			throw new FetchError(
+				error.status,
+				error.response?.data.message ?? error.code
+			);
+		}
 		if (error instanceof ZodError)
 			throw new FetchError(
 				400,
