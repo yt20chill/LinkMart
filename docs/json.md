@@ -126,7 +126,7 @@
 
 ### 📍 4.1 User Registration
 
-|[POST] |/api/user/registration
+|[POST] |/signup
 
 > ⬇️ Req Body:
 
@@ -165,7 +165,7 @@
 
 ### 📍 4.2 User Login
 
-| [POST] | /api/user/login |
+| [POST] | /login |
 | ------ | --------------- |
 
 > ⬇️ Req Body:
@@ -256,7 +256,7 @@
 
 ### 📍 5.1 Create Request
 
-| [POST] | /api/request |
+| [POST] | /request |
 | ------ | ------------ |
 
 > ⬇️ Req Body:
@@ -295,12 +295,12 @@
 
 ### 📍 5.2 Get All Requests (Limit 30)
 
-| [Get] | /api/request |
+| [Get] | /request |
 | ----- | ------------ |
 
 ##### 📍 5.2.1 Get All - with queries
 
-| [Get] | /api/request?p={page}&category={category}&location={location} |
+| [Get] | /api/request?p={page}&limit={limit}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
 
 ##### 📍 5.2.2 Get All - by userId (via created_by)
@@ -315,7 +315,9 @@
 
 ```js
 🟢 [200]  OK
-[{
+{totalNumberRequest: 100(Total Record),
+[
+{
     "requestId" : string (ulid),
     "locationId" : int(location.location_id),
     "locationName" : string(location.name),
@@ -324,7 +326,8 @@
     "offerPrice"? : float,
     "createdBy": string(user.username)
     "updatedAt": DateTime
-},.../* Max 30Requests */]
+},.../* Max 30 Requests */]
+}
 ```
 
 ```js
