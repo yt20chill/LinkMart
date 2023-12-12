@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { queryKey } from "../../lib/apiUtils";
+import { CategoryFieldDto } from "../../schemas/responseSchema";
 import { getCategoryFieldsAJAX } from "../api/requestApi";
-import { CategoryFieldDto } from "../api/responseSchema";
 
 const mockDropDownFields = [{ size: ["XS", "S"] }, { color: ["Red", "Blue"] }];
 const mockTextFields = ["Brand", "Material"];

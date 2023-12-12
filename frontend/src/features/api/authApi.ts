@@ -1,14 +1,14 @@
 import { authApiRoutes, axiosWrapper } from "../../lib/apiUtils";
+import { SignInDto, SignUpDto } from "../../schemas/requestSchema";
 import { AuthorizeLevel } from "../../types/authModels";
-import { SignInDto, SignUpDto } from "../forms/requestSchema";
 
-import { AuthState } from "../stores/authStore";
 import {
 	AuthDto,
 	UserDto,
 	authResponseSchema,
 	userResponseSchema,
-} from "./responseSchema";
+} from "../../schemas/responseSchema";
+import { AuthState } from "../stores/authStore";
 
 export const signInAJAX = async (signInDto: SignInDto): Promise<AuthDto> => {
 	return await axiosWrapper<SignInDto, AuthDto>(authApiRoutes.SIGN_IN, {

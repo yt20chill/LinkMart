@@ -3,7 +3,7 @@ import {
 	emptyStringToNull,
 	requiredId,
 	stringToPositiveNumber,
-} from "../../../lib/schemaUtils";
+} from "../../lib/schemaUtils";
 
 export const allowedFileTypes = ["image/png", "image/jpeg"];
 

@@ -1,7 +1,10 @@
 import { FetchError, axiosWrapper, requestApiRoutes } from "../../lib/apiUtils";
 import { printFormData } from "../../lib/formUtils";
-import { DeleteImageParams } from "../forms/requestSchema";
-import { CategoryId, RequestId } from "../forms/requestSchema/requestSchema";
+import { DeleteImageParams } from "../../schemas/requestSchema";
+import {
+	CategoryId,
+	RequestId,
+} from "../../schemas/requestSchema/requestSchema";
 
 import {
 	CategoryDto,
@@ -14,7 +17,7 @@ import {
 	locationsResponseSchema,
 	requestDetailsResponseSchema,
 	requestsResponseSchema,
-} from "./responseSchema";
+} from "../../schemas/responseSchema";
 
 export const getAllCategoriesAJAX = async () => {
 	return await axiosWrapper<void, CategoryDto[]>(requestApiRoutes.CATEGORY, {

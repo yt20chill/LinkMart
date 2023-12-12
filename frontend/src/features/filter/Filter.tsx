@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { CategoryDto, LocationDto } from "../api/responseSchema";
+import { CategoryDto, LocationDto } from "../../schemas/responseSchema";
 import { FilterTab } from "./FilterTab";
 
 const categories: CategoryDto[] = [
@@ -28,9 +28,11 @@ export function Filter() {
 	// const { data: locations } = useQueryContainer().getAllLocations;
 	const [searchParams, setSearchParams] = useSearchParams();
 	const onClick = (queryParam: string, value: string) => {
-		searchParams.has(queryParam, value.toLowerCase().trim())
+		searchParams.has(queryParam) &&
+		searchParams.get(queryParam) === value.toLowerCase().trim()
 			? searchParams.delete(queryParam, value.toLowerCase().trim())
 			: searchParams.append(queryParam, value.toLowerCase().trim());
+
 		return setSearchParams(searchParams);
 	};
 

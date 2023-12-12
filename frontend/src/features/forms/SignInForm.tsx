@@ -4,9 +4,12 @@ import { useMutation, useQueryClient } from "react-query";
 import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
 import { FetchError, queryKey } from "../../lib/apiUtils";
+import {
+	SignInDto,
+	signInSchema,
+} from "../../schemas/requestSchema/authSchema";
 import { signInAJAX } from "../api/authApi";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
-import { SignInDto, signInSchema } from "./requestSchema/authSchema";
 
 const defaultValues = Object.freeze({
 	email: "",

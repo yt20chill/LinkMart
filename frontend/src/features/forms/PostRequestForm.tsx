@@ -11,17 +11,17 @@ import ImagePreview from "../../components/form/ImagePreview";
 import { FetchError, queryKey } from "../../lib/apiUtils";
 import { appendFormData, printFormData } from "../../lib/formUtils";
 import {
+	RequestForm,
+	allowedFileTypes,
+	postRequestSchema,
+} from "../../schemas/requestSchema";
+import {
 	deleteRequestImageAJAX,
 	postRequestAJAX,
 	putRequestAJAX,
 } from "../api/requestApi";
 import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
 import { useUpdateRequestForm } from "../hooks/useUpdateForm";
-import {
-	RequestForm,
-	allowedFileTypes,
-	postRequestSchema,
-} from "./requestSchema";
 
 const categories = [
 	{ categoryId: 1, categoryName: "Clothes" },
