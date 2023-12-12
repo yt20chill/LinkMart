@@ -126,7 +126,7 @@
 
 ### 📍 4.1 User Registration
 
-|[POST] |/api/user/registration
+|[POST] |/signup
 
 > ⬇️ Req Body:
 
@@ -165,7 +165,7 @@
 
 ### 📍 4.2 User Login
 
-| [POST] | /api/user/login |
+| [POST] | /login |
 | ------ | --------------- |
 
 > ⬇️ Req Body:
