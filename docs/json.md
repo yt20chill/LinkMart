@@ -256,7 +256,7 @@
 
 ### 📍 5.1 Create Request
 
-| [POST] | /api/request |
+| [POST] | /request |
 | ------ | ------------ |
 
 > ⬇️ Req Body:
