@@ -295,7 +295,7 @@
 
 ### 📍 5.2 Get All Requests (Limit 30)
 
-| [Get] | /api/request |
+| [Get] | /request |
 | ----- | ------------ |
 
 ##### 📍 5.2.1 Get All - with queries
