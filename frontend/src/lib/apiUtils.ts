@@ -32,6 +32,15 @@ export const requestApiRoutes = Object.freeze({
 	IMAGE: `/request/image`,
 });
 
+type ApiMethod = "get" | "post" | "put" | "delete";
+type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
+	OptionsType extends {
+		schema: ZodType<ResultType>;
+	}
+		? ResultType
+		: void
+>;
+
 export class FetchError extends Error {
 	constructor(
 		public readonly status: number = 500,
@@ -41,15 +50,6 @@ export class FetchError extends Error {
 		Object.setPrototypeOf(this, FetchError.prototype);
 	}
 }
-
-type ApiMethod = "get" | "post" | "put" | "delete";
-type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
-	OptionsType extends {
-		schema: ZodType<ResultType>;
-	}
-		? ResultType
-		: void
->;
 
 /**
  * <PayloadType, ResultType>
@@ -64,18 +64,18 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 		method?: ApiMethod;
 		data?: PayloadType;
 		schema?: ZodType<ResultType>;
+		params?: URLSearchParams | Record<string, string | number>;
 	}
 ): Promise<ResultType> /*AxiosWrapperReturnType<ResultType, typeof options> */ => {
 	try {
 		const method = options?.method ?? "get";
 		const isFormData = options?.data instanceof FormData;
 		if (isFormData) setCommonContentTypeHeaders(false);
-		//TODO: remove this after testing
-		console.log(`${method}ing ${url}...`);
 		const response = await axios<ResultType>({
 			method,
 			url,
 			data: options?.data,
+			params: options?.params,
 		});
 		if (isFormData) setCommonContentTypeHeaders();
 		//TODO: how to fix?

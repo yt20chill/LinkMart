@@ -48,14 +48,14 @@ export const postRequestAJAX = async (formData: FormData) => {
 
 /**
  * searchParams may contain page, location, and category
- * @param searchParams useSearchParams.toString() to convert searchParams to string
- * @returns brief info of requests, limit = 30
+ * @param searchParams URLSearchParams
+ * @returns brief info of requests
  */
-export const getAllRequestsAJAX = async (searchParams?: string) => {
-	return await axiosWrapper<void, RequestDto[]>(
-		`${requestApiRoutes.REQUEST}?${searchParams ?? ""}`,
-		{ schema: requestsResponseSchema }
-	);
+export const getAllRequestsAJAX = async (searchParams: URLSearchParams) => {
+	return await axiosWrapper<void, RequestDto[]>(requestApiRoutes.REQUEST, {
+		schema: requestsResponseSchema,
+		params: searchParams,
+	});
 };
 
 export const getRequestDetailsAJAX = async ({ requestId }: RequestId) => {
