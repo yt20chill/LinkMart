@@ -8,7 +8,7 @@ export function RequestCard(props: RequestDto) {
   return (
     <Link
       to={`/request-detail/${props.requestId}`}
-      className="bg-base-100/25 backdrop-blur-lg icn-hvr-fill rounded-lg shadow [&_a]:hover:flex p-2 hover:shadow-2xl hover:scale-105 transition-all h-max-content border border-base-200/75 select-none overflow-hidden"
+      className="relative bg-base-100/25 backdrop-blur-lg icn-hvr-fill rounded-lg shadow [&_a]:hover:flex p-2 hover:shadow-2xl hover:scale-105 transition-all h-max-content border border-base-200/75 select-none overflow-hidden"
     >
       <figure className="rounded-md h-48 flex justify-center bg-slate-300 overflow-hidden border border-gray-200">
         <img
@@ -24,21 +24,8 @@ export function RequestCard(props: RequestDto) {
           {props.locationName}
         </div>
       </div>
-      <div className="px-2 pt-2 flex">
-        <div>
-          <Link
-            to={siteMap(RouteEnum.PostRequest)}
-            className="hidden flex-col justify-center rounded-lg border border-base-300/75 bg-base-200/10 backdrop-blur-md [&>span]:hover:text-2xl w-12 h-12 hover:w-24 hover:h-16 [&_div]:hover:flex [&_div]:hover:max-h-24 transition-all text-slate-500 overflow-hidden hover:ring-2 ring-orange-500/25 hover:bg-orange-500 hover:text-slate-100"
-          >
-            <span className="material-symbols-rounded text-lg mx-1 flex items-center justify-center">
-              add_shopping_cart
-            </span>
-            <div className="flex text-xs justify-center items-start max-h-0 overflow-hidden transition-all">
-              Want Too
-            </div>
-          </Link>
-        </div>
-        <div className="grow">
+      <div className="flex px-2">
+        <div className="w-full">
           {props.offerPrice ? (
             <div className="flex justify-end items-baseline text-2xl h-6 text-amber-800">
               <span className="text-sm">Offer $</span>
@@ -52,7 +39,7 @@ export function RequestCard(props: RequestDto) {
               <div className="text">Please Offer</div>
             </div>
           )}
-          <div className="flex justify-end items-center gap-1 ">
+          <div className="flex justify-end items-center gap-1">
             <span className="material-symbols-rounded text-lg">
               account_circle
             </span>
@@ -66,6 +53,19 @@ export function RequestCard(props: RequestDto) {
             {mapDate(props.updatedAt) as ReactNode}
           </div>
         </div>
+      </div>
+      <div className="absolute bottom-2 left-2">
+        <Link
+          to={siteMap(RouteEnum.PostRequest)}
+          className="hidden flex-col justify-center rounded-lg border border-slate-200 bg-base-200/10 [&>span]:hover:text-2xl w-12 h-12 hover:w-24 hover:h-16 [&_div]:hover:flex [&_div]:hover:max-h-24 transition-all text-slate-500 overflow-hidden hover:ring-2 ring-orange-500/25 hover:bg-base-200/95 hover:text-orange-500 hover:shadow-lg hover:rounded-3xl"
+        >
+          <span className="material-symbols-rounded text-lg mx-1 flex items-center justify-center">
+            add_shopping_cart
+          </span>
+          <div className="flex text-xs justify-center items-start max-h-0 overflow-hidden transition-all">
+            Want Too
+          </div>
+        </Link>
       </div>
     </Link>
   );
