@@ -33,8 +33,8 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 		defaultValues,
 		images,
 	} = useUpdateRequestForm(requestId);
-	const { data: categories } = useQueryContainer().getAllCategories;
-	const { data: locations } = useQueryContainer().getAllLocations;
+	const { categories } = useQueryContainer();
+	const { locations } = useQueryContainer();
 	const [formData, setFormData] = useState<FormData>(new FormData());
 	const queryClient = useQueryClient();
 	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
@@ -85,7 +85,7 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 		setValue
 	);
 	const onSubmitBaseForm = async (data: RequestForm) => {
-		// setFormData((formData) => appendFormData(data, formData));
+		// append category fields result to form data (as json) first
 		setFormData((formData) =>
 			appendFormData(
 				{ itemDetail: JSON.stringify(categoryForm.getValues()) },

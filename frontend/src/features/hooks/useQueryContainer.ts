@@ -15,5 +15,10 @@ export function useQueryContainer() {
 		staleTime: Infinity,
 	});
 
-	return { getAllCategories, getAllLocations };
+	return {
+		getAllCategories,
+		getAllLocations,
+		categories: getAllCategories.data,
+		locations: getAllLocations.data,
+	};
 }

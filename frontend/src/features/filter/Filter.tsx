@@ -24,8 +24,8 @@ const locations: LocationDto[] = [
 ];
 
 export function Filter() {
-	// const { data: categories } = useQueryContainer().getAllCategories;
-	// const { data: locations } = useQueryContainer().getAllLocations;
+	// const { categories } = useQueryContainer();
+	// const { locations } = useQueryContainer();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const onClick = (queryParam: string, value: string) => {
 		searchParams.has(queryParam) &&
