@@ -8,7 +8,7 @@ import {
 	SignInDto,
 	signInSchema,
 } from "../../schemas/requestSchema/authSchema";
-import { signInAJAX } from "../api/authApi";
+import { signInAJAX } from "../../services/api/authApi";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
 
 const defaultValues = Object.freeze({

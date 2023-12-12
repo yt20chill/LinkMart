@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { queryKey } from "../../lib/apiUtils";
 import { CategoryFieldDto } from "../../schemas/responseSchema";
-import { getCategoryFieldsAJAX } from "../api/requestApi";
+import { getCategoryFieldsAJAX } from "../../services/api/requestApi";
 
 export const useCategoryOptions = (categoryId: number) => {
 	if (!categoryId || isNaN(categoryId))

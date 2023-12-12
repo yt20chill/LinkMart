@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { queryKey } from "../../lib/apiUtils";
 import { dtoToString } from "../../lib/formUtils";
 import { RequestForm } from "../../schemas/requestSchema";
-import { getRequestDetailsAJAX } from "../api/requestApi";
+import { getRequestDetailsAJAX } from "../../services/api/requestApi";
 
 // type Identifiers = { requestId: string } | { orderId: string };
 

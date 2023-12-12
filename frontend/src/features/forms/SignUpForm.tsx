@@ -8,7 +8,7 @@ import {
 	SignUpDto,
 	signUpSchema,
 } from "../../schemas/requestSchema/authSchema";
-import { signUpAJAX } from "../api/authApi";
+import { signUpAJAX } from "../../services/api/authApi";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
 
 const defaultValues: SignUpDto = Object.freeze({

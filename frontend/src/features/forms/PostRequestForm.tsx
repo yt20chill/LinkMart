@@ -19,7 +19,7 @@ import {
 	deleteRequestImageAJAX,
 	postRequestAJAX,
 	putRequestAJAX,
-} from "../api/requestApi";
+} from "../../services/api/requestApi";
 import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 import { useUpdateRequestForm } from "../hooks/useUpdateForm";

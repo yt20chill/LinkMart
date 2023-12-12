@@ -1,6 +1,9 @@
 import { useQuery } from "react-query";
 import { queryKey } from "../../lib/apiUtils";
-import { getAllCategoriesAJAX, getAllLocationsAJAX } from "../api/requestApi";
+import {
+	getAllCategoriesAJAX,
+	getAllLocationsAJAX,
+} from "../../services/api/requestApi";
 
 export function useQueryContainer() {
 	const getAllCategories = useQuery({
