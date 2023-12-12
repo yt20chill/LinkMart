@@ -2,13 +2,6 @@ import axios, { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { ZodError, ZodType } from "zod";
 
-export const queryKey = Object.freeze({
-	REQUEST: "request",
-	OFFER: "offer",
-	ORDER: "order",
-	AUTH: "auth",
-});
-
 const setCommonContentTypeHeaders = (set = true) => {
 	return set
 		? (axios.defaults.headers.common["Content-Type"] = "application/json")
@@ -18,19 +11,6 @@ setCommonContentTypeHeaders();
 axios.defaults.baseURL = import.meta.env.VITE_API_URL as string;
 axios.defaults.headers.common["Authorization"] =
 	`Bearer ${localStorage.getItem("token")}` ?? undefined;
-
-export const authApiRoutes = Object.freeze({
-	SIGN_IN: `/login`,
-	SIGN_UP: `/signup`,
-	GET_AUTH: `/api/user`,
-});
-
-export const requestApiRoutes = Object.freeze({
-	CATEGORY: `/category`,
-	LOCATION: `/location`,
-	REQUEST: `/request`,
-	IMAGE: `/request/image`,
-});
 
 type ApiMethod = "get" | "post" | "put" | "delete";
 type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<

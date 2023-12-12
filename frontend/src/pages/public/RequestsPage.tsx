@@ -5,8 +5,8 @@ import { useInfiniteQuery } from "react-query";
 import { Link, useSearchParams } from "react-router-dom";
 import { Filter } from "../../features/filter/Filter";
 import { useSearchParamsWrapper } from "../../features/hooks/useSearchParamsWrapper";
-import { queryKey } from "../../lib/apiUtils";
 import { getAllRequestsAJAX } from "../../services/api/requestApi";
+import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 
 const fakeRequestList: RequestDto[] = [

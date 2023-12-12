@@ -8,7 +8,7 @@ import FormFileInput from "../../components/form/FormFileInput";
 import FormInput from "../../components/form/FormInput";
 import FormSelect from "../../components/form/FormSelect";
 import ImagePreview from "../../components/form/ImagePreview";
-import { FetchError, queryKey } from "../../lib/apiUtils";
+import { FetchError } from "../../lib/apiUtils";
 import { appendFormData, printFormData } from "../../lib/formUtils";
 import {
 	RequestForm,
@@ -20,6 +20,7 @@ import {
 	postRequestAJAX,
 	putRequestAJAX,
 } from "../../services/api/requestApi";
+import { queryKey } from "../../services/query.config";
 import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 import { useUpdateRequestForm } from "../hooks/useUpdateForm";
