@@ -1,12 +1,7 @@
 import FilterGroup from "../../components/search/FilterGroup";
 import { useQueryContainer } from "../hooks/useQueryContainer";
-import { UseSearchParamsWrapperReturnType } from "../hooks/useSearchParamsWrapper";
 
-type FilterProps = {
-	searchParamsWrapper: UseSearchParamsWrapperReturnType;
-};
-
-export function Filter({ searchParamsWrapper }: FilterProps) {
+export function Filter() {
 	const { categories, locations } = useQueryContainer();
 
 	return (
@@ -15,7 +10,6 @@ export function Filter({ searchParamsWrapper }: FilterProps) {
 				<div className="max-w-7xl mx-auto">
 					{categories ? (
 						<FilterGroup
-							searchParamsWrapper={searchParamsWrapper}
 							name="Categories"
 							items={categories.map((category) => category.categoryName)}
 						/>
@@ -24,7 +18,6 @@ export function Filter({ searchParamsWrapper }: FilterProps) {
 					)}
 					{locations ? (
 						<FilterGroup
-							searchParamsWrapper={searchParamsWrapper}
 							name="Countries"
 							items={locations.map((location) => location.locationName)}
 						/>

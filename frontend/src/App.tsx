@@ -11,12 +11,12 @@ function App() {
 			<Navbar />
 			<ToastContainer
 				position="top-center"
-				autoClose={2000}
+				autoClose={500}
 				closeOnClick
 				pauseOnHover
 				pauseOnFocusLoss={false}
 				theme="light"
-				limit={1}
+				limit={5}
 			/>
 			<Routes>
 				{routeConfigArray.map((route) => (

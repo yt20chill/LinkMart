@@ -6,6 +6,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Filter } from "../../features/filter/Filter";
 import { useSearchParamsWrapper } from "../../features/hooks/useSearchParamsWrapper";
 import { getAllRequestsAJAX } from "../../services/api/requestApi";
+import { SearchParamsWrapperContext } from "../../services/context/searchParamsContext";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 
@@ -96,8 +97,8 @@ function RequestsPage() {
 	);
 
 	return (
-		<>
-			<Filter searchParamsWrapper={searchParamsWrapper} />
+		<SearchParamsWrapperContext.Provider value={searchParamsWrapper}>
+			<Filter />
 			<div className="mt-5 max-w-7xl max-xl:px-2 mx-auto ">
 				<h1 className="text-black text-xl "></h1>
 			</div>
@@ -122,7 +123,7 @@ function RequestsPage() {
 			{isFetchingNextPage && (
 				<span className="loading loading-dots loading-lg"></span>
 			)}
-		</>
+		</SearchParamsWrapperContext.Provider>
 	);
 }
 

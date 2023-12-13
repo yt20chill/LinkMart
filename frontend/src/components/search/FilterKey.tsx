@@ -1,12 +1,13 @@
 import { memo, useState } from "react";
-import { FilterKeyProps } from "../../types/sharePropsModel";
+import { useSearchParamsContext } from "../../services/context/searchParamsContext";
 
-export const FilterKey = ({
-	name,
-	value,
-	searchParamsWrapper,
-}: FilterKeyProps) => {
-	const { hasSearchParams, toggleSearchParams } = searchParamsWrapper;
+export type FilterKeyProps = {
+	name: string;
+	value: string;
+};
+
+export const FilterKey = ({ name, value }: FilterKeyProps) => {
+	const { hasSearchParams, toggleSearchParams } = useSearchParamsContext();
 	const [isChecked, setIsChecked] = useState<boolean>(
 		hasSearchParams(name, value)
 	);

@@ -39,6 +39,7 @@ export const queryClient = new QueryClient({
 								errorCodeAbandonRetry.includes(error.status)
 							);
 			},
+			refetchOnWindowFocus: false,
 		},
 	},
 });
