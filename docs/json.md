@@ -564,9 +564,7 @@
 ```js
 {
     "offerId" : int(offer.offer_id),
-    "orderStatusId" : int(order_status.order_status_id),
-    "logisticCompany_id" : int(logistic_company.logistic_company_id),
-    "shippingOrderNo": int
+    "shippingAddress": string,
 }
 ```
 
@@ -574,12 +572,9 @@
 
 ```js
 🟢 [200]  OK
-[{
-    "offerId" : int(offer.offer_id),
-    "orderStatusId" : int(order_status.order_status_id),
-    "logisticCompanyId" : int(logistic_company.logistic_company_id),
-    "shippingOrderNo": int
-},...]
+{
+    "orderId": ulid(order.id)
+}
 ```
 
 ```js
