@@ -352,7 +352,9 @@
     "categoryName" : string,
     "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
     "item" : string,
+    "primaryImage" : String,
     "images" : [{
+        "requestId" : String,
         "imageId" : int,
         "imagePath" : string
     },.../*images*/]
