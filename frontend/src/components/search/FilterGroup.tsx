@@ -1,15 +1,16 @@
 import FilterKey from "./FilterKey";
 
 type FilterGroupProps = {
+	displayName: string;
 	name: string;
 	items: string[];
 };
 
-const FilterGroup = ({ name, items }: FilterGroupProps) => {
+const FilterGroup = ({ displayName, name, items }: FilterGroupProps) => {
 	if (items.length === 0) return null;
 	return (
 		<>
-			<div>{name}</div>
+			<div>{displayName}</div>
 			<ul
 				tabIndex={0}
 				className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"

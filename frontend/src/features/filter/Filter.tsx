@@ -10,7 +10,8 @@ export function Filter() {
 				<div className="max-w-7xl mx-auto">
 					{categories ? (
 						<FilterGroup
-							name="Categories"
+							displayName="Categories"
+							name="category"
 							items={categories.map((category) => category.categoryName)}
 						/>
 					) : (
@@ -18,7 +19,8 @@ export function Filter() {
 					)}
 					{locations ? (
 						<FilterGroup
-							name="Countries"
+							displayName="Countries"
+							name="location"
 							items={locations.map((location) => location.locationName)}
 						/>
 					) : (
