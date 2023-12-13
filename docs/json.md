@@ -296,7 +296,7 @@
 }
 ```
 
-### 📍 5.2 Get All Requests (Limit 30)
+### 📍 5.2 Get All Requests (Limit 30) Done~
 
 | [Get] | /request |
 | ----- | ------------ |
@@ -306,7 +306,7 @@
 | [Get] | /api/request?p={page}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
 
-##### 📍 5.2.2 Get All - by userId (via created_by)
+##### 📍 5.2.2 Get All - by userId (via created_by) Done~
 
 | [Get] | /api/user/request (userId in jwt header) |
 | ----- | ---------------------------------------- |
