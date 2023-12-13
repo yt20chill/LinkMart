@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import FilterKey from "./FilterKey";
 
 type FilterGroupProps = {
@@ -7,7 +8,12 @@ type FilterGroupProps = {
 };
 
 const FilterGroup = ({ displayName, name, items }: FilterGroupProps) => {
-	if (items.length === 0) return null;
+	const filterKeys = useMemo(
+		() =>
+			items.map((item) => <FilterKey key={item} name={name} value={item} />),
+		[items, name]
+	);
+	if (filterKeys.length === 0) return null;
 	return (
 		<>
 			<div>{displayName}</div>
@@ -15,9 +21,7 @@ const FilterGroup = ({ displayName, name, items }: FilterGroupProps) => {
 				tabIndex={0}
 				className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
 			>
-				{items.map((item) => (
-					<FilterKey key={item} name={name} value={item} />
-				))}
+				{filterKeys}
 			</ul>
 		</>
 	);
