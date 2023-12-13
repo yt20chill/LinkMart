@@ -18,7 +18,7 @@ jobs:
           VITE_NODE_ENV: production
           VITE_API_URL: "http://api.fight2gether.com"
         run: |
-          npm install --omit=dev
+          npm install
           npm run build
       - name: Archive built files
         uses: actions/upload-artifact@v3
