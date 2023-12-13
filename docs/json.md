@@ -300,7 +300,7 @@
 
 ##### 📍 5.2.1 Get All - with queries
 
-| [Get] | /api/request?p={page}&limit={limit}&category={category}&location={location} |
+| [Get] | /api/request?p={page}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
 
 ##### 📍 5.2.2 Get All - by userId (via created_by)
