@@ -311,20 +311,26 @@
 > ⬆️ Resp:
 
 > Sort by updated_at desc && isActive === true
-> Limit 30
 
 ```js
 🟢 [200]  OK
-{totalNumberRequest: 100(Total Record),
 [
 {
     "requestId" : string (ulid),
-    "locationId" : int(location.location_id),
+    "createdBy": string(user.username),
     "locationName" : string(location.name),
     "item" : string,
-    "image" : string
+    "images" : string[
+            {
+            "imageId" : int
+            "request_id": int
+            "image_path": String
+            "createdAt": DateTime,
+            "updatedAt": DateTime
+        }
+    ]
     "offerPrice"? : float,
-    "createdBy": string(user.username)
+    "createdAt": DateTime,
     "updatedAt": DateTime
 },.../* Max 30 Requests */]
 }
