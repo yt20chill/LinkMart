@@ -205,11 +205,21 @@
 
 ```js
 🟢 [200]  OK
-["isPrimary" :
+[
 {
-    "address" :
+    "isPrimary" : true
+    "address" : String
     
-},...]
+},
+{    "isPrimary" : true
+     "address" : [
+{ 123 },
+{ 456 }
+                    }
+]
+}
+
+]
 ```
 
 ---
