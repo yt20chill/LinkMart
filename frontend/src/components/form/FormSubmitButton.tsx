@@ -3,12 +3,19 @@ type FormSubmitButtonProps = {
 	onClick: (
 		e?: React.BaseSyntheticEvent<object, any, any> | undefined
 	) => Promise<void>;
+	disabled: boolean;
 };
 
-const FormSubmitButton = ({ label, onClick }: FormSubmitButtonProps) => {
+// passed onClick here to support multiple form handling
+const FormSubmitButton = ({
+	label,
+	onClick,
+	disabled = false,
+}: FormSubmitButtonProps) => {
 	return (
-		<button className="btn btn-warning" onClick={onClick}>
+		<button className="btn btn-warning" onClick={onClick} disabled={disabled}>
 			{label}
+			{disabled && <span className="loading loading-spinner loading-md"></span>}
 		</button>
 	);
 };

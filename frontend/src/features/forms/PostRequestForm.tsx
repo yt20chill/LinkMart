@@ -7,9 +7,10 @@ import CategoryFieldsForm from "../../components/form/CategoryFields";
 import FormFileInput from "../../components/form/FormFileInput";
 import FormInput from "../../components/form/FormInput";
 import FormSelect from "../../components/form/FormSelect";
+import FormSubmitButton from "../../components/form/FormSubmitButton";
 import ImagePreview from "../../components/form/ImagePreview";
 import { FetchError } from "../../lib/apiUtils";
-import { appendFormData, printFormData } from "../../lib/formUtils";
+import { appendFormData } from "../../lib/formUtils";
 import {
 	RequestForm,
 	allowedFileTypes,
@@ -84,7 +85,7 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 		"imageFile",
 		setValue
 	);
-	const onSubmitBaseForm = async (data: RequestForm) => {
+	const onSubmit = async (data: RequestForm) => {
 		// append category fields result to form data (as json) first
 		setFormData((formData) =>
 			appendFormData(
@@ -93,13 +94,12 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 			)
 		);
 		setFormData((formData) => appendFormData(data, formData));
-		printFormData(formData);
 		requestId ? await editRequest(formData) : await postRequest(formData);
 	};
 	return (
 		<>
 			{categories && locations ? (
-				<form onSubmit={handleSubmit(onSubmitBaseForm)}>
+				<form>
 					{categories && (
 						<FormSelect
 							register={register}
@@ -174,6 +174,11 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 			) : (
 				<SkeletonForm />
 			)}
+			<FormSubmitButton
+				label="Post Request"
+				onClick={handleSubmit(onSubmit)}
+				disabled={isEditing || isPosting}
+			/>
 		</>
 	);
 };

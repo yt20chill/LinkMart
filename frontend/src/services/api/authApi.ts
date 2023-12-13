@@ -1,4 +1,4 @@
-import { SignInForm, SignUpForm } from "../../schemas/requestSchema";
+import { TSignInForm, TSignUpForm } from "../../schemas/requestSchema";
 import { AuthorizeLevel } from "../../types/authModels";
 
 import { axiosWrapper } from "../../lib/apiUtils";
@@ -11,8 +11,8 @@ import {
 import { authApiRoutes } from "../query.config";
 import { AuthState } from "../stores/authStore";
 
-export const signInAJAX = async (signInForm: SignInForm): Promise<AuthDto> => {
-	return await axiosWrapper<SignInForm, AuthDto>(authApiRoutes.SIGN_IN, {
+export const signInAJAX = async (signInForm: TSignInForm): Promise<AuthDto> => {
+	return await axiosWrapper<TSignInForm, AuthDto>(authApiRoutes.SIGN_IN, {
 		method: "post",
 		data: signInForm,
 		schema: authResponseSchema,
@@ -20,7 +20,7 @@ export const signInAJAX = async (signInForm: SignInForm): Promise<AuthDto> => {
 };
 
 export const signUpAJAX = async (
-	signUpForm: Omit<SignUpForm, "confirmPassword">
+	signUpForm: Omit<TSignUpForm, "confirmPassword">
 ): Promise<AuthDto> => {
 	return await axiosWrapper<typeof signUpForm, AuthDto>(authApiRoutes.SIGN_UP, {
 		method: "post",

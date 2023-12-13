@@ -4,6 +4,7 @@ import {
 	signInSchema,
 	signUpSchema,
 } from "./authSchema";
+import { OfferForm, PostOfferDto, postOfferSchema } from "./offerSchema";
 import {
 	CategoryId,
 	DeleteImageParams,
@@ -20,6 +21,7 @@ export {
 	allowedFileTypes,
 	categoryIdSchema,
 	deleteImageParamsSchema,
+	postOfferSchema,
 	postRequestSchema,
 	requestIdSchema,
 	signInSchema,
@@ -29,6 +31,8 @@ export {
 export type {
 	CategoryId,
 	DeleteImageParams,
+	OfferForm,
+	PostOfferDto,
 	RequestForm,
 	RequestId,
 	TSignInForm,
