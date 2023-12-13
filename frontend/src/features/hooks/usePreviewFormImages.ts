@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
 	FieldValues,
 	Path,
+	PathValue,
 	UseFormSetValue,
 	UseFormWatch,
 } from "react-hook-form";
@@ -17,11 +18,11 @@ type UsePreviewImagesReturnType = {
 	onDelete: (options: { name: string }) => void;
 };
 
-export const usePreviewFormImages = <T extends FieldValues, K extends Path<T>>(
+export const usePreviewFormImages = <T extends FieldValues>(
 	watch: UseFormWatch<T>,
-	path: K,
+	path: Path<T>,
 	setValue: UseFormSetValue<T>
-): Path<T> extends FileList ? UsePreviewImagesReturnType : never => {
+): UsePreviewImagesReturnType => {
 	const imageFiles = watch(path);
 	if (
 		Object.keys(imageFiles).length > 0 &&
@@ -81,9 +82,11 @@ export const usePreviewFormImages = <T extends FieldValues, K extends Path<T>>(
 		setBase64Images((base64Images) =>
 			base64Images.filter((newImage) => newImage.name !== options.name)
 		);
-		setValue<FileList>(
+		setValue(
 			path,
-			arrayToFileList(imageArray.filter((image) => image.name !== options.name))
+			arrayToFileList(
+				imageArray.filter((image) => image.name !== options.name)
+			) as PathValue<T, Path<T>>
 		);
 	};
 

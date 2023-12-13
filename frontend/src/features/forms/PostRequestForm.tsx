@@ -78,7 +78,7 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 		defaultValues: defaultValues.itemDetail,
 	});
 	const categoryId = watch("categoryId");
-	const { base64Images, onDelete } = usePreviewFormImages(
+	const { base64Images, onDelete } = usePreviewFormImages<RequestForm>(
 		watch,
 		"imageFile",
 		setValue
