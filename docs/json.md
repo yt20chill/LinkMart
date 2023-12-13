@@ -328,7 +328,7 @@
             "createdAt": DateTime,
             "updatedAt": DateTime
         }
-    ]
+    ],
     "offerPrice"? : float,
     "createdAt": DateTime,
     "updatedAt": DateTime
