@@ -1,7 +1,7 @@
-type FormSubmitButtonProps = {
+type FormSubmitButtonProps<C = unknown, T = unknown> = {
 	label: string;
 	onClick: (
-		e?: React.BaseSyntheticEvent<object, any, any> | undefined
+		e?: React.BaseSyntheticEvent<object, C, T> | undefined
 	) => Promise<void>;
 	disabled: boolean;
 };
