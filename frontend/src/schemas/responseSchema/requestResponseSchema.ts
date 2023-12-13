@@ -31,10 +31,10 @@ type CategoryFieldDto = z.infer<typeof categoryFieldResponseSchema>;
 
 const requestResponseSchema = z.object({
 	requestId: resultUlid,
-	locationId: resultId,
+	// locationId: resultId,
 	locationName: z.string().min(1),
 	item: z.string().min(1),
-	image: z.string().url(),
+	primaryImage: z.string().url(),
 	offerPrice: z.number().positive().nullable(),
 	createdBy: z.string().min(1),
 	updatedAt: z.string().datetime(),
@@ -51,18 +51,18 @@ const imageSchema = z.object({
 
 type ImageDto = z.infer<typeof imageSchema>;
 
-const requestDetailsResponseSchema = requestResponseSchema
-	.extend({
-		itemDetail: z.record(z.string()),
-		categoryId: resultId,
-		categoryName: z.string().min(1),
-		images: z.array(imageSchema),
-		url: z.string().url().nullable(),
-		quantity: z.number().int().positive(),
-		requestRemark: z.string().nullable(),
-		createdAt: z.string().datetime(),
-	})
-	.omit({ image: true });
+const requestDetailsResponseSchema = requestResponseSchema.extend({
+	itemDetail: z.record(z.string()),
+	locationId: resultId,
+	categoryId: resultId,
+	categoryName: z.string().min(1),
+	images: z.array(imageSchema),
+	url: z.string().url().nullable(),
+	quantity: z.number().int().positive(),
+	requestRemark: z.string().nullable(),
+	createdAt: z.string().datetime(),
+});
+// .omit({ primaryImage: true });
 
 type RequestDetailsDto = z.infer<typeof requestDetailsResponseSchema>;
 

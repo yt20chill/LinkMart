@@ -39,13 +39,6 @@ export const postRequestSchema = z.object({
 	itemDetail: z.record(z.string()),
 });
 
-export const getRequestsQuerySchema = z.object({
-	page: z.number().int().positive().optional(),
-	category: z.string().optional(),
-	location: z.string().optional(),
-});
-export type GetRequestsQuery = z.infer<typeof getRequestsQuerySchema>;
-
 export const requestIdSchema = z.object({
 	requestId: z.string().ulid(),
 });
