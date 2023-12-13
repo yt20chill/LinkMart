@@ -3,21 +3,22 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { ErrorMessage, FormInput } from "../../components/form";
+import FormSubmitButton from "../../components/form/FormSubmitButton";
 import { FetchError } from "../../lib/apiUtils";
 import {
 	OfferForm,
+	RequestId,
 	postOfferSchema,
-} from "../../schemas/requestSchema/offerSchema";
+} from "../../schemas/requestSchema";
 import { postOfferAJAX } from "../../services/api/offerApi";
 import { queryKey } from "../../services/query.config";
 
 const defaultValues: OfferForm = {
-	requestId: "",
 	price: "",
 	offerRemark: "",
 };
 
-const PostOfferForm = () => {
+const PostOfferForm = ({ requestId }: RequestId) => {
 	const {
 		register,
 		formState: { errors },
@@ -27,7 +28,11 @@ const PostOfferForm = () => {
 		defaultValues,
 	});
 	const queryClient = useQueryClient();
-	const { mutateAsync: postOffer, error } = useMutation({
+	const {
+		mutateAsync: postOffer,
+		error,
+		isLoading,
+	} = useMutation({
 		mutationFn: postOfferAJAX,
 		onSuccess: async () => {
 			toast.success(`Offer has been made successfully!`);
@@ -35,7 +40,8 @@ const PostOfferForm = () => {
 		},
 	});
 	const onSubmit = async (formData: OfferForm) => {
-		await postOffer(formData);
+		const validated = postOfferSchema.parse({ ...formData, requestId });
+		await postOffer(validated);
 	};
 	return (
 		<form>
@@ -48,9 +54,11 @@ const PostOfferForm = () => {
 				/>
 			))}
 			{error instanceof FetchError && <ErrorMessage message={error.message} />}
-			<button onClick={handleSubmit(onSubmit)} className="btn btn-warning">
-				Offer
-			</button>
+			<FormSubmitButton
+				label="Offer"
+				onClick={handleSubmit(onSubmit)}
+				disabled={isLoading}
+			/>
 		</form>
 	);
 };

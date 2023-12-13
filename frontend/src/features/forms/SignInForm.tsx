@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
+import FormSubmitButton from "../../components/form/FormSubmitButton";
 import { FetchError } from "../../lib/apiUtils";
 import { TSignInForm, signInSchema } from "../../schemas/requestSchema";
 import { signInAJAX } from "../../services/api/authApi";
@@ -25,7 +26,11 @@ const SignInForm = () => {
 	});
 	const navigatePrev = useNavigateToPreviousPage();
 	const queryClient = useQueryClient();
-	const signIn = useMutation({
+	const {
+		mutateAsync: signIn,
+		isLoading,
+		error,
+	} = useMutation({
 		mutationFn: (signInForm: TSignInForm) => signInAJAX(signInForm),
 		onSuccess: async ({ jwt }) => {
 			window.localStorage.setItem("access_token", jwt);
@@ -34,8 +39,8 @@ const SignInForm = () => {
 		},
 	});
 
-	const onSubmit = (signInForm: TSignInForm) => {
-		signIn.mutate(signInForm);
+	const onSubmit = async (signInForm: TSignInForm) => {
+		await signIn(signInForm);
 	};
 
 	return (
@@ -49,16 +54,12 @@ const SignInForm = () => {
 					errors={errors}
 				/>
 			))}
-			{signIn.error instanceof FetchError && (
-				<ErrorMessage message={signIn.error.message} />
-			)}
-			<button
-				type="submit"
+			{error instanceof FetchError && <ErrorMessage message={error.message} />}
+			<FormSubmitButton
+				label="Offer"
 				onClick={handleSubmit(onSubmit)}
-				className="btn btn-warning"
-			>
-				SignIn
-			</button>
+				disabled={isLoading}
+			/>
 		</form>
 	);
 };

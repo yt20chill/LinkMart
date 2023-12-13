@@ -10,4 +10,9 @@ export const postOfferSchema = z.object({
 	offerRemark: z.string().nullable(),
 });
 
-export type OfferForm = Record<keyof z.infer<typeof postOfferSchema>, string>;
+export type PostOfferDto = z.infer<typeof postOfferSchema>;
+
+export type OfferForm = Record<
+	Exclude<keyof PostOfferDto, "requestId">,
+	string
+>;

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
+import FormSubmitButton from "../../components/form/FormSubmitButton";
 import { FetchError } from "../../lib/apiUtils";
 import { TSignUpForm, signUpSchema } from "../../schemas/requestSchema";
 import { signUpAJAX } from "../../services/api/authApi";
@@ -28,7 +29,11 @@ const SignUpForm = () => {
 	});
 	const navigatePrev = useNavigateToPreviousPage();
 	const queryClient = useQueryClient();
-	const signUp = useMutation({
+	const {
+		mutateAsync: signUp,
+		error,
+		isLoading,
+	} = useMutation({
 		mutationFn: (signUpDto: Omit<TSignUpForm, "confirmPassword">) =>
 			signUpAJAX(signUpDto),
 		onSuccess: async ({ jwt }) => {
@@ -37,15 +42,15 @@ const SignUpForm = () => {
 			navigatePrev();
 		},
 	});
-	const onSubmit = (formData: TSignUpForm) => {
+	const onSubmit = async (formData: TSignUpForm) => {
 		const { confirmPassword, ...rest } = formData;
 		if (rest.password !== confirmPassword)
 			setError("confirmPassword", { message: "Passwords do not match" });
-		signUp.mutate(rest);
+		await signUp(rest);
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+		<form className="space-y-8">
 			{Object.keys(defaultValues).map((name) => (
 				<FormInput
 					key={name}
@@ -55,19 +60,12 @@ const SignUpForm = () => {
 					errors={errors}
 				/>
 			))}
-			<button
-				className="btn btn-warning"
-				type="submit"
-				disabled={signUp.isLoading}
-			>
-				Sign Up
-				{signUp.isLoading && (
-					<span className="loading loading-spinner loading-lg"></span>
-				)}
-			</button>
-			{signUp.error instanceof FetchError && (
-				<ErrorMessage message={signUp.error.message} />
-			)}
+			{error instanceof FetchError && <ErrorMessage message={error.message} />}
+			<FormSubmitButton
+				label="Sign Up"
+				onClick={handleSubmit(onSubmit)}
+				disabled={isLoading}
+			/>
 		</form>
 	);
 };
