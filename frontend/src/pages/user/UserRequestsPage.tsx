@@ -1,5 +1,12 @@
+import AcceptOfferForm from "../../features/forms/AcceptOfferForm";
+
 function UserRequestsPage() {
-	return <div>UserRequestsPage</div>;
+	return (
+		<>
+			<AcceptOfferForm offerId="01BX5ZZKBKACTAV9WEVGEMMVRZ" />
+			<div>UserRequestsPage</div>
+		</>
+	);
 }
 
 export default UserRequestsPage;
