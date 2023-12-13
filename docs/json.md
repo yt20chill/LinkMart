@@ -18,7 +18,7 @@
 
 ## 📎 1. Category Route
 
-### 📍 1.1 Get all category
+### 📍 1.1 Get all category Done~
 
 | [GET] | /category |
 | ----- | ------------- |
@@ -42,7 +42,7 @@
 
 ---
 
-### 📍 1.2 Category_field
+### 📍 1.2 Category_field Done~
 
 | [GET] | /category/:categoryId |
 | ----- | ------------------------- |
@@ -69,7 +69,7 @@
 
 ---
 
-## 📎 2. Status Route
+## 📎 2. Status Route Done~
 
 ### 📍 2.1 Status
 
@@ -97,7 +97,7 @@
 
 ## 📎 3. Order Status Route
 
-### 📍 3.1 Order Status
+### 📍 3.1 Order Status Done~
 
 | [GET] | /orderStatus |
 | ----- | ---------------- |
@@ -124,7 +124,7 @@
 
 ## 📎 4. User Route
 
-### 📍 4.1 User Registration
+### 📍 4.1 User Registration Done~
 
 |[POST] |/signup
 
@@ -163,7 +163,7 @@
 
 ---
 
-### 📍 4.2 User Login
+### 📍 4.2 User Login Done~
 
 | [POST] | /login |
 | ------ | --------------- |
@@ -196,7 +196,7 @@
 
 ---
 
-### 📍 4.3 User Address Info
+### 📍 4.3 User Address Info Done~
 
 | [GET] | /api/user/address |
 | ----- | ----------------- |
@@ -206,10 +206,6 @@
 ```js
 🟢 [200]  OK
 [
-{
-    "address" : String
-    
-},
 {
     "address" : [
             { String },
@@ -261,7 +257,7 @@
 
 ## 📎 5. Request Route
 
-### 📍 5.1 Create Request
+### 📍 5.1 Create Request Done~
 
 | [POST] | /request |
 | ------ | ------------ |
@@ -591,7 +587,7 @@
 }
 ```
 
-## 📎 8. Location Route
+## 📎 8. Location Route Done~
 
 ### 8.1 Order Request
 
@@ -607,7 +603,7 @@
 },...]
 ```
 
-## 📎 9. Logistic Company Route
+## 📎 9. Logistic Company Route Done~
 
 ### 📍 9.1 Logistic Company
 
