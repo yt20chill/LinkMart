@@ -54,7 +54,6 @@ const SignUpForm = () => {
 			{Object.keys(defaultValues).map((name) => (
 				<FormInput
 					key={name}
-					type={/password/i.test(name) ? "password" : "text"}
 					name={name as keyof TSignUpForm}
 					register={register}
 					errors={errors}
