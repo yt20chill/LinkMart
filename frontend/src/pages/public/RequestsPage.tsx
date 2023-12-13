@@ -79,7 +79,6 @@ const fakeRequestList: RequestDto[] = [
 ];
 
 function RequestsPage() {
-	const limit = 15;
 	const searchParamsWrapper = useSearchParamsWrapper(useSearchParams());
 	const { searchParams } = searchParamsWrapper;
 	const { data: requests, isFetchingNextPage } = useInfiniteQuery<RequestDto[]>(
@@ -87,11 +86,10 @@ function RequestsPage() {
 			queryKey: [queryKey.REQUEST, { searchParams: searchParams.toString() }],
 			queryFn: ({ pageParam = 1 }) => {
 				searchParams.set("p", (pageParam as number).toString());
-				searchParams.set("limit", limit.toString());
 				return getAllRequestsAJAX(searchParams);
 			},
 			getNextPageParam: (lastPage, allPages): number | undefined => {
-				return lastPage.length === limit ? allPages.length + 1 : undefined;
+				return lastPage.length === 0 ? allPages.length + 1 : undefined;
 			},
 		}
 	);
