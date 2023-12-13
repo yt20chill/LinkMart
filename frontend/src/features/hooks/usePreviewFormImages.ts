@@ -1,21 +1,34 @@
 import { useEffect, useState } from "react";
 import {
-	FieldPath,
 	FieldValues,
+	Path,
 	UseFormSetValue,
 	UseFormWatch,
 } from "react-hook-form";
 import { toast } from "react-toastify";
+import { FetchError } from "../../lib/apiUtils";
+import { arrayToFileList } from "../../lib/formUtils";
 import { toDataURLAsync } from "../../lib/utils";
 
 type Base64Image = { name: string; src: string };
 
-export const usePreviewFormImages = <T extends FieldValues>(
+type UsePreviewImagesReturnType = {
+	base64Images: Base64Image[];
+	onDelete: (options: { name: string }) => void;
+};
+
+export const usePreviewFormImages = <T extends FieldValues, K extends Path<T>>(
 	watch: UseFormWatch<T>,
-	path: FieldPath<T>,
+	path: K,
 	setValue: UseFormSetValue<T>
-) => {
-	const imageFiles = watch(path) as FileList;
+): Path<T> extends FileList ? UsePreviewImagesReturnType : never => {
+	const imageFiles = watch(path);
+	if (
+		Object.keys(imageFiles).length > 0 &&
+		!((imageFiles as unknown) instanceof FileList)
+	) {
+		throw new FetchError(400, `The value at path "${path}" is not a FileList.`);
+	}
 	const [imageArray, setImageArray] = useState<File[]>([]);
 	const [base64Images, setBase64Images] = useState<Base64Image[]>([]);
 	useEffect(() => {
@@ -62,15 +75,15 @@ export const usePreviewFormImages = <T extends FieldValues>(
 			})
 		)
 			.then((images) => setBase64Images(() => images))
-			.catch(() => toast.error("Something went wrong"));
+			.catch(() => toast.error("Cannot read files"));
 	}, [imageArray]);
 	const onDelete = (options: { name: string }) => {
 		setBase64Images((base64Images) =>
 			base64Images.filter((newImage) => newImage.name !== options.name)
 		);
-		setValue(
+		setValue<FileList>(
 			path,
-			imageArray.filter((file) => file.name !== options.name)
+			arrayToFileList(imageArray.filter((image) => image.name !== options.name))
 		);
 	};
 

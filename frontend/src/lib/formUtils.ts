@@ -59,3 +59,16 @@ export const dtoToString = <T extends Record<string, unknown>>(
 		return acc;
 	}, {} as Record<keyof T, string>);
 };
+
+export const emptyObjectToNull = <T extends Record<string, string>>(
+	obj: T
+): T | null => {
+	if (Object.keys(obj).length === 0) return null;
+	return obj;
+};
+
+export const arrayToFileList = (files: File[]) => {
+	const dataTransfer = new DataTransfer();
+	files.forEach((file) => dataTransfer.items.add(file));
+	return dataTransfer.files;
+};

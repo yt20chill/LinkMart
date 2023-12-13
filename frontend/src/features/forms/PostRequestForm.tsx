@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
@@ -10,7 +9,7 @@ import FormSelect from "../../components/form/FormSelect";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import ImagePreview from "../../components/form/ImagePreview";
 import { FetchError } from "../../lib/apiUtils";
-import { appendFormData } from "../../lib/formUtils";
+import { appendFormData, emptyObjectToNull } from "../../lib/formUtils";
 import {
 	RequestForm,
 	allowedFileTypes,
@@ -36,7 +35,6 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 		images,
 	} = useUpdateRequestForm(requestId);
 	const { categories, locations } = useQueryContainer();
-	const [formData, setFormData] = useState<FormData>(new FormData());
 	const queryClient = useQueryClient();
 	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
 		mutationFn: (formData: FormData) => {
@@ -87,13 +85,12 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 	);
 	const onSubmit = async (data: RequestForm) => {
 		// append category fields result to form data (as json) first
-		setFormData((formData) =>
-			appendFormData(
-				{ itemDetail: JSON.stringify(categoryForm.getValues()) },
-				formData
-			)
-		);
-		setFormData((formData) => appendFormData(data, formData));
+		const combinedData = {
+			...data,
+			itemDetail: emptyObjectToNull(categoryForm.getValues()),
+		};
+		const formData = new FormData();
+		appendFormData(combinedData, formData);
 		requestId ? await editRequest(formData) : await postRequest(formData);
 	};
 	return (
@@ -162,23 +159,15 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 							categoryId={+categoryId}
 						/>
 					)}
-					<input
-						type="submit"
-						value="Submit"
+					<FormSubmitButton
+						label="Create Post"
+						onClick={handleSubmit(onSubmit)}
 						disabled={isEditing || isPosting}
 					/>
-					{(isEditing || isPosting) && (
-						<span className="loading loading-spinner loading-lg"></span>
-					)}
 				</form>
 			) : (
 				<SkeletonForm />
 			)}
-			<FormSubmitButton
-				label="Post Request"
-				onClick={handleSubmit(onSubmit)}
-				disabled={isEditing || isPosting}
-			/>
 		</>
 	);
 };
