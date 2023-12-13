@@ -12,7 +12,7 @@ function FormInput<T extends FieldValues>({
 	name,
 	label = camelToTitleCase(name),
 	placeholder = label,
-	type = "text",
+	type = /password/i.test(name) ? "password" : "text",
 	defaultValue = "",
 	register,
 	errors,

@@ -95,7 +95,7 @@ routeConfigMap
 		component: RequestDetailsPage,
 	})
 	.set(RouteEnum.Profile, {
-		name: "profile",
+		name: "Profile",
 		path: "/profile",
 		authorizeLevel: AuthorizeLevel.USER,
 		component: ProfilePage,

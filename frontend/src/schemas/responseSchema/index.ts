@@ -1,6 +1,10 @@
 import { AuthDto, authResponseSchema } from "./authResponseSchema";
 import { BaseResponseDto, baseResponseSchema } from "./baseResponseSchema";
 import {
+	AcceptOfferResponseDto,
+	acceptOfferResponseSchema,
+} from "./orderResponseSchema";
+import {
 	CategoryDto,
 	CategoryFieldDto,
 	ImageDto,
@@ -16,6 +20,7 @@ import {
 import { UserDto, userResponseSchema } from "./userResponseSchema";
 
 export {
+	acceptOfferResponseSchema,
 	authResponseSchema,
 	baseResponseSchema,
 	categoriesResponseSchema,
@@ -27,6 +32,7 @@ export {
 };
 
 export type {
+	AcceptOfferResponseDto,
 	AuthDto,
 	BaseResponseDto,
 	CategoryDto,

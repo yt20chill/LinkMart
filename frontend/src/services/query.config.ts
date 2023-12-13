@@ -9,23 +9,6 @@ export const queryKey = Object.freeze({
 	AUTH: "auth",
 });
 
-export const authApiRoutes = Object.freeze({
-	SIGN_IN: `/login`,
-	SIGN_UP: `/signup`,
-	GET_AUTH: `/api/user`,
-});
-
-export const requestApiRoutes = Object.freeze({
-	CATEGORY: `/category`,
-	LOCATION: `/location`,
-	REQUEST: `/request`,
-	IMAGE: `/request/image`,
-});
-
-export const offerApiRoutes = Object.freeze({
-	OFFER: `/api/offer`,
-});
-
 const errorCodeAbandonRetry = [400, 401, 403, 404, 500];
 
 export const queryClient = new QueryClient({

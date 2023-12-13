@@ -44,11 +44,10 @@ const SignInForm = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form className="space-y-8">
 			{Object.keys(defaultValues).map((name) => (
 				<FormInput
 					key={name}
-					type={/password/i.test(name) ? "password" : "text"}
 					name={name as keyof TSignInForm}
 					register={register}
 					errors={errors}

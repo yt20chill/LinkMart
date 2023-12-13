@@ -1,4 +1,4 @@
-import { axiosWrapper } from "../../lib/apiUtils";
+import { FetchError, axiosWrapper } from "../../lib/apiUtils";
 import { printFormData } from "../../lib/formUtils";
 import { DeleteImageParams } from "../../schemas/requestSchema";
 import {
@@ -18,7 +18,14 @@ import {
 	requestDetailsResponseSchema,
 	requestsResponseSchema,
 } from "../../schemas/responseSchema";
-import { requestApiRoutes } from "../query.config";
+
+const requestApiRoutes = Object.freeze({
+	CATEGORY: `/category`,
+	LOCATION: `/location`,
+	REQUEST: `/request`,
+	POST_REQUEST: `/api/request`,
+	IMAGE: `/request/image`,
+});
 
 export const getAllCategoriesAJAX = async () => {
 	return await axiosWrapper<void, CategoryDto[]>(requestApiRoutes.CATEGORY, {
@@ -41,7 +48,7 @@ export const getAllLocationsAJAX = async () => {
 
 export const postRequestAJAX = async (formData: FormData) => {
 	printFormData(formData);
-	return await axiosWrapper<FormData>(requestApiRoutes.REQUEST, {
+	return await axiosWrapper<FormData>(requestApiRoutes.POST_REQUEST, {
 		method: "post",
 		data: formData,
 	});
@@ -69,7 +76,7 @@ export const getRequestDetailsAJAX = async ({ requestId }: RequestId) => {
 
 export const putRequestAJAX = async (requestId: string, formData: FormData) => {
 	return await axiosWrapper<FormData>(
-		`${requestApiRoutes.REQUEST}/${requestId}`,
+		`${requestApiRoutes.POST_REQUEST}/${requestId}`,
 		{
 			method: "put",
 			data: formData,
@@ -78,7 +85,7 @@ export const putRequestAJAX = async (requestId: string, formData: FormData) => {
 };
 
 export const deleteRequestAJAX = async ({ requestId }: RequestId) => {
-	return await axiosWrapper(`${requestApiRoutes.REQUEST}/${requestId}`, {
+	return await axiosWrapper(`${requestApiRoutes.POST_REQUEST}/${requestId}`, {
 		method: "delete",
 	});
 };

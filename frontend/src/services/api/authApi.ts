@@ -8,8 +8,14 @@ import {
 	authResponseSchema,
 	userResponseSchema,
 } from "../../schemas/responseSchema";
-import { authApiRoutes } from "../query.config";
+
 import { AuthState } from "../stores/authStore";
+
+const authApiRoutes = Object.freeze({
+	SIGN_IN: `/login`,
+	SIGN_UP: `/signup`,
+	GET_AUTH: `/api/user`,
+});
 
 export const signInAJAX = async (signInForm: TSignInForm): Promise<AuthDto> => {
 	return await axiosWrapper<TSignInForm, AuthDto>(authApiRoutes.SIGN_IN, {
