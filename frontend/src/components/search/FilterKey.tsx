@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParamsContext } from "../../services/context/searchParamsContext";
 
 export type FilterKeyProps = {
@@ -7,10 +7,14 @@ export type FilterKeyProps = {
 };
 
 export const FilterKey = ({ name, value }: FilterKeyProps) => {
-	const { hasSearchParams, toggleSearchParams } = useSearchParamsContext();
+	const { hasSearchParams, toggleSearchParams, searchParams } =
+		useSearchParamsContext();
 	const [isChecked, setIsChecked] = useState<boolean>(
 		hasSearchParams(name, value)
 	);
+	useEffect(() => {
+		hasSearchParams(name, value) ? setIsChecked(true) : setIsChecked(false);
+	}, [searchParams, name, value, hasSearchParams]);
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setIsChecked(e.target.checked);
 		toggleSearchParams(name, value);
@@ -30,4 +34,4 @@ export const FilterKey = ({ name, value }: FilterKeyProps) => {
 	);
 };
 
-export default memo(FilterKey);
+export default FilterKey;

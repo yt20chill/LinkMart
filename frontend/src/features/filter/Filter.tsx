@@ -1,9 +1,10 @@
 import FilterGroup from "../../components/search/FilterGroup";
+import { useSearchParamsContext } from "../../services/context/searchParamsContext";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 
 export function Filter() {
 	const { categories, locations } = useQueryContainer();
-
+	const { setSearchParams } = useSearchParamsContext();
 	return (
 		<>
 			<div className="max-w-full bg-gradient-to-r from-orange-300 to-amber-300/75 text-base-100 shadow">
@@ -27,6 +28,12 @@ export function Filter() {
 						<span className="loading loading-dots loading-sm"></span>
 					)}
 				</div>
+				<button
+					className="btn btn-outline btn-warning"
+					onClick={() => setSearchParams()}
+				>
+					Clear All
+				</button>
 			</div>
 		</>
 	);
