@@ -320,15 +320,7 @@
     "createdBy": string(user.username),
     "locationName" : string(location.name),
     "item" : string,
-    "images" : string[
-            {
-            "imageId" : int
-            "request_id": int
-            "image_path": String
-            "createdAt": DateTime,
-            "updatedAt": DateTime
-        }
-    ],
+    "primaryImage" : string,
     "offerPrice"? : float,
     "createdAt": DateTime,
     "updatedAt": DateTime
