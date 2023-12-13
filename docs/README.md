@@ -32,5 +32,5 @@ References
 
 1. [Java Ulid-creator](https://github.com/f4b6a3/ulid-creator)
 2. [Zustand](https://github.com/pmndrs/zustand): Global State Management Library
-3. [Zustood](https://github.com/udecode/zustood): On top of Zustand
+3. [DaisyUI](https://daisyui.com/) Frontend tailwinds utility classes
 4. [React-Query](https://tanstack.com/query/v4/docs/react/quick-start): Fetch handler

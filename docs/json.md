@@ -300,7 +300,7 @@
 
 ##### 📍 5.2.1 Get All - with queries
 
-| [Get] | /api/request?p={page}&limit={limit}&category={category}&location={location} |
+| [Get] | /api/request?p={page}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
 
 ##### 📍 5.2.2 Get All - by userId (via created_by)
@@ -311,20 +311,18 @@
 > ⬆️ Resp:
 
 > Sort by updated_at desc && isActive === true
-> Limit 30
 
 ```js
 🟢 [200]  OK
-{totalNumberRequest: 100(Total Record),
 [
 {
     "requestId" : string (ulid),
-    "locationId" : int(location.location_id),
+    "createdBy": string(user.username),
     "locationName" : string(location.name),
     "item" : string,
-    "image" : string
+    "primaryImage" : string,
     "offerPrice"? : float,
-    "createdBy": string(user.username)
+    "createdAt": DateTime,
     "updatedAt": DateTime
 },.../* Max 30 Requests */]
 }
