@@ -1,4 +1,9 @@
-import { SignInDto, SignUpDto, signInSchema, signUpSchema } from "./authSchema";
+import {
+	TSignInForm,
+	TSignUpForm,
+	signInSchema,
+	signUpSchema,
+} from "./authSchema";
 import {
 	CategoryId,
 	DeleteImageParams,
@@ -26,6 +31,6 @@ export type {
 	DeleteImageParams,
 	RequestForm,
 	RequestId,
-	SignInDto,
-	SignUpDto,
+	TSignInForm,
+	TSignUpForm,
 };

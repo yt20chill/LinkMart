@@ -22,7 +22,7 @@ export const requiredId = z
 	.pipe(z.number().int().positive({ message: "invalid option" }));
 
 export const resultId = z.number().int().positive();
-export const resultUlid = z.string().ulid();
+export const ulid = z.string().ulid();
 
 const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
 type Literal = z.infer<typeof literalSchema>;

@@ -22,6 +22,10 @@ export const requestApiRoutes = Object.freeze({
 	IMAGE: `/request/image`,
 });
 
+export const offerApiRoutes = Object.freeze({
+	OFFER: `/api/offer`,
+});
+
 const errorCodeAbandonRetry = [400, 401, 403, 404, 500];
 
 export const queryClient = new QueryClient({

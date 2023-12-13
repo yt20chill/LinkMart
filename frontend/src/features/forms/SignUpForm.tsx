@@ -4,27 +4,24 @@ import { useMutation, useQueryClient } from "react-query";
 import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
 import { FetchError } from "../../lib/apiUtils";
-import {
-	SignUpDto,
-	signUpSchema,
-} from "../../schemas/requestSchema/authSchema";
+import { TSignUpForm, signUpSchema } from "../../schemas/requestSchema";
 import { signUpAJAX } from "../../services/api/authApi";
 import { queryKey } from "../../services/query.config";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
 
-const defaultValues: SignUpDto = Object.freeze({
+const defaultValues: TSignUpForm = Object.freeze({
 	email: "",
 	password: "",
 	confirmPassword: "",
 });
 
-function SignUpForm() {
+const SignUpForm = () => {
 	const {
 		handleSubmit,
 		register,
 		formState: { errors },
 		setError,
-	} = useForm<SignUpDto>({
+	} = useForm<TSignUpForm>({
 		resolver: zodResolver(signUpSchema),
 		defaultValues,
 		mode: "onTouched",
@@ -32,7 +29,7 @@ function SignUpForm() {
 	const navigatePrev = useNavigateToPreviousPage();
 	const queryClient = useQueryClient();
 	const signUp = useMutation({
-		mutationFn: (signUpDto: Omit<SignUpDto, "confirmPassword">) =>
+		mutationFn: (signUpDto: Omit<TSignUpForm, "confirmPassword">) =>
 			signUpAJAX(signUpDto),
 		onSuccess: async ({ jwt }) => {
 			window.localStorage.setItem("access_token", jwt);
@@ -40,7 +37,7 @@ function SignUpForm() {
 			navigatePrev();
 		},
 	});
-	const onSubmit = (formData: SignUpDto) => {
+	const onSubmit = (formData: TSignUpForm) => {
 		const { confirmPassword, ...rest } = formData;
 		if (rest.password !== confirmPassword)
 			setError("confirmPassword", { message: "Passwords do not match" });
@@ -53,7 +50,7 @@ function SignUpForm() {
 				<FormInput
 					key={name}
 					type={/password/i.test(name) ? "password" : "text"}
-					name={name as keyof SignUpDto}
+					name={name as keyof TSignUpForm}
 					register={register}
 					errors={errors}
 				/>
@@ -73,6 +70,6 @@ function SignUpForm() {
 			)}
 		</form>
 	);
-}
+};
 
 export default SignUpForm;

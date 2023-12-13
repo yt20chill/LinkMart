@@ -4,15 +4,12 @@ import { useMutation, useQueryClient } from "react-query";
 import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
 import { FetchError } from "../../lib/apiUtils";
-import {
-	SignInDto,
-	signInSchema,
-} from "../../schemas/requestSchema/authSchema";
+import { TSignInForm, signInSchema } from "../../schemas/requestSchema";
 import { signInAJAX } from "../../services/api/authApi";
 import { queryKey } from "../../services/query.config";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
 
-const defaultValues = Object.freeze({
+const defaultValues: TSignInForm = Object.freeze({
 	email: "",
 	password: "",
 });
@@ -22,14 +19,14 @@ const SignInForm = () => {
 		register,
 		formState: { errors },
 		handleSubmit,
-	} = useForm<SignInDto>({
+	} = useForm<TSignInForm>({
 		resolver: zodResolver(signInSchema),
 		defaultValues,
 	});
 	const navigatePrev = useNavigateToPreviousPage();
 	const queryClient = useQueryClient();
 	const signIn = useMutation({
-		mutationFn: (formData: SignInDto) => signInAJAX(formData),
+		mutationFn: (signInForm: TSignInForm) => signInAJAX(signInForm),
 		onSuccess: async ({ jwt }) => {
 			window.localStorage.setItem("access_token", jwt);
 			await queryClient.invalidateQueries(queryKey.AUTH);
@@ -37,8 +34,8 @@ const SignInForm = () => {
 		},
 	});
 
-	const onSubmit = (formData: SignInDto) => {
-		signIn.mutate(formData);
+	const onSubmit = (signInForm: TSignInForm) => {
+		signIn.mutate(signInForm);
 	};
 
 	return (
@@ -47,7 +44,7 @@ const SignInForm = () => {
 				<FormInput
 					key={name}
 					type={/password/i.test(name) ? "password" : "text"}
-					name={name as keyof SignInDto}
+					name={name as keyof TSignInForm}
 					register={register}
 					errors={errors}
 				/>

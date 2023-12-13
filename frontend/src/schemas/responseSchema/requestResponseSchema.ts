@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { resultId, resultUlid } from "../../lib/schemaUtils";
+import { resultId, ulid } from "../../lib/schemaUtils";
 
 const categoryResponseSchema = z.object({
 	categoryId: resultId,
@@ -30,7 +30,7 @@ const categoryFieldsResponseSchema = z.array(categoryFieldResponseSchema);
 type CategoryFieldDto = z.infer<typeof categoryFieldResponseSchema>;
 
 const requestResponseSchema = z.object({
-	requestId: resultUlid,
+	requestId: ulid,
 	// locationId: resultId,
 	locationName: z.string().min(1),
 	item: z.string().min(1),
