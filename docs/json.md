@@ -205,9 +205,10 @@
 
 ```js
 🟢 [200]  OK
-[{
+["isPrimary" :
+{
     "address" :
-    "isPrimary" :
+    
 },...]
 ```
 
