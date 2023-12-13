@@ -207,12 +207,10 @@
 🟢 [200]  OK
 [
 {
-    "isPrimary" : true
     "address" : String
     
 },
 {
-    "isPrimary" : false
     "address" : [
             { 123 },
             { 456 }
