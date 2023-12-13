@@ -301,7 +301,7 @@
 | [Get] | /request |
 | ----- | ------------ |
 
-##### 📍 5.2.1 Get All - with queries
+##### 📍 5.2.1 Get All - with queries  Done(waiting for test)
 
 | [Get] | /api/request?p={page}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
