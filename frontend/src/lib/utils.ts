@@ -53,9 +53,9 @@ export const isShallowEqual = <T>(arg1: T, arg2: T): boolean => {
 export const imageHoverView: MouseEventHandler = (e) => {
   console.log(e);
   const img = e.target as HTMLElement;
-  img.style.transform = "scale(1.5)";
-  img.parentElement!.scrollLeft -= e.movementX * 2;
-  img.parentElement!.scrollTop -= e.movementY * 2;
+  img.style.transform = "scale(2)";
+  img.parentElement!.scrollLeft -= e.movementX * 3;
+  img.parentElement!.scrollTop -= e.movementY * 3;
 };
 
 export const imageHoverEnd: MouseEventHandler = (e) => {
