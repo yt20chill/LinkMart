@@ -34,8 +34,7 @@ const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
 		defaultValues,
 		images,
 	} = useUpdateRequestForm(requestId);
-	const { categories } = useQueryContainer();
-	const { locations } = useQueryContainer();
+	const { categories, locations } = useQueryContainer();
 	const [formData, setFormData] = useState<FormData>(new FormData());
 	const queryClient = useQueryClient();
 	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
