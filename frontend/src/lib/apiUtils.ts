@@ -13,13 +13,13 @@ axios.defaults.headers.common["Authorization"] =
 	`Bearer ${localStorage.getItem("token")}` ?? undefined;
 
 type ApiMethod = "get" | "post" | "put" | "delete";
-type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
-	OptionsType extends {
-		schema: ZodType<ResultType>;
-	}
-		? ResultType
-		: void
->;
+// type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
+// 	OptionsType extends {
+// 		schema: ZodType<ResultType>;
+// 	}
+// 		? ResultType
+// 		: void
+// >;
 
 export class FetchError extends Error {
 	constructor(
@@ -68,7 +68,7 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 			console.error(error);
 			throw new FetchError(
 				error.status,
-				error.response?.data.message ?? error.code
+				(error.response?.data.message as string) ?? error.code ?? error.message
 			);
 		}
 		if (error instanceof ZodError)

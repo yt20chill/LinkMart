@@ -1,5 +1,5 @@
 import { AuthDto, authResponseSchema } from "./authResponseSchema";
-import { BaseResponseDto, baseResponseSchema } from "./baseResponseSchema";
+import { ErrorResponseDto, errorResponseSchema } from "./baseResponseSchema";
 import {
 	AcceptOfferResponseDto,
 	acceptOfferResponseSchema,
@@ -22,7 +22,7 @@ import { UserDto, userResponseSchema } from "./userResponseSchema";
 export {
 	acceptOfferResponseSchema,
 	authResponseSchema,
-	baseResponseSchema,
+	errorResponseSchema as baseResponseSchema,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
 	locationsResponseSchema,
@@ -34,9 +34,9 @@ export {
 export type {
 	AcceptOfferResponseDto,
 	AuthDto,
-	BaseResponseDto,
 	CategoryDto,
 	CategoryFieldDto,
+	ErrorResponseDto,
 	ImageDto,
 	LocationDto,
 	RequestDetailsDto,
