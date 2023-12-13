@@ -22,7 +22,7 @@ export const requestApiRoutes = Object.freeze({
 	IMAGE: `/request/image`,
 });
 
-const errorCodeAbandonRetry = [401, 403, 404, 500];
+const errorCodeAbandonRetry = [400, 401, 403, 404, 500];
 
 export const queryClient = new QueryClient({
 	defaultOptions: {
