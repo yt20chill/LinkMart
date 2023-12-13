@@ -14,7 +14,7 @@ export function RequestCard(props: RequestDto) {
 				<img
 					className="object-cover w-full"
 					title={props.item}
-					src={props.image}
+					src={props.primaryImage}
 				/>
 			</figure>
 			<div className="px-2 pt-1">
