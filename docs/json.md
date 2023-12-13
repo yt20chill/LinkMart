@@ -211,14 +211,12 @@
     "address" : String
     
 },
-{    "isPrimary" : true
-     "address" : [
-{ 123 },
-{ 456 }
-                    }
+{
+    "isPrimary" : true
+    "address" : [
+            { 123 },
+            { 456 }
 ]
-}
-
 ]
 ```
 
