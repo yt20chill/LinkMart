@@ -1,6 +1,8 @@
 import axios, { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { ZodError, ZodType } from "zod";
+import { ErrorResponseDto } from "../schemas/responseSchema";
+import { isObjOfType } from "./utils";
 
 const setCommonContentTypeHeaders = (set = true) => {
 	return set
@@ -9,17 +11,28 @@ const setCommonContentTypeHeaders = (set = true) => {
 };
 setCommonContentTypeHeaders();
 axios.defaults.baseURL = import.meta.env.VITE_API_URL as string;
-axios.defaults.headers.common["Authorization"] =
-	`Bearer ${localStorage.getItem("token")}` ?? undefined;
+// TODO: handle login and logout !important
+axios.defaults.headers.common["Authorization"] = localStorage.getItem("token")
+	? `Bearer ${localStorage.getItem("token")}`
+	: undefined;
 
 type ApiMethod = "get" | "post" | "put" | "delete";
-// type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
-// 	OptionsType extends {
-// 		schema: ZodType<ResultType>;
-// 	}
-// 		? ResultType
-// 		: void
-// >;
+type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
+	OptionsType extends {
+		schema: ZodType<ResultType>;
+	}
+		? ResultType
+		: undefined
+>;
+
+type AxiosWrapperOptionsType<PayloadType> = Partial<{
+	method: ApiMethod;
+	data: PayloadType;
+	params: URLSearchParams | Record<string, string | number>;
+}>;
+
+type RequiredSchemaOptionsType<PayloadType, ResultType> =
+	AxiosWrapperOptionsType<PayloadType> & { schema: ZodType<ResultType> };
 
 export class FetchError extends Error {
 	constructor(
@@ -40,13 +53,13 @@ export class FetchError extends Error {
  */
 export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 	url: string,
-	options?: {
-		method?: ApiMethod;
-		data?: PayloadType;
-		schema?: ZodType<ResultType>;
-		params?: URLSearchParams | Record<string, string | number>;
-	}
-): Promise<ResultType> /*AxiosWrapperReturnType<ResultType, typeof options> */ => {
+	options?:
+		| AxiosWrapperOptionsType<PayloadType>
+		| RequiredSchemaOptionsType<PayloadType, ResultType>
+): /*Promise<ResultType>*/ AxiosWrapperReturnType<
+	ResultType,
+	typeof options
+> => {
 	try {
 		const method = options?.method ?? "get";
 		const isFormData = options?.data instanceof FormData;
@@ -58,17 +71,20 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 			params: options?.params,
 		});
 		if (isFormData) setCommonContentTypeHeaders();
-		//TODO: how to fix?
-		return options?.schema
-			? options.schema.parse(response.data)
-			: (undefined as ResultType);
+		if (
+			options &&
+			isObjOfType<RequiredSchemaOptionsType<PayloadType, ResultType>>(
+				options,
+				"schema"
+			)
+		)
+			return options.schema.parse(response.data);
 	} catch (error) {
 		toast.error("Something went wrong");
-		if (isAxiosError(error)) {
-			console.error(error);
+		if (isAxiosError<ErrorResponseDto>(error)) {
 			throw new FetchError(
 				error.status,
-				(error.response?.data.message as string) ?? error.code ?? error.message
+				error.response?.data.message ?? error.code ?? error.message
 			);
 		}
 		if (error instanceof ZodError)
