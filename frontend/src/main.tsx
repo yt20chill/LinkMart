@@ -11,17 +11,17 @@ import { queryClient } from "./services/query.config.ts";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
-	throw new Error("Root element not found");
+  throw new Error("Root element not found");
 }
 
 ReactDOM.createRoot(rootElement).render(
-	<React.StrictMode>
-		<ErrorBoundary FallbackComponent={ErrorFallBack}>
-			<BrowserRouter>
-				<QueryClientProvider client={queryClient}>
-					<App />
-				</QueryClientProvider>
-			</BrowserRouter>
-		</ErrorBoundary>
-	</React.StrictMode>
+  <React.StrictMode>
+    <ErrorBoundary FallbackComponent={ErrorFallBack}>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
+  </React.StrictMode>
 );
