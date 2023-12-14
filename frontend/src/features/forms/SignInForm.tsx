@@ -4,7 +4,8 @@ import { useMutation, useQueryClient } from "react-query";
 import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
-import { FetchError, setCommonAuthorizationHeader } from "../../lib/apiUtils";
+import { FetchError } from "../../lib/apiUtils";
+import { signInHandler } from "../../lib/authUtils";
 import { TSignInForm, signInSchema } from "../../schemas/requestSchema";
 import { signInAJAX } from "../../services/api/authApi";
 import { queryKey } from "../../services/query.config";
@@ -33,8 +34,7 @@ const SignInForm = () => {
 	} = useMutation({
 		mutationFn: (signInForm: TSignInForm) => signInAJAX(signInForm),
 		onSuccess: async ({ jwt }) => {
-			window.localStorage.setItem("access_token", jwt);
-			setCommonAuthorizationHeader();
+			signInHandler(jwt);
 			await queryClient.invalidateQueries(queryKey.AUTH);
 			navigatePrev();
 		},

@@ -7,8 +7,8 @@ import { isObjOfType } from "./utils";
 /**
  *
  * @param signIn boolean: true = signIn, false = signOut
- * signIn = true: set common authorization header with token from localStorage
- * signIn = false: delete common authorization header
+ * @returns signIn = true: set common authorization header with token from localStorage
+ * @returns signIn = false: delete common authorization header
  */
 export const setCommonAuthorizationHeader = (signIn = true): void => {
 	signIn
