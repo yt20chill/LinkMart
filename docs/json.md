@@ -193,10 +193,37 @@
 }
 ```
 
+---
+
+### 📍 4.3.1 User Address Info Done~
+
+| [POST] | /api/user/address |
+| ----- | ----------------- |
+
+> ⬇️ Req Body:
+"JWT in header" "Change is_Primary" 
+```js
+{
+"address" :
+    [
+    String,
+    String,
+    String,
+]
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+```
 
 ---
 
-### 📍 4.3 User Address Info Done~
+---
+
+### 📍 4.3.2 User Address Info Done~
 
 | [GET] | /api/user/address |
 | ----- | ----------------- |
@@ -205,7 +232,59 @@
 
 ```js
 🟢 [200]  OK
-[ {address: string},
+[   {
+    addressId: int,
+    address: string},
+... ]
+```
+
+---
+
+### 📍 4.3.3 Change User Primary Address
+
+| [PUT] | /api/user/address/{addressId} |
+| ----- | ----------------- |
+
+> ⬇️ Req Body:
+"JWT in header" "Change is_Primary" 
+```js
+{
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+... ]
+
+```js
+🔴 [400] BAD REQUEST
+... ]
+```
+
+---
+
+### 📍 4.3.3 Dalete User Address
+
+| [DELETE] | /api/user/address/{addressId} |
+| ----- | ----------------- |
+
+> ⬇️ Req Body:
+"JWT in header"
+```js
+{
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+... ]
+
+```js
+🔴 [400] BAD REQUEST
 ... ]
 ```
 
@@ -351,11 +430,7 @@
     "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
     "item" : string,
     "primaryImage" : String,
-    "images" : [{
-        "requestId" : String,
-        "imageId" : int,
-        "imagePath" : string
-    },.../*images*/]
+   
     "url" : string | null,
     "quantity" : int,
     "requestRemark" : string | null,
@@ -363,6 +438,14 @@
     "createdBy" : string(username),
     "createdAt" : Date,
     "updatedAt" : Date
+    "imageId":
+},
+{
+ "images" : [{
+        "requestId" : String,
+        "imageId" : int,
+        "imagePath" : string
+    },.../*images*/]
 }
 🔴 [400]
 {
