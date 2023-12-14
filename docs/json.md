@@ -404,11 +404,7 @@
     "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
     "item" : string,
     "primaryImage" : String,
-    "images" : [{
-        "requestId" : String,
-        "imageId" : int,
-        "imagePath" : string
-    },.../*images*/]
+   
     "url" : string | null,
     "quantity" : int,
     "requestRemark" : string | null,
@@ -416,6 +412,14 @@
     "createdBy" : string(username),
     "createdAt" : Date,
     "updatedAt" : Date
+    "imageId":
+},
+{
+ "images" : [{
+        "requestId" : String,
+        "imageId" : int,
+        "imagePath" : string
+    },.../*images*/]
 }
 🔴 [400]
 {
