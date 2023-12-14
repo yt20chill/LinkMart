@@ -1,9 +1,4 @@
-import {
-	FieldErrors,
-	FieldPath,
-	FieldValues,
-	UseFormRegister,
-} from "react-hook-form";
+import { ZodObject, ZodRawShape } from "zod";
 
 export const appendFormData = <T extends object>(
 	data: T,
@@ -42,15 +37,6 @@ export const isFileExists = <T extends { name: string }>(
 	return files.some((f) => f.name === file.name);
 };
 
-export type BaseFormInputProps<T extends FieldValues = FieldValues> = {
-	name: FieldPath<T>;
-	register: UseFormRegister<T>;
-	label?: string;
-	placeholder?: string;
-	defaultValue?: string;
-	errors: FieldErrors<T>;
-};
-
 export const dtoToString = <T extends Record<string, unknown>>(
 	dto: Record<keyof T, unknown>
 ) => {
@@ -71,4 +57,20 @@ export const arrayToFileList = (files: File[]) => {
 	const dataTransfer = new DataTransfer();
 	files.forEach((file) => dataTransfer.items.add(file));
 	return dataTransfer.files;
+};
+
+/**
+ *
+ * @param formSchema Z object
+ * @returns object of all keys set to empty string
+ */
+export const generateEmptyStringDefaultValues = <T extends ZodRawShape>(
+	formSchema: ZodObject<T>
+): Readonly<Record<keyof ZodRawShape, string>> => {
+	return Object.freeze(
+		Object.keys(formSchema.shape).reduce((acc, key) => {
+			acc[key] = "";
+			return acc;
+		}, {} as Record<keyof ZodRawShape, string>)
+	);
 };

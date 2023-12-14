@@ -17,14 +17,20 @@ import {
 	requestDetailsResponseSchema,
 	requestsResponseSchema,
 } from "./requestResponseSchema";
-import { UserDto, userResponseSchema } from "./userResponseSchema";
+import {
+	AddressDto,
+	UserDto,
+	addressResponseSchema,
+	userResponseSchema,
+} from "./userResponseSchema";
 
 export {
 	acceptOfferResponseSchema,
+	addressResponseSchema,
 	authResponseSchema,
-	errorResponseSchema as baseResponseSchema,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
+	errorResponseSchema,
 	locationsResponseSchema,
 	requestDetailsResponseSchema,
 	requestsResponseSchema,
@@ -33,6 +39,7 @@ export {
 
 export type {
 	AcceptOfferResponseDto,
+	AddressDto,
 	AuthDto,
 	CategoryDto,
 	CategoryFieldDto,

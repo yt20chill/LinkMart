@@ -22,6 +22,7 @@ import {
 	postRequestSchema,
 	requestIdSchema,
 } from "./requestSchema";
+import { AddAddressForm, postAddressSchema } from "./userSchema";
 
 export {
 	acceptOfferFormSchema,
@@ -29,6 +30,7 @@ export {
 	allowedFileTypes,
 	categoryIdSchema,
 	deleteImageParamsSchema,
+	postAddressSchema,
 	postOfferSchema,
 	postRequestSchema,
 	requestIdSchema,
@@ -38,6 +40,7 @@ export {
 
 export type {
 	AcceptOfferDto,
+	AddAddressForm,
 	CategoryId,
 	DeleteImageParams,
 	OfferForm,
