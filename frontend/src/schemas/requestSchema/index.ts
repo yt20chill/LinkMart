@@ -26,7 +26,7 @@ import {
 	PostAddressDto,
 	TPostAddressForm,
 	postAddressDtoSchema,
-	postAddressFormSchema,
+	postAddressSchema,
 } from "./userSchema";
 
 export {
@@ -36,7 +36,7 @@ export {
 	categoryIdSchema,
 	deleteImageParamsSchema,
 	postAddressDtoSchema,
-	postAddressFormSchema,
+	postAddressSchema,
 	postOfferSchema,
 	postRequestSchema,
 	requestIdSchema,
