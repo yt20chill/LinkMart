@@ -1,12 +1,8 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { FormInput, FormSubmitButton } from "../../components/form";
-import {
-	TPostAddressForm,
-	postAddressFormSchema,
-} from "../../schemas/requestSchema";
+import { TPostAddressForm } from "../../schemas/requestSchema";
 import { postAddressAJAX } from "../../services/api/userApi";
 import { queryKey } from "../../services/query.config";
 
@@ -17,7 +13,7 @@ function PostAddressForm() {
 		register,
 		control,
 	} = useForm<TPostAddressForm>({
-		resolver: zodResolver(postAddressFormSchema),
+		// resolver: zodResolver(postAddressFormSchema),
 		mode: "onTouched",
 	});
 	const { fields, append, remove } = useFieldArray({
@@ -40,6 +36,8 @@ function PostAddressForm() {
 			if (addr.address) acc.address.push(addr.address);
 			return acc;
 		}, postAddressDto);
+		if (postAddressDto.address.length === 0)
+			return toast.error("Please enter at least one address!");
 		await postAddress(postAddressDto);
 	};
 	return (
