@@ -1,8 +1,11 @@
 import { DateBadge } from "@/components/badge/DateBadge";
 import { PillBadge } from "@/components/badge/PillBadge";
-import { RequestDetailBadge } from "@/components/badge/RequestDetailBadge";
+import { DetailDisplay } from "@/components/display/DetailDisplay";
+import { PriceDisplay } from "@/components/display/PriceDisplay";
 import { IconCircleFrame } from "@/components/frame/IconCircleFrame";
-import { ImageFrame } from "@/components/imageFrame/ImageFrame";
+import { MainImageFrame } from "@/components/imageFrame/MainImageFrame";
+import { SubImageFrame } from "@/components/imageFrame/SubImageFrame";
+import { SectionTitle } from "@/components/title/SectionTitle";
 import { imageHoverEnd, imageHoverView } from "@/lib/utils";
 import { RequestDetailsDto } from "@/schemas/responseSchema";
 import { useState } from "react";
@@ -14,7 +17,14 @@ function RequestDetailsPage() {
     locationName: "🇯🇵 Japan",
     categoryId: 1,
     categoryName: "Clothes",
-    itemDetail: { Color: "White", Size: "XS" },
+    itemDetail: {
+      Color: "White",
+      Size: "XS",
+      Width: "White",
+      Height: "XS",
+      Scale: "White",
+      Range: "XS",
+    },
     item: "Uniqlo White Jacket",
     primaryImage:
       "http://cdn.linkmart.com.s3-website-ap-southeast-1.amazonaws.com/profiles/profile-1702383773670.avif",
@@ -43,7 +53,7 @@ function RequestDetailsPage() {
   };
 
   const [currentImage, setCurrentImage] = useState<string>(
-    fakeRequest.primaryImage as string
+    fakeRequest.primaryImage
   );
   return (
     <div className="bg-base-200/80 backdrop-blur-3xl mt-12 py-12 border-y border-base-300">
@@ -51,20 +61,12 @@ function RequestDetailsPage() {
         <main className="flex flex-wrap max-md:px-6 px-12">
           {/*Request Img */}
           <div className="max-md:w-full w-2/5 flex flex-col flex-wrap max-md:order-2">
-            <div className="flex justify-center aspect-square w-full overflow-hidden rounded-sm bg-slate-300 border border-white/10 ring-1 ring-black/10">
-              <img
-                title={fakeRequest.item}
-                className="object-cover origin-top-left"
-                src={currentImage}
-                onMouseMove={(e) => imageHoverView(e)}
-                onMouseLeave={(e) => imageHoverEnd(e)}
-              />
-            </div>
+            <MainImageFrame title={fakeRequest.item} imagePath={currentImage} />
             <div className="mt-2 grid grid-cols-5 relative gap-2">
               {fakeRequest.images.map((itm) => (
-                <ImageFrame
+                <SubImageFrame
                   key={itm.imagePath}
-                  {...itm}
+                  imagePath={itm.imagePath}
                   onClick={(e) =>
                     setCurrentImage((e.target as HTMLImageElement).src)
                   }
@@ -74,12 +76,7 @@ function RequestDetailsPage() {
           </div>
           {/*Request Info */}
           <div className="max-md:w-full w-3/5 flex flex-col flex-wrap max-md:pl-0 max-md:pt-6 pl-12 mb-3">
-            <div className="text-slate-400/80 flex items-center gap-1 font-roboto tracking-wide text-sm">
-              <span className="material-symbols-rounded msr-light">
-                package_2
-              </span>
-              Request Item
-            </div>
+            <SectionTitle icon="package_2" content={"Request Item"} />
             <div className="inline-flex max-md:text-2xl text-3xl font-bold mb-2">
               {fakeRequest.item}
             </div>
@@ -101,15 +98,9 @@ function RequestDetailsPage() {
               </div>
             </div>
             <hr className="border-base-300 my-4" />
-
-            <div className="text-slate-400/80 flex items-center gap-1 font-roboto tracking-wide text-sm">
-              <span className="material-symbols-rounded msr-light">
-                view_list
-              </span>
-              Details
-            </div>
+            <SectionTitle icon="view_list" content={"Details"} />
             <div className="grid max-md:grid-cols-2 grid-cols-3 gap-2 p-5">
-              <RequestDetailBadge
+              <DetailDisplay
                 title={fakeRequest.locationName}
                 label={"From"}
                 value={fakeRequest.locationName
@@ -118,28 +109,34 @@ function RequestDetailsPage() {
                   .join(" ")}
               />
               {Object.entries(fakeRequest.itemDetail).map(([key, val]) => (
-                <RequestDetailBadge
+                <DetailDisplay
                   key={val}
+                  className={val.length > 20 ? "col-span-2" : ""}
                   label={key}
                   value={val}
                   title={val}
                 />
               ))}
-            </div>
-            <div className="text-right">
-              <div className="inline-flex px-2 rounded-badge text-slate-400 bg-slate-200 text-sm me-2">
-                Offer
-              </div>
-              {fakeRequest.offerPrice ? (
-                <span className="text-3xl tracking-tighter">
-                  <span className="text-base">HK $</span>
-                  {fakeRequest.offerPrice.toLocaleString("en")}
-                </span>
-              ) : (
-                <span className="text-3xl">{fakeRequest.offerPrice}</span>
+              {fakeRequest.requestRemark && (
+                <DetailDisplay
+                  icon="info"
+                  className="col-span-3"
+                  label="Remark"
+                  value={fakeRequest.requestRemark}
+                />
               )}
             </div>
+            <div className="text-right">
+              <PriceDisplay
+                badge={true}
+                badgeContent="Offer"
+                price={fakeRequest.offerPrice}
+              />
+            </div>
+
             <hr className="border-base-300 my-4" />
+            <div>Offer Btn</div>
+            <div>Clone Btn</div>
           </div>
         </main>
       </div>
