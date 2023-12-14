@@ -196,7 +196,7 @@
 
 ---
 
-### 📍 4.3 User Address Info Done~
+### 📍 4.3.1 User Address Info Done~
 
 | [GET] | /api/user/address |
 | ----- | ----------------- |
@@ -205,13 +205,61 @@
 
 ```js
 🟢 [200]  OK
-[
+[   {
+    addressId: int,
+    address: string},
+... ]
+```
+
+---
+
+### 📍 4.3.2 Change User Primary Address
+
+| [PUT] | /api/user/address |
+| ----- | ----------------- |
+
+> ⬇️ Req Body:
+"JWT in header" "Change is_Primary" 
+```js
 {
-    "address" : [
-            { String },
-            { String }
-]
-]
+    "addressId" : string,
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+... ]
+
+```js
+🔴 [400] BAD REQUEST
+... ]
+```
+
+---
+
+### 📍 4.3.3 Dalete User Address
+
+| [DELETE] | /api/user/address/{addressId} |
+| ----- | ----------------- |
+
+> ⬇️ Req Body:
+"JWT in header"
+```js
+{
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+... ]
+
+```js
+🔴 [400] BAD REQUEST
+... ]
 ```
 
 ---
