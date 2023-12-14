@@ -1,6 +1,6 @@
 import { FieldValues } from "react-hook-form";
-import { BaseFormInputProps } from "../../lib/formUtils";
 import { camelToTitleCase } from "../../lib/utils";
+import { BaseFormInputProps, OptionItem } from "../../types/formModels";
 import ErrorMessage from "./ErrorMessage";
 
 type FormSelectProps<T extends FieldValues> = BaseFormInputProps<T> & {
@@ -8,12 +8,7 @@ type FormSelectProps<T extends FieldValues> = BaseFormInputProps<T> & {
 	required?: boolean;
 };
 
-type OptionItem = {
-	value: string;
-	displayValue?: string;
-};
-
-function FormSelect<T extends FieldValues>({
+const FormSelect = <T extends FieldValues>({
 	name,
 	label = camelToTitleCase(name),
 	placeholder = `Select ${label}`,
@@ -22,7 +17,7 @@ function FormSelect<T extends FieldValues>({
 	required = true,
 	register,
 	errors,
-}: FormSelectProps<T>) {
+}: FormSelectProps<T>) => {
 	const error = errors?.[name]?.message as string | undefined;
 	return (
 		<label className="form-control w-full max-w-xs">
@@ -47,6 +42,6 @@ function FormSelect<T extends FieldValues>({
 			{error && <ErrorMessage message={error} />}
 		</label>
 	);
-}
+};
 
 export default FormSelect;

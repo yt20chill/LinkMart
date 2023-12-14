@@ -25,8 +25,11 @@ import {
 import {
 	PostAddressDto,
 	TPostAddressForm,
+	UpdatePrimaryAddressDto,
+	UpdatePrimaryAddressForm,
 	postAddressDtoSchema,
 	postAddressSchema,
+	updatePrimaryAddressFormSchema,
 } from "./userSchema";
 
 export {
@@ -42,6 +45,7 @@ export {
 	requestIdSchema,
 	signInSchema,
 	signUpSchema,
+	updatePrimaryAddressFormSchema,
 };
 
 export type {
@@ -57,4 +61,6 @@ export type {
 	TPostAddressForm,
 	TSignInForm,
 	TSignUpForm,
+	UpdatePrimaryAddressDto,
+	UpdatePrimaryAddressForm,
 };

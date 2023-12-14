@@ -13,8 +13,10 @@ const addressResponseSchema = z.object({
 	address: z.string().min(1),
 });
 
+const addressesResponseSchema = z.array(addressResponseSchema);
+
 type AddressDto = z.infer<typeof addressResponseSchema>;
 
-export { addressResponseSchema, userResponseSchema };
+export { addressesResponseSchema, userResponseSchema };
 
 export type { AddressDto, UserDto };

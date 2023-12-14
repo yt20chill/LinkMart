@@ -18,11 +18,16 @@ export type FormItemContextValue = {
 	id: string;
 };
 
-export type BaseFormInputProps<T extends FieldValues = FieldValues> = {
+export type BaseFormInputProps<T extends FieldValues> = {
 	name: FieldPath<T>;
 	register: UseFormRegister<T>;
 	label?: string;
 	placeholder?: string;
 	defaultValue?: string;
 	errors: FieldErrors<T>;
+};
+
+export type OptionItem = {
+	value: string;
+	displayValue?: string;
 };

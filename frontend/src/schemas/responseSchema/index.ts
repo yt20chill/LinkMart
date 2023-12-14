@@ -20,13 +20,13 @@ import {
 import {
 	AddressDto,
 	UserDto,
-	addressResponseSchema,
+	addressesResponseSchema,
 	userResponseSchema,
 } from "./userResponseSchema";
 
 export {
 	acceptOfferResponseSchema,
-	addressResponseSchema,
+	addressesResponseSchema,
 	authResponseSchema,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,

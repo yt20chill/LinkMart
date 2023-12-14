@@ -1,6 +1,9 @@
 import { axiosWrapper } from "../../lib/apiUtils";
 import { PostAddressDto } from "../../schemas/requestSchema";
-import { AddressDto } from "../../schemas/responseSchema";
+import {
+	AddressDto,
+	addressesResponseSchema,
+} from "../../schemas/responseSchema";
 
 const userApiRoutes = Object.freeze({
 	ADDRESS: "/api/user/address",
@@ -26,7 +29,9 @@ const deleteAddressAJAX = async (addressId: string) => {
 };
 
 const getAddressAJAX = async () => {
-	await axiosWrapper<void, AddressDto>(userApiRoutes.ADDRESS);
+	return await axiosWrapper<void, AddressDto[]>(userApiRoutes.ADDRESS, {
+		schema: addressesResponseSchema,
+	});
 };
 
 export {
