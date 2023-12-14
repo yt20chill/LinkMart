@@ -4,17 +4,34 @@ import { ZodError, ZodType } from "zod";
 import { ErrorResponseDto } from "../schemas/responseSchema";
 import { isObjOfType } from "./utils";
 
-const setCommonContentTypeHeaders = (set = true) => {
-	return set
-		? (axios.defaults.headers.common["Content-Type"] = "application/json")
-		: delete axios.defaults.headers.common["Content-Type"];
+/**
+ *
+ * @param signIn boolean: true = signIn, false = signOut
+ * @returns signIn = true: set common authorization header with token from localStorage
+ * @returns signIn = false: delete common authorization header
+ */
+export const setCommonAuthorizationHeader = (signIn = true): void => {
+	signIn
+		? (axios.defaults.headers.common["Authorization"] = localStorage.getItem(
+				"token"
+		  )
+				? `Bearer ${localStorage.getItem("token")}`
+				: undefined)
+		: delete axios.defaults.headers.common["Authorization"];
 };
-setCommonContentTypeHeaders();
-axios.defaults.baseURL = import.meta.env.VITE_API_URL as string;
-// TODO: handle login and logout !important
-axios.defaults.headers.common["Authorization"] = localStorage.getItem("token")
-	? `Bearer ${localStorage.getItem("token")}`
-	: undefined;
+
+const setCommonContentTypeHeader = (set = true) => {
+	if (set) axios.defaults.headers.common["Content-Type"] = "application/json";
+	else delete axios.defaults.headers.common["Content-Type"];
+};
+
+const axiosInit = () => {
+	setCommonContentTypeHeader();
+	setCommonAuthorizationHeader();
+	axios.defaults.baseURL = import.meta.env.VITE_API_URL as string;
+};
+
+axiosInit();
 
 type ApiMethod = "get" | "post" | "put" | "delete";
 type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
@@ -63,14 +80,14 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 	try {
 		const method = options?.method ?? "get";
 		const isFormData = options?.data instanceof FormData;
-		if (isFormData) setCommonContentTypeHeaders(false);
+		if (isFormData) setCommonContentTypeHeader(false);
 		const response = await axios<ResultType>({
 			method,
 			url,
 			data: options?.data,
 			params: options?.params,
 		});
-		if (isFormData) setCommonContentTypeHeaders();
+		if (isFormData) setCommonContentTypeHeader();
 		if (
 			options &&
 			isObjOfType<RequiredSchemaOptionsType<PayloadType, ResultType>>(
