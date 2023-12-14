@@ -197,7 +197,7 @@
 
 ### 📍 4.3.1 User Address Info Done~
 
-| [GET] | /api/user/address |
+| [POST] | /api/user/address |
 | ----- | ----------------- |
 
 > ⬇️ Req Body:
@@ -205,9 +205,10 @@
 ```js
 {
 "address" :
-[String,
-String,
-String,
+    [
+    String,
+    String,
+    String,
 ]
 }
 ```
