@@ -205,13 +205,8 @@
 
 ```js
 🟢 [200]  OK
-[
-{
-    "address" : [
-            { String },
-            { String }
-]
-]
+[ {address: string},
+... ]
 ```
 
 ---
