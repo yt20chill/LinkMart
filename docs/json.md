@@ -240,7 +240,7 @@
 
 ---
 
-### 📍 4.3.3 Change User Primary Address
+### 📍 4.3.3 Change User Primary Address Done
 
 | [PUT] | /api/user/address/{addressId} |
 | ----- | ----------------- |
@@ -256,7 +256,10 @@
 
 ```js
 🟢 [200]  OK
-... ]
+[{
+	"success": true,
+	"message": "User address had been updated"
+}]
 
 ```js
 🔴 [400] BAD REQUEST
