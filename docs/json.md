@@ -193,10 +193,40 @@
 }
 ```
 
-
 ---
 
 ### 📍 4.3.1 User Address Info Done~
+
+| [GET] | /api/user/address |
+| ----- | ----------------- |
+
+> ⬇️ Req Body:
+"JWT in header" "Change is_Primary" 
+```js
+{
+"address" :
+[String,
+String,
+String,
+]
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+[   {
+    addressId: int,
+    address: string},
+... ]
+```
+
+---
+
+---
+
+### 📍 4.3.2 User Address Info Done~
 
 | [GET] | /api/user/address |
 | ----- | ----------------- |
@@ -213,16 +243,15 @@
 
 ---
 
-### 📍 4.3.2 Change User Primary Address
+### 📍 4.3.3 Change User Primary Address
 
-| [PUT] | /api/user/address |
+| [PUT] | /api/user/address/{addressId} |
 | ----- | ----------------- |
 
 > ⬇️ Req Body:
 "JWT in header" "Change is_Primary" 
 ```js
 {
-    "addressId" : string,
 }
 ```
 
