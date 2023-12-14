@@ -6,7 +6,6 @@ import { IconCircleFrame } from "@/components/frame/IconCircleFrame";
 import { MainImageFrame } from "@/components/imageFrame/MainImageFrame";
 import { SubImageFrame } from "@/components/imageFrame/SubImageFrame";
 import { SectionTitle } from "@/components/title/SectionTitle";
-import { imageHoverEnd, imageHoverView } from "@/lib/utils";
 import { RequestDetailsDto } from "@/schemas/responseSchema";
 import { useState } from "react";
 
