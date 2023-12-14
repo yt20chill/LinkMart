@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { MouseEventHandler } from "react";
 import { twMerge } from "tailwind-merge";
-
+import crypto from "crypto-js";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -51,7 +51,6 @@ export const isShallowEqual = <T>(arg1: T, arg2: T): boolean => {
 };
 
 export const imageHoverView: MouseEventHandler = (e) => {
-  console.log(e);
   const img = e.target as HTMLElement;
   img.style.transform = "scale(2)";
   img.parentElement!.scrollLeft -= e.movementX * 3;
@@ -61,4 +60,21 @@ export const imageHoverView: MouseEventHandler = (e) => {
 export const imageHoverEnd: MouseEventHandler = (e) => {
   const img = e.target as HTMLElement;
   img.style.transform = "scale(1)";
+};
+
+export enum iconStyleEnum {
+  mp = "mp",
+  identicon = "id",
+  monsterrid = "monsterrid",
+  wavatat = "wavatat",
+  retro = "retro",
+  robohash = "robohash",
+  blank = "blank",
+}
+
+export const mapIconUrl = (username: string, type?: iconStyleEnum) => {
+  const hashData = crypto.SHA256(`${username}@LinkMart.com`);
+  return `https://gravatar.com/avatar/${crypto.enc.Base64.stringify(
+    hashData
+  )}?d=${type ?? "retro"}&f=y`;
 };

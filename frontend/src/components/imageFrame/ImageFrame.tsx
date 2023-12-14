@@ -1,14 +1,14 @@
 export function ImageFrame(props: {
-  path: string;
-  onClickFn: (e: React.MouseEvent) => void;
+  imagePath: string;
+  onClick: (e: React.MouseEvent<HTMLImageElement>) => void;
 }) {
   return (
-    <div className="hover:scale-110 z-[1] hover:z-10 flex aspect-square overflow-hidden hover:shadow rounded hover:ring-2 ring-slate-800/50 transition-all cursor-pointer">
+    <div className="hover:scale-110 z-[1] hover:z-10 flex justify-center aspect-square overflow-hidden hover:shadow rounded transition-all cursor-pointer bg-slate-100 border border-white/10 ring-1 ring-black/10 hover:ring-offset-2">
       <img
-        title={props.path}
+        title={props.imagePath}
         className="object-cover"
-        src={props.path}
-        onClick={(e) => props.onClickFn(e)}
+        src={props.imagePath}
+        onClick={(e: React.MouseEvent<HTMLImageElement>) => props.onClick(e)}
       />
     </div>
   );
