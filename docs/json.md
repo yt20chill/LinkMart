@@ -217,10 +217,6 @@
 
 ```js
 🟢 [200]  OK
-[   {
-    addressId: int,
-    address: string},
-... ]
 ```
 
 ---
