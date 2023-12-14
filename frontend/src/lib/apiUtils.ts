@@ -42,14 +42,14 @@ type AxiosWrapperReturnType<ResultType, OptionsType> = Promise<
 		: undefined
 >;
 
-type AxiosWrapperOptionsType<PayloadType> = Partial<{
+type AxiosWrapperOptions<PayloadType> = Partial<{
 	method: ApiMethod;
 	data: PayloadType;
 	params: URLSearchParams | Record<string, string | number>;
 }>;
 
-type RequiredSchemaOptionsType<PayloadType, ResultType> =
-	AxiosWrapperOptionsType<PayloadType> & { schema: ZodType<ResultType> };
+type AxiosWrapperSchemaOptions<PayloadType, ResultType> =
+	AxiosWrapperOptions<PayloadType> & { schema: ZodType<ResultType> };
 
 export class FetchError extends Error {
 	constructor(
@@ -71,8 +71,8 @@ export class FetchError extends Error {
 export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 	url: string,
 	options?:
-		| AxiosWrapperOptionsType<PayloadType>
-		| RequiredSchemaOptionsType<PayloadType, ResultType>
+		| AxiosWrapperOptions<PayloadType>
+		| AxiosWrapperSchemaOptions<PayloadType, ResultType>
 ): /*Promise<ResultType>*/ AxiosWrapperReturnType<
 	ResultType,
 	typeof options
@@ -90,7 +90,7 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 		if (isFormData) setCommonContentTypeHeader();
 		if (
 			options &&
-			isObjOfType<RequiredSchemaOptionsType<PayloadType, ResultType>>(
+			isObjOfType<AxiosWrapperSchemaOptions<PayloadType, ResultType>>(
 				options,
 				"schema"
 			)

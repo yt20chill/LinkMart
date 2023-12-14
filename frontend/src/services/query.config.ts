@@ -7,6 +7,7 @@ export const queryKey = Object.freeze({
 	OFFER: "offer",
 	ORDER: "order",
 	AUTH: "auth",
+	USER: "user",
 });
 
 const errorCodeAbandonRetry = [400, 401, 403, 404, 500];

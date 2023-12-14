@@ -37,7 +37,7 @@ const requestResponseSchema = z.object({
 	primaryImage: z.string().url(),
 	offerPrice: z.number().positive().nullable(),
 	createdBy: z.string().min(1),
-	updatedAt: z.string().datetime(),
+	updatedAt: z.string(),
 });
 
 const requestsResponseSchema = z.array(requestResponseSchema);
@@ -60,7 +60,7 @@ const requestDetailsResponseSchema = requestResponseSchema.extend({
 	url: z.string().url().nullable(),
 	quantity: z.number().int().positive(),
 	requestRemark: z.string().nullable(),
-	createdAt: z.string().datetime(),
+	createdAt: z.string(),
 });
 // .omit({ primaryImage: true });
 

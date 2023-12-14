@@ -1,4 +1,9 @@
-import { FieldPath, FieldValues } from "react-hook-form";
+import {
+	FieldErrors,
+	FieldPath,
+	FieldValues,
+	UseFormRegister,
+} from "react-hook-form";
 
 export type FormInputType = "text" | "email" | "password" | "number" | "radio";
 
@@ -11,4 +16,13 @@ export type FormFieldContextValue<
 
 export type FormItemContextValue = {
 	id: string;
+};
+
+export type BaseFormInputProps<T extends FieldValues = FieldValues> = {
+	name: FieldPath<T>;
+	register: UseFormRegister<T>;
+	label?: string;
+	placeholder?: string;
+	defaultValue?: string;
+	errors: FieldErrors<T>;
 };
