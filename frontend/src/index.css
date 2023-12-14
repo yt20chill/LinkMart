@@ -21,10 +21,17 @@ b.emo {
 .icn-hvr-fill .material-symbols-rounded {
 	font-variation-settings: "FILL" 0, "wght" 400;
 	transition: all 0.3s ease;
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 .msr-light {
 	font-variation-settings: "wght" 300;
+}
+
+*:hover .icn-no-hvr,
+.icn-no-hvr:hover {
+	font-variation-settings: "FILL" 0, 'wght' 300 !important;
 }
 
 .icn-hvr-fill:hover .material-symbols-rounded,
