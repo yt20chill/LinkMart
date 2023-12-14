@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ErrorBoundary } from "react-error-boundary";
 import { QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App.tsx";
+import ErrorFallBack from "./components/ui/ErrorFallBack.tsx";
 import "./index.css";
 import { queryClient } from "./services/query.config.ts";
 
@@ -14,10 +16,12 @@ if (!rootElement) {
 
 ReactDOM.createRoot(rootElement).render(
 	<React.StrictMode>
-		<BrowserRouter>
-			<QueryClientProvider client={queryClient}>
-				<App />
-			</QueryClientProvider>
-		</BrowserRouter>
+		<ErrorBoundary FallbackComponent={ErrorFallBack}>
+			<BrowserRouter>
+				<QueryClientProvider client={queryClient}>
+					<App />
+				</QueryClientProvider>
+			</BrowserRouter>
+		</ErrorBoundary>
 	</React.StrictMode>
 );

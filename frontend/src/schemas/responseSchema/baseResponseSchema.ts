@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-export const baseResponseSchema = z.object({
-	message: z.string().optional(),
+export const errorResponseSchema = z.object({
+	message: z.string(),
 });
 
-export type BaseResponseDto = z.infer<typeof baseResponseSchema>;
+export type ErrorResponseDto = z.infer<typeof errorResponseSchema>;

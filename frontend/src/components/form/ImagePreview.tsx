@@ -20,8 +20,11 @@ type NewImagePreviewProps = BaseImagePreviewProps & {
 const ImagePreview = (
 	props: ExistingImagePreviewProps | NewImagePreviewProps
 ) => {
-	const showAlert = async () => {
+	const showAlert = async (
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
 		try {
+			e.preventDefault();
 			const option = await withReactContent(SweetAlert).fire({
 				titleText: "Confirm Delete?",
 				text: "Are you sure you want to delete this image?",
