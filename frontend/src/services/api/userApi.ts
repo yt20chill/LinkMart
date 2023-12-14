@@ -1,13 +1,13 @@
 import { axiosWrapper } from "../../lib/apiUtils";
-import { AddAddressForm } from "../../schemas/requestSchema";
+import { PostAddressDto } from "../../schemas/requestSchema";
 import { AddressDto } from "../../schemas/responseSchema";
 
 const userApiRoutes = Object.freeze({
 	ADDRESS: "/api/user/address",
 });
 
-const postAddressAJAX = async (data: AddAddressForm) => {
-	await axiosWrapper<AddAddressForm>(userApiRoutes.ADDRESS, {
+const postAddressAJAX = async (data: PostAddressDto) => {
+	await axiosWrapper<PostAddressDto>(userApiRoutes.ADDRESS, {
 		method: "post",
 		data,
 	});

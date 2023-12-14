@@ -11,7 +11,12 @@ const logError = (error: Error) => {
 function ErrorFallBack({ error, resetErrorBoundary }: ErrorFallBackProps) {
 	logError(error);
 	resetErrorBoundary();
-	return <div>Something Went Wrong!!!!!!</div>;
+	return (
+		<div>
+			<p>An error occurred: {error.message}</p>
+			<button onClick={resetErrorBoundary}>Go back</button>
+		</div>
+	);
 }
 
 export default ErrorFallBack;

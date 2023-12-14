@@ -13,10 +13,14 @@ const FormSubmitButton = ({
 	disabled = false,
 }: FormSubmitButtonProps) => {
 	return (
-		<button className="btn btn-warning" onClick={onClick} disabled={disabled}>
-			{label}
-			{disabled && <span className="loading loading-spinner loading-md"></span>}
-		</button>
+		<div className="block my-5">
+			<button className="btn btn-warning" onClick={onClick} disabled={disabled}>
+				{label}
+				{disabled && (
+					<span className="loading loading-spinner loading-md"></span>
+				)}
+			</button>
+		</div>
 	);
 };
 

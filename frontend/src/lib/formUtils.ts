@@ -66,11 +66,11 @@ export const arrayToFileList = (files: File[]) => {
  */
 export const generateEmptyStringDefaultValues = <T extends ZodRawShape>(
 	formSchema: ZodObject<T>
-): Readonly<Record<keyof ZodRawShape, string>> => {
+): Readonly<Record<keyof T, string>> => {
 	return Object.freeze(
-		Object.keys(formSchema.shape).reduce((acc, key) => {
+		Object.keys(formSchema.shape).reduce((acc: Record<string, string>, key) => {
 			acc[key] = "";
 			return acc;
-		}, {} as Record<keyof ZodRawShape, string>)
+		}, {}) as Readonly<Record<keyof T, string>>
 	);
 };

@@ -6,15 +6,14 @@ import FormInput from "../../components/form/FormInput";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import { FetchError } from "../../lib/apiUtils";
 import { signInHandler } from "../../lib/authUtils";
+import { generateEmptyStringDefaultValues } from "../../lib/formUtils";
 import { TSignInForm, signInSchema } from "../../schemas/requestSchema";
 import { signInAJAX } from "../../services/api/authApi";
 import { queryKey } from "../../services/query.config";
 import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
 
-const defaultValues: TSignInForm = Object.freeze({
-	email: "",
-	password: "",
-});
+const defaultValues: TSignInForm =
+	generateEmptyStringDefaultValues(signInSchema);
 
 const SignInForm = () => {
 	const {
@@ -56,7 +55,7 @@ const SignInForm = () => {
 			))}
 			{error instanceof FetchError && <ErrorMessage message={error.message} />}
 			<FormSubmitButton
-				label="Offer"
+				label="Sign In"
 				onClick={handleSubmit(onSubmit)}
 				disabled={isLoading}
 			/>

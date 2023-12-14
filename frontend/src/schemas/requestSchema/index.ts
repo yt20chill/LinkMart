@@ -22,7 +22,12 @@ import {
 	postRequestSchema,
 	requestIdSchema,
 } from "./requestSchema";
-import { AddAddressForm, postAddressSchema } from "./userSchema";
+import {
+	PostAddressDto,
+	TPostAddressForm,
+	postAddressDtoSchema,
+	postAddressFormSchema,
+} from "./userSchema";
 
 export {
 	acceptOfferFormSchema,
@@ -30,7 +35,8 @@ export {
 	allowedFileTypes,
 	categoryIdSchema,
 	deleteImageParamsSchema,
-	postAddressSchema,
+	postAddressDtoSchema,
+	postAddressFormSchema,
 	postOfferSchema,
 	postRequestSchema,
 	requestIdSchema,
@@ -40,14 +46,15 @@ export {
 
 export type {
 	AcceptOfferDto,
-	AddAddressForm,
 	CategoryId,
 	DeleteImageParams,
 	OfferForm,
+	PostAddressDto,
 	PostOfferDto,
 	RequestForm,
 	RequestId,
 	TAcceptOfferForm,
+	TPostAddressForm,
 	TSignInForm,
 	TSignUpForm,
 };

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import EditAddressForm from "../../features/forms/EditAddressForm";
+import PostAddressForm from "../../features/forms/PostAddressForm";
 
 const NotFoundPage = () => {
 	const navigate = useNavigate();
@@ -21,7 +21,7 @@ const NotFoundPage = () => {
 					>
 						Go Back Home
 					</p>
-					<EditAddressForm />
+					<PostAddressForm />
 				</div>
 			</div>
 		</>
