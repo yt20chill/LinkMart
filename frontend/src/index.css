@@ -1,11 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Ubuntu:wght@300;400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Noto+Sans+HK:wght@100;400;700&family=Ubuntu:wght@300;400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root *:not(.material-symbols-rounded) {
-	font-family: "Ubuntu", sans-serif;
+	font-family: "Ubuntu", "Noto Sans HK", sans-serif;
 }
 
 b.emo {
@@ -13,10 +12,19 @@ b.emo {
 	;
 }
 
+.font-roboto:not(.material-symbols-rounded) {
+	font-family: "Roboto", sans-serif !important;
+	;
+}
+
 .material-symbols-rounded,
 .icn-hvr-fill .material-symbols-rounded {
 	font-variation-settings: "FILL" 0, "wght" 400;
 	transition: all 0.3s ease;
+}
+
+.msr-light {
+	font-variation-settings: "wght" 300;
 }
 
 .icn-hvr-fill:hover .material-symbols-rounded,
