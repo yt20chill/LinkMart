@@ -15,7 +15,7 @@ export function RequestCardSkeleton() {
             <div className="bg-gray-300 w-4 h-4 rounded-full"></div>
             <div className="bg-gray-300 w-8 h-4"></div>
           </div>
-          <div className="ml-auto bg-gray-300 w-1/2 h-4 mt-2"></div>
+          <div className="ml-auto bg-gray-300 w-1/2 h-4 my-2"></div>
         </div>
       </div>
     </div>
