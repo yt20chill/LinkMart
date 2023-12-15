@@ -13,6 +13,7 @@
 7. [Order Route](#-7-order-route)
 8. [Location Route](#-8-location-route)
 9. [Logistic Company Route](#-9-logistic-company-route)
+10. [Provider Route](#-10-provider-route)
 
 ---
 
@@ -787,6 +788,38 @@ REDIRECT TO PAYMENT PAGE
     "logisticCompanyId" : int,
     "logisticCompanyName" : string,
     "logisticCompanyUrl" : string
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get order status name
+}
+```
+
+---
+## 📎 10. Provider Route 
+
+### 📍 10.1 Create Provider Done
+
+| [POST] | /api/provider/{locationId}|
+| ----- | --------------------- |
+"jwt" :
+> ⬇️ Req Body:
+
+```
+{
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"success": Boolean,
+	"message": "Provider had been created ProviderId: providerId//ULID"
 }
 ```
 
