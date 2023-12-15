@@ -90,7 +90,7 @@ routeConfigMap
 	.set(RouteEnum.RequestDetail, {
 		// providers or other users to see
 		name: "Request Detail",
-		path: "/request-detail/:id",
+		path: "/request-detail/:requestId",
 		authorizeLevel: AuthorizeLevel.PUBLIC,
 		component: RequestDetailsPage,
 	})

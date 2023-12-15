@@ -1,4 +1,4 @@
-import { FetchError, axiosWrapper } from "../../lib/apiUtils";
+import { axiosWrapper } from "../../lib/apiUtils";
 import { printFormData } from "../../lib/formUtils";
 import { DeleteImageParams } from "../../schemas/requestSchema";
 import {
@@ -75,12 +75,9 @@ export const getAllRequestsAJAX = async (searchParams: URLSearchParams) => {
 };
 
 export const getRequestDetailsAJAX = async ({ requestId }: RequestId) => {
-	if (!requestId) throw new FetchError(400, "invalid request id");
-	return (
-		(await axiosWrapper<void, RequestDetailsDto>(
-			`${requestApiRoutes.REQUEST}/${requestId}`,
-			{ schema: requestDetailsResponseSchema }
-		)) ?? {}
+	return await axiosWrapper<void, RequestDetailsDto>(
+		`${requestApiRoutes.REQUEST}/${requestId}`,
+		{ schema: requestDetailsResponseSchema }
 	);
 };
 

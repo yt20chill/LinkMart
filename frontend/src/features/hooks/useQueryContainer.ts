@@ -1,7 +1,10 @@
 import { useQuery } from "react-query";
+import { RequestId } from "../../schemas/requestSchema";
+import { RequestDetailsDto } from "../../schemas/responseSchema";
 import {
 	getAllCategoriesAJAX,
 	getAllLocationsAJAX,
+	getRequestDetailsAJAX,
 } from "../../services/api/requestApi";
 import { queryKey } from "../../services/query.config";
 
@@ -17,11 +20,17 @@ export function useQueryContainer() {
 		queryFn: getAllLocationsAJAX,
 		staleTime: Infinity,
 	});
-
+	const useGetRequestDetails = (requestId: RequestId) => {
+		return useQuery<RequestDetailsDto | undefined>({
+			queryKey: [queryKey.REQUEST, requestId],
+			queryFn: () => getRequestDetailsAJAX(requestId),
+		});
+	};
 	return {
 		getAllCategories,
 		getAllLocations,
 		categories: getAllCategories.data,
 		locations: getAllLocations.data,
+		useGetRequestDetails,
 	};
 }
