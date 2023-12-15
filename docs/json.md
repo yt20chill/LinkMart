@@ -335,7 +335,7 @@
 
 ---
 
-### 📍 4.5 Get user
+### 📍 4.5 Get user Done Debugging
 
 | [GET] | /api/user |
 | ----- | ----------------- |
