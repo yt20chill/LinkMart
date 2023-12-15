@@ -726,6 +726,7 @@ REDIRECT TO PAYMENT PAGE
 "jwt"
 "Change request status, offer status"
 | [POST]| /api/order |
+| ----- | ------------- |
 (Payment website callback)
 
 > ⬆️ Resp:
