@@ -1,14 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import CategoryFieldsForm from "../../components/form/CategoryFields";
+import {
+	CategoryFieldsForm,
+	FormInput,
+	FormSelect,
+	FormSubmitButton,
+	ImagePreview,
+} from "../../components/form";
 import FormFileInput from "../../components/form/FormFileInput";
-import FormInput from "../../components/form/FormInput";
-import FormSelect from "../../components/form/FormSelect";
-import FormSubmitButton from "../../components/form/FormSubmitButton";
-import ImagePreview from "../../components/form/ImagePreview";
 import { FetchError } from "../../lib/apiUtils";
 import { appendFormData } from "../../lib/formUtils";
 import {
@@ -34,6 +37,13 @@ const PostRequestForm = () => {
 	const [searchParams] = useSearchParams();
 	const requestId = searchParams.get("cloneId");
 	const { defaultValuesByField, images } = useUpdateRequestForm(requestId);
+	const defaultValues = useMemo(
+		() => ({
+			...defaultValuesByField.text,
+			...defaultValuesByField.dropDown,
+		}),
+		[defaultValuesByField]
+	);
 	const { categories, locations } = useQueryContainer();
 	const queryClient = useQueryClient();
 	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
@@ -62,31 +72,25 @@ const PostRequestForm = () => {
 			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
 		},
 	});
-	// console.log({
-	// 	...defaultValuesByField.text,
-	// 	...defaultValuesByField.dropDown,
-	// });
 	const {
 		register,
 		handleSubmit,
 		watch,
 		formState: { errors },
 		setValue,
+		reset,
 	} = useForm<RequestForm>({
-		resolver: zodResolver(postRequestSchema),
-		defaultValues: {
-			...defaultValuesByField.text,
-			...defaultValuesByField.dropDown,
-		},
+		resolver: zodResolver(
+			requestId
+				? postRequestSchema.omit({ imageFile: true })
+				: postRequestSchema
+		),
+		defaultValues,
 		mode: "onSubmit",
 	});
-	console.log({
-		...defaultValuesByField.text,
-		...defaultValuesByField.dropDown,
-	});
-	// const categoryForm = useForm<Record<string, string>>({
-	// 	defaultValues: defaultValuesByField.others.itemDetail,
-	// });
+	useEffect(() => {
+		reset(defaultValues);
+	}, [defaultValues, reset]);
 	const categoryId = watch("categoryId");
 	const { base64Images, onDelete } = usePreviewFormImages<RequestForm>(
 		watch,
