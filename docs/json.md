@@ -362,7 +362,33 @@
 ```
 
 ---
+### 📍 4.4.2 Delete user payment method Done 
 
+| [DELETE] | /api/user/payment/{paymentMethodId} |
+| ----- | ----------------- |
+
+> ⬇️ Req Body:
+"JWT in header"
+```js
+{
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+... {
+	"success": true,
+	"message": "User Payment Method had been deleted"
+}
+
+```js
+🔴 [400] BAD REQUEST
+... ]
+```
+
+---
 ### 📍 4.5 Get user Done 
 
 | [GET] | /api/user |
