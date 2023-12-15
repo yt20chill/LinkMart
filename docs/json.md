@@ -195,7 +195,7 @@
 
 ---
 
-### 📍 4.3.1 User Address Info Done~
+### 📍 4.3.1 User Address Info Debugging
 
 | [POST] | /api/user/address |
 | ----- | ----------------- |
@@ -205,11 +205,8 @@
 ```js
 {
 "address" :
-    [
-    String,
-    String,
-    String,
-]
+    "String"
+}
 }
 ```
 
@@ -225,7 +222,28 @@
 
 ### 📍 4.3.2 User Address Info Done~
 
-| [GET] | /api/user/address |
+| [GET] | /api/user/addressInArrayFormat |
+| ----- | ----------------- |
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+[   {
+"address" :
+    [
+    String,
+    String,
+    String,
+]
+}
+... ]
+```
+
+---
+### 📍 4.3.2 User Address Info Done~
+
+| [GET] | /api/user/addressInJsonFormat |
 | ----- | ----------------- |
 
 > ⬆️ Resp:
@@ -268,7 +286,7 @@
 
 ---
 
-### 📍 4.3.3 Dalete User Address
+### 📍 4.3.3 Dalete User Address Done
 
 | [DELETE] | /api/user/address/{addressId} |
 | ----- | ----------------- |
@@ -284,7 +302,10 @@
 
 ```js
 🟢 [200]  OK
-... ]
+... {
+	"success": true,
+	"message": "User address had been deleted, latest address is set to primary"
+}
 
 ```js
 🔴 [400] BAD REQUEST
