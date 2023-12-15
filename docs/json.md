@@ -314,7 +314,7 @@
 
 ---
 
-### 📍 4.4 Get user payment method Done
+### 📍 4.4 Get user payment method Done (updated with paymeny_methid_id)
 
 | [GET] | /api/user/payment |
 | ----- | ----------------- |
@@ -325,6 +325,7 @@
 🟢 [200]  OK
 ** HOLD **
 // [{
+		"payment_method_id": 3,
 		"payment_method": "Visa",
 		"card_no": "1234567890123456",
 		"card_holder_name": "testing",
@@ -386,6 +387,34 @@
 ```js
 🔴 [400] BAD REQUEST
 ... ]
+```
+
+---
+### 📍 4.4.3 Update user payment method Done 
+
+| [POST] | /api/user/payment/{paymentMethodId} |
+| ----- | ----------------- |
+> ⬇️ Req Body:
+"JWT in header" "Change is_Primary" 
+```js
+{
+		"payment_method": "Visa",
+		"card_no": "1234567890123459",
+		"card_holder_name": "testing_from_inso",
+		"expiry_date": "12/22"
+	}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+** HOLD **
+{
+	"success": true,
+	"message": "User Payment Method had been updated"
+}
+// 	
 ```
 
 ---
