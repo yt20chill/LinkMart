@@ -519,7 +519,7 @@
 }
 ```
 
-### 📍 5.6 Delete User Request
+### 📍 5.6 Delete User Request Done~
 
 | [DELETE] | /api/request/:requestId |
 | -------- | ----------------------- |
