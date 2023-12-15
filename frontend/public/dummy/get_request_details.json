@@ -1,0 +1,38 @@
+{
+	"requestId": "01HHEZNSZ64QBWC6J77YAWHAEY",
+	"locationId": 1,
+	"locationName": "🇯🇵 Japan",
+	"categoryId": 1,
+	"categoryName": "Clothes",
+	"itemDetail": {
+		"Color": "White",
+		"Size": "XS",
+		"Width": "White",
+		"Height": "XS",
+		"Scale": "White",
+		"Range": "XS"
+	},
+	"item": "Uniqlo White Jacket",
+	"primaryImage": "http://cdn.linkmart.com.s3-website-ap-southeast-1.amazonaws.com/profiles/profile-1702383773670.avif",
+	"images": [
+		{
+			"imageId": 1,
+			"imagePath": "http://cdn.linkmart.com.s3-website-ap-southeast-1.amazonaws.com/profiles/profile-1702383773670.avif"
+		},
+		{ "imageId": 2, "imagePath": "https://loremflickr.com/320/240?random=1" },
+		{ "imageId": 3, "imagePath": "https://loremflickr.com/320/240?random=2" },
+		{ "imageId": 4, "imagePath": "https://loremflickr.com/320/240?random=3" },
+		{ "imageId": 5, "imagePath": "https://loremflickr.com/320/240?random=4" },
+		{ "imageId": 6, "imagePath": "https://loremflickr.com/320/240?random=5" },
+		{ "imageId": 7, "imagePath": "https://loremflickr.com/320/240?random=6" },
+		{ "imageId": 8, "imagePath": "https://loremflickr.com/320/240?random=7" },
+		{ "imageId": 9, "imagePath": "https://loremflickr.com/320/240?random=8" }
+	],
+	"url": "https://google.com",
+	"quantity": 1,
+	"requestRemark": "無縫羽絨連帽外套",
+	"offerPrice": 1900,
+	"createdBy": "Jackie Mo",
+	"createdAt": "2023-12-12 20:22:54.04832",
+	"updatedAt": "2023-12-12 20:22:54.04832"
+}
