@@ -19,12 +19,6 @@ const defaultValues = {
 	addressId: "",
 };
 
-const addresses: AddressDto[] = [
-	{ addressId: 1, address: "address 1" },
-	{ addressId: 2, address: "address 2" },
-	{ addressId: 3, address: "address 3" },
-];
-
 const SelectPrimaryAddressForm = () => {
 	const {
 		handleSubmit,
@@ -34,11 +28,11 @@ const SelectPrimaryAddressForm = () => {
 		defaultValues,
 		resolver: zodResolver(updatePrimaryAddressFormSchema),
 	});
+
 	const queryClient = useQueryClient();
-	const { data /*: addresses*/, isLoading } = useQuery<AddressDto[]>({
+	const { data: addresses, isLoading } = useQuery<AddressDto[]>({
 		queryKey: [queryKey.USER, "address"],
-		// TODO: how to fix axiosWrapper so that it doesn't return undefined?
-		queryFn: async () => (await getAddressAJAX()) as AddressDto[],
+		queryFn: getAddressAJAX,
 	});
 	const { mutateAsync: updatePrimaryAddress, isLoading: isUpdating } =
 		useMutation({

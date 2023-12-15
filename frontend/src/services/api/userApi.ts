@@ -29,9 +29,11 @@ const deleteAddressAJAX = async (addressId: string) => {
 };
 
 const getAddressAJAX = async () => {
-	return await axiosWrapper<void, AddressDto[]>(userApiRoutes.ADDRESS, {
-		schema: addressesResponseSchema,
-	});
+	return (
+		(await axiosWrapper<void, AddressDto[]>(userApiRoutes.ADDRESS, {
+			schema: addressesResponseSchema,
+		})) ?? []
+	);
 };
 
 export {

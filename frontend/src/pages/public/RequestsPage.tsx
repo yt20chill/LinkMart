@@ -1,3 +1,4 @@
+import { RequestCard } from "@/components/card/RequestCard";
 import { RequestCardSkeleton } from "@/components/card/RequestCardSkeleton";
 import { useInfiniteQuery } from "react-query";
 import { Link, useSearchParams } from "react-router-dom";
@@ -7,7 +8,6 @@ import { getAllRequestsAJAX } from "../../services/api/requestApi";
 import { SearchParamsWrapperContext } from "../../services/context/searchParamsContext";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
-import { RequestCard } from "@/components/card/RequestCard";
 
 function RequestsPage() {
   const searchParamsWrapper = useSearchParamsWrapper(useSearchParams());

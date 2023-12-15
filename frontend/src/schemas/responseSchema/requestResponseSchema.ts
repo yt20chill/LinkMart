@@ -1,5 +1,22 @@
 import { z } from "zod";
-import { resultId, ulid } from "../../lib/schemaUtils";
+import { resultId, ulid, zeroToNull } from "../../lib/schemaUtils";
+
+export {
+	categoriesResponseSchema,
+	categoryFieldsResponseSchema,
+	locationsResponseSchema,
+	requestDetailsResponseSchema,
+	requestsResponseSchema,
+};
+
+export type {
+	CategoryDto,
+	CategoryFieldDto,
+	ImageDto,
+	LocationDto,
+	RequestDetailsDto,
+	RequestDto,
+};
 
 const categoryResponseSchema = z.object({
 	categoryId: resultId,
@@ -35,7 +52,7 @@ const requestResponseSchema = z.object({
 	locationName: z.string().min(1),
 	item: z.string().min(1),
 	primaryImage: z.string().url(),
-	offerPrice: z.number().positive().nullable(),
+	offerPrice: zeroToNull,
 	createdBy: z.string().min(1),
 	updatedAt: z.string(),
 });
@@ -65,20 +82,3 @@ const requestDetailsResponseSchema = requestResponseSchema.extend({
 // .omit({ primaryImage: true });
 
 type RequestDetailsDto = z.infer<typeof requestDetailsResponseSchema>;
-
-export {
-	categoriesResponseSchema,
-	categoryFieldsResponseSchema,
-	locationsResponseSchema,
-	requestDetailsResponseSchema,
-	requestsResponseSchema,
-};
-
-export type {
-	CategoryDto,
-	CategoryFieldDto,
-	ImageDto,
-	LocationDto,
-	RequestDetailsDto,
-	RequestDto,
-};

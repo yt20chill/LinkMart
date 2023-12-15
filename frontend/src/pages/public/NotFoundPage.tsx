@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import PostAddressForm from "../../features/forms/PostAddressForm";
-import SelectPrimaryAddressForm from "../../features/forms/SelectPrimaryAddressForm";
 
 const NotFoundPage = () => {
 	const navigate = useNavigate();
@@ -22,8 +20,6 @@ const NotFoundPage = () => {
 					>
 						Go Back Home
 					</p>
-					<PostAddressForm />
-					<SelectPrimaryAddressForm />
 				</div>
 			</div>
 		</>

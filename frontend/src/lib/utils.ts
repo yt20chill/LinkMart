@@ -43,7 +43,7 @@ export const toDataURLAsync = (file: File): Promise<string> => {
 };
 
 export const isObjOfType = <T>(obj: unknown, key: keyof T): obj is T =>
-	!!(obj as T)[key];
+	!!obj && !!(obj as T)[key];
 
 export const isShallowEqual = <T>(arg1: T, arg2: T): boolean => {
 	if (arg1 === arg2) return true;
@@ -61,16 +61,6 @@ export const imageHoverEnd: MouseEventHandler = (e) => {
 	const img = e.target as HTMLElement;
 	img.style.transform = "scale(1)";
 };
-
-// export enum iconStyleEnum {
-// 	mp = "mp",
-// 	identicon = "id",
-// 	monsterrid = "monsterrid",
-// 	wavatat = "wavatat",
-// 	retro = "retro",
-// 	robohash = "robohash",
-// 	blank = "blank",
-// }
 
 export type IconType =
 	| "mp"
