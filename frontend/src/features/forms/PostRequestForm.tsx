@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import CategoryFieldsForm from "../../components/form/CategoryFields";
 import FormFileInput from "../../components/form/FormFileInput";
@@ -26,9 +27,9 @@ import { useQueryContainer } from "../hooks/useQueryContainer";
 import { useUpdateRequestForm } from "../hooks/useUpdateForm";
 import SkeletonForm from "./SkeletonForm";
 
-type PostRequestFormProps = { requestId?: string };
-
-const PostRequestForm = ({ requestId }: PostRequestFormProps) => {
+const PostRequestForm = () => {
+	const [searchParams] = useSearchParams();
+	const requestId = searchParams.get("cloneId");
 	const {
 		defaultValuesByField: { text },
 		defaultValues,

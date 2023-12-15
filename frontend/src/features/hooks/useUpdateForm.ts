@@ -38,11 +38,11 @@ type RequestFormEmptyDefaultValues = {
 	text: RequestFormTextFields;
 };
 
-function useUpdateRequestForm(requestId?: string) {
+function useUpdateRequestForm(requestId: string | null) {
 	const { data } = useQuery({
 		queryKey: [queryKey.REQUEST, { requestId }],
 		queryFn: () => getRequestDetailsAJAX({ requestId: requestId! }),
-		enabled: !!requestId,
+		enabled: requestId !== null,
 	});
 	const [defaultValuesByField, setDefaultValuesByField] =
 		useState<RequestFormEmptyDefaultValues>({
