@@ -625,11 +625,11 @@
 
 ## 📎 6. Offer Route
 
-### 📍 6.1 Create New Offer
+### 📍 6.1 Create New Offer !!!!!!
 
 | [POST] | /api/offer |
 | ------ | ---------- |
-
+ "jwt"
 > ⬇️ Req Body:
 
 ```js
@@ -638,8 +638,8 @@
     "providerId" : ulid(provider.provider_id),
     "status" : int(status.status_id),
     "price" : int,
+    "estimatedProcessTime" : int,
     "offerRemark" : string
-    "jwt" :
 }
 ```
 
@@ -648,72 +648,25 @@
 ```js
 🟢 [200]  OK
 {
-    "success" : true,
-    "data" : [
-        {
-        "offerId" : int,
-        }
-    ]
 }
 ```
 
 ```js
 🔴 [400] BAD REQUEST
 {
-    "success" : false,
     "message" : fail to post offer
 }
 ```
 
-### 📍 6.2 Get Provider Offer (user side)
+### 📍 6.2 Get Provider Offer (user side) 
 
-| [GET] | /api/get_offer |
+| [GET] | /api/offer/{requestId}|
 | ----- | -------------- |
-
+"jwt" :
 > ⬇️ Req Body:
 
 ```js
 {
-    "jwt" :
-}
-```
-
-> ⬆️ Resp:
-
-```js
-🟢 [200]  OK
-{
-    "success" : true,
-    "data" : [
-    "orderId" : int(order.order_id)
-    "requestId" : int(request.request_id),
-    "providerId" : int(provider.provider_id),
-    "status" : int(status.status_id),
-    "price" : int,
-    "offerRemark" : string
-    ]
-}
-```
-
-```js
-🔴 [400] BAD REQUEST
-{
-    "message" : fail to post offer
-}
-```
-
-### 📍 6.3 Get Specific Provider Offer (user side)
-
-| [GET] | /api/get_offer/:id |
-| ----- | ------------------ |
-
-> ⬇️ Req Body:
-
-```js
-//with JWT Header
-//Body
-{
-    "offerId" : int
 }
 ```
 
@@ -722,36 +675,57 @@
 ```js
 🟢 [200]  OK
 [{
-    "orderId" : int(order.order_id)
+    "offerId" : int(offer_id)
     "requestId" : int(request.request_id),
     "providerId" : int(provider.provider_id),
+    "providerName": string(user.username),
     "status" : int(status.status_id),
-    "price" : int,
-    "offerRemark" : string
+    "providerPrice" : int,
+    "estimatedProcessTime": int,
+    "offerRemark" : string   
 },...]
 ```
 
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : fail to post offer
+    "message" : fail to get offer
 }
 ```
 
-## 📎 7. Order Route
+### 📍 6.3 Accpet offer (PUT)
 
-### 📍 7.1 Order Request
+| [PUT] | /api/offer/:offerId |
+| ----- | ------------------ |
 
-| [POST]| /api/order
+"jwt"
 
 > ⬇️ Req Body:
 
 ```js
 {
     "offerId" : int(offer.offer_id),
-    "shippingAddress": string,
+    "userAddressId": int,
 }
 ```
+```js
+🟢 [200]  OK
+REDIRECT TO PAYMENT PAGE
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to get offer
+}
+```
+---
+
+## 📎 7. Order Route
+
+### 📍 7.1 Order Request
+"jwt"
+"Change request status, offer status"
+| [POST]| /api/order (Payment website callback)
 
 > ⬆️ Resp:
 
