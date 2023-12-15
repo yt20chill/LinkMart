@@ -51,7 +51,7 @@ const requestResponseSchema = z.object({
 	locationName: z.string().min(1),
 	item: z.string().min(1),
 	primaryImage: z.string().url(),
-	offerPrice: z.number().nonnegative(),
+	offerPrice: z.number().nonnegative().nullable(),
 	createdBy: z.string().min(1),
 	updatedAt: z.string(),
 });

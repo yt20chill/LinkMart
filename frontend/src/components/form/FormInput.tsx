@@ -24,7 +24,7 @@ function FormInput<T extends FieldValues>({
 			</div>
 			<input
 				type={type}
-				placeholder={defaultValue ?? placeholder}
+				placeholder={placeholder}
 				className="input input-bordered w-full max-w-xs"
 				defaultValue={defaultValue}
 				{...register(name)}

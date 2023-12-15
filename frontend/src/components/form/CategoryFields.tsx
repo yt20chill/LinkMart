@@ -33,6 +33,7 @@ const CategoryFieldsForm = ({
 					<FormSelect
 						key={fieldName}
 						name={`${keyName}.${fieldName}`}
+						label={fieldName}
 						register={register}
 						errors={errors}
 						optionItems={fieldOptions.map((option) => ({
@@ -46,6 +47,7 @@ const CategoryFieldsForm = ({
 				<FormInput
 					key={fieldName}
 					name={`${keyName}.${fieldName}`}
+					label={fieldName}
 					register={register}
 					errors={errors}
 					defaultValue={defaultValues[fieldName] ?? ""}

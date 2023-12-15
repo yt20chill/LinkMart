@@ -80,6 +80,10 @@ const PostRequestForm = () => {
 		},
 		mode: "onSubmit",
 	});
+	console.log({
+		...defaultValuesByField.text,
+		...defaultValuesByField.dropDown,
+	});
 	// const categoryForm = useForm<Record<string, string>>({
 	// 	defaultValues: defaultValuesByField.others.itemDetail,
 	// });
