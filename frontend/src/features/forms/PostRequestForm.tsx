@@ -35,7 +35,9 @@ import SkeletonForm from "./SkeletonForm";
 
 const PostRequestForm = () => {
 	const [searchParams] = useSearchParams();
-	const requestId = searchParams.get("cloneId");
+	const requestId =
+		searchParams.get("cloneId") || searchParams.get("requestId");
+	const isClone = searchParams.has("cloneId");
 	const { defaultValuesByField, images } = useUpdateRequestForm(requestId);
 	const defaultValues = useMemo(
 		() => ({
@@ -101,7 +103,10 @@ const PostRequestForm = () => {
 		// append category fields result to form data (as json) first
 		const formData = new FormData();
 		appendFormData(data, formData);
-		requestId ? await editRequest(formData) : await postRequest(formData);
+		// has requestId and not clone => edit, else post
+		requestId && !isClone
+			? await editRequest(formData)
+			: await postRequest(formData);
 	};
 	return (
 		<>
@@ -143,19 +148,25 @@ const PostRequestForm = () => {
 						multiple={true}
 						accept={allowedFileTypes.join(",")}
 					/>
-					{images.length > 0 &&
-						images.map((img) => (
-							<ImagePreview
-								key={img.imageId}
-								imageId={img.imageId}
-								src={img.imagePath}
-								onDelete={deleteImage}
-							/>
-						))}
 					{base64Images.length > 0 &&
-						base64Images.map((img) => (
-							<ImagePreview key={img.name} {...img} onDelete={onDelete} />
-						))}
+						base64Images
+							.reverse()
+							.map((img) => (
+								<ImagePreview key={img.name} {...img} onDelete={onDelete} />
+							))}
+					{images.length > 0 &&
+						images
+							.reverse()
+							.map((img) => (
+								<ImagePreview
+									key={img.imageId}
+									imageId={img.imageId}
+									src={img.imagePath}
+									onDelete={deleteImage}
+									canDelete={!isClone}
+								/>
+							))}
+
 					{Object.keys(defaultValuesByField.text).map((field) => (
 						<FormInput
 							key={field}
