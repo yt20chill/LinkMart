@@ -8,7 +8,7 @@ export function RequestCard(props: RequestDto) {
   return (
     <Link
       to={`/request-detail/${props.requestId}`}
-      className="relative bg-base-100/25 backdrop-blur-lg icn-hvr-fill rounded-lg shadow [&_a]:hover:flex p-2 hover:shadow-2xl hover:scale-105 transition-all h-max-content border border-base-200/75 select-none overflow-hidden"
+      className="inline-box relative bg-base-100/25 backdrop-blur-lg icn-hvr-fill rounded-lg shadow [&_a]:hover:flex p-2 hover:shadow-2xl hover:scale-105 transition-all h-fit border border-base-200/75 select-none overflow-hidden"
     >
       <figure className="rounded-md h-48 flex justify-center bg-slate-300 overflow-hidden border border-gray-200">
         <img
@@ -18,9 +18,8 @@ export function RequestCard(props: RequestDto) {
         />
       </figure>
       <div className="px-2 pt-1">
-        <div className="truncate">{props.item}</div>
-        <div className="inline-flex items-center font-light text-sm gap-1 text-slate-500 ps-1 pe-2 border border-slate-500 rounded-badge">
-          <span className="material-symbols-rounded text-sm">public</span>
+        <div className="truncat mb-1">{props.item}</div>
+        <div className="inline-flex items-center font-light text-sm gap-1 text-slate-500 px-2 border border-slate-500 rounded-badge">
           {props.locationName}
         </div>
       </div>

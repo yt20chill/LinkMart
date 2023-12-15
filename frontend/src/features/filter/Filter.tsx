@@ -40,7 +40,7 @@ export function Filter(props: FilterProps) {
         )}
       </div>
       <button
-        className="btn btn-outline btn-warning w-full"
+        className="rounded-box py-2 shadow hover:shadow-lg hover:ring-2 hover:ring-orange-300 hover:ring-offset-2 bg-orange-400 hover:bg-orange-400 text-base-100 hover:text-lg w-full overflow-hidden transition-all"
         onClick={() => setSearchParams()}
       >
         Clear All
