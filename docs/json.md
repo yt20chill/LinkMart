@@ -334,7 +334,7 @@
 
 ---
 
-### 📍 4.4.1 Create user payment method Done
+### 📍 4.4.1 Create user payment method Done *because have dummy data have to call few times after
 
 | [POST] | /api/user/payment |
 | ----- | ----------------- |
