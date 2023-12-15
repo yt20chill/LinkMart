@@ -1,9 +1,12 @@
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { useCategoryOptions } from "../../features/hooks/useCategoryOptions";
 import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
 
-type CategoryFieldsFormProps<T extends FieldValues = Record<string, string>> = {
+type CategoryFieldsFormProps<
+	T extends Record<string, unknown> = Record<string, unknown>
+> = {
+	keyName: string;
 	register: UseFormRegister<T>;
 	errors: FieldErrors<T>;
 	categoryId: number;
@@ -11,6 +14,7 @@ type CategoryFieldsFormProps<T extends FieldValues = Record<string, string>> = {
 };
 
 const CategoryFieldsForm = ({
+	keyName,
 	register,
 	errors,
 	categoryId,
@@ -28,7 +32,7 @@ const CategoryFieldsForm = ({
 				return (
 					<FormSelect
 						key={fieldName}
-						name={fieldName}
+						name={`${keyName}.${fieldName}`}
 						register={register}
 						errors={errors}
 						optionItems={fieldOptions.map((option) => ({
@@ -41,7 +45,7 @@ const CategoryFieldsForm = ({
 			{textFields.map((fieldName) => (
 				<FormInput
 					key={fieldName}
-					name={`itemDetail.${fieldName}`}
+					name={`${keyName}.${fieldName}`}
 					register={register}
 					errors={errors}
 					defaultValue={defaultValues[fieldName] ?? ""}

@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router-dom";
@@ -9,8 +10,12 @@ import FormSelect from "../../components/form/FormSelect";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import ImagePreview from "../../components/form/ImagePreview";
 import { FetchError } from "../../lib/apiUtils";
-import { appendFormData, objectToJSON } from "../../lib/formUtils";
-import { RequestForm, allowedFileTypes } from "../../schemas/requestSchema";
+import { appendFormData } from "../../lib/formUtils";
+import {
+	RequestForm,
+	allowedFileTypes,
+	postRequestSchema,
+} from "../../schemas/requestSchema";
 import {
 	deleteRequestImageAJAX,
 	postRequestAJAX,
@@ -68,16 +73,16 @@ const PostRequestForm = () => {
 		formState: { errors },
 		setValue,
 	} = useForm<RequestForm>({
-		// resolver: zodResolver(postRequestSchema),
+		resolver: zodResolver(postRequestSchema),
 		defaultValues: {
 			...defaultValuesByField.text,
 			...defaultValuesByField.dropDown,
 		},
 		mode: "onSubmit",
 	});
-	const categoryForm = useForm<Record<string, string>>({
-		defaultValues: defaultValuesByField.others.itemDetail,
-	});
+	// const categoryForm = useForm<Record<string, string>>({
+	// 	defaultValues: defaultValuesByField.others.itemDetail,
+	// });
 	const categoryId = watch("categoryId");
 	const { base64Images, onDelete } = usePreviewFormImages<RequestForm>(
 		watch,
@@ -86,18 +91,14 @@ const PostRequestForm = () => {
 	);
 	const onSubmit = async (data: RequestForm) => {
 		// append category fields result to form data (as json) first
-		const combinedData = {
-			...data,
-			itemDetail: objectToJSON(categoryForm.getValues()),
-		};
 		const formData = new FormData();
-		appendFormData(combinedData, formData);
+		appendFormData(data, formData);
 		requestId ? await editRequest(formData) : await postRequest(formData);
 	};
 	return (
 		<>
 			{categories && locations ? (
-				<form onSubmit={handleSubmit(onSubmit)}>
+				<form>
 					{categories && (
 						<FormSelect
 							register={register}
@@ -160,9 +161,11 @@ const PostRequestForm = () => {
 					))}
 					{categoryId && (
 						<CategoryFieldsForm
-							register={categoryForm.register}
-							errors={categoryForm.formState.errors}
+							keyName="itemDetail"
+							register={register}
+							errors={errors}
 							categoryId={+categoryId}
+							defaultValuesJSON={defaultValuesByField.others.itemDetail}
 						/>
 					)}
 					<FormSubmitButton

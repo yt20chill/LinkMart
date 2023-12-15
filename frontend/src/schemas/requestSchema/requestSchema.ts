@@ -27,14 +27,14 @@ export const postRequestSchema = z.object({
 		.refine((files) => files.length > 0, { message: "required" }),
 	item: z.string().min(1, { message: "required" }),
 	url: emptyStringToNull.pipe(
-		z.string().url({ message: "invalid url" }).nullable()
+		z.string().url({ message: "invalid url" }).nullish()
 	),
 	quantity: stringToPositiveNumber().pipe(
 		z.number().int().positive({ message: "invalid quantity" }).default(1)
 	),
 	requestRemark: emptyStringToNull.nullable(),
 	offerPrice: stringToPositiveNumber({ isFloat: true }).pipe(
-		z.number().positive().nullable()
+		z.number().positive().nullish()
 	),
 	itemDetail: z.record(z.string()),
 });

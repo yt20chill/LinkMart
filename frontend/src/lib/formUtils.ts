@@ -4,17 +4,18 @@ export const appendFormData = <T extends object>(
 	data: T,
 	oldFormData?: FormData
 ): FormData => {
+	console.log(data);
 	const formData = oldFormData ?? new FormData();
 	for (const key in data) {
 		const value = data[key];
-		if (formData.has(key)) continue;
+		if (formData.has(key) || value === undefined || value === null) continue;
 		if (Array.isArray(value) || value instanceof FileList) {
 			for (const elem of value) {
 				formData.append(key, elem as string | Blob);
 			}
-			continue;
-		}
-		formData.append(key, value as string);
+		} else if (typeof value === "object")
+			formData.append(key, JSON.stringify(value));
+		else formData.append(key, value as string);
 	}
 	return formData;
 };
