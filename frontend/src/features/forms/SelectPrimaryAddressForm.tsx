@@ -19,12 +19,6 @@ const defaultValues = {
 	addressId: "",
 };
 
-const addresses: AddressDto[] = [
-	{ addressId: 1, address: "address 1" },
-	{ addressId: 2, address: "address 2" },
-	{ addressId: 3, address: "address 3" },
-];
-
 const SelectPrimaryAddressForm = () => {
 	const {
 		handleSubmit,
@@ -36,7 +30,7 @@ const SelectPrimaryAddressForm = () => {
 	});
 
 	const queryClient = useQueryClient();
-	const { data /*: addresses*/, isLoading } = useQuery<AddressDto[]>({
+	const { data: addresses, isLoading } = useQuery<AddressDto[]>({
 		queryKey: [queryKey.USER, "address"],
 		queryFn: getAddressAJAX,
 	});

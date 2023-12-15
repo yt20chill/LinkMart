@@ -28,22 +28,28 @@ const requestApiRoutes = Object.freeze({
 });
 
 export const getAllCategoriesAJAX = async () => {
-	return await axiosWrapper<void, CategoryDto[]>(requestApiRoutes.CATEGORY, {
-		schema: categoriesResponseSchema,
-	});
+	return (
+		(await axiosWrapper<void, CategoryDto[]>(requestApiRoutes.CATEGORY, {
+			schema: categoriesResponseSchema,
+		})) ?? []
+	);
 };
 
 export const getCategoryFieldsAJAX = async ({ categoryId }: CategoryId) => {
-	return await axiosWrapper<number, CategoryFieldDto[]>(
-		`${requestApiRoutes.CATEGORY}/${categoryId}`,
-		{ schema: categoryFieldsResponseSchema }
+	return (
+		(await axiosWrapper<number, CategoryFieldDto[]>(
+			`${requestApiRoutes.CATEGORY}/${categoryId}`,
+			{ schema: categoryFieldsResponseSchema }
+		)) ?? []
 	);
 };
 
 export const getAllLocationsAJAX = async () => {
-	return await axiosWrapper<void, LocationDto[]>(requestApiRoutes.LOCATION, {
-		schema: locationsResponseSchema,
-	});
+	return (
+		(await axiosWrapper<void, LocationDto[]>(requestApiRoutes.LOCATION, {
+			schema: locationsResponseSchema,
+		})) ?? []
+	);
 };
 
 export const postRequestAJAX = async (formData: FormData) => {
@@ -60,17 +66,21 @@ export const postRequestAJAX = async (formData: FormData) => {
  * @returns brief info of requests
  */
 export const getAllRequestsAJAX = async (searchParams: URLSearchParams) => {
-	return await axiosWrapper<void, RequestDto[]>(requestApiRoutes.REQUEST, {
-		schema: requestsResponseSchema,
-		params: searchParams,
-	});
+	return (
+		(await axiosWrapper<void, RequestDto[]>(requestApiRoutes.REQUEST, {
+			schema: requestsResponseSchema,
+			params: searchParams,
+		})) ?? []
+	);
 };
 
 export const getRequestDetailsAJAX = async ({ requestId }: RequestId) => {
 	if (!requestId) throw new FetchError(400, "invalid request id");
-	return await axiosWrapper<void, RequestDetailsDto>(
-		`${requestApiRoutes.REQUEST}/${requestId}`,
-		{ schema: requestDetailsResponseSchema }
+	return (
+		(await axiosWrapper<void, RequestDetailsDto>(
+			`${requestApiRoutes.REQUEST}/${requestId}`,
+			{ schema: requestDetailsResponseSchema }
+		)) ?? {}
 	);
 };
 

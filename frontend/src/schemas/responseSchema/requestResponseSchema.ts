@@ -1,6 +1,23 @@
 import { z } from "zod";
 import { resultId, ulid, zeroToNull } from "../../lib/schemaUtils";
 
+export {
+	categoriesResponseSchema,
+	categoryFieldsResponseSchema,
+	locationsResponseSchema,
+	requestDetailsResponseSchema,
+	requestsResponseSchema,
+};
+
+export type {
+	CategoryDto,
+	CategoryFieldDto,
+	ImageDto,
+	LocationDto,
+	RequestDetailsDto,
+	RequestDto,
+};
+
 const categoryResponseSchema = z.object({
 	categoryId: resultId,
 	categoryName: z.string().min(1),
@@ -65,20 +82,3 @@ const requestDetailsResponseSchema = requestResponseSchema.extend({
 // .omit({ primaryImage: true });
 
 type RequestDetailsDto = z.infer<typeof requestDetailsResponseSchema>;
-
-export {
-	categoriesResponseSchema,
-	categoryFieldsResponseSchema,
-	locationsResponseSchema,
-	requestDetailsResponseSchema,
-	requestsResponseSchema,
-};
-
-export type {
-	CategoryDto,
-	CategoryFieldDto,
-	ImageDto,
-	LocationDto,
-	RequestDetailsDto,
-	RequestDto,
-};

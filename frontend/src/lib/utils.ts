@@ -62,16 +62,6 @@ export const imageHoverEnd: MouseEventHandler = (e) => {
 	img.style.transform = "scale(1)";
 };
 
-// export enum iconStyleEnum {
-// 	mp = "mp",
-// 	identicon = "id",
-// 	monsterrid = "monsterrid",
-// 	wavatat = "wavatat",
-// 	retro = "retro",
-// 	robohash = "robohash",
-// 	blank = "blank",
-// }
-
 export type IconType =
 	| "mp"
 	| "id"
