@@ -22,8 +22,8 @@ const NotFoundPage = () => {
 					>
 						Go Back Home
 					</p>
-					<PostAddressForm />
 					<SelectPrimaryAddressForm />
+					<PostAddressForm />
 				</div>
 			</div>
 		</>

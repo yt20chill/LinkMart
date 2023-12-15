@@ -16,19 +16,19 @@ const FormRadioInput = <T extends FieldValues>({
 }: FormRadioInputProps<T>) => {
 	const error = errors?.[name]?.message as string | undefined;
 	return (
-		<div className="rating space-y-8">
+		<div className="space-y-8 flex flex-col">
 			<p>{label}</p>
 			{optionItems.map((item, index) => (
-				<div key={item.value}>
-					<label htmlFor={item.value}>{item.displayValue}</label>
+				<div key={item.value} className=" shadow-orange-200">
 					<input
 						type="radio"
-						className="mask mask-star-2 bg-orange-400"
+						className="me-5"
 						value={item.value}
 						id={item.value}
 						defaultChecked={index === 0}
 						{...register(name)}
 					/>
+					<label htmlFor={item.value}>{item.displayValue}</label>
 				</div>
 			))}
 			{error && <ErrorMessage message={error} />}

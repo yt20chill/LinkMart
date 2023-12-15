@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { resultId, ulid } from "../../lib/schemaUtils";
+import { resultId, ulid, zeroToNull } from "../../lib/schemaUtils";
 
 const categoryResponseSchema = z.object({
 	categoryId: resultId,
@@ -35,7 +35,7 @@ const requestResponseSchema = z.object({
 	locationName: z.string().min(1),
 	item: z.string().min(1),
 	primaryImage: z.string().url(),
-	offerPrice: z.number().positive().nullable(),
+	offerPrice: zeroToNull,
 	createdBy: z.string().min(1),
 	updatedAt: z.string(),
 });

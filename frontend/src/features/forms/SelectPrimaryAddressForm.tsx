@@ -34,11 +34,13 @@ const SelectPrimaryAddressForm = () => {
 		defaultValues,
 		resolver: zodResolver(updatePrimaryAddressFormSchema),
 	});
+
 	const queryClient = useQueryClient();
 	const { data /*: addresses*/, isLoading } = useQuery<AddressDto[]>({
 		queryKey: [queryKey.USER, "address"],
 		// TODO: how to fix axiosWrapper so that it doesn't return undefined?
-		queryFn: async () => (await getAddressAJAX()) as AddressDto[],
+		// queryFn: async () => (await getAddressAJAX()) as AddressDto[],
+		queryFn: getAddressAJAX, // Type 'undefined' is not assignable to type '{ addressId: number; address: string; }[]'.
 	});
 	const { mutateAsync: updatePrimaryAddress, isLoading: isUpdating } =
 		useMutation({
