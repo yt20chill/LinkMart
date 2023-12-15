@@ -8,8 +8,8 @@ type BaseImagePreviewProps = {
 };
 
 type ExistingImagePreviewProps = BaseImagePreviewProps & {
-	imageId: string;
-	onDelete: (options: { imageId: string }) => Promise<void>;
+	imageId: number;
+	onDelete: (options: { imageId: number }) => Promise<void>;
 };
 
 type NewImagePreviewProps = BaseImagePreviewProps & {

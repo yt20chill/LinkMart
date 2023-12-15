@@ -8,10 +8,10 @@ export const appendFormData = <T extends object>(
 	for (const key in data) {
 		const value = data[key];
 		if (formData.has(key)) continue;
-		if (Array.isArray(value)) {
-			value.forEach((elem) => {
-				formData.append(key, elem as string);
-			});
+		if (Array.isArray(value) || value instanceof FileList) {
+			for (const elem of value) {
+				formData.append(key, elem as string | Blob);
+			}
 			continue;
 		}
 		formData.append(key, value as string);
@@ -48,11 +48,9 @@ export const dtoToString = <T extends Record<string, unknown>>(
 	}, {} as Record<keyof T, string>);
 };
 
-export const emptyObjectToNull = <T extends Record<string, string>>(
-	obj: T
-): T | null => {
+export const objectToJSON = (obj: object): string | null => {
 	if (Object.keys(obj).length === 0) return null;
-	return obj;
+	return JSON.stringify(obj);
 };
 
 export const arrayToFileList = (files: File[]) => {

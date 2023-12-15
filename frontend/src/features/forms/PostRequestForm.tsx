@@ -1,5 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router-dom";
@@ -11,12 +9,8 @@ import FormSelect from "../../components/form/FormSelect";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import ImagePreview from "../../components/form/ImagePreview";
 import { FetchError } from "../../lib/apiUtils";
-import { appendFormData, emptyObjectToNull } from "../../lib/formUtils";
-import {
-	RequestForm,
-	allowedFileTypes,
-	postRequestSchema,
-} from "../../schemas/requestSchema";
+import { appendFormData, objectToJSON } from "../../lib/formUtils";
+import { RequestForm, allowedFileTypes } from "../../schemas/requestSchema";
 import {
 	deleteRequestImageAJAX,
 	postRequestAJAX,
@@ -25,22 +19,16 @@ import {
 import { queryKey } from "../../services/query.config";
 import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
 import { useQueryContainer } from "../hooks/useQueryContainer";
-import { useUpdateRequestForm } from "../hooks/useUpdateForm";
+import {
+	RequestFormTextFields,
+	useUpdateRequestForm,
+} from "../hooks/useUpdateForm";
 import SkeletonForm from "./SkeletonForm";
 
 const PostRequestForm = () => {
 	const [searchParams] = useSearchParams();
 	const requestId = searchParams.get("cloneId");
 	const { defaultValuesByField, images } = useUpdateRequestForm(requestId);
-	const defaultValues = useMemo(
-		() => ({
-			...defaultValuesByField.dropDown,
-			...defaultValuesByField.text,
-			...defaultValuesByField.others,
-		}),
-		[defaultValuesByField]
-	);
-	console.log(defaultValues);
 	const { categories, locations } = useQueryContainer();
 	const queryClient = useQueryClient();
 	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
@@ -69,7 +57,10 @@ const PostRequestForm = () => {
 			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
 		},
 	});
-
+	// console.log({
+	// 	...defaultValuesByField.text,
+	// 	...defaultValuesByField.dropDown,
+	// });
 	const {
 		register,
 		handleSubmit,
@@ -77,12 +68,15 @@ const PostRequestForm = () => {
 		formState: { errors },
 		setValue,
 	} = useForm<RequestForm>({
-		resolver: zodResolver(postRequestSchema),
-		defaultValues,
+		// resolver: zodResolver(postRequestSchema),
+		defaultValues: {
+			...defaultValuesByField.text,
+			...defaultValuesByField.dropDown,
+		},
 		mode: "onSubmit",
 	});
 	const categoryForm = useForm<Record<string, string>>({
-		defaultValues: defaultValues.itemDetail,
+		defaultValues: defaultValuesByField.others.itemDetail,
 	});
 	const categoryId = watch("categoryId");
 	const { base64Images, onDelete } = usePreviewFormImages<RequestForm>(
@@ -94,7 +88,7 @@ const PostRequestForm = () => {
 		// append category fields result to form data (as json) first
 		const combinedData = {
 			...data,
-			itemDetail: emptyObjectToNull(categoryForm.getValues()),
+			itemDetail: objectToJSON(categoryForm.getValues()),
 		};
 		const formData = new FormData();
 		appendFormData(combinedData, formData);
@@ -103,7 +97,7 @@ const PostRequestForm = () => {
 	return (
 		<>
 			{categories && locations ? (
-				<form>
+				<form onSubmit={handleSubmit(onSubmit)}>
 					{categories && (
 						<FormSelect
 							register={register}
@@ -111,6 +105,7 @@ const PostRequestForm = () => {
 							errors={errors}
 							name="categoryId"
 							label="Category"
+							defaultValue={defaultValuesByField.dropDown.categoryId}
 							optionItems={categories.map((category) => ({
 								value: category.categoryId + "",
 								displayValue: category.categoryName,
@@ -124,6 +119,7 @@ const PostRequestForm = () => {
 							errors={errors}
 							name="locationId"
 							label="Location"
+							defaultValue={defaultValuesByField.dropDown.locationId}
 							optionItems={locations.map((location) => ({
 								value: location.locationId + "",
 								displayValue: location.locationName,
@@ -155,6 +151,9 @@ const PostRequestForm = () => {
 						<FormInput
 							key={field}
 							name={field as keyof RequestForm}
+							defaultValue={
+								defaultValuesByField.text[field as keyof RequestFormTextFields]
+							}
 							register={register}
 							errors={errors}
 						/>

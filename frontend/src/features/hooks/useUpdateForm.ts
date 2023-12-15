@@ -10,7 +10,7 @@ type RequestFormOtherFields = {
 	imageFile: File[];
 	itemDetail: Record<string, string>;
 };
-type RequestFormTextFields = Omit<
+export type RequestFormTextFields = Omit<
 	RequestForm,
 	keyof RequestFormDropDownFields | keyof RequestFormOtherFields
 >;
@@ -58,6 +58,7 @@ function useUpdateRequestForm(requestId: string | null) {
 			createdBy,
 			primaryImage,
 			requestId,
+			updatedAt,
 			...formData
 		} = data;
 		const { locationId, categoryId, itemDetail, ...rest } = formData;

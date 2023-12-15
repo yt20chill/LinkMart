@@ -13,9 +13,9 @@ import { isObjOfType } from "./utils";
 export const setCommonAuthorizationHeader = (signIn = true): void => {
 	signIn
 		? (axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-				"token"
+				"access_token"
 		  )
-				? `Bearer ${localStorage.getItem("token")}`
+				? `Bearer ${localStorage.getItem("access_token")}`
 				: undefined)
 		: delete axios.defaults.headers.common["Authorization"];
 };

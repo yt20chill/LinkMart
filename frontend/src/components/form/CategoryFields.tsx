@@ -34,17 +34,17 @@ const CategoryFieldsForm = ({
 						optionItems={fieldOptions.map((option) => ({
 							value: option,
 						}))}
-						defaultValue={defaultValues[fieldName] ?? undefined}
+						defaultValue={defaultValues[fieldName] ?? ""}
 					/>
 				);
 			})}
 			{textFields.map((fieldName) => (
 				<FormInput
 					key={fieldName}
-					name={fieldName}
+					name={`itemDetail.${fieldName}`}
 					register={register}
 					errors={errors}
-					defaultValue={defaultValues[fieldName] ?? undefined}
+					defaultValue={defaultValues[fieldName] ?? ""}
 				/>
 			))}
 		</>

@@ -1,7 +1,6 @@
 import { FieldValues } from "react-hook-form";
-import { BaseFormInputProps } from "../../lib/formUtils";
 import { camelToTitleCase } from "../../lib/utils";
-import { FormInputType } from "../../types/formModels";
+import { BaseFormInputProps, FormInputType } from "../../types/formModels";
 import ErrorMessage from "./ErrorMessage";
 
 type FormInputProps<T extends FieldValues> = BaseFormInputProps<T> & {
@@ -13,7 +12,7 @@ function FormInput<T extends FieldValues>({
 	label = camelToTitleCase(name),
 	placeholder = label,
 	type = /password/i.test(name) ? "password" : "text",
-	defaultValue = "",
+	defaultValue,
 	register,
 	errors,
 }: FormInputProps<T>) {
@@ -25,7 +24,7 @@ function FormInput<T extends FieldValues>({
 			</div>
 			<input
 				type={type}
-				placeholder={placeholder}
+				placeholder={defaultValue ?? placeholder}
 				className="input input-bordered w-full max-w-xs"
 				defaultValue={defaultValue}
 				{...register(name)}

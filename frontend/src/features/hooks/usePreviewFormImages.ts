@@ -7,9 +7,8 @@ import {
 	UseFormWatch,
 } from "react-hook-form";
 import { toast } from "react-toastify";
-import { FetchError } from "../../lib/apiUtils";
 import { arrayToFileList } from "../../lib/formUtils";
-import { toDataURLAsync } from "../../lib/utils";
+import { isObjOfType, toDataURLAsync } from "../../lib/utils";
 
 type Base64Image = { name: string; src: string };
 
@@ -24,60 +23,7 @@ export const usePreviewFormImages = <T extends FieldValues>(
 	setValue: UseFormSetValue<T>
 ): UsePreviewImagesReturnType => {
 	const imageFiles = watch(path);
-	if (
-		Object.keys(imageFiles).length > 0 &&
-		!((imageFiles as unknown) instanceof FileList)
-	) {
-		throw new FetchError(400, `The value at path "${path}" is not a FileList.`);
-	}
-	const [imageArray, setImageArray] = useState<File[]>([]);
 	const [base64Images, setBase64Images] = useState<Base64Image[]>([]);
-	useEffect(() => {
-		setImageArray(() => Array.from(imageFiles));
-	}, [imageFiles]);
-	// on change
-	// FIXME: bug, cannot delete image
-	// useEffect(() => {
-	// 	if (imageArray.length === memoizedImages.length) return;
-	// 	setPendingImages(() =>
-	// 		imageArray.filter(
-	// 			(file) =>
-	// 				allowedFileTypes.includes(file.type) &&
-	// 				!isFileExists(memoizedImages, file)
-	// 		)
-	// 	);
-	// 	return () => setPendingImages([]);
-	// }, [imageArray, memoizedImages]);
-
-	// useEffect(() => {
-	// 	if (pendingImages.length === 0) return;
-	// 	Promise.all(
-	// 		pendingImages.map(async (image) => ({
-	// 			name: image.name,
-	// 			src: await toDataURLAsync(image),
-	// 		}))
-	// 	)
-	// 		.then((images) => {
-	// 			setNewImages((prevImages) => [...prevImages, ...images]);
-	// 		})
-	// 		.catch(() => {
-	// 			toast.error("Something went wrong");
-	// 		});
-	// }, [pendingImages]);
-	useEffect(() => {
-		if (imageArray.length === 0) {
-			setBase64Images([]);
-			return;
-		}
-		Promise.all(
-			imageArray.map(async (image) => {
-				const dataUrl = await toDataURLAsync(image);
-				return { name: image.name, src: dataUrl };
-			})
-		)
-			.then((images) => setBase64Images(() => images))
-			.catch(() => toast.error("Cannot read files"));
-	}, [imageArray]);
 	const onDelete = (options: { name: string }) => {
 		setBase64Images((base64Images) =>
 			base64Images.filter((newImage) => newImage.name !== options.name)
@@ -85,10 +31,28 @@ export const usePreviewFormImages = <T extends FieldValues>(
 		setValue(
 			path,
 			arrayToFileList(
-				imageArray.filter((image) => image.name !== options.name)
+				Array.from(imageFiles as FileList).filter(
+					(image) => image.name !== options.name
+				)
 			) as PathValue<T, Path<T>>
 		);
 	};
+	useEffect(() => {
+		if (
+			!imageFiles ||
+			Object.keys(imageFiles).length === 0 ||
+			!isObjOfType<FileList>(imageFiles, "item")
+		)
+			return;
+		Promise.all(
+			Array.from(imageFiles as FileList).map(async (image) => {
+				const dataUrl = await toDataURLAsync(image);
+				return { name: image.name, src: dataUrl };
+			})
+		)
+			.then((base64Images) => setBase64Images(base64Images))
+			.catch(() => toast.error("Something went wrong"));
+	}, [imageFiles]);
 
 	return { base64Images, onDelete };
 };
