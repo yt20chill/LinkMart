@@ -606,7 +606,7 @@
 
 | [DELETE] | /api/request/:requestId |
 | -------- | ----------------------- |
-
+"chanage image is active"
 > ⬆️ Resp:
 
 ```js
