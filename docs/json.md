@@ -680,7 +680,7 @@
     "efficiency": float (max 5)
     "attitude": float (max 5)
     "statusName": string
-    "providerPrice" : float,
+    "price" : float,
     "estimatedProcessTime": int (days),
     "offerRemark"? : string   
 },...]
@@ -695,7 +695,7 @@
 
 ### 📍 6.3 Accpet offer
 
-| [GET] | /api/offer/:offerId |
+| [POST] | /api/offer/:offerId |
 | ----- | ------------------ |
 
 "jwt"
@@ -706,6 +706,7 @@
 {
     "offerId" : int(offer.offer_id),
     "userAddressId": int,
+    "price": int
 }
 ```
 ```js
@@ -728,6 +729,16 @@ REDIRECT TO PAYMENT PAGE
 | [POST]| /api/order |
 | ----- | ------------- |
 (Payment website callback)
+"jwt"
+> ⬇️ Req Body:
+
+```js
+{
+    "offerId" : int(offer.offer_id),
+    "userAddressId": int,
+    "price": int
+}
+```
 
 > ⬆️ Resp:
 
