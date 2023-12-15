@@ -314,7 +314,7 @@
 
 ---
 
-### 📍 4.4 Get user payment method
+### 📍 4.4 Get user payment method Done
 
 | [GET] | /api/user/payment |
 | ----- | ----------------- |
@@ -325,12 +325,40 @@
 🟢 [200]  OK
 ** HOLD **
 // [{
-//     "payment_method" :
-//     "card_no" :
-//     "card_holder" :
-//     "card_holder_name" :
-//     "expiry_date" :
-// },...]
+		"payment_method": "Visa",
+		"card_no": "1234567890123456",
+		"card_holder_name": "testing",
+		"expiry_date": "12/22"
+	},...]
+```
+
+---
+
+### 📍 4.4.1 Create user payment method Done
+
+| [POST] | /api/user/payment |
+| ----- | ----------------- |
+> ⬇️ Req Body:
+"JWT in header" "Change is_Primary" 
+```js
+{
+		"payment_method": "Visa",
+		"card_no": "1234567890123459",
+		"card_holder_name": "testing_from_inso",
+		"expiry_date": "12/22"
+	}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+** HOLD **
+{
+	"success": true,
+	"message": "User Payment Method had been created"
+}
+// 	
 ```
 
 ---
