@@ -51,7 +51,7 @@ export type RequestId = z.infer<typeof requestIdSchema>;
 export type CategoryId = z.infer<typeof categoryIdSchema>;
 
 export const deleteImageParamsSchema = z.object({
-	imageId: z.number().int().positive(),
+	imageId: requiredId,
 });
 
 export type DeleteImageParams = z.infer<typeof deleteImageParamsSchema>;

@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router-dom";
@@ -30,11 +31,16 @@ import SkeletonForm from "./SkeletonForm";
 const PostRequestForm = () => {
 	const [searchParams] = useSearchParams();
 	const requestId = searchParams.get("cloneId");
-	const {
-		defaultValuesByField: { text },
-		defaultValues,
-		images,
-	} = useUpdateRequestForm(requestId);
+	const { defaultValuesByField, images } = useUpdateRequestForm(requestId);
+	const defaultValues = useMemo(
+		() => ({
+			...defaultValuesByField.dropDown,
+			...defaultValuesByField.text,
+			...defaultValuesByField.others,
+		}),
+		[defaultValuesByField]
+	);
+	console.log(defaultValues);
 	const { categories, locations } = useQueryContainer();
 	const queryClient = useQueryClient();
 	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
@@ -145,7 +151,7 @@ const PostRequestForm = () => {
 						base64Images.map((img) => (
 							<ImagePreview key={img.name} {...img} onDelete={onDelete} />
 						))}
-					{Object.keys(text).map((field) => (
+					{Object.keys(defaultValuesByField.text).map((field) => (
 						<FormInput
 							key={field}
 							name={field as keyof RequestForm}

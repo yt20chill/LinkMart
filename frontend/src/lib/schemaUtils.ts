@@ -22,6 +22,7 @@ const requiredId = z
 	.pipe(z.number().int().positive({ message: "invalid option" }));
 
 const resultId = z.number().int().positive();
+
 const ulid = z.string().ulid();
 
 const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
@@ -34,7 +35,7 @@ const zodJson: z.ZodType<Json> = z.lazy(() =>
 const zeroToNull = z
 	.number()
 	.nonnegative()
-	.transform((value) => (value === 0 ? null : value))
+	.transform((value) => (value === 0 ? null : value + ""))
 	.nullable();
 
 export {

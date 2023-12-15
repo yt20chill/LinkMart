@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useQuery } from "react-query";
 import { dtoToString } from "../../lib/formUtils";
 import { RequestForm } from "../../schemas/requestSchema";
 import { getRequestDetailsAJAX } from "../../services/api/requestApi";
 import { queryKey } from "../../services/query.config";
-
-// type Identifiers = { requestId: string } | { orderId: string };
 
 type RequestFormDropDownFields = { locationId: string; categoryId: string };
 type RequestFormOtherFields = {
@@ -44,48 +42,34 @@ function useUpdateRequestForm(requestId: string | null) {
 		queryFn: () => getRequestDetailsAJAX({ requestId: requestId! }),
 		enabled: requestId !== null,
 	});
-	const [defaultValuesByField, setDefaultValuesByField] =
-		useState<RequestFormEmptyDefaultValues>({
+
+	return useMemo(() => {
+		const defaultValuesByField: RequestFormEmptyDefaultValues = {
 			dropDown: requestFormDropDownEmptyDefaultValues,
 			others: requestFormOtherFieldsEmptyDefaultValues,
 			text: requestFormTextEmptyDefaultValues,
-		});
-	const defaultValues = Object.assign(
-		{},
-		requestFormDropDownEmptyDefaultValues,
-		requestFormOtherFieldsEmptyDefaultValues,
-		requestFormTextEmptyDefaultValues
-	);
-	useEffect(() => {
-		if (!requestId || !data || Object.keys(data).length === 0) return;
+		};
+		if (!data) return { defaultValuesByField, images: [] };
 		const {
 			images,
 			locationName,
 			categoryName,
 			createdAt,
 			createdBy,
-			itemDetail,
-			locationId,
-			categoryId,
-			...rest
+			primaryImage,
+			requestId,
+			...formData
 		} = data;
-		const dropDown = dtoToString<RequestFormDropDownFields>({
-			locationId,
-			categoryId,
-		});
-		const text = dtoToString<RequestFormTextFields>(rest);
-		const others = { imageFile: [], itemDetail };
-		setDefaultValuesByField({
-			dropDown,
-			text,
-			others,
-		});
-	}, [data, requestId]);
-	return {
-		defaultValues,
-		defaultValuesByField,
-		images: data?.images ?? [],
-	};
+		const { locationId, categoryId, itemDetail, ...rest } = formData;
+		defaultValuesByField.dropDown = {
+			locationId: locationId + "",
+			categoryId: categoryId + "",
+		};
+		defaultValuesByField.text =
+			dtoToString<Record<keyof RequestFormTextFields, string>>(rest);
+		defaultValuesByField.others = { imageFile: [], itemDetail };
+		return { defaultValuesByField, images };
+	}, [data]);
 }
 
 export { useUpdateRequestForm };

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { resultId, ulid, zeroToNull } from "../../lib/schemaUtils";
+import { resultId, ulid } from "../../lib/schemaUtils";
 
 export {
 	categoriesResponseSchema,
@@ -48,11 +48,10 @@ type CategoryFieldDto = z.infer<typeof categoryFieldResponseSchema>;
 
 const requestResponseSchema = z.object({
 	requestId: ulid,
-	// locationId: resultId,
 	locationName: z.string().min(1),
 	item: z.string().min(1),
 	primaryImage: z.string().url(),
-	offerPrice: zeroToNull,
+	offerPrice: z.number().nonnegative(),
 	createdBy: z.string().min(1),
 	updatedAt: z.string(),
 });
