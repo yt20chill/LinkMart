@@ -34,7 +34,8 @@ const zodJson: z.ZodType<Json> = z.lazy(() =>
 const zeroToNull = z
 	.number()
 	.nonnegative()
-	.transform((value) => (value === 0 ? null : value));
+	.transform((value) => (value === 0 ? null : value))
+	.nullable();
 
 export {
 	emptyStringToNull,
