@@ -89,7 +89,6 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 		});
 		if (isFormData) setCommonContentTypeHeader();
 		if (
-			options &&
 			isObjOfType<AxiosWrapperSchemaOptions<PayloadType, ResultType>>(
 				options,
 				"schema"
