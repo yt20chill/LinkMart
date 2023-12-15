@@ -32,7 +32,7 @@ function RequestsPage() {
       </div>
       <div className="mt-5 max-w-7xl flex mx-auto">
         <Filter className="inline-flex flex-col min-w-[250px] max-lg:hidden" />
-        <div className="px-6 grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grow">
+        <div className="px-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 grow mb-auto">
           {requests && requests.pages.length > 0 ? (
             requests.pages.map((data) => {
               if (!data) return null;
