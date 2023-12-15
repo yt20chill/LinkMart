@@ -67,7 +67,7 @@ export class RequestController {
       },
     ];
   }
-  @Get('request/:id')
+  @Get('/:id')
   getRequestById() {
     return {
       requestId: '01HHEZNSZ64QBWC6J77YAWHAEY',
