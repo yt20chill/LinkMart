@@ -24,10 +24,8 @@ import {
 } from "./requestSchema";
 import {
 	PostAddressDto,
-	TPostAddressForm,
 	UpdatePrimaryAddressDto,
 	UpdatePrimaryAddressForm,
-	postAddressDtoSchema,
 	postAddressSchema,
 	updatePrimaryAddressFormSchema,
 } from "./userSchema";
@@ -38,7 +36,6 @@ export {
 	allowedFileTypes,
 	categoryIdSchema,
 	deleteImageParamsSchema,
-	postAddressDtoSchema,
 	postAddressSchema,
 	postOfferSchema,
 	postRequestSchema,
@@ -58,7 +55,6 @@ export type {
 	RequestForm,
 	RequestId,
 	TAcceptOfferForm,
-	TPostAddressForm,
 	TSignInForm,
 	TSignUpForm,
 	UpdatePrimaryAddressDto,

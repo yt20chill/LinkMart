@@ -6,10 +6,7 @@ import { toast } from "react-toastify";
 import { FormInput, FormSubmitButton } from "../../components/form";
 import CancelButton from "../../components/ui/CancelButton";
 import PrimaryButton from "../../components/ui/PrimaryButton";
-import {
-	TPostAddressForm,
-	postAddressSchema,
-} from "../../schemas/requestSchema";
+import { PostAddressDto, postAddressSchema } from "../../schemas/requestSchema";
 import { postAddressAJAX } from "../../services/api/userApi";
 import { queryKey } from "../../services/query.config";
 
@@ -20,7 +17,7 @@ function PostAddressForm() {
 		formState: { errors },
 		register,
 		reset,
-	} = useForm<TPostAddressForm>({
+	} = useForm<PostAddressDto>({
 		resolver: zodResolver(postAddressSchema),
 		mode: "onTouched",
 	});
@@ -33,9 +30,8 @@ function PostAddressForm() {
 		},
 	});
 
-	const onSubmit = async (data: TPostAddressForm) => {
-		const postAddressDto = { address: [data.address] };
-		await postAddress(postAddressDto);
+	const onSubmit = async (data: PostAddressDto) => {
+		await postAddress(data);
 	};
 	return isShow ? (
 		<form>
