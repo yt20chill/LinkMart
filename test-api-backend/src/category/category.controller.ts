@@ -47,7 +47,7 @@ export class CategoryController {
       },
     ];
   }
-  @Get()
+  @Get('/:id')
   getCategoryOptions() {
     return [
       {
@@ -58,7 +58,7 @@ export class CategoryController {
       {
         categoryFieldId: 1,
         categoryFieldName: 'Brand',
-        categoryFieldOptions: null,
+        categoryFieldOptions: [],
       },
     ];
   }
