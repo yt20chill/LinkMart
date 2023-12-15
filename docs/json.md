@@ -635,11 +635,9 @@
 ```js
 {
     "requestId" : ulid(request.request_id),
-    "providerId" : ulid(provider.provider_id),
-    "status" : int(status.status_id),
     "price" : int,
     "estimatedProcessTime" : int,
-    "offerRemark" : string
+    "offerRemark" : string | undefined
 }
 ```
 
@@ -658,9 +656,9 @@
 }
 ```
 
-### 📍 6.2 Get Provider Offer (user side) 
+### 📍 6.2 Get Request Offer (user side) 
 
-| [GET] | /api/offer/{requestId}|
+| [GET] | /api/offer/request/:requestId
 | ----- | -------------- |
 "jwt" :
 > ⬇️ Req Body:
@@ -679,10 +677,12 @@
     "requestId" : int(request.request_id),
     "providerId" : int(provider.provider_id),
     "providerName": string(user.username),
-    "status" : int(status.status_id),
-    "providerPrice" : int,
-    "estimatedProcessTime": int,
-    "offerRemark" : string   
+    "efficiency": float (max 5)
+    "attitude": float (max 5)
+    "statusName": string
+    "providerPrice" : float,
+    "estimatedProcessTime": int (days),
+    "offerRemark"? : string   
 },...]
 ```
 
@@ -693,9 +693,9 @@
 }
 ```
 
-### 📍 6.3 Accpet offer (PUT)
+### 📍 6.3 Accpet offer
 
-| [PUT] | /api/offer/:offerId |
+| [GET] | /api/offer/:offerId |
 | ----- | ------------------ |
 
 "jwt"
