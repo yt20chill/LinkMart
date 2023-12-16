@@ -2,8 +2,8 @@ export function AnimatedBG() {
   return (
     <div className="overflow-hidden fixed inset-0 -z-50 w-screen">
       <img
-        src="./image/bg.webp"
-        className="object-cover blur-3xl scale-110 opacity-10 select-none pointer-events-none h-full w-screen"
+        src="./image/BG.jpeg"
+        className="object-cover blur-xl scale-110 opacity-30 select-none pointer-events-none h-full w-screen"
         title="LinkMart"
       />
       {/* <div className="select-none rounded-full z-30 absolute w-[80vw] h-[80vw] blur-3xl bg-cyan-50/50 origin-center transform-center "></div>
