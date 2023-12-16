@@ -1,10 +1,14 @@
 import { RouteEnum, siteMap } from "@/services/routes.config";
 import { useAuthStore } from "@/services/stores/authStore";
-import { AuthorizeLevel } from "@/types/authModels";
+import { AuthorizeLevels } from "@/types/authModels";
 import { Link } from "react-router-dom";
 
 export function Navbar() {
-	const userInfo = useAuthStore((state) => state);
+	const { isAuthenticated, role, username } = useAuthStore((state) => ({
+		isAuthenticated: state.isAuthenticated,
+		role: state.role,
+		username: state.username,
+	}));
 	return (
 		<nav className="py-5 shadow-md border-b-8 border-orange-600 text-slate-500 bg-base-100">
 			{/* nav_responsive */}
@@ -56,7 +60,7 @@ export function Navbar() {
 				</div>
 				{/* nav_login_info */}
 				<div className="flex gap-10 items-center">
-					{!userInfo.isAuthenticated ? (
+					{!isAuthenticated ? (
 						<>
 							<div className="dropdown dropdown-end">
 								<div
@@ -67,7 +71,7 @@ export function Navbar() {
 									<span className="material-symbols-rounded mx-1">
 										account_circle
 									</span>
-									{userInfo.username}
+									{username}
 								</div>
 								<div
 									tabIndex={0}
@@ -81,7 +85,7 @@ export function Navbar() {
 											Profile
 										</div>
 									</Link>
-									{userInfo.role === AuthorizeLevel.PROVIDER && (
+									{role === AuthorizeLevels.PROVIDER && (
 										<Link to={siteMap(RouteEnum.ProviderProfile)}>
 											<div className="flex items-center p-3 rounded-lg hover:bg-base-100/75 hover:shadow transition-all duration-300 [&>span]:hover:text-amber-500 hover:text-amber-950">
 												<span className="material-symbols-rounded mx-1">

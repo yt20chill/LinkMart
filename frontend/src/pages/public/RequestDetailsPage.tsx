@@ -13,7 +13,7 @@ import { RequestCardSkeleton } from "../../components/card/RequestCardSkeleton";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import { useQueryContainer } from "../../features/hooks/useQueryContainer";
 import { useAuthStore } from "../../services/stores/authStore";
-import { AuthorizeLevel } from "../../types/authModels";
+import { AuthorizeLevels } from "../../types/authModels";
 
 const RequestDetailsPage = () => {
 	const { requestId } = useParams();
@@ -107,7 +107,7 @@ const RequestDetailsPage = () => {
 						</div>
 
 						<hr className="border-base-300 my-4" />
-						{role === AuthorizeLevel.PROVIDER && (
+						{role === AuthorizeLevels.PROVIDER && (
 							<PrimaryButton
 								label="Offer"
 								onClick={() => console.log("offer")}

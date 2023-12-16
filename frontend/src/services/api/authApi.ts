@@ -1,5 +1,5 @@
 import { TSignInForm, TSignUpForm } from "../../schemas/requestSchema";
-import { AuthorizeLevel } from "../../types/authModels";
+import { AuthorizeLevels } from "../../types/authModels";
 
 import { axiosWrapper } from "../../lib/apiUtils";
 import {
@@ -44,7 +44,7 @@ export const getAuthAJAX = async (): Promise<
 		(await axiosWrapper<void, UserDto>(authApiRoutes.GET_AUTH, {
 			schema: userResponseSchema,
 		})) ?? {};
-	if (!username) return { username: null, role: AuthorizeLevel.PUBLIC };
-	if (!providerId) return { username, role: AuthorizeLevel.USER };
-	return { username, role: AuthorizeLevel.PROVIDER };
+	if (!username) return { username: null, role: AuthorizeLevels.PUBLIC };
+	if (!providerId) return { username, role: AuthorizeLevels.USER };
+	return { username, role: AuthorizeLevels.PROVIDER };
 };

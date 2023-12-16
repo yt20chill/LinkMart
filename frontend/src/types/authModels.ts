@@ -1,4 +1,4 @@
-export enum AuthorizeLevel {
+export enum AuthorizeLevels {
 	PUBLIC,
 	USER,
 	PROVIDER,

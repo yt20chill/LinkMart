@@ -12,3 +12,25 @@ export const mapDate = (date: Date | string) => {
 		return date.toString().slice(0, 10);
 	}
 };
+
+type EnumArray<T> = {
+	keys: string[];
+	values: T[];
+};
+
+type EnumMap<T> = Map<string, T>;
+
+export const enumToMap = <T>(enumerate: Record<string, T>): EnumMap<T> => {
+	const enumKeyValue = Object.values(enumerate).reduce(
+		(acc, curr): EnumArray<T> =>
+			typeof curr === "string"
+				? { ...acc, keys: [...acc.keys, curr as string] }
+				: { ...acc, values: [...acc.values, curr] },
+		<EnumArray<T>>{ keys: [], values: [] }
+	);
+	const enumMap = new Map<string, T>();
+	enumKeyValue.keys.forEach((key, index) => {
+		enumMap.set(key, enumKeyValue.values[index]);
+	});
+	return Object.freeze(enumMap);
+};

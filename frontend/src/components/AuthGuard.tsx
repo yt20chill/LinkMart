@@ -1,15 +1,23 @@
 import { useQuery } from "react-query";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 import { useAuth } from "../features/hooks/useAuth";
 import { FetchError } from "../lib/apiUtils";
 import { getAuthAJAX } from "../services/api/authApi";
 import { queryKey } from "../services/query.config";
 import { RouteEnum, siteMap } from "../services/routes.config";
 import { useAuthStore } from "../services/stores/authStore";
+import { AuthorizeLevels } from "../types/authModels";
 import Loading from "./ui/Loading";
 
-const AuthGuard = () => {
-	const authStore = useAuthStore((state) => state);
+type AuthGuardProps = {
+	authorizeLevel?: AuthorizeLevels;
+};
+
+const AuthGuard = ({
+	authorizeLevel = AuthorizeLevels.USER,
+}: AuthGuardProps) => {
+	const authStore = useAuthStore(useShallow((state) => state));
 	const {
 		data: userInfo,
 		isLoading,
@@ -28,18 +36,26 @@ const AuthGuard = () => {
 		});
 		authStore.reset;
 	}
-	if (isLoading) authStore.setIsAuthenticated(null);
-	else if (userInfo) authStore.login(userInfo.username, userInfo.role);
-	if (authStore.isAuthenticated === null) return <Loading />;
-	return authStore.isAuthenticated ? (
-		<Outlet />
-	) : (
-		<Navigate
-			to={siteMap(RouteEnum.SignIn)}
-			state={{ from: location }}
-			replace
-		/>
-	);
+	// if validating or revalidating user info, display loading
+	if (isLoading) {
+		authStore.setIsAuthenticated(null);
+		return <Loading />;
+	}
+	if (userInfo) authStore.login(userInfo.username, userInfo.role);
+	// if user info validated and authorized
+	if (authStore.isAuthenticated && authStore.role > authorizeLevel)
+		return <Outlet />;
+	// if not logged in
+	if (authStore.isAuthenticated === false)
+		return (
+			<Navigate
+				to={siteMap(RouteEnum.SignIn)}
+				state={{ from: location }}
+				replace
+			/>
+		);
+	// if user info validated but not authorized
+	return <Navigate to={siteMap(RouteEnum.Home)} replace />;
 };
 
 export default AuthGuard;

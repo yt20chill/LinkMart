@@ -28,13 +28,13 @@ import {
 } from "../pages/user";
 
 import PostRequestPage from "../pages/user/PostRequestPage";
-import { AuthorizeLevel } from "../types/authModels";
+import { AuthorizeLevels } from "../types/authModels";
 
 interface TRouteConfig {
 	name: string;
 	path: string;
 	component: JSX.ElementType;
-	authorizeLevel: AuthorizeLevel;
+	authorizeLevel: AuthorizeLevels;
 }
 
 export enum RouteEnum {
@@ -66,130 +66,130 @@ routeConfigMap
 	.set(RouteEnum.Home, {
 		name: "home",
 		path: "/",
-		authorizeLevel: AuthorizeLevel.PUBLIC,
+		authorizeLevel: AuthorizeLevels.PUBLIC,
 		component: HomePage,
 	})
 	.set(RouteEnum.SignUp, {
 		name: "Sign Up",
 		path: "/sign-up",
-		authorizeLevel: AuthorizeLevel.PUBLIC,
+		authorizeLevel: AuthorizeLevels.PUBLIC,
 		component: SignUpPage,
 	})
 	.set(RouteEnum.SignIn, {
 		name: "Sign In",
 		path: "/sign-in",
-		authorizeLevel: AuthorizeLevel.PUBLIC,
+		authorizeLevel: AuthorizeLevels.PUBLIC,
 		component: SignInPage,
 	})
 	.set(RouteEnum.Requests, {
 		name: "requests",
 		path: "/requests",
-		authorizeLevel: AuthorizeLevel.PUBLIC,
+		authorizeLevel: AuthorizeLevels.PUBLIC,
 		component: RequestsPage,
 	})
 	.set(RouteEnum.RequestDetail, {
 		// providers or other users to see
 		name: "Request Detail",
 		path: "/request-detail/:requestId",
-		authorizeLevel: AuthorizeLevel.PUBLIC,
+		authorizeLevel: AuthorizeLevels.PUBLIC,
 		component: RequestDetailsPage,
 	})
 	.set(RouteEnum.Profile, {
 		name: "Profile",
 		path: "/profile",
-		authorizeLevel: AuthorizeLevel.USER,
+		authorizeLevel: AuthorizeLevels.USER,
 		component: ProfilePage,
 	})
 	.set(RouteEnum.UserRequests, {
 		// request management
 		name: "My Requests",
 		path: "/user/requests",
-		authorizeLevel: AuthorizeLevel.USER,
+		authorizeLevel: AuthorizeLevels.USER,
 		component: UserRequestsPage,
 	})
 	.set(RouteEnum.PostRequest, {
 		name: "New Request",
 		path: "/request/post",
-		authorizeLevel: AuthorizeLevel.USER,
+		authorizeLevel: AuthorizeLevels.USER,
 		component: PostRequestPage,
 	})
 	.set(RouteEnum.UserOrder, {
 		name: "My Order",
 		path: "/order",
-		authorizeLevel: AuthorizeLevel.USER,
+		authorizeLevel: AuthorizeLevels.USER,
 		component: UserOrderPage,
 	})
 	.set(RouteEnum.OrderDetail, {
 		name: "Order Detail",
 		path: "/order-detail/:id",
-		authorizeLevel: AuthorizeLevel.USER,
+		authorizeLevel: AuthorizeLevels.USER,
 		component: OrderDetailsPage,
 	})
 	.set(RouteEnum.ProviderRegister, {
 		name: "Provider Registration",
 		path: "/provider/register",
-		authorizeLevel: AuthorizeLevel.USER,
+		authorizeLevel: AuthorizeLevels.USER,
 		component: ProviderRegisterPage,
 	})
 	.set(RouteEnum.ProviderProfile, {
 		name: "Profile",
 		path: "/provider/profile",
-		authorizeLevel: AuthorizeLevel.PROVIDER,
+		authorizeLevel: AuthorizeLevels.PROVIDER,
 		component: ProviderProfilePage,
 	})
 	.set(RouteEnum.MyOffer, {
 		// offer management
 		name: "My Offer",
 		path: "/offer",
-		authorizeLevel: AuthorizeLevel.PROVIDER,
+		authorizeLevel: AuthorizeLevels.PROVIDER,
 		component: OfferPage,
 	})
 	.set(RouteEnum.OfferDetail, {
 		name: "Offer Details",
 		path: "/offer-details/:id",
-		authorizeLevel: AuthorizeLevel.PROVIDER,
+		authorizeLevel: AuthorizeLevels.PROVIDER,
 		component: OfferDetailsPage,
 	})
 	.set(RouteEnum.Task, {
 		name: "task",
 		path: "/task",
-		authorizeLevel: AuthorizeLevel.PROVIDER,
+		authorizeLevel: AuthorizeLevels.PROVIDER,
 		component: TaskPage,
 	})
 	.set(RouteEnum.TaskDetail, {
 		name: "Task Details",
 		path: "/task-details/:id",
-		authorizeLevel: AuthorizeLevel.PROVIDER,
+		authorizeLevel: AuthorizeLevels.PROVIDER,
 		component: TaskDetailsPage,
 	})
 	.set(RouteEnum.Dashboard, {
 		name: "dashboard",
 		path: "/dashboard",
-		authorizeLevel: AuthorizeLevel.PROVIDER,
+		authorizeLevel: AuthorizeLevels.PROVIDER,
 		component: DashboardPage,
 	})
 	.set(RouteEnum.AdminSignIn, {
 		name: "adminSignIn",
 		path: "/admin/sign-in",
-		authorizeLevel: AuthorizeLevel.ADMIN,
+		authorizeLevel: AuthorizeLevels.ADMIN,
 		component: AdminSignInPage,
 	})
 	.set(RouteEnum.Task, {
 		name: "task",
 		path: "/admin/task",
-		authorizeLevel: AuthorizeLevel.ADMIN,
+		authorizeLevel: AuthorizeLevels.ADMIN,
 		component: AdminTasksPage,
 	})
 	.set(RouteEnum.TaskDetail, {
 		name: "taskDetail",
 		path: "/admin/task-detail/:id",
-		authorizeLevel: AuthorizeLevel.ADMIN,
+		authorizeLevel: AuthorizeLevels.ADMIN,
 		component: AdminTaskDetailsPage,
 	})
 	.set(RouteEnum.NotFound, {
 		name: "NotFound",
 		path: "*",
-		authorizeLevel: AuthorizeLevel.PUBLIC,
+		authorizeLevel: AuthorizeLevels.PUBLIC,
 		component: NotFoundPage,
 	});
 
