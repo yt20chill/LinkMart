@@ -82,7 +82,7 @@ const RequestDetailsPage = () => {
 							/>
 							{Object.entries(details.itemDetail).map(([key, val]) => (
 								<DetailDisplay
-									key={val}
+									key={`${key}-${val}`}
 									className={val.length > 20 ? "col-span-2" : ""}
 									label={key}
 									value={val}
