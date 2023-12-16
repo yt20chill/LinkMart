@@ -735,7 +735,7 @@ REDIRECT TO PAYMENT PAGE
 
 ```js
 {
-    "offerId" : int(offer.offer_id),
+    "offerId" : String//ulid(offer.offer_id),
     "userAddressId": int,
     "price": int
 }
