@@ -5,12 +5,12 @@ import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import { FetchError } from "../../lib/apiUtils";
-import { generateEmptyStringDefaultValues } from "../../lib/formUtils";
+import { generateDefaultValues } from "../../lib/formUtils";
 import { TSignUpForm, signUpSchema } from "../../schemas/requestSchema";
 import { signUpAJAX } from "../../services/api/authApi";
 import { useAuth } from "../hooks/useAuth";
 
-const defaultValues = generateEmptyStringDefaultValues(signUpSchema);
+const defaultValues = generateDefaultValues(signUpSchema);
 
 const SignUpForm = () => {
 	const {

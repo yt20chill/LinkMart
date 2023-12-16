@@ -5,13 +5,12 @@ import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import { FetchError } from "../../lib/apiUtils";
-import { generateEmptyStringDefaultValues } from "../../lib/formUtils";
+import { generateDefaultValues } from "../../lib/formUtils";
 import { TSignInForm, signInSchema } from "../../schemas/requestSchema";
 import { signInAJAX } from "../../services/api/authApi";
 import { useAuth } from "../hooks/useAuth";
 
-const defaultValues: TSignInForm =
-	generateEmptyStringDefaultValues(signInSchema);
+const defaultValues: TSignInForm = generateDefaultValues(signInSchema);
 
 const SignInForm = () => {
 	const {

@@ -136,7 +136,7 @@ export {
 	arrayToFileList,
 	dtoToString,
 	fireAlert,
-	generateDefaultValues as generateEmptyStringDefaultValues,
+	generateDefaultValues,
 	isFileExists,
 	objectToJSON,
 	printFormData,
