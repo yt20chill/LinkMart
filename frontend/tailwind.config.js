@@ -83,7 +83,7 @@ module.exports = {
       {
         light: {
           ...require("daisyui/src/theming/themes")["light"],
-          primary: "#fdba74",
+          primary: "#22d3ee",
           "primary-content": "#fff",
           accent: "#b75737",
           secondary: "#2dd4bf",
@@ -93,7 +93,7 @@ module.exports = {
         },
         dark: {
           ...require("daisyui/src/theming/themes")["dark"],
-          primary: "#fdba74",
+          primary: "#22d3ee",
           "primary-content": "#fff",
           accent: "#b75737",
           secondary: "#2dd4bf",
