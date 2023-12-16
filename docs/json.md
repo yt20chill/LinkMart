@@ -626,7 +626,7 @@
 
 ## 📎 6. Offer Route
 
-### 📍 6.1 Create New Offer !!!!!!
+### 📍 6.1 Create New Offer Done~
 
 | [POST] | /api/offer |
 | ------ | ---------- |
@@ -657,7 +657,7 @@
 }
 ```
 
-### 📍 6.2 Get Request Offer (user side) 
+### 📍 6.2 Get Request Offer (user side) Done~
 
 | [GET] | /api/offer/request/:requestId
 | ----- | -------------- |
