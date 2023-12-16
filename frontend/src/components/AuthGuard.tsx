@@ -30,11 +30,12 @@ const AuthGuard = ({
 	});
 	const location = useLocation();
 	const { signOutHandler } = useAuth();
+
 	if (isError && error instanceof FetchError && error.status === 401) {
 		signOutHandler().catch((error) => {
 			console.error(error);
 		});
-		authStore.reset;
+		authStore.reset();
 	}
 	// if validating or revalidating user info, display loading
 	if (isLoading) {
