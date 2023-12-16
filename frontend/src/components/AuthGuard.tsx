@@ -29,7 +29,7 @@ const AuthGuard = () => {
 		authStore.reset;
 	}
 	if (isLoading) authStore.setIsAuthenticated(null);
-	if (userInfo) authStore.login(userInfo.username, userInfo.role);
+	else if (userInfo) authStore.login(userInfo.username, userInfo.role);
 	if (authStore.isAuthenticated === null) return <Loading />;
 	return authStore.isAuthenticated ? (
 		<Outlet />
