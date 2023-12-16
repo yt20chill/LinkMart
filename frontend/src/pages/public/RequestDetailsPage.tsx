@@ -19,7 +19,6 @@ import { AuthorizeLevels } from "../../types/authModels";
 const RequestDetailsPage = () => {
 	const { requestId } = useParams();
 	const navigate = useNavigate();
-	console.log(`${siteMap(RouteEnum.PostRequest)}?cloneId=${requestId}`);
 	if (requestId === undefined) navigate("/404", { replace: true });
 	const role = useAuthStore((state) => state.role);
 	const { useGetRequestDetails } = useQueryContainer();
