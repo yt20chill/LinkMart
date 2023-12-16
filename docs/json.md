@@ -707,7 +707,7 @@
 {
     "offerId" : int(offer.offer_id),
     "userAddressId": int,
-    "price": int
+    XXXXX "price": int //Fred comment: price should not provide by request,but check via SQL by offerId
 }
 ```
 ```js
