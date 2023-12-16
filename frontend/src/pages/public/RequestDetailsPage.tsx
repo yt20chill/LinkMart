@@ -12,12 +12,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { RequestCardSkeleton } from "../../components/card/RequestCardSkeleton";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import { useQueryContainer } from "../../features/hooks/useQueryContainer";
+import { RouteEnum, siteMap } from "../../services/routes.config";
 import { useAuthStore } from "../../services/stores/authStore";
 import { AuthorizeLevels } from "../../types/authModels";
 
 const RequestDetailsPage = () => {
 	const { requestId } = useParams();
 	const navigate = useNavigate();
+	console.log(`${siteMap(RouteEnum.PostRequest)}?cloneId=${requestId}`);
 	if (requestId === undefined) navigate("/404", { replace: true });
 	const role = useAuthStore((state) => state.role);
 	const { useGetRequestDetails } = useQueryContainer();
@@ -113,7 +115,14 @@ const RequestDetailsPage = () => {
 								onClick={() => console.log("offer")}
 							/>
 						)}
-						<div>Clone Btn</div>
+						<PrimaryButton
+							label="Clone"
+							onClick={() => {
+								navigate(
+									`${siteMap(RouteEnum.PostRequest)}?cloneId=${requestId}`
+								);
+							}}
+						/>
 					</div>
 				</main>
 			</div>

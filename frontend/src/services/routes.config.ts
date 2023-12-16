@@ -199,7 +199,7 @@ const siteMap = (route: RouteEnum): string => {
 	const routeConfig = routeConfigMap.get(route);
 	if (!routeConfig) return "/";
 	const prefix = authorizedLevelToPrefix(routeConfig.authorizeLevel);
-	return `${prefix}/${routeConfig.path}`;
+	return (prefix ? `/${prefix}` : "") + `/${routeConfig.path}`;
 };
 
 const authorizedLevelMap = Object.freeze(

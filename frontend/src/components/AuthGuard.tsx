@@ -44,6 +44,7 @@ const AuthGuard = ({
 	}
 	if (userInfo) authStore.login(userInfo.username, userInfo.role);
 
+	// if not logged in
 	if (authStore.isAuthenticated === false)
 		return (
 			<Navigate
@@ -55,7 +56,6 @@ const AuthGuard = ({
 	// if user info validated and authorized
 	if (authStore.isAuthenticated && authStore.role > authorizeLevel)
 		return <Outlet />;
-	// if not logged in
 
 	// if user info validated but not authorized
 	return <Navigate to={siteMap(RouteEnum.Home)} replace />;
