@@ -9,6 +9,7 @@ import SweetAlert from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { FormInput } from "../../components/form";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
+import { generateDefaultValues } from "../../lib/formUtils";
 import {
 	TAcceptOfferForm,
 	acceptOfferFormSchema,
@@ -22,9 +23,7 @@ type AcceptOfferFormProps = {
 	offerId: string;
 };
 
-const defaultValues: TAcceptOfferForm = {
-	shippingAddress: "",
-};
+const defaultValues = generateDefaultValues(acceptOfferFormSchema);
 
 const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 	const {
@@ -40,10 +39,13 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 	const navigate = useNavigate();
 	const { mutateAsync: acceptOffer, isLoading } = useMutation({
 		mutationFn: acceptOfferAJAX,
-		onSuccess: async ({ orderId }) => {
+		onSuccess: async (result) => {
+			if (!result) return;
 			await queryClient.invalidateQueries(queryKey.ORDER);
 			// TODO: Handle payment here?
-			navigate(`${routesConfig.get(RouteEnum.OrderDetail)?.path}/${orderId}`);
+			navigate(
+				`${routesConfig.get(RouteEnum.OrderDetail)?.path}/${result.orderId}`
+			);
 		},
 	});
 	const onSubmit = async (formData: TAcceptOfferForm) => {

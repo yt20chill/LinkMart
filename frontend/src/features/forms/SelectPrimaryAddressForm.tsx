@@ -5,7 +5,11 @@ import { toast } from "react-toastify";
 import { FormSubmitButton } from "../../components/form";
 import FormRadioInput from "../../components/form/FormRadioInput";
 import CancelButton from "../../components/ui/CancelButton";
-import { fireAlert, sweetAlertDefaultOptions } from "../../lib/formUtils";
+import {
+	fireAlert,
+	generateDefaultValues,
+	sweetAlertDefaultOptions,
+} from "../../lib/formUtils";
 import {
 	UpdateAddressForm,
 	updateAddressFormSchema,
@@ -18,9 +22,7 @@ import {
 } from "../../services/api/userApi";
 import { queryKey } from "../../services/query.config";
 
-const defaultValues = {
-	addressId: "",
-};
+const defaultValues = generateDefaultValues(updateAddressFormSchema);
 const sweetAlertOptions = {
 	...sweetAlertDefaultOptions,
 	text: "Are you sure you want to delete this address?",

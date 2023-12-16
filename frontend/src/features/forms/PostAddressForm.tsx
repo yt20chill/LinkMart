@@ -6,9 +6,12 @@ import { toast } from "react-toastify";
 import { FormInput, FormSubmitButton } from "../../components/form";
 import CancelButton from "../../components/ui/CancelButton";
 import PrimaryButton from "../../components/ui/PrimaryButton";
+import { generateDefaultValues } from "../../lib/formUtils";
 import { PostAddressDto, postAddressSchema } from "../../schemas/requestSchema";
 import { postAddressAJAX } from "../../services/api/userApi";
 import { queryKey } from "../../services/query.config";
+
+const defaultValues = generateDefaultValues(postAddressSchema);
 
 function PostAddressForm() {
 	const [isShow, setIsShow] = useState(true);
@@ -19,6 +22,7 @@ function PostAddressForm() {
 		reset,
 	} = useForm<PostAddressDto>({
 		resolver: zodResolver(postAddressSchema),
+		defaultValues,
 		mode: "onTouched",
 	});
 	const queryClient = useQueryClient();
