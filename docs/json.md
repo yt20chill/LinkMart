@@ -626,7 +626,7 @@
 
 ## 📎 6. Offer Route
 
-### 📍 6.1 Create New Offer !!!!!!
+### 📍 6.1 Create New Offer Done~
 
 | [POST] | /api/offer |
 | ------ | ---------- |
@@ -657,7 +657,7 @@
 }
 ```
 
-### 📍 6.2 Get Request Offer (user side) 
+### 📍 6.2 Get Request Offer (user side) Done~
 
 | [GET] | /api/offer/request/:requestId
 | ----- | -------------- |
@@ -707,7 +707,7 @@
 {
     "offerId" : int(offer.offer_id),
     "userAddressId": int,
-    "price": int
+    XXXXX "price": int //Fred comment: price should not provide by request,but check via SQL by offerId
 }
 ```
 ```js
@@ -826,7 +826,7 @@ REDIRECT TO PAYMENT PAGE
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : failed to get order status name
+    "message" : message" : invalid Token / locationId 
 }
 ```
 
