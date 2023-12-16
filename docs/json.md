@@ -826,7 +826,7 @@ REDIRECT TO PAYMENT PAGE
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : failed to get order status name
+    "message" : message" : invalid Token / locationId 
 }
 ```
 
