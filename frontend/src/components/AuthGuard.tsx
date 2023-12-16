@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
@@ -31,19 +32,14 @@ const AuthGuard = ({
 	const location = useLocation();
 	const { signOutHandler } = useAuth();
 
-	if (isError && error instanceof FetchError && error.status === 401) {
-		signOutHandler().catch((error) => {
-			console.error(error);
-		});
-		authStore.reset();
-	}
-	// if validating or revalidating user info, display loading
-	if (isLoading) {
-		authStore.setIsAuthenticated(null);
-		return <Loading />;
-	}
-	if (userInfo) authStore.login(userInfo.username, userInfo.role);
-
+	useEffect(() => {
+		if (isError && error instanceof FetchError && error.status === 401) {
+			signOutHandler().catch((error) => console.error(error));
+			authStore.reset();
+		} else if (isLoading) authStore.setIsAuthenticated(null);
+		else if (userInfo) authStore.login(userInfo.username, userInfo.role);
+	}, [authStore, isError, error, isLoading, userInfo, signOutHandler]);
+	if (authStore.isAuthenticated === null) return <Loading />;
 	// if not logged in
 	if (authStore.isAuthenticated === false)
 		return (
@@ -53,12 +49,11 @@ const AuthGuard = ({
 				replace
 			/>
 		);
-	// if user info validated and authorized
-	if (authStore.isAuthenticated && authStore.role > authorizeLevel)
-		return <Outlet />;
-
 	// if user info validated but not authorized
-	return <Navigate to={siteMap(RouteEnum.Home)} replace />;
+	else if (authStore.isAuthenticated && authStore.role < authorizeLevel)
+		return <Navigate to={siteMap(RouteEnum.Home)} replace />;
+	// if user info validated and authorized
+	return <Outlet />;
 };
 
 export default AuthGuard;
