@@ -199,7 +199,8 @@ const siteMap = (route: RouteEnum): string => {
 	const routeConfig = routeConfigMap.get(route);
 	if (!routeConfig) return "/";
 	const prefix = authorizedLevelToPrefix(routeConfig.authorizeLevel);
-	return `${prefix}/${routeConfig.path}`;
+	// if prefix = "" (because of public or undefined), get rid of the /. Else add / to prevent relative <Link to>
+	return `${prefix ? "/" + prefix : ""}/${routeConfig.path}`;
 };
 
 const authorizedLevelMap = Object.freeze(
