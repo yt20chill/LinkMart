@@ -584,7 +584,7 @@
 
 ### 📍 5.5 Update User Request
 
-| [PUT] | /api/request/:requestId |
+| [PUT] | /api/request/update/:requestId |
 | ----- | ----------------------- |
 
 > ⬇️ Req Body:
