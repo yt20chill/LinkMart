@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
 import SweetAlert, { SweetAlertOptions } from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { ZodObject, ZodRawShape } from "zod";
+import { ZodEffects, ZodObject, ZodRawShape } from "zod";
+import { isObjOfType } from "./utils";
 
 const appendFormData = <T extends object>(
 	data: T,
@@ -59,26 +60,43 @@ const arrayToFileList = (files: File[]) => {
 	return dataTransfer.files;
 };
 
-/**
- *
- * @param formSchema Z object
- * @returns object of all keys set to empty string
- */
-const generateEmptyStringDefaultValues = <
+function generateDefaultValues<
 	T extends ZodRawShape,
 	K extends keyof T = never
 >(
 	formSchema: ZodObject<T>,
 	options?: { exclude?: K[] }
-): Readonly<Record<Exclude<keyof T, K>, string>> => {
+): Readonly<Record<Exclude<keyof T, K>, string>>;
+function generateDefaultValues<
+	T extends ZodRawShape,
+	K extends keyof T = never
+>(
+	formSchema: ZodEffects<ZodObject<T>>,
+	options?: { exclude?: K[] }
+): Readonly<Record<Exclude<keyof T, K>, string>>;
+/**
+ *
+ * @param formSchema Z object
+ * @returns object of all keys set to empty string
+ */
+function generateDefaultValues<
+	T extends ZodRawShape,
+	K extends keyof T = never
+>(
+	formSchema: ZodObject<T> | ZodEffects<ZodObject<T>>,
+	options?: { exclude?: K[] }
+): Readonly<Record<Exclude<keyof T, K>, string>> {
+	const keys = isObjOfType<ZodObject<T>>(formSchema, "shape")
+		? Object.keys(formSchema.shape)
+		: Object.keys(formSchema._def.schema.shape);
 	return Object.freeze(
-		Object.keys(formSchema.shape).reduce((acc: Record<string, string>, key) => {
+		keys.reduce((acc: Record<string, string>, key) => {
 			if (options?.exclude?.includes(key as K)) return acc;
 			acc[key] = "";
 			return acc;
 		}, {}) as Record<Exclude<keyof T, K>, string>
 	);
-};
+}
 type OnClickCallback = () => Promise<void> | void;
 
 type FireAlertParams = {
@@ -118,7 +136,7 @@ export {
 	arrayToFileList,
 	dtoToString,
 	fireAlert,
-	generateEmptyStringDefaultValues,
+	generateDefaultValues as generateEmptyStringDefaultValues,
 	isFileExists,
 	objectToJSON,
 	printFormData,
