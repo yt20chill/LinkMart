@@ -208,7 +208,7 @@ const authorizedLevelMap = Object.freeze(
 
 const authorizedLevelToPrefix = (authorizedLevel: AuthorizeLevels): string => {
 	const level = authorizedLevelMap.get(authorizedLevel);
-	return level && level !== "PUBLIC" ? level.toLowerCase() : "/";
+	return level && level !== "PUBLIC" ? level.toLowerCase() : "";
 };
 
 export {
