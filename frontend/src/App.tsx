@@ -4,6 +4,7 @@ import AuthGuard from "./components/AuthGuard";
 import { Footer } from "./components/footer/Footer";
 import { Navbar } from "./components/navbar/Navbar";
 import { AnimatedBG } from "./features/animatedBackground/AnimatedBG";
+import { NotFoundPage } from "./pages/public";
 import {
 	authorizedLevelMap,
 	authorizedLevelToPrefix,
@@ -28,6 +29,7 @@ function App() {
 			<Routes>
 				{Array.from(authorizedLevelMap.keys()).map((level) =>
 					// <RoutesByRole key={level} authorizeLevel={level} />
+					// need authGuard
 					level > AuthorizeLevels.PUBLIC ? (
 						<Route
 							key={level}
@@ -45,7 +47,7 @@ function App() {
 								))}
 						</Route>
 					) : (
-						// <RoutesMapper authorizeLevel={authorizeLevel} />
+						// public
 						routeConfigArray
 							.filter((route) => route.authorizeLevel === level)
 							.map((route) => (
@@ -57,6 +59,7 @@ function App() {
 							))
 					)
 				)}
+				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 			<Footer />
 		</div>
