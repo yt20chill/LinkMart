@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AuthGuard from "./components/AuthGuard";
@@ -16,7 +17,12 @@ import { AuthorizeLevels } from "./types/authModels";
 function App() {
 	// TODO: will this cause performance issue? whole app re-rendered when authStore updated
 	const { updateAuthStore } = useAuth();
-	updateAuthStore();
+
+	// updateAuthStore after mount
+	useEffect(() => {
+		updateAuthStore();
+	}, [updateAuthStore]);
+
 	return (
 		<div className="min-w-[360px] min-h-screen flex flex-col">
 			<AnimatedBG />
