@@ -2,7 +2,7 @@ import { ToastContainer } from "react-toastify";
 import { Navbar } from "./components/navbar/Navbar";
 import RoutesByRole from "./components/routes/RoutesByRole";
 import { AnimatedBG } from "./features/animatedBackground/AnimatedBG";
-import { enumToMap } from "./lib/formattingUtils";
+import { authorizedLevelMap } from "./services/routes.config";
 import { AuthorizeLevels } from "./types/authModels";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
 				theme="light"
 				limit={5}
 			/>
-			{Array.from(enumToMap(AuthorizeLevels).values()).map((level) => (
+			{Array.from(authorizedLevelMap.keys()).map((level) => (
 				<RoutesByRole key={level} authorizeLevel={level as AuthorizeLevels} />
 			))}
 		</div>

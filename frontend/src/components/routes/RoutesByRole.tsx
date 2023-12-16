@@ -1,5 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import { routeConfigArray } from "../../services/routes.config";
+import {
+	authorizedLevelMap,
+	routeConfigArray,
+} from "../../services/routes.config";
 import { AuthorizeLevels } from "../../types/authModels";
 import AuthGuard from "../AuthGuard";
 
@@ -17,12 +20,16 @@ type RoutesByRoleProps = {
 // };
 
 const RoutesByRole = ({ authorizeLevel }: RoutesByRoleProps) => {
-	console.log("here-----------------------------------");
-	console.log(authorizeLevel);
+	const level = authorizedLevelMap.get(authorizeLevel);
+	const prefix =
+		level === "PUBLIC" || level === undefined ? "/" : level.toLowerCase();
 	return (
 		<Routes>
 			{authorizeLevel > AuthorizeLevels.PUBLIC ? (
-				<Route element={<AuthGuard authorizeLevel={authorizeLevel} />}>
+				<Route
+					path={prefix}
+					element={<AuthGuard authorizeLevel={authorizeLevel} />}
+				>
 					{routeConfigArray
 						.filter((route) => route.authorizeLevel === authorizeLevel)
 						.map((route) => (

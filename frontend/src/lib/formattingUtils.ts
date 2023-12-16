@@ -18,8 +18,13 @@ type EnumArray<T> = {
 	values: T[];
 };
 
-type EnumMap<T> = Map<string, T>;
+type EnumMap<T> = Map<T, string>;
 
+/**
+ *
+ * @param enumerate
+ * @returns Map with key: Enum type and value = string key
+ */
 export const enumToMap = <T>(enumerate: Record<string, T>): EnumMap<T> => {
 	const enumKeyValue = Object.values(enumerate).reduce(
 		(acc, curr): EnumArray<T> =>
@@ -28,9 +33,9 @@ export const enumToMap = <T>(enumerate: Record<string, T>): EnumMap<T> => {
 				: { ...acc, values: [...acc.values, curr] },
 		<EnumArray<T>>{ keys: [], values: [] }
 	);
-	const enumMap = new Map<string, T>();
-	enumKeyValue.keys.forEach((key, index) => {
-		enumMap.set(key, enumKeyValue.values[index]);
+	const enumMap = new Map<T, string>();
+	enumKeyValue.values.forEach((value, index) => {
+		enumMap.set(value, enumKeyValue.keys[index]);
 	});
 	return Object.freeze(enumMap);
 };
