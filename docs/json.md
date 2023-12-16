@@ -13,6 +13,7 @@
 7. [Order Route](#-7-order-route)
 8. [Location Route](#-8-location-route)
 9. [Logistic Company Route](#-9-logistic-company-route)
+10. [Provider Route](#-10-provider-route)
 
 ---
 
@@ -314,7 +315,7 @@
 
 ---
 
-### 📍 4.4 Get user payment method
+### 📍 4.4 Get user payment method Done (updated with paymeny_methid_id)
 
 | [GET] | /api/user/payment |
 | ----- | ----------------- |
@@ -325,16 +326,99 @@
 🟢 [200]  OK
 ** HOLD **
 // [{
-//     "payment_method" :
-//     "card_no" :
-//     "card_holder" :
-//     "card_holder_name" :
-//     "expiry_date" :
-// },...]
+		"payment_method_id": 3,
+		"payment_method": "Visa",
+		"card_no": "1234567890123456",
+		"card_holder_name": "testing",
+		"expiry_date": "12/22"
+	},...]
 ```
 
 ---
 
+### 📍 4.4.1 Create user payment method Done *because have dummy data have to call few times after
+
+| [POST] | /api/user/payment |
+| ----- | ----------------- |
+> ⬇️ Req Body:
+"JWT in header" "Change is_Primary" 
+```js
+{
+		"payment_method": "Visa",
+		"card_no": "1234567890123459",
+		"card_holder_name": "testing_from_inso",
+		"expiry_date": "12/22"
+	}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+** HOLD **
+{
+	"success": true,
+	"message": "User Payment Method had been created"
+}
+// 	
+```
+
+---
+### 📍 4.4.2 Delete user payment method Done 
+
+| [DELETE] | /api/user/payment/{paymentMethodId} |
+| ----- | ----------------- |
+
+> ⬇️ Req Body:
+"JWT in header"
+```js
+{
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+... {
+	"success": true,
+	"message": "User Payment Method had been deleted"
+}
+
+```js
+🔴 [400] BAD REQUEST
+... ]
+```
+
+---
+### 📍 4.4.3 Update user payment method Done 
+
+| [POST] | /api/user/payment/{paymentMethodId} |
+| ----- | ----------------- |
+> ⬇️ Req Body:
+"JWT in header" "Change is_Primary" 
+```js
+{
+		"payment_method": "Visa",
+		"card_no": "1234567890123459",
+		"card_holder_name": "testing_from_inso",
+		"expiry_date": "12/22"
+	}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+** HOLD **
+{
+	"success": true,
+	"message": "User Payment Method had been updated"
+}
+// 	
+```
+
+---
 ### 📍 4.5 Get user Done 
 
 | [GET] | /api/user |
@@ -436,7 +520,7 @@
 }
 ```
 
-### 📍 5.3 Get One (by request id)
+### 📍 5.3 Get One (by request id) Done~
 
 | [GET] | /api/request/:requestId |
 | ----- | ----------------------- |
@@ -454,7 +538,11 @@
     "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
     "item" : string,
     "primaryImage" : String,
-   
+    "images" : [{
+        "requestId" : String,
+        "imageId" : int,
+        "imagePath" : string
+    },.../*images*/]
     "url" : string | null,
     "quantity" : int,
     "requestRemark" : string | null,
@@ -463,13 +551,6 @@
     "createdAt" : Date,
     "updatedAt" : Date
     "imageId":
-},
-{
- "images" : [{
-        "requestId" : String,
-        "imageId" : int,
-        "imagePath" : string
-    },.../*images*/]
 }
 🔴 [400]
 {
@@ -522,11 +603,11 @@
 }
 ```
 
-### 📍 5.6 Delete User Request
+### 📍 5.6 Delete User Request Done~
 
 | [DELETE] | /api/request/:requestId |
 | -------- | ----------------------- |
-
+"chanage image is active"
 > ⬆️ Resp:
 
 ```js
@@ -545,21 +626,19 @@
 
 ## 📎 6. Offer Route
 
-### 📍 6.1 Create New Offer
+### 📍 6.1 Create New Offer !!!!!!
 
 | [POST] | /api/offer |
 | ------ | ---------- |
-
+ "jwt"
 > ⬇️ Req Body:
 
 ```js
 {
     "requestId" : ulid(request.request_id),
-    "providerId" : ulid(provider.provider_id),
-    "status" : int(status.status_id),
     "price" : int,
-    "offerRemark" : string
-    "jwt" :
+    "estimatedProcessTime" : int,
+    "offerRemark" : string | undefined
 }
 ```
 
@@ -568,72 +647,25 @@
 ```js
 🟢 [200]  OK
 {
-    "success" : true,
-    "data" : [
-        {
-        "offerId" : int,
-        }
-    ]
 }
 ```
 
 ```js
 🔴 [400] BAD REQUEST
 {
-    "success" : false,
     "message" : fail to post offer
 }
 ```
 
-### 📍 6.2 Get Provider Offer (user side)
+### 📍 6.2 Get Request Offer (user side) 
 
-| [GET] | /api/get_offer |
+| [GET] | /api/offer/request/:requestId
 | ----- | -------------- |
-
+"jwt" :
 > ⬇️ Req Body:
 
 ```js
 {
-    "jwt" :
-}
-```
-
-> ⬆️ Resp:
-
-```js
-🟢 [200]  OK
-{
-    "success" : true,
-    "data" : [
-    "orderId" : int(order.order_id)
-    "requestId" : int(request.request_id),
-    "providerId" : int(provider.provider_id),
-    "status" : int(status.status_id),
-    "price" : int,
-    "offerRemark" : string
-    ]
-}
-```
-
-```js
-🔴 [400] BAD REQUEST
-{
-    "message" : fail to post offer
-}
-```
-
-### 📍 6.3 Get Specific Provider Offer (user side)
-
-| [GET] | /api/get_offer/:id |
-| ----- | ------------------ |
-
-> ⬇️ Req Body:
-
-```js
-//with JWT Header
-//Body
-{
-    "offerId" : int
 }
 ```
 
@@ -642,34 +674,70 @@
 ```js
 🟢 [200]  OK
 [{
-    "orderId" : int(order.order_id)
+    "offerId" : int(offer_id)
     "requestId" : int(request.request_id),
     "providerId" : int(provider.provider_id),
-    "status" : int(status.status_id),
-    "price" : int,
-    "offerRemark" : string
+    "providerName": string(user.username),
+    "efficiency": float (max 5)
+    "attitude": float (max 5)
+    "statusName": string
+    "price" : float,
+    "estimatedProcessTime": int (days),
+    "offerRemark"? : string   
 },...]
 ```
 
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : fail to post offer
+    "message" : fail to get offer
 }
 ```
 
-## 📎 7. Order Route
+### 📍 6.3 Accpet offer
 
-### 📍 7.1 Order Request
+| [POST] | /api/offer/:offerId |
+| ----- | ------------------ |
 
-| [POST]| /api/order
+"jwt"
 
 > ⬇️ Req Body:
 
 ```js
 {
     "offerId" : int(offer.offer_id),
-    "shippingAddress": string,
+    "userAddressId": int,
+    "price": int
+}
+```
+```js
+🟢 [200]  OK
+REDIRECT TO PAYMENT PAGE
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to get offer
+}
+```
+---
+
+## 📎 7. Order Route
+
+### 📍 7.1 Order Request
+"jwt"
+"Change request status, offer status"
+| [POST]| /api/order |
+| ----- | ------------- |
+(Payment website callback)
+"jwt"
+> ⬇️ Req Body:
+
+```js
+{
+    "offerId" : int(offer.offer_id),
+    "userAddressId": int,
+    "price": int
 }
 ```
 
@@ -720,6 +788,38 @@
     "logisticCompanyId" : int,
     "logisticCompanyName" : string,
     "logisticCompanyUrl" : string
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get order status name
+}
+```
+
+---
+## 📎 10. Provider Route 
+
+### 📍 10.1 Create Provider Done
+
+| [POST] | /api/provider/{locationId}|
+| ----- | --------------------- |
+"jwt" :
+> ⬇️ Req Body:
+
+```
+{
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"success": Boolean,
+	"message": "Provider had been created ProviderId: providerId//ULID"
 }
 ```
 
