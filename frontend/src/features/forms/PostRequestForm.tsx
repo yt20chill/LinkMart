@@ -181,6 +181,7 @@ const PostRequestForm = () => {
 					{categoryId && (
 						<CategoryFieldsForm
 							keyName="itemDetail"
+							//TODO: how not to as unknown as UseFormRegister<Record<string, unknown>>?
 							register={
 								register as unknown as UseFormRegister<Record<string, unknown>>
 							}
