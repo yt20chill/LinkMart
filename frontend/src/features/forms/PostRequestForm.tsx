@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { FieldErrors, UseFormRegister, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -181,8 +181,10 @@ const PostRequestForm = () => {
 					{categoryId && (
 						<CategoryFieldsForm
 							keyName="itemDetail"
-							register={register}
-							errors={errors}
+							register={
+								register as unknown as UseFormRegister<Record<string, unknown>>
+							}
+							errors={errors as FieldErrors<Record<string, string>>}
 							categoryId={+categoryId}
 							defaultValuesJSON={defaultValuesByField.others.itemDetail}
 						/>
