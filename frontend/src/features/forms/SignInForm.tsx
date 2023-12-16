@@ -1,16 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import { FetchError } from "../../lib/apiUtils";
-import { signInHandler } from "../../lib/authUtils";
 import { generateEmptyStringDefaultValues } from "../../lib/formUtils";
 import { TSignInForm, signInSchema } from "../../schemas/requestSchema";
 import { signInAJAX } from "../../services/api/authApi";
-import { queryKey } from "../../services/query.config";
-import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
+import { useAuth } from "../hooks/useAuth";
 
 const defaultValues: TSignInForm =
 	generateEmptyStringDefaultValues(signInSchema);
@@ -24,18 +22,15 @@ const SignInForm = () => {
 		resolver: zodResolver(signInSchema),
 		defaultValues,
 	});
-	const navigatePrev = useNavigateToPreviousPage();
-	const queryClient = useQueryClient();
+	const { signInHandler } = useAuth();
 	const {
 		mutateAsync: signIn,
 		isLoading,
 		error,
 	} = useMutation({
 		mutationFn: (signInForm: TSignInForm) => signInAJAX(signInForm),
-		onSuccess: async ({ jwt }) => {
-			signInHandler(jwt);
-			await queryClient.invalidateQueries(queryKey.AUTH);
-			navigatePrev();
+		onSuccess: async (result) => {
+			await signInHandler(result?.jwt);
 		},
 	});
 

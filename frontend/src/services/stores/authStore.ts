@@ -9,8 +9,9 @@ export type AuthState = {
 };
 
 type AuthActions = {
-	login: (username: string, role: AuthorizeLevel) => void;
+	login: (username: string | null, role: AuthorizeLevel) => void;
 	reset: () => void;
+	setIsAuthenticated: (isAuthenticated: boolean | null) => void;
 };
 
 const initAuthState: AuthState = Object.freeze({
@@ -21,9 +22,11 @@ const initAuthState: AuthState = Object.freeze({
 
 const useAuthStoreBase = create<AuthState & AuthActions>()((set) => ({
 	...initAuthState,
-	login: (username: string, role: AuthorizeLevel) =>
-		set({ username, isAuthenticated: true, role }),
+	login: (username: string | null, role: AuthorizeLevel) =>
+		set({ username, role, isAuthenticated: role > AuthorizeLevel.PUBLIC }),
 	reset: () => set(initAuthState),
+	setIsAuthenticated: (isAuthenticated: boolean | null) =>
+		set({ isAuthenticated }),
 }));
 
 export const useAuthStore = createSelectors(useAuthStoreBase);

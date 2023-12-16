@@ -4,6 +4,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { FormSubmitButton } from "../../components/form";
 import FormRadioInput from "../../components/form/FormRadioInput";
+import CancelButton from "../../components/ui/CancelButton";
+import { fireAlert, sweetAlertDefaultOptions } from "../../lib/formUtils";
 import {
 	UpdateAddressForm,
 	updateAddressFormSchema,
@@ -18,6 +20,10 @@ import { queryKey } from "../../services/query.config";
 
 const defaultValues = {
 	addressId: "",
+};
+const sweetAlertOptions = {
+	...sweetAlertDefaultOptions,
+	text: "Are you sure you want to delete this address?",
 };
 
 const SelectPrimaryAddressForm = () => {
@@ -50,10 +56,13 @@ const SelectPrimaryAddressForm = () => {
 			await queryClient.invalidateQueries([queryKey.USER, "address"]);
 		},
 	});
-	const updatePrimary = async ({ addressId }: UpdateAddressForm) => {
+	const onUpdate = async ({ addressId }: UpdateAddressForm) => {
 		await updatePrimaryAddress(addressId);
 	};
-	const deleteAddress = async ({ addressId }: UpdateAddressForm) => {};
+	const onDelete = async ({ addressId }: UpdateAddressForm) => {
+		await deleteAddress(addressId);
+	};
+
 	return (
 		<form>
 			{isLoading && <span className="loading loading-dots loading-lg"></span>}
@@ -71,8 +80,16 @@ const SelectPrimaryAddressForm = () => {
 			)}
 			<FormSubmitButton
 				label="Change Primary Address"
-				onClick={handleSubmit(updatePrimary)}
+				onClick={handleSubmit(onUpdate)}
 				disabled={isUpdating}
+			/>
+			<CancelButton
+				label="Delete"
+				onClick={fireAlert({
+					options: sweetAlertOptions,
+					onConfirmed: handleSubmit(onDelete),
+				})}
+				disabled={isDeleting}
 			/>
 		</form>
 	);

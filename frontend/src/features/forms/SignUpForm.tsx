@@ -1,14 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import ErrorMessage from "../../components/form/ErrorMessage";
 import FormInput from "../../components/form/FormInput";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import { FetchError } from "../../lib/apiUtils";
 import { TSignUpForm, signUpSchema } from "../../schemas/requestSchema";
 import { signUpAJAX } from "../../services/api/authApi";
-import { queryKey } from "../../services/query.config";
-import { useNavigateToPreviousPage } from "../hooks/useNavigateToPreviousPage";
+import { useAuth } from "../hooks/useAuth";
 
 const defaultValues: TSignUpForm = Object.freeze({
 	email: "",
@@ -27,8 +26,7 @@ const SignUpForm = () => {
 		defaultValues,
 		mode: "onTouched",
 	});
-	const navigatePrev = useNavigateToPreviousPage();
-	const queryClient = useQueryClient();
+	const { signInHandler } = useAuth();
 	const {
 		mutateAsync: signUp,
 		error,
@@ -36,10 +34,8 @@ const SignUpForm = () => {
 	} = useMutation({
 		mutationFn: (signUpDto: Omit<TSignUpForm, "confirmPassword">) =>
 			signUpAJAX(signUpDto),
-		onSuccess: async ({ jwt }) => {
-			window.localStorage.setItem("access_token", jwt);
-			await queryClient.invalidateQueries(queryKey.AUTH);
-			navigatePrev();
+		onSuccess: async (result) => {
+			await signInHandler(result?.jwt);
 		},
 	});
 	const onSubmit = async (formData: TSignUpForm) => {
