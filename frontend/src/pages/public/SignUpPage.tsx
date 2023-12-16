@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import SignUpForm from "../../features/forms/SignUpForm";
+import { useLoggedInRedirect } from "../../features/hooks/useLoggedInRedirect";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 
-function SignUpPage() {
+const SignUpPage = () => {
+	useLoggedInRedirect();
 	return (
 		<>
 			<SignUpForm />
@@ -12,6 +14,6 @@ function SignUpPage() {
 			</p>
 		</>
 	);
-}
+};
 
 export default SignUpPage;

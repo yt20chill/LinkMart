@@ -4,6 +4,7 @@ import AuthGuard from "./components/AuthGuard";
 import { Footer } from "./components/footer/Footer";
 import { Navbar } from "./components/navbar/Navbar";
 import { AnimatedBG } from "./features/animatedBackground/AnimatedBG";
+import { useAuth } from "./features/hooks/useAuth";
 import { NotFoundPage } from "./pages/public";
 import {
 	authorizedLevelMap,
@@ -13,6 +14,9 @@ import {
 import { AuthorizeLevels } from "./types/authModels";
 
 function App() {
+	// TODO: will this cause performance issue? whole app re-rendered when authStore updated
+	const { updateAuthStore } = useAuth();
+	updateAuthStore();
 	return (
 		<div className="min-w-[360px] min-h-screen flex flex-col">
 			<AnimatedBG />
