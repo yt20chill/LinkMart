@@ -111,6 +111,7 @@ const RequestDetailsPage = () => {
 						{role === AuthorizeLevels.PROVIDER && (
 							<PrimaryButton
 								label="Offer"
+								//TODO: offer modal
 								onClick={() => console.log("offer")}
 							/>
 						)}

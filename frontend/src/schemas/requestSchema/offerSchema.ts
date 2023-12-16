@@ -6,11 +6,15 @@ export const postOfferSchema = z.object({
 	price: z
 		.string()
 		.transform((val) => parseFloat(val))
-		.pipe(z.number().positive()),
+		.pipe(z.number().positive())
+		.refine((value) => value > 0, { message: "Invalid Price" }),
 	estimatedProcessTime: z
 		.string()
 		.transform((val) => parseInt(val))
-		.pipe(z.number().positive()),
+		.pipe(z.number().positive())
+		.refine((value) => value > 0, {
+			message: "Invalid Process Time",
+		}),
 	offerRemark: z.string().nullable(),
 });
 
