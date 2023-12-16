@@ -64,14 +64,19 @@ const arrayToFileList = (files: File[]) => {
  * @param formSchema Z object
  * @returns object of all keys set to empty string
  */
-const generateEmptyStringDefaultValues = <T extends ZodRawShape>(
-	formSchema: ZodObject<T>
-): Readonly<Record<keyof T, string>> => {
+const generateEmptyStringDefaultValues = <
+	T extends ZodRawShape,
+	K extends keyof T = never
+>(
+	formSchema: ZodObject<T>,
+	options?: { exclude?: K[] }
+): Readonly<Record<Exclude<keyof T, K>, string>> => {
 	return Object.freeze(
 		Object.keys(formSchema.shape).reduce((acc: Record<string, string>, key) => {
+			if (options?.exclude?.includes(key as K)) return acc;
 			acc[key] = "";
 			return acc;
-		}, {}) as Readonly<Record<keyof T, string>>
+		}, {}) as Record<Exclude<keyof T, K>, string>
 	);
 };
 type OnClickCallback = () => Promise<void> | void;

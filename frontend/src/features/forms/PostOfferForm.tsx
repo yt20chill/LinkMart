@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { ErrorMessage, FormInput } from "../../components/form";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import { FetchError } from "../../lib/apiUtils";
+import { generateEmptyStringDefaultValues } from "../../lib/formUtils";
 import {
 	OfferForm,
 	RequestId,
@@ -13,10 +14,9 @@ import {
 import { postOfferAJAX } from "../../services/api/offerApi";
 import { queryKey } from "../../services/query.config";
 
-const defaultValues: OfferForm = {
-	price: "",
-	offerRemark: "",
-};
+const defaultValues = generateEmptyStringDefaultValues(postOfferSchema, {
+	exclude: ["requestId"],
+});
 
 const PostOfferForm = ({ requestId }: RequestId) => {
 	const {

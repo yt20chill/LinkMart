@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import PostOfferForm from "../../features/forms/PostOfferForm";
 
 const NotFoundPage = () => {
 	const navigate = useNavigate();
@@ -22,6 +23,7 @@ const NotFoundPage = () => {
 					</p>
 				</div>
 			</div>
+			<PostOfferForm requestId="1" />
 		</>
 	);
 };

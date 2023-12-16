@@ -7,6 +7,10 @@ export const postOfferSchema = z.object({
 		.string()
 		.transform((val) => parseFloat(val))
 		.pipe(z.number().positive()),
+	estimatedProcessTime: z
+		.string()
+		.transform((val) => parseInt(val))
+		.pipe(z.number().positive()),
 	offerRemark: z.string().nullable(),
 });
 
