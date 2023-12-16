@@ -5,11 +5,12 @@ import { toast } from "react-toastify";
 import { FormSubmitButton } from "../../components/form";
 import FormRadioInput from "../../components/form/FormRadioInput";
 import {
-	UpdatePrimaryAddressForm,
-	updatePrimaryAddressFormSchema,
+	UpdateAddressForm,
+	updateAddressFormSchema,
 } from "../../schemas/requestSchema";
 import { AddressDto } from "../../schemas/responseSchema";
 import {
+	deleteAddressAJAX,
 	getAddressAJAX,
 	updatePrimaryAddressAJAX,
 } from "../../services/api/userApi";
@@ -24,9 +25,9 @@ const SelectPrimaryAddressForm = () => {
 		handleSubmit,
 		register,
 		formState: { errors },
-	} = useForm<UpdatePrimaryAddressForm>({
+	} = useForm<UpdateAddressForm>({
 		defaultValues,
-		resolver: zodResolver(updatePrimaryAddressFormSchema),
+		resolver: zodResolver(updateAddressFormSchema),
 	});
 
 	const queryClient = useQueryClient();
@@ -42,9 +43,17 @@ const SelectPrimaryAddressForm = () => {
 				await queryClient.invalidateQueries([queryKey.USER, "address"]);
 			},
 		});
-	const onSubmit = async ({ addressId }: UpdatePrimaryAddressForm) => {
+	const { mutateAsync: deleteAddress, isLoading: isDeleting } = useMutation({
+		mutationFn: deleteAddressAJAX,
+		onSuccess: async () => {
+			toast.success("Address deleted");
+			await queryClient.invalidateQueries([queryKey.USER, "address"]);
+		},
+	});
+	const updatePrimary = async ({ addressId }: UpdateAddressForm) => {
 		await updatePrimaryAddress(addressId);
 	};
+	const deleteAddress = async ({ addressId }: UpdateAddressForm) => {};
 	return (
 		<form>
 			{isLoading && <span className="loading loading-dots loading-lg"></span>}
@@ -62,7 +71,7 @@ const SelectPrimaryAddressForm = () => {
 			)}
 			<FormSubmitButton
 				label="Change Primary Address"
-				onClick={handleSubmit(onSubmit)}
+				onClick={handleSubmit(updatePrimary)}
 				disabled={isUpdating}
 			/>
 		</form>

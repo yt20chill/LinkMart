@@ -1,25 +1,21 @@
 import { z } from "zod";
 import { requiredId } from "../../lib/schemaUtils";
 
-export { postAddressSchema, updatePrimaryAddressFormSchema };
-export type {
-	PostAddressDto,
-	UpdatePrimaryAddressDto,
-	UpdatePrimaryAddressForm,
-};
+export { postAddressSchema, updateAddressFormSchema };
+export type { PostAddressDto, UpdateAddressDto, UpdateAddressForm };
 
 const postAddressSchema = z.object({
 	address: z.string().min(1, { message: "required" }),
 });
 
-const updatePrimaryAddressFormSchema = z.object({
+const updateAddressFormSchema = z.object({
 	addressId: requiredId,
 });
 
 type PostAddressDto = z.infer<typeof postAddressSchema>;
-type UpdatePrimaryAddressForm = Record<
-	keyof z.infer<typeof updatePrimaryAddressFormSchema>,
+type UpdateAddressForm = Record<
+	keyof z.infer<typeof updateAddressFormSchema>,
 	string
 >;
 
-type UpdatePrimaryAddressDto = z.infer<typeof updatePrimaryAddressFormSchema>;
+type UpdateAddressDto = z.infer<typeof updateAddressFormSchema>;

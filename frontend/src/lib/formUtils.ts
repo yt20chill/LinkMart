@@ -1,10 +1,12 @@
+import { toast } from "react-toastify";
+import SweetAlert, { SweetAlertOptions } from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import { ZodObject, ZodRawShape } from "zod";
 
-export const appendFormData = <T extends object>(
+const appendFormData = <T extends object>(
 	data: T,
 	oldFormData?: FormData
 ): FormData => {
-	console.log(data);
 	const formData = oldFormData ?? new FormData();
 	for (const key in data) {
 		const value = data[key];
@@ -20,25 +22,22 @@ export const appendFormData = <T extends object>(
 	return formData;
 };
 
-export const printFormData = (formData: FormData) => {
+const printFormData = (formData: FormData) => {
 	for (const [k, v] of formData.entries()) {
 		console.log(`${k}:`, v);
 	}
 };
 
-export const removeFileFromArray = (files: File[], name: string) => {
+const removeFileFromArray = (files: File[], name: string) => {
 	if (files.length <= 1) return [];
 	return files.filter((file) => file.name !== name);
 };
 
-export const isFileExists = <T extends { name: string }>(
-	files: T[],
-	file: File
-) => {
+const isFileExists = <T extends { name: string }>(files: T[], file: File) => {
 	return files.some((f) => f.name === file.name);
 };
 
-export const dtoToString = <T extends Record<string, unknown>>(
+const dtoToString = <T extends Record<string, unknown>>(
 	dto: Record<keyof T, unknown>
 ) => {
 	return Object.entries(dto).reduce((acc, [key, value]) => {
@@ -49,12 +48,12 @@ export const dtoToString = <T extends Record<string, unknown>>(
 	}, {} as Record<keyof T, string>);
 };
 
-export const objectToJSON = (obj: object): string | null => {
+const objectToJSON = (obj: object): string | null => {
 	if (Object.keys(obj).length === 0) return null;
 	return JSON.stringify(obj);
 };
 
-export const arrayToFileList = (files: File[]) => {
+const arrayToFileList = (files: File[]) => {
 	const dataTransfer = new DataTransfer();
 	files.forEach((file) => dataTransfer.items.add(file));
 	return dataTransfer.files;
@@ -65,7 +64,7 @@ export const arrayToFileList = (files: File[]) => {
  * @param formSchema Z object
  * @returns object of all keys set to empty string
  */
-export const generateEmptyStringDefaultValues = <T extends ZodRawShape>(
+const generateEmptyStringDefaultValues = <T extends ZodRawShape>(
 	formSchema: ZodObject<T>
 ): Readonly<Record<keyof T, string>> => {
 	return Object.freeze(
@@ -74,4 +73,50 @@ export const generateEmptyStringDefaultValues = <T extends ZodRawShape>(
 			return acc;
 		}, {}) as Readonly<Record<keyof T, string>>
 	);
+};
+type OnClickCallback = () => Promise<void> | void;
+
+type FireAlertParams = {
+	options?: SweetAlertOptions;
+	onConfirmed: OnClickCallback;
+	onCancelled?: OnClickCallback;
+};
+
+const sweetAlertDefaultOptions: SweetAlertOptions = {
+	titleText: "Confirm Delete?",
+	text: "Are you sure you want to delete this?",
+	icon: "warning",
+	showCancelButton: true,
+};
+
+const fireAlert =
+	({
+		options = sweetAlertDefaultOptions,
+		onConfirmed,
+		onCancelled,
+	}: FireAlertParams) =>
+	async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		try {
+			e.preventDefault();
+			const option = await withReactContent(SweetAlert).fire(options);
+			if (!option.isConfirmed)
+				return onCancelled ? await onCancelled() : undefined;
+			return await onConfirmed();
+		} catch (error) {
+			console.error(error);
+			toast.error("Something went wrong");
+		}
+	};
+
+export {
+	appendFormData,
+	arrayToFileList,
+	dtoToString,
+	fireAlert,
+	generateEmptyStringDefaultValues,
+	isFileExists,
+	objectToJSON,
+	printFormData,
+	removeFileFromArray,
+	sweetAlertDefaultOptions,
 };
