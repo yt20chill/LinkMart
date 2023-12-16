@@ -32,7 +32,7 @@ function RequestsPage() {
       </div>
       <div className="mt-5 max-w-7xl flex mx-auto">
         <Filter className="inline-flex flex-col min-w-[250px] max-lg:hidden" />
-        <div className="px-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 grow mb-auto">
+        <div className="px-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 grow mb-auto w-screen">
           {requests && requests.pages.length > 0 ? (
             requests.pages.map((data) => {
               if (!data) return null;
@@ -41,7 +41,20 @@ function RequestsPage() {
               ));
             })
           ) : (
-            <RequestCardSkeleton />
+            <>
+              <RequestCardSkeleton />
+              <RequestCardSkeleton />
+              <RequestCardSkeleton />
+              <RequestCardSkeleton />
+            </>
+          )}
+          {isFetchingNextPage && (
+            <>
+              <RequestCardSkeleton />
+              <RequestCardSkeleton />
+              <RequestCardSkeleton />
+              <RequestCardSkeleton />
+            </>
           )}
         </div>
       </div>
@@ -50,7 +63,7 @@ function RequestsPage() {
         to={siteMap(RouteEnum.PostRequest)}
         className="fixed text-base-100 bottom-0 right-0 mb-3 mr-3 md:mb-12 md:mr-12"
       >
-        <div className="flex justify-center items-center bg-gradient-to-r from-amber-300 to-orange-500 p-4 gap-1 rounded-badge shadow">
+        <div className="flex justify-center items-center bg-gradient-to-r from-cyan-300 to-rose-500 p-4 gap-1 rounded-badge shadow">
           <span className="material-symbols-rounded">add_circle</span>
           <span className="max-md:hidden">Create Request</span>
         </div>

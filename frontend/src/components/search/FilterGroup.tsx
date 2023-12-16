@@ -19,7 +19,7 @@ const FilterGroup = ({ displayName, name, items }: FilterGroupProps) => {
       <div className="truncate">{displayName}</div>
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box"
+        className="dropdown-content z-[1] p-2 shadow bg-base-100/50 backdrop-blur-lg rounded-box transition-all border-2 border-slate-100"
       >
         {filterKeys}
       </ul>
