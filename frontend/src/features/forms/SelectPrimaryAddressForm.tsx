@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { FormSubmitButton } from "../../components/form";
 import FormRadioInput from "../../components/form/FormRadioInput";
@@ -14,13 +14,12 @@ import {
 	UpdateAddressForm,
 	updateAddressFormSchema,
 } from "../../schemas/requestSchema";
-import { AddressDto } from "../../schemas/responseSchema";
 import {
 	deleteAddressAJAX,
-	getAddressAJAX,
 	updatePrimaryAddressAJAX,
 } from "../../services/api/userApi";
 import { queryKey } from "../../services/query.config";
+import { useQueryContainer } from "../hooks/useQueryContainer";
 
 const defaultValues = generateDefaultValues(updateAddressFormSchema);
 const sweetAlertOptions = {
@@ -37,12 +36,12 @@ const SelectPrimaryAddressForm = () => {
 		defaultValues,
 		resolver: zodResolver(updateAddressFormSchema),
 	});
-
+	const {
+		addresses,
+		getAddresses: { isLoading: isGettingAddresses },
+	} = useQueryContainer();
 	const queryClient = useQueryClient();
-	const { data: addresses, isLoading } = useQuery<AddressDto[]>({
-		queryKey: [queryKey.USER, "address"],
-		queryFn: getAddressAJAX,
-	});
+
 	const { mutateAsync: updatePrimaryAddress, isLoading: isUpdating } =
 		useMutation({
 			mutationFn: updatePrimaryAddressAJAX,
@@ -67,7 +66,9 @@ const SelectPrimaryAddressForm = () => {
 
 	return (
 		<form>
-			{isLoading && <span className="loading loading-dots loading-lg"></span>}
+			{isGettingAddresses && (
+				<span className="loading loading-dots loading-lg"></span>
+			)}
 			{addresses && (
 				<FormRadioInput
 					name="addressId"

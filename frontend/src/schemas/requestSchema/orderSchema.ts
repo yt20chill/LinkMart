@@ -1,15 +1,18 @@
 import { z } from "zod";
-import { ulid } from "../../lib/schemaUtils";
+import { requiredId, ulid } from "../../lib/schemaUtils";
 const acceptOfferSchema = z.object({
 	offerId: ulid,
-	shippingAddress: z.string().min(10, { message: "required" }),
+	userAddressId: requiredId,
 });
 
 const acceptOfferFormSchema = acceptOfferSchema.omit({ offerId: true });
 
 type AcceptOfferDto = z.infer<typeof acceptOfferSchema>;
 
-type TAcceptOfferForm = Omit<AcceptOfferDto, "offerId">;
+type TAcceptOfferForm = Record<
+	Exclude<keyof AcceptOfferDto, "offerId">,
+	string
+>;
 
 export { acceptOfferFormSchema, acceptOfferSchema };
 

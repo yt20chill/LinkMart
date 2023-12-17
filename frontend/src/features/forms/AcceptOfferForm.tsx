@@ -1,14 +1,14 @@
-// TODO: Change the form totally
-
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SweetAlert from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { FormInput } from "../../components/form";
+import { FormSelect } from "../../components/form";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
+import PrimaryButton from "../../components/ui/PrimaryButton";
 import { generateDefaultValues } from "../../lib/formUtils";
 import {
 	TAcceptOfferForm,
@@ -17,7 +17,10 @@ import {
 } from "../../schemas/requestSchema";
 import { acceptOfferAJAX } from "../../services/api/orderApi";
 import { queryKey } from "../../services/query.config";
-import routesConfig, { RouteEnum } from "../../services/routes.config";
+import { RouteEnum, siteMap } from "../../services/routes.config";
+import { useQueryContainer } from "../hooks/useQueryContainer";
+import PostAddressForm from "./PostAddressForm";
+import SkeletonForm from "./SkeletonForm";
 
 type AcceptOfferFormProps = {
 	offerId: string;
@@ -26,6 +29,7 @@ type AcceptOfferFormProps = {
 const defaultValues = generateDefaultValues(acceptOfferFormSchema);
 
 const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
+	const [showAddAddress, setShowAddAddress] = useState(false);
 	const {
 		handleSubmit,
 		formState: { errors },
@@ -35,6 +39,10 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		defaultValues,
 		mode: "onTouched",
 	});
+	const {
+		addresses,
+		getAddresses: { isLoading: isGettingAddresses },
+	} = useQueryContainer();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 	const { mutateAsync: acceptOffer, isLoading } = useMutation({
@@ -42,10 +50,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		onSuccess: async (result) => {
 			if (!result) return;
 			await queryClient.invalidateQueries(queryKey.ORDER);
-			// TODO: Handle payment here?
-			navigate(
-				`${routesConfig.get(RouteEnum.OrderDetail)?.path}/${result.orderId}`
-			);
+			navigate(`${siteMap(RouteEnum.Payment)}/${result.orderId}`);
 		},
 	});
 	const onSubmit = async (formData: TAcceptOfferForm) => {
@@ -65,14 +70,41 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		await acceptOffer(acceptOfferDto.data);
 	};
 	return (
-		<form>
-			<FormInput name="shippingAddress" register={register} errors={errors} />
-			<FormSubmitButton
-				label="Accept Offer"
-				onClick={handleSubmit(onSubmit)}
-				disabled={isLoading}
-			/>
-		</form>
+		<div className="flex items-center justify-center inset-0 fixed">
+			<div className="flex flex-col w-96 bg-base-100 p-10 rounded-3xl shadow">
+				<form>
+					{isGettingAddresses && <SkeletonForm />}
+					{addresses && (
+						<>
+							<FormSelect
+								name="userAddressId"
+								register={register}
+								errors={errors}
+								optionItems={addresses.map((addresses) => ({
+									value: addresses.addressId + "",
+									displayValue: addresses.address,
+								}))}
+							/>
+							<FormSubmitButton
+								label="Accept Offer"
+								onClick={handleSubmit(onSubmit)}
+								disabled={isLoading}
+							/>
+						</>
+					)}
+				</form>
+				<PrimaryButton
+					label="Add New Address"
+					onClick={() => setShowAddAddress(true)}
+				/>
+				{showAddAddress && (
+					<PostAddressForm
+						isShow={showAddAddress}
+						setIsShow={setShowAddAddress}
+					/>
+				)}
+			</div>
+		</div>
 	);
 };
 

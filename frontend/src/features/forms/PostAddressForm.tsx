@@ -1,20 +1,22 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { FormInput, FormSubmitButton } from "../../components/form";
 import CancelButton from "../../components/ui/CancelButton";
-import PrimaryButton from "../../components/ui/PrimaryButton";
 import { generateDefaultValues } from "../../lib/formUtils";
 import { PostAddressDto, postAddressSchema } from "../../schemas/requestSchema";
 import { postAddressAJAX } from "../../services/api/userApi";
 import { queryKey } from "../../services/query.config";
 
+type PostAddressFormProps = {
+	isShow: boolean;
+	setIsShow: (isShow: boolean) => void;
+};
+
 const defaultValues = generateDefaultValues(postAddressSchema);
 
-function PostAddressForm() {
-	const [isShow, setIsShow] = useState(true);
+function PostAddressForm({ isShow, setIsShow }: PostAddressFormProps) {
 	const {
 		handleSubmit,
 		formState: { errors },
@@ -36,34 +38,30 @@ function PostAddressForm() {
 
 	const onSubmit = async (data: PostAddressDto) => {
 		await postAddress(data);
+		reset();
+		setIsShow(false);
 	};
-	return isShow ? (
-		<form>
-			<FormInput name={"address"} register={register} errors={errors} />
-			<div className="flex align-middle justify-center space-x-2">
-				<FormSubmitButton
-					label="Confirm"
-					onClick={handleSubmit(onSubmit)}
-					disabled={isPosting}
-				/>
-				<CancelButton
-					onClick={(e) => {
-						e.preventDefault();
-						setIsShow(false);
-						reset();
-					}}
-					label="Cancel"
-				/>
-			</div>
-		</form>
-	) : (
-		<PrimaryButton
-			label="Add address"
-			onClick={(e) => {
-				e.preventDefault();
-				setIsShow(true);
-			}}
-		/>
+	return (
+		isShow && (
+			<form>
+				<FormInput name={"address"} register={register} errors={errors} />
+				<div className="flex justify-center gap-2">
+					<FormSubmitButton
+						label="Confirm"
+						onClick={handleSubmit(onSubmit)}
+						disabled={isPosting}
+					/>
+					<CancelButton
+						onClick={(e) => {
+							e.preventDefault();
+							setIsShow(false);
+							reset();
+						}}
+						label="Cancel"
+					/>
+				</div>
+			</form>
+		)
 	);
 }
 
