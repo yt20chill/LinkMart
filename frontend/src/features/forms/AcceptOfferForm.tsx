@@ -70,41 +70,39 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		await acceptOffer(acceptOfferDto.data);
 	};
 	return (
-		<div className="flex items-center justify-center inset-0 fixed">
-			<div className="flex flex-col w-96 bg-base-100 p-10 rounded-3xl shadow">
-				<form>
-					{isGettingAddresses && <SkeletonForm />}
-					{addresses && (
-						<>
-							<FormSelect
-								name="userAddressId"
-								register={register}
-								errors={errors}
-								optionItems={addresses.map((addresses) => ({
-									value: addresses.addressId + "",
-									displayValue: addresses.address,
-								}))}
-							/>
-							<FormSubmitButton
-								label="Accept Offer"
-								onClick={handleSubmit(onSubmit)}
-								disabled={isLoading}
-							/>
-						</>
-					)}
-				</form>
-				<PrimaryButton
-					label="Add New Address"
-					onClick={() => setShowAddAddress(true)}
-				/>
-				{showAddAddress && (
-					<PostAddressForm
-						isShow={showAddAddress}
-						setIsShow={setShowAddAddress}
-					/>
+		<>
+			<form>
+				{isGettingAddresses && <SkeletonForm />}
+				{addresses && (
+					<>
+						<FormSelect
+							name="userAddressId"
+							register={register}
+							errors={errors}
+							optionItems={addresses.map((addresses) => ({
+								value: addresses.addressId + "",
+								displayValue: addresses.address,
+							}))}
+						/>
+						<FormSubmitButton
+							label="Accept Offer"
+							onClick={handleSubmit(onSubmit)}
+							disabled={isLoading}
+						/>
+					</>
 				)}
-			</div>
-		</div>
+			</form>
+			<PrimaryButton
+				label="Add New Address"
+				onClick={() => setShowAddAddress(true)}
+			/>
+			{showAddAddress && (
+				<PostAddressForm
+					isShow={showAddAddress}
+					setIsShow={setShowAddAddress}
+				/>
+			)}
+		</>
 	);
 };
 

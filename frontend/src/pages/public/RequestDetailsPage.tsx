@@ -10,8 +10,11 @@ import { RequestDetailsDto } from "@/schemas/responseSchema";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { RequestCardSkeleton } from "../../components/card/RequestCardSkeleton";
+import FormModal from "../../components/modal/FormModal";
 import PrimaryButton from "../../components/ui/PrimaryButton";
+import PostOfferForm from "../../features/forms/PostOfferForm";
 import { useQueryContainer } from "../../features/hooks/useQueryContainer";
+import { ControlModalContext } from "../../services/context/closeModalContext";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 import { useAuthStore } from "../../services/stores/authStore";
 import { AuthorizeLevels } from "../../types/authModels";
@@ -28,6 +31,7 @@ const RequestDetailsPage = () => {
 		[details]
 	);
 	const [currentImage, setCurrentImage] = useState<string>("");
+	const [showPostOfferModal, setShowPostOfferModal] = useState(false);
 	useEffect(() => {
 		if (memoizedDetails) setCurrentImage(memoizedDetails.primaryImage);
 	}, [memoizedDetails]);
@@ -107,14 +111,26 @@ const RequestDetailsPage = () => {
 							/>
 						</div>
 
-						<hr className="border-base-300 my-4" />
-						{role === AuthorizeLevels.PROVIDER && (
-							<PrimaryButton
-								label="Offer"
-								//TODO: offer modal
-								onClick={() => console.log("offer")}
-							/>
-						)}
+						<ControlModalContext.Provider
+							value={{
+								isShow: showPostOfferModal,
+								setIsShow: setShowPostOfferModal,
+							}}
+						>
+							<hr className="border-base-300 my-4" />
+							{role === AuthorizeLevels.PROVIDER && (
+								<PrimaryButton
+									label="Offer"
+									onClick={() => setShowPostOfferModal(true)}
+								/>
+							)}
+							{showPostOfferModal && (
+								<FormModal>
+									<PostOfferForm requestId={requestId!} />
+								</FormModal>
+							)}
+						</ControlModalContext.Provider>
+
 						<PrimaryButton
 							label="Clone"
 							onClick={() => {
