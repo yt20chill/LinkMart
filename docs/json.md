@@ -662,7 +662,7 @@
     "message" : "fail to put request"
 }
 ```
-### 📍 5.7 Find my cancel reuqest
+### 📍 5.7 Find my reuqest history
 
 | [GET] | /api/request/history |
 | -------- | ----------------------- |
