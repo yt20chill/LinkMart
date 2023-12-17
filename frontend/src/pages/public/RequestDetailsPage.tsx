@@ -41,7 +41,9 @@ const RequestDetailsPage = () => {
 	useEffect(() => {
 		if (memoizedDetails) {
 			if (username === memoizedDetails.createdBy)
-				navigate(`${siteMap(RouteEnum.UserRequestDetail)}/${requestId}`);
+				navigate(`${siteMap(RouteEnum.UserRequestDetail)}/${requestId}`, {
+					replace: true,
+				});
 			setCurrentImage(memoizedDetails.primaryImage);
 		}
 	}, [memoizedDetails, username, requestId, navigate]);
