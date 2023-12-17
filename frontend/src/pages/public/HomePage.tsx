@@ -2,7 +2,7 @@ import { useState } from "react";
 import FormModal from "../../components/modal/FormModal";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import AcceptOfferForm from "../../features/forms/AcceptOfferForm";
-import { ControlModalContext } from "../../services/context/closeModalContext";
+import { ControlModalContext } from "../../services/context/ControlModalContext";
 
 function HomePage() {
 	const [isShow, setIsShow] = useState(false);

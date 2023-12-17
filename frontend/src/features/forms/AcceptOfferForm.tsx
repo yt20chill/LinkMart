@@ -16,7 +16,7 @@ import {
 	acceptOfferSchema,
 } from "../../schemas/requestSchema";
 import { acceptOfferAJAX } from "../../services/api/offerApi";
-import { useControlModalContext } from "../../services/context/closeModalContext";
+import { useControlModalContext } from "../../services/context/ControlModalContext";
 import { queryKey } from "../../services/query.config";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 import PostAddressForm from "./PostAddressForm";

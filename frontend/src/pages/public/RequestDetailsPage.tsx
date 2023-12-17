@@ -15,7 +15,7 @@ import FormModal from "../../components/modal/FormModal";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import PostOfferForm from "../../features/forms/PostOfferForm";
 import { useQueryContainer } from "../../features/hooks/useQueryContainer";
-import { ControlModalContext } from "../../services/context/closeModalContext";
+import { ControlModalContext } from "../../services/context/ControlModalContext";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 import { useAuthStore } from "../../services/stores/authStore";
 import { AuthorizeLevels } from "../../types/authModels";

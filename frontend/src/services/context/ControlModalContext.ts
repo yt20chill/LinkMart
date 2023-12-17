@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+export { ControlModalContext, useControlModalContext };
 
 type ControlModalContextType = {
 	isShow: boolean;
@@ -17,5 +18,3 @@ const useControlModalContext = () => {
 		);
 	return controlModal;
 };
-
-export { ControlModalContext, useControlModalContext };
