@@ -694,7 +694,7 @@
 
 ## 📎 6. Offer Route
 
-### 📍 6.1 Create New Offer Done~
+### 📍 6.1.1 Create New Offer Done~
 
 | [POST] | /api/offer |
 | ------ | ---------- |
@@ -716,6 +716,32 @@
 🟢 [200]  OK
 {
 }
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to post offer
+}
+```
+### 📍 6.1.2 GET Offer (provider)
+
+| [GET] | /api/offer/myOffer |
+| ------ | ---------- |
+ "jwt"
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+[  {
+    "requestId" : ulid(request.request_id),
+    "offerId" : ulid(offer.offer_id),
+    "createdBy" : String,
+    "primaryImage": String,
+    "price" : int,
+    "estimatedProcessTime" : int,
+    "status": String
+}      ,...]
 ```
 
 ```js
