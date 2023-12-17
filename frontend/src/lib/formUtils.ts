@@ -4,6 +4,19 @@ import withReactContent from "sweetalert2-react-content";
 import { ZodEffects, ZodObject, ZodRawShape } from "zod";
 import { isObjOfType } from "./utils";
 
+export {
+	appendFormData,
+	arrayToFileList,
+	dtoToString,
+	fireAlert,
+	generateDefaultValues,
+	isFileExists,
+	maskHalfClassNameArr,
+	objectToJSON,
+	printFormData,
+	removeFileFromArray,
+	sweetAlertDefaultOptions,
+};
 const appendFormData = <T extends object>(
 	data: T,
 	oldFormData?: FormData
@@ -112,6 +125,8 @@ const sweetAlertDefaultOptions: SweetAlertOptions = {
 	showCancelButton: true,
 };
 
+const maskHalfClassNameArr = Object.freeze(["mask-half-1", "mask-half-2"]);
+
 const fireAlert =
 	({
 		options = sweetAlertDefaultOptions,
@@ -130,16 +145,3 @@ const fireAlert =
 			toast.error("Something went wrong");
 		}
 	};
-
-export {
-	appendFormData,
-	arrayToFileList,
-	dtoToString,
-	fireAlert,
-	generateDefaultValues,
-	isFileExists,
-	objectToJSON,
-	printFormData,
-	removeFileFromArray,
-	sweetAlertDefaultOptions,
-};

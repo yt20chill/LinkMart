@@ -1,3 +1,4 @@
+import { maskHalfClassNameArr } from "../../../../lib/formUtils";
 import { camelToTitleCase } from "../../../../lib/utils";
 
 type RatingProps = {
@@ -5,15 +6,15 @@ type RatingProps = {
 	label: string;
 	score: number;
 	maxScore?: number;
+	readOnly?: boolean;
 };
-
-const maskHalfClassNameArr = ["mask-half-1", "mask-half-2"];
 
 const Rating = ({
 	name,
 	label = camelToTitleCase(name),
 	score,
 	maxScore = 5,
+	readOnly = false,
 }: RatingProps) => {
 	return (
 		<>
@@ -31,7 +32,7 @@ const Rating = ({
 							type="radio"
 							name={name}
 							checked={Math.floor(score * 2) === index + 1}
-							readOnly
+							readOnly={readOnly}
 						/>
 					))}
 			</div>

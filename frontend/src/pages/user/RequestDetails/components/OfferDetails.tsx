@@ -30,6 +30,7 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 		providerName,
 		providerId,
 		reviewCount,
+		offerId: offerIdFromAPI,
 		...displayDetails
 	} = offerDetails;
 	const score = (efficiency + attitude) / 2;
@@ -47,7 +48,12 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 			<div>
 				<IconCircleFrame username={providerName} />
 				<span>{score.toFixed(1)}</span>
-				<Rating name={`${providerId}-score`} label="" score={score} />
+				<Rating
+					name={`${providerId}-score`}
+					label=""
+					score={score}
+					readOnly={true}
+				/>
 				<span>({reviewCount})</span>
 				<div className="flex">
 					<PrimaryButton
