@@ -20,6 +20,7 @@ import {
 } from "../pages/public";
 import {
 	OrderDetailsPage,
+	PaymentPage,
 	ProfilePage,
 	ProviderRegisterPage,
 	RequestDetailsPage,
@@ -46,6 +47,7 @@ export enum RouteEnum {
 	UserRequests,
 	PostRequest,
 	RequestDetail,
+	Payment,
 	UserOrder,
 	OrderDetail,
 	ProviderRegister,
@@ -124,6 +126,12 @@ routeConfigMap
 		path: "order-detail/:id",
 		authorizeLevel: AuthorizeLevels.USER,
 		component: OrderDetailsPage,
+	})
+	.set(RouteEnum.Payment, {
+		name: "Payment",
+		path: "payment/:offerId",
+		authorizeLevel: AuthorizeLevels.USER,
+		component: PaymentPage,
 	})
 	.set(RouteEnum.ProviderRegister, {
 		name: "Provider Registration",
