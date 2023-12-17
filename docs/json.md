@@ -724,9 +724,37 @@
     "message" : fail to post offer
 }
 ```
-### 📍 6.1.2 GET Offer (provider)
+### 📍 6.1.2 GET Offer (provider) Done~
 
 | [GET] | /api/offer/myOffer |
+| ------ | ---------- |
+ "jwt"
+> ⬇️ Req Body:
+
+```js
+{
+    "requestId"? : ulid(request.request_id),
+    "price"? : int,
+    "estimatedProcessTime"? : int,
+    "offerRemark"? : string | undefined
+}
+```
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to change offer
+}
+```
+```
+### 📍 6.1.2 Amend Offer (provider) 
+
+| [GET] | /api/offer/:offerId |
 | ------ | ---------- |
  "jwt"
 > ⬆️ Resp:
