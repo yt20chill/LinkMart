@@ -29,9 +29,7 @@ export const postRequestSchema = z.object({
 	url: emptyStringToNull.pipe(
 		z.string().url({ message: "invalid url" }).nullish()
 	),
-	quantity: stringToPositiveNumber().pipe(
-		z.number().int().positive({ message: "invalid quantity" }).default(1)
-	),
+	quantity: z.string().min(1, { message: "required" }),
 	requestRemark: emptyStringToNull.nullable(),
 	offerPrice: stringToPositiveNumber({ isFloat: true }).pipe(
 		z.number().positive().nullish()

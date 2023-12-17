@@ -26,8 +26,10 @@ import {
 } from "./requestResponseSchema";
 import {
 	AddressDto,
+	GetOrderDto,
 	UserDto,
 	addressesResponseSchema,
+	getOrdersSchema,
 	userResponseSchema,
 } from "./userResponseSchema";
 
@@ -39,6 +41,7 @@ export {
 	categoryFieldsResponseSchema,
 	createOrderResponseSchema,
 	errorResponseSchema,
+	getOrdersSchema,
 	locationsResponseSchema,
 	requestDetailsResponseSchema,
 	requestOffersResponseSchema,
@@ -54,6 +57,7 @@ export type {
 	CategoryFieldDto,
 	CreateOrderDto,
 	ErrorResponseDto,
+	GetOrderDto,
 	ImageDto,
 	LocationDto,
 	RequestDetailsDto,
