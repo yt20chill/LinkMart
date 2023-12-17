@@ -1,19 +1,19 @@
 import { z } from "zod";
-import { requiredId, ulid } from "../../lib/schemaUtils";
-const acceptOfferSchema = z.object({
+import { ulid } from "../../lib/schemaUtils";
+
+export { createOrderParamsSchema };
+export type { CreateOrderParams };
+
+const createOrderParamsSchema = z.object({
+	success: z
+		.string()
+		.refine((value) => value === "true", { message: "success must be true" }),
 	offerId: ulid,
-	userAddressId: requiredId.or(z.number().int().positive()),
+	userAddressId: z.string().refine((value) => parseInt(value) > 0, {
+		message: "userAddressId must be a positive integer",
+	}),
+	// price: z.string().refine((value) => parseFloat(value) > 0, {
+	// 	message: "price must be a positive number",
+	// }),
 });
-
-const acceptOfferFormSchema = acceptOfferSchema.omit({ offerId: true });
-
-type AcceptOfferDto = z.infer<typeof acceptOfferSchema>;
-
-type TAcceptOfferForm = Record<
-	Exclude<keyof AcceptOfferDto, "offerId">,
-	string
->;
-
-export { acceptOfferFormSchema, acceptOfferSchema };
-
-export type { AcceptOfferDto, TAcceptOfferForm };
+type CreateOrderParams = z.infer<typeof createOrderParamsSchema>;

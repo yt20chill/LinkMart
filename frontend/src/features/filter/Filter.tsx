@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import FilterGroup from "../../components/search/FilterGroup";
-import { useSearchParamsContext } from "../../services/context/searchParamsContext";
+import { useSearchParamsContext } from "../../services/context/SearchParamsWrapperContext";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 
 type FilterProps = {

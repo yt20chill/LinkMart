@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 import { RouteEnum, siteMap } from "../../services/routes.config";
@@ -8,8 +9,9 @@ const useLoggedInRedirect = () => {
 		useShallow((state) => state.isAuthenticated)
 	);
 	const navigate = useNavigate();
-	if (isAuthenticated) navigate(siteMap(RouteEnum.Requests));
-	else return;
+	useEffect(() => {
+		if (isAuthenticated) navigate(siteMap(RouteEnum.Requests));
+	}, [isAuthenticated, navigate]);
 };
 
 export { useLoggedInRedirect };

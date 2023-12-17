@@ -74,7 +74,7 @@ const requestDetailsResponseSchema = requestResponseSchema.extend({
 	categoryName: z.string().min(1),
 	images: z.array(imageSchema),
 	url: z.string().url().nullable(),
-	quantity: z.number().int().positive(),
+	quantity: z.string().min(1),
 	requestRemark: z.string().nullable(),
 	createdAt: z.string(),
 });

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useControlModalContext } from "../../services/context/closeModalContext";
+import { useControlModalContext } from "../../services/context/ControlModalContext";
 
 type FormModalProps = {
 	children: ReactNode;

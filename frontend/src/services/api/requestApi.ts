@@ -24,10 +24,22 @@ const requestApiRoutes = Object.freeze({
 	LOCATION: `/location`,
 	REQUEST: `/request`,
 	POST_REQUEST: `/api/request`,
-	IMAGE: `/request/image`,
+	IMAGE: `/api/request/image`,
 });
 
-export const getAllCategoriesAJAX = async () => {
+export {
+	deleteRequestAJAX,
+	deleteRequestImageAJAX,
+	getAllCategoriesAJAX,
+	getAllLocationsAJAX,
+	getAllRequestsAJAX,
+	getCategoryFieldsAJAX,
+	getRequestDetailsAJAX,
+	postRequestAJAX,
+	putRequestAJAX,
+};
+
+const getAllCategoriesAJAX = async () => {
 	return (
 		(await axiosWrapper<void, CategoryDto[]>(requestApiRoutes.CATEGORY, {
 			schema: categoriesResponseSchema,
@@ -35,7 +47,7 @@ export const getAllCategoriesAJAX = async () => {
 	);
 };
 
-export const getCategoryFieldsAJAX = async ({ categoryId }: CategoryId) => {
+const getCategoryFieldsAJAX = async ({ categoryId }: CategoryId) => {
 	return (
 		(await axiosWrapper<number, CategoryFieldDto[]>(
 			`${requestApiRoutes.CATEGORY}/${categoryId}`,
@@ -44,7 +56,7 @@ export const getCategoryFieldsAJAX = async ({ categoryId }: CategoryId) => {
 	);
 };
 
-export const getAllLocationsAJAX = async () => {
+const getAllLocationsAJAX = async () => {
 	return (
 		(await axiosWrapper<void, LocationDto[]>(requestApiRoutes.LOCATION, {
 			schema: locationsResponseSchema,
@@ -52,7 +64,7 @@ export const getAllLocationsAJAX = async () => {
 	);
 };
 
-export const postRequestAJAX = async (formData: FormData) => {
+const postRequestAJAX = async (formData: FormData) => {
 	printFormData(formData);
 	return await axiosWrapper<FormData>(requestApiRoutes.POST_REQUEST, {
 		method: "post",
@@ -65,7 +77,7 @@ export const postRequestAJAX = async (formData: FormData) => {
  * @param searchParams URLSearchParams
  * @returns brief info of requests
  */
-export const getAllRequestsAJAX = async (searchParams: URLSearchParams) => {
+const getAllRequestsAJAX = async (searchParams: URLSearchParams) => {
 	return (
 		(await axiosWrapper<void, RequestDto[]>(requestApiRoutes.REQUEST, {
 			schema: requestsResponseSchema,
@@ -74,14 +86,14 @@ export const getAllRequestsAJAX = async (searchParams: URLSearchParams) => {
 	);
 };
 
-export const getRequestDetailsAJAX = async ({ requestId }: RequestId) => {
+const getRequestDetailsAJAX = async ({ requestId }: RequestId) => {
 	return await axiosWrapper<void, RequestDetailsDto>(
 		`${requestApiRoutes.REQUEST}/${requestId}`,
 		{ schema: requestDetailsResponseSchema }
 	);
 };
 
-export const putRequestAJAX = async (requestId: string, formData: FormData) => {
+const putRequestAJAX = async (requestId: string, formData: FormData) => {
 	return await axiosWrapper<FormData>(
 		`${requestApiRoutes.POST_REQUEST}/${requestId}`,
 		{
@@ -91,15 +103,13 @@ export const putRequestAJAX = async (requestId: string, formData: FormData) => {
 	);
 };
 
-export const deleteRequestAJAX = async ({ requestId }: RequestId) => {
+const deleteRequestAJAX = async ({ requestId }: RequestId) => {
 	return await axiosWrapper(`${requestApiRoutes.POST_REQUEST}/${requestId}`, {
 		method: "delete",
 	});
 };
 
-export const deleteRequestImageAJAX = async ({
-	imageId,
-}: DeleteImageParams) => {
+const deleteRequestImageAJAX = async ({ imageId }: DeleteImageParams) => {
 	return await axiosWrapper(`${requestApiRoutes.IMAGE}/${imageId}`, {
 		method: "delete",
 	});

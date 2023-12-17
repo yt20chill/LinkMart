@@ -1,13 +1,23 @@
-import AcceptOfferForm from "../../features/forms/AcceptOfferForm";
+import { useQuery } from "react-query";
+import { RequestCard } from "../../components/card/RequestCard";
+import { RequestCardSkeleton } from "../../components/card/RequestCardSkeleton";
+import { getRequestsByUserAJAX } from "../../services/api/userApi";
+import { queryKey } from "../../services/query.config";
 
-function UserRequestsPage() {
-	// OfferForm is for testing only
+const UserRequestsPage = () => {
+	const { data: requests } = useQuery({
+		queryKey: [queryKey.USER, "requests"],
+		queryFn: getRequestsByUserAJAX,
+	});
 	return (
 		<>
-			<AcceptOfferForm offerId="01BX5ZZKBKACTAV9WEVGEMMVRZ" />
-			<div>UserRequestsPage</div>
+			{requests ? (
+				requests.map((req) => <RequestCard key={req.requestId} {...req} />)
+			) : (
+				<RequestCardSkeleton />
+			)}
 		</>
 	);
-}
+};
 
 export default UserRequestsPage;

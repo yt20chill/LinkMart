@@ -2,7 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SweetAlert from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -11,14 +10,14 @@ import FormSubmitButton from "../../components/form/FormSubmitButton";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import { generateDefaultValues } from "../../lib/formUtils";
 import {
+	AcceptOfferDto,
 	TAcceptOfferForm,
-	acceptOfferFormSchema,
+	acceptOfferDtoSchema,
 	acceptOfferSchema,
 } from "../../schemas/requestSchema";
-import { acceptOfferAJAX } from "../../services/api/orderApi";
-import { useControlModalContext } from "../../services/context/closeModalContext";
+import { acceptOfferAJAX } from "../../services/api/offerApi";
+import { useControlModalContext } from "../../services/context/ControlModalContext";
 import { queryKey } from "../../services/query.config";
-import { RouteEnum, siteMap } from "../../services/routes.config";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 import PostAddressForm from "./PostAddressForm";
 import SkeletonForm from "./SkeletonForm";
@@ -27,7 +26,7 @@ type AcceptOfferFormProps = {
 	offerId: string;
 };
 
-const defaultValues = generateDefaultValues(acceptOfferFormSchema);
+const defaultValues = generateDefaultValues(acceptOfferSchema);
 
 const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 	const [showAddAddress, setShowAddAddress] = useState(false);
@@ -36,7 +35,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		formState: { errors },
 		register,
 	} = useForm<TAcceptOfferForm>({
-		resolver: zodResolver(acceptOfferFormSchema),
+		resolver: zodResolver(acceptOfferSchema),
 		defaultValues,
 		mode: "onSubmit",
 	});
@@ -45,27 +44,33 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		getAddresses: { isLoading: isGettingAddresses },
 	} = useQueryContainer();
 	const queryClient = useQueryClient();
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const { mutateAsync: acceptOffer, isLoading } = useMutation({
-		mutationFn: acceptOfferAJAX,
+		mutationFn: (dto: AcceptOfferDto) => acceptOfferAJAX(dto),
 		onSuccess: async (result) => {
 			if (!result) return;
-			await queryClient.invalidateQueries(queryKey.ORDER);
-			navigate(`${siteMap(RouteEnum.Payment)}/${result.orderId}`);
+			await queryClient.invalidateQueries([queryKey.OFFER, { offerId }]);
+			// navigate(
+			// 	`${siteMap(RouteEnum.Payment)}/${result.offerId}?address=${
+			// 		result.userAddressId
+			// 	}`,
+			// 	{ replace: true }
+			// );
 		},
 	});
 	const { setIsShow } = useControlModalContext();
 
 	const onSubmit = async (formData: TAcceptOfferForm) => {
-		const acceptOfferDto = acceptOfferSchema.safeParse({
+		const dto = acceptOfferDtoSchema.safeParse({
 			...formData,
 			offerId,
 		});
-		if (!acceptOfferDto.success) {
-			console.error(acceptOfferDto.error);
+		if (!dto.success) {
+			console.error(dto.error);
 			return toast.error("Something went wrong! Please try again later");
 		}
-
+		setIsShow(false);
+		setShowAddAddress(false);
 		const option = await withReactContent(SweetAlert).fire({
 			title: "Are you sure you want to accept this offer?",
 			text: "You will be redirected to the payment page",
@@ -73,7 +78,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 			showCancelButton: true,
 		});
 		if (!option.isConfirmed) return setIsShow(false);
-		await acceptOffer(acceptOfferDto.data);
+		await acceptOffer(dto.data);
 	};
 	return (
 		<>

@@ -2,8 +2,15 @@ import { AuthDto, authResponseSchema } from "./authResponseSchema";
 import { ErrorResponseDto, errorResponseSchema } from "./baseResponseSchema";
 import {
 	AcceptOfferResponseDto,
+	OfferDetailsDto,
 	acceptOfferResponseSchema,
+	requestOffersResponseSchema,
+} from "./offerResponseSchema";
+import {
+	CreateOrderDto,
+	createOrderResponseSchema,
 } from "./orderResponseSchema";
+
 import {
 	CategoryDto,
 	CategoryFieldDto,
@@ -19,8 +26,10 @@ import {
 } from "./requestResponseSchema";
 import {
 	AddressDto,
+	GetOrderDto,
 	UserDto,
 	addressesResponseSchema,
+	getOrdersSchema,
 	userResponseSchema,
 } from "./userResponseSchema";
 
@@ -30,9 +39,12 @@ export {
 	authResponseSchema,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
+	createOrderResponseSchema,
 	errorResponseSchema,
+	getOrdersSchema,
 	locationsResponseSchema,
 	requestDetailsResponseSchema,
+	requestOffersResponseSchema,
 	requestsResponseSchema,
 	userResponseSchema,
 };
@@ -43,9 +55,12 @@ export type {
 	AuthDto,
 	CategoryDto,
 	CategoryFieldDto,
+	CreateOrderDto,
 	ErrorResponseDto,
+	GetOrderDto,
 	ImageDto,
 	LocationDto,
+	OfferDetailsDto,
 	RequestDetailsDto,
 	RequestDto,
 	UserDto,

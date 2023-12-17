@@ -5,7 +5,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Filter } from "../../features/filter/Filter";
 import { useSearchParamsWrapper } from "../../features/hooks/useSearchParamsWrapper";
 import { getAllRequestsAJAX } from "../../services/api/requestApi";
-import { SearchParamsWrapperContext } from "../../services/context/searchParamsContext";
+import { SearchParamsWrapperContext } from "../../services/context/SearchParamsWrapperContext";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 
@@ -27,7 +27,10 @@ function RequestsPage() {
 
   return (
     <SearchParamsWrapperContext.Provider value={searchParamsWrapper}>
-      <div className="mt-12 max-w-7xl flex mx-auto">
+      <div className="mt-5 max-w-7xl max-lg:px-2 mx-auto ">
+        <h1 className="text-black text-xl "></h1>
+      </div>
+      <div className="mt-5 max-w-7xl flex mx-auto">
         <Filter className="inline-flex flex-col min-w-[250px] max-lg:hidden" />
         <div className="px-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 grow mb-auto w-screen">
           {requests && requests.pages.length > 0 ? (

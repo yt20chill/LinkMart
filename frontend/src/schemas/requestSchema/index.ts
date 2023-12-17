@@ -4,13 +4,18 @@ import {
 	signInSchema,
 	signUpSchema,
 } from "./authSchema";
-import { OfferForm, PostOfferDto, postOfferSchema } from "./offerSchema";
 import {
 	AcceptOfferDto,
+	AcceptOfferPayload,
+	OfferForm,
+	PostOfferDto,
 	TAcceptOfferForm,
-	acceptOfferFormSchema,
+	acceptOfferDtoSchema,
 	acceptOfferSchema,
-} from "./orderSchema";
+	postOfferSchema,
+} from "./offerSchema";
+import { CreateOrderParams, createOrderParamsSchema } from "./orderSchema";
+
 import {
 	CategoryId,
 	DeleteImageParams,
@@ -31,10 +36,11 @@ import {
 } from "./userSchema";
 
 export {
-	acceptOfferFormSchema,
+	acceptOfferDtoSchema,
 	acceptOfferSchema,
 	allowedFileTypes,
 	categoryIdSchema,
+	createOrderParamsSchema,
 	deleteImageParamsSchema,
 	postAddressSchema,
 	postOfferSchema,
@@ -47,7 +53,9 @@ export {
 
 export type {
 	AcceptOfferDto,
+	AcceptOfferPayload,
 	CategoryId,
+	CreateOrderParams,
 	DeleteImageParams,
 	OfferForm,
 	PostAddressDto,

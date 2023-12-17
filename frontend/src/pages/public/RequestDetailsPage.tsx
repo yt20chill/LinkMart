@@ -9,12 +9,13 @@ import { SectionTitle } from "@/components/title/SectionTitle";
 import { RequestDetailsDto } from "@/schemas/responseSchema";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 import { RequestCardSkeleton } from "../../components/card/RequestCardSkeleton";
 import FormModal from "../../components/modal/FormModal";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import PostOfferForm from "../../features/forms/PostOfferForm";
 import { useQueryContainer } from "../../features/hooks/useQueryContainer";
-import { ControlModalContext } from "../../services/context/closeModalContext";
+import { ControlModalContext } from "../../services/context/ControlModalContext";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 import { useAuthStore } from "../../services/stores/authStore";
 import { AuthorizeLevels } from "../../types/authModels";
@@ -23,7 +24,12 @@ const RequestDetailsPage = () => {
 	const { requestId } = useParams();
 	const navigate = useNavigate();
 	if (requestId === undefined) navigate("/404", { replace: true });
-	const role = useAuthStore((state) => state.role);
+	const { role, username } = useAuthStore(
+		useShallow((state) => ({
+			role: state.role,
+			username: state.username,
+		}))
+	);
 	const { useGetRequestDetails } = useQueryContainer();
 	const { data: details } = useGetRequestDetails({ requestId: requestId! });
 	const memoizedDetails = useMemo<RequestDetailsDto | undefined>(
@@ -33,8 +39,14 @@ const RequestDetailsPage = () => {
 	const [currentImage, setCurrentImage] = useState<string>("");
 	const [showPostOfferModal, setShowPostOfferModal] = useState(false);
 	useEffect(() => {
-		if (memoizedDetails) setCurrentImage(memoizedDetails.primaryImage);
-	}, [memoizedDetails]);
+		if (memoizedDetails) {
+			if (username === memoizedDetails.createdBy)
+				navigate(`${siteMap(RouteEnum.UserRequestDetail)}/${requestId}`, {
+					replace: true,
+				});
+			setCurrentImage(memoizedDetails.primaryImage);
+		}
+	}, [memoizedDetails, username, requestId, navigate]);
 	return details ? (
 		<div className="bg-base-200/80 backdrop-blur-3xl mt-12 py-12 border-y border-base-300">
 			<div className="max-w-7xl max-xl:px-2 mx-auto">

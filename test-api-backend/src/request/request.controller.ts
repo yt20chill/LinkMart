@@ -102,10 +102,10 @@ export class RequestController {
         { imageId: 9, imagePath: 'https://loremflickr.com/320/240?random=8' },
       ],
       url: 'https://google.com',
-      quantity: 1,
+      quantity: '1',
       requestRemark: '無縫羽絨連帽外套',
       offerPrice: 1900,
-      createdBy: 'Jackie Mo',
+      createdBy: 'Jason',
       createdAt: '2023-12-12 20:22:54.04832',
       updatedAt: '2023-12-12 20:22:54.04832',
     };

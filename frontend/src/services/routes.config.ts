@@ -1,4 +1,4 @@
-import { enumToMap } from "../lib/formattingUtils";
+import { enumToMap, removeParams } from "../lib/formattingUtils";
 import {
 	AdminSignInPage,
 	AdminTaskDetailsPage,
@@ -21,14 +21,15 @@ import {
 import {
 	OrderDetailsPage,
 	PaymentPage,
+	PostRequestPage,
 	ProfilePage,
 	ProviderRegisterPage,
 	RequestDetailsPage,
 	UserOrderPage,
+	UserRequestDetailsPage,
 	UserRequestsPage,
 } from "../pages/user";
 
-import PostRequestPage from "../pages/user/PostRequestPage";
 import { AuthorizeLevels } from "../types/authModels";
 
 interface TRouteConfig {
@@ -45,6 +46,7 @@ export enum RouteEnum {
 	Requests,
 	Profile,
 	UserRequests,
+	UserRequestDetail,
 	PostRequest,
 	RequestDetail,
 	Payment,
@@ -108,6 +110,12 @@ routeConfigMap
 		path: "requests",
 		authorizeLevel: AuthorizeLevels.USER,
 		component: UserRequestsPage,
+	})
+	.set(RouteEnum.UserRequestDetail, {
+		name: "My Request Detail",
+		path: "request-detail/:requestId",
+		authorizeLevel: AuthorizeLevels.USER,
+		component: UserRequestDetailsPage,
 	})
 	.set(RouteEnum.PostRequest, {
 		name: "New Request",
@@ -194,12 +202,6 @@ routeConfigMap
 		authorizeLevel: AuthorizeLevels.ADMIN,
 		component: AdminTaskDetailsPage,
 	});
-// .set(RouteEnum.NotFound, {
-// 	name: "NotFound",
-// 	path: "*",
-// 	authorizeLevel: AuthorizeLevels.PUBLIC,
-// 	component: NotFoundPage,
-// });
 
 const routeConfigArray = Object.freeze(Array.from(routeConfigMap.values()));
 
@@ -207,7 +209,7 @@ const siteMap = (route: RouteEnum): string => {
 	const routeConfig = routeConfigMap.get(route);
 	if (!routeConfig) return "/";
 	const prefix = authorizedLevelToPrefix(routeConfig.authorizeLevel);
-	return (prefix ? `/${prefix}` : "") + `/${routeConfig.path}`;
+	return (prefix ? `/${prefix}` : "") + `/${removeParams(routeConfig.path)}`;
 };
 
 const authorizedLevelMap = Object.freeze(
