@@ -757,6 +757,7 @@
 | [GET] | /api/offer/:offerId |
 | ------ | ---------- |
  "jwt"
+```
 > ⬆️ Resp:
 
 ```js
@@ -848,6 +849,7 @@ url: FRONTEND_DOMAIN/payment/:offerId?addressId={addressId}&price={price}
 {
     "message" : fail to get offer
 }
+```
 ---
 
 ## 📎 7. Order Route
@@ -886,6 +888,32 @@ Success
 🟢 [200]  OK
 {
     "message": "payment cancelled"
+}
+```
+
+### 📍 7.2 Get All Order By UserId
+| [GET]| /api/user/:userId/order |
+| ----- | ------------- |
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+[{
+  "orderId": string,
+  "orderStatus": string,
+  "providerId": int,
+  "providerName": string,
+  "item": string,
+  "primaryImage": string,
+  "quantity": int,
+  "price": float,
+  "createdAt": Date,
+},...],
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get orders
 }
 ```
 
