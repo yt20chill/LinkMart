@@ -30,7 +30,7 @@ export function RequestCard({
       <div className="flex px-2">
         <div className="w-full">
           {offerPrice ? (
-            <div className="flex justify-end items-baseline text-2xl h-6 text-cyan-800">
+            <div className="flex justify-end items-baseline text-2xl h-6 text-secondary-800">
               <span className="text-sm">Offer $</span>
               {offerPrice.toLocaleString("en")}
             </div>
@@ -60,7 +60,7 @@ export function RequestCard({
       <div className="absolute bottom-2 left-2">
         <Link
           to={`${siteMap(RouteEnum.PostRequest)}?cloneId=${requestId}`}
-          className="hidden flex-col justify-center rounded-lg border border-slate-200 bg-base-200/10 [&>span]:hover:text-2xl w-12 h-12 hover:w-24 hover:h-16 [&_div]:hover:flex [&_div]:hover:max-h-24 transition-all text-slate-500 overflow-hidden hover:ring-2 ring-rose-500/25 hover:bg-base-200/95 hover:text-rose-500 hover:shadow-lg hover:rounded-3xl"
+          className="hidden flex-col justify-center rounded-lg border border-slate-200 bg-base-200/10 [&>span]:hover:text-2xl w-12 h-12 hover:w-24 hover:h-16 [&_div]:hover:flex [&_div]:hover:max-h-24 transition-all text-slate-500 overflow-hidden hover:ring-2 ring-primary-500/25 hover:bg-base-200/95 hover:text-primary-500 hover:shadow-lg hover:rounded-3xl"
         >
           <span className="material-symbols-rounded text-lg mx-1 flex items-center justify-center">
             add_shopping_cart

@@ -63,7 +63,7 @@ function RequestsPage() {
         to={siteMap(RouteEnum.PostRequest)}
         className="fixed text-base-100 bottom-0 right-0 mb-3 mr-3 md:mb-12 md:mr-12"
       >
-        <div className="flex justify-center items-center bg-gradient-to-r from-cyan-300 to-rose-500 p-4 gap-1 rounded-badge shadow">
+        <div className="flex justify-center items-center bg-gradient-to-r from-secondary-300 to-primary-500 p-4 gap-1 rounded-badge shadow">
           <span className="material-symbols-rounded">add_circle</span>
           <span className="max-md:hidden">Create Request</span>
         </div>
