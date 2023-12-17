@@ -737,6 +737,7 @@
     "requestId" : ulid(request.request_id),
     "offerId" : ulid(offer.offer_id),
     "createdBy" : String,
+    "item": String,
     "primaryImage": String,
     "price" : int,
     "estimatedProcessTime" : int,
@@ -747,7 +748,7 @@
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : fail to post offer
+    "message" : fail to get offer
 }
 ```
 
