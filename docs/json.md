@@ -937,6 +937,7 @@ Success
   "primaryImage": string,
   "quantity": int,
   "price": float,
+  "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
   "createdAt": Date,
 },...],
 ```
