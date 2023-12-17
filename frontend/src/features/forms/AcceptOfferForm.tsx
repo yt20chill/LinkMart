@@ -37,7 +37,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 	} = useForm<TAcceptOfferForm>({
 		resolver: zodResolver(acceptOfferFormSchema),
 		defaultValues,
-		mode: "onTouched",
+		mode: "onSubmit",
 	});
 	const {
 		addresses,
@@ -58,8 +58,12 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 			...formData,
 			offerId,
 		});
-		if (!acceptOfferDto.success)
+		console.log(formData);
+		if (!acceptOfferDto.success) {
+			console.error(acceptOfferDto.error);
 			return toast.error("Something went wrong! Please try again later");
+		}
+
 		const option = await withReactContent(SweetAlert).fire({
 			title: "Are you sure you want to accept this offer?",
 			text: "You will be redirected to the payment page",

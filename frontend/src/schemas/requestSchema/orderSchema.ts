@@ -2,7 +2,7 @@ import { z } from "zod";
 import { requiredId, ulid } from "../../lib/schemaUtils";
 const acceptOfferSchema = z.object({
 	offerId: ulid,
-	userAddressId: requiredId,
+	userAddressId: requiredId.or(z.number().int().positive()),
 });
 
 const acceptOfferFormSchema = acceptOfferSchema.omit({ offerId: true });
