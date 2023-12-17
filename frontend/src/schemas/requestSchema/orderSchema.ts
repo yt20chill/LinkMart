@@ -12,5 +12,8 @@ const createOrderParamsSchema = z.object({
 	userAddressId: z.string().refine((value) => parseInt(value) > 0, {
 		message: "userAddressId must be a positive integer",
 	}),
+	// price: z.string().refine((value) => parseFloat(value) > 0, {
+	// 	message: "price must be a positive number",
+	// }),
 });
 type CreateOrderParams = z.infer<typeof createOrderParamsSchema>;
