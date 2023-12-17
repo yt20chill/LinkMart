@@ -5,12 +5,18 @@ import FormModal from "../../../../components/modal/FormModal";
 import CancelButton from "../../../../components/ui/CancelButton";
 import PrimaryButton from "../../../../components/ui/PrimaryButton";
 import AcceptOfferForm from "../../../../features/forms/AcceptOfferForm";
+import { fireAlert, sweetAlertDefaultOptions } from "../../../../lib/formUtils";
 import { camelToTitleCase } from "../../../../lib/utils";
 import { useOfferDetailsContext } from "../../../../services/context/OfferDetailsContext";
 import Rating from "./Rating";
 
 type OfferDetailsProps = {
 	offerId: string;
+};
+
+const sweetAlertOptions = {
+	...sweetAlertDefaultOptions,
+	text: "Are you sure you want to decline this offer?",
 };
 
 const OfferDetails = ({ offerId }: OfferDetailsProps) => {
@@ -48,7 +54,15 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 						label="Accept"
 						onClick={() => setShowAcceptForm(true)}
 					/>
-					<CancelButton label="Decline" onClick={() => onDecline(offerId)} />
+					<CancelButton
+						label="Decline"
+						onClick={() =>
+							fireAlert({
+								options: sweetAlertOptions,
+								onConfirmed: () => onDecline(offerId),
+							})
+						}
+					/>
 				</div>
 			</div>
 			{showAcceptForm && (

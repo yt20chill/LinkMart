@@ -3,6 +3,7 @@ import {
 	AcceptOfferDto,
 	AcceptOfferPayload,
 	PostOfferDto,
+	RequestId,
 } from "../../schemas/requestSchema";
 import {
 	AcceptOfferResponseDto,
@@ -11,7 +12,12 @@ import {
 	requestOffersResponseSchema,
 } from "../../schemas/responseSchema";
 
-export { acceptOfferAJAX, getAllOffersByRequestIdAJAX, postOfferAJAX };
+export {
+	acceptOfferAJAX,
+	declineOfferAJAX,
+	getAllOffersByRequestIdAJAX,
+	postOfferAJAX,
+};
 
 const offerApiRoutes = Object.freeze({
 	OFFER: `/api/offer`,
@@ -38,13 +44,19 @@ const acceptOfferAJAX = async (
 	);
 };
 
-const getAllOffersByRequestIdAJAX = async (
-	requestId: string
-): Promise<OfferDetailsDto[] | undefined> => {
+const getAllOffersByRequestIdAJAX = async ({
+	requestId,
+}: RequestId): Promise<OfferDetailsDto[] | undefined> => {
 	return await axiosWrapper<void, OfferDetailsDto[]>(
 		`${offerApiRoutes.OFFER_BY_REQUEST}/${requestId}`,
 		{
 			schema: requestOffersResponseSchema,
 		}
 	);
+};
+
+const declineOfferAJAX = async (offerId: string): Promise<void> => {
+	return await axiosWrapper(`${offerApiRoutes.OFFER}/${offerId}`, {
+		method: "delete",
+	});
 };
