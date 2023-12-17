@@ -23,21 +23,25 @@ const PaymentPage = () => {
 	});
 	if (!offerId || !userAddressId || !price) {
 		toast.error("invalid url, redirect to request page");
-		return navigate(siteMap(RouteEnum.UserRequests));
+		navigate(siteMap(RouteEnum.UserRequests));
 	}
 	return (
-		<>
-			<p>Price: {price}</p>
-			<PrimaryButton
-				label="Pay"
-				onClick={() => pay({ success: "true", offerId, userAddressId })}
-				disabled={isLoading}
-			/>
-			<CancelButton
-				label="Cancel"
-				onClick={() => navigate(siteMap(RouteEnum.UserRequests))}
-			/>
-		</>
+		offerId &&
+		userAddressId &&
+		price && (
+			<>
+				<p>Price: {price}</p>
+				<PrimaryButton
+					label="Pay"
+					onClick={() => pay({ success: "true", offerId, userAddressId })}
+					disabled={isLoading}
+				/>
+				<CancelButton
+					label="Cancel"
+					onClick={() => navigate(siteMap(RouteEnum.UserRequests))}
+				/>
+			</>
+		)
 	);
 };
 
