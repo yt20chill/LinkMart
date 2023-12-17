@@ -111,25 +111,13 @@ const RequestDetailsPage = () => {
 							/>
 						</div>
 
-						<ControlModalContext.Provider
-							value={{
-								isShow: showPostOfferModal,
-								setIsShow: setShowPostOfferModal,
-							}}
-						>
-							<hr className="border-base-300 my-4" />
-							{role === AuthorizeLevels.PROVIDER && (
-								<PrimaryButton
-									label="Offer"
-									onClick={() => setShowPostOfferModal(true)}
-								/>
-							)}
-							{showPostOfferModal && (
-								<FormModal>
-									<PostOfferForm requestId={requestId!} />
-								</FormModal>
-							)}
-						</ControlModalContext.Provider>
+						<hr className="border-base-300 my-4" />
+						{role === AuthorizeLevels.PROVIDER && (
+							<PrimaryButton
+								label="Offer"
+								onClick={() => setShowPostOfferModal(true)}
+							/>
+						)}
 
 						<PrimaryButton
 							label="Clone"
@@ -142,6 +130,18 @@ const RequestDetailsPage = () => {
 					</div>
 				</main>
 			</div>
+			{showPostOfferModal && (
+				<ControlModalContext.Provider
+					value={{
+						isShow: showPostOfferModal,
+						setIsShow: setShowPostOfferModal,
+					}}
+				>
+					<FormModal>
+						<PostOfferForm requestId={requestId!} />
+					</FormModal>
+				</ControlModalContext.Provider>
+			)}
 		</div>
 	) : (
 		<RequestCardSkeleton />
