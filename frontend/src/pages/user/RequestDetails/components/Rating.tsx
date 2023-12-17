@@ -7,6 +7,8 @@ type RatingProps = {
 	maxScore?: number;
 };
 
+const maskHalfClassNameArr = ["mask-half-1", "mask-half-2"];
+
 const Rating = ({
 	name,
 	label = camelToTitleCase(name),
@@ -16,15 +18,20 @@ const Rating = ({
 	return (
 		<>
 			<span>{label}</span>
-			<div className="rating rating-md pointer-events-none">
-				{Array(maxScore)
+			<div className="rating rating-md rating-half">
+				<input type="radio" name={name} className="rating-hidden" />
+				{Array(maxScore * 2)
 					.fill(null)
 					.map((_, index) => (
 						<input
+							className={`mask mask-star-2 bg-orange-400 ${
+								maskHalfClassNameArr[index % 2]
+							}`}
 							key={index}
 							type="radio"
 							name={name}
-							checked={Math.floor(score) === index}
+							checked={Math.floor(score * 2) === index + 1}
+							readOnly
 						/>
 					))}
 			</div>

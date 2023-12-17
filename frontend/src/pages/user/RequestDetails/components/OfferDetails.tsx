@@ -47,7 +47,7 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 			<div>
 				<IconCircleFrame username={providerName} />
 				<span>{score.toFixed(1)}</span>
-				<Rating name="score" label="" score={score} />
+				<Rating name={`${providerId}-score`} label="" score={score} />
 				<span>({reviewCount})</span>
 				<div className="flex">
 					<PrimaryButton
