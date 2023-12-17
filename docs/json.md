@@ -834,7 +834,8 @@
 > ⬆️ Resp:
 
 ```js
-🟢 [200]  OK
+🟢 [303]  Redirect
+url: FRONTEND_DOMAIN/payment/:offerId?addressId={addressId}&price={price}
 {
     "offerId" : string (offer.offer_id)
     "userAddressId": int
