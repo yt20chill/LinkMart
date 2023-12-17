@@ -1,4 +1,6 @@
-export const mapDate = (date: Date | string) => {
+export { enumToMap, mapDate, removeParams };
+
+const mapDate = (date: Date | string) => {
 	const timeDiff = Date.now() - Date.parse(date.toString());
 	if (timeDiff < 60_000) {
 		return "Just now";
@@ -25,7 +27,7 @@ type EnumMap<T> = Map<T, string>;
  * @param enumerate
  * @returns Map with key: Enum type and value = string key
  */
-export const enumToMap = <T>(enumerate: Record<string, T>): EnumMap<T> => {
+const enumToMap = <T>(enumerate: Record<string, T>): EnumMap<T> => {
 	const enumKeyValue = Object.values(enumerate).reduce(
 		(acc, curr): EnumArray<T> =>
 			typeof curr === "string"
@@ -38,4 +40,9 @@ export const enumToMap = <T>(enumerate: Record<string, T>): EnumMap<T> => {
 		enumMap.set(value, enumKeyValue.keys[index]);
 	});
 	return Object.freeze(enumMap);
+};
+
+const removeParams = (url: string) => {
+	const paramRegex = /\/:\w+/g;
+	return url.replace(paramRegex, "");
 };

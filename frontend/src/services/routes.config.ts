@@ -1,4 +1,4 @@
-import { enumToMap } from "../lib/formattingUtils";
+import { enumToMap, removeParams } from "../lib/formattingUtils";
 import {
 	AdminSignInPage,
 	AdminTaskDetailsPage,
@@ -194,12 +194,6 @@ routeConfigMap
 		authorizeLevel: AuthorizeLevels.ADMIN,
 		component: AdminTaskDetailsPage,
 	});
-// .set(RouteEnum.NotFound, {
-// 	name: "NotFound",
-// 	path: "*",
-// 	authorizeLevel: AuthorizeLevels.PUBLIC,
-// 	component: NotFoundPage,
-// });
 
 const routeConfigArray = Object.freeze(Array.from(routeConfigMap.values()));
 
@@ -207,7 +201,7 @@ const siteMap = (route: RouteEnum): string => {
 	const routeConfig = routeConfigMap.get(route);
 	if (!routeConfig) return "/";
 	const prefix = authorizedLevelToPrefix(routeConfig.authorizeLevel);
-	return (prefix ? `/${prefix}` : "") + `/${routeConfig.path}`;
+	return (prefix ? `/${prefix}` : "") + `/${removeParams(routeConfig.path)}`;
 };
 
 const authorizedLevelMap = Object.freeze(
