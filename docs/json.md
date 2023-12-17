@@ -892,7 +892,7 @@ Success
 ```
 
 ### 📍 7.2 Get All Order By UserId
-| [GET]| /api/user/:userId/order |
+| [GET]| /api/user/order |
 | ----- | ------------- |
 "jwt"
 > ⬆️ Resp:
@@ -901,6 +901,7 @@ Success
 [{
   "orderId": string,
   "orderStatus": string,
+  "requestId": string,
   "providerId": int,
   "providerName": string,
   "item": string,
