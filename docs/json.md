@@ -439,9 +439,9 @@
 
 ## 📎 5. Request Route
 
-### 📍 5.1 Create Request Done~
+### 📍 5.1.1 Create Request Done~
 
-| [POST] | /request |
+| [POST] | /api/request |
 | ------ | ------------ |
 
 > ⬇️ Req Body:
@@ -468,6 +468,45 @@
 🟢 [200]  OK
 {
     "message": "success"
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : "fail to post request"
+}
+```
+### 📍 5.1.2 Create Clone Request
+
+| [POST] | /api/request/clone |
+| ------ | ------------ |
+
+> ⬇️ Req Body:
+
+```js
+//with JWT header
+//format: FormData
+{
+    "locationId" : int(location.location_id),
+    "categoryId" : int(category.category_id),
+    "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
+    "item" : string,
+    "primaryImage" : String
+    "imageFile" : [string, ...]  (FormData Files) or (String url)
+    "url" : string | null,
+    "quantity" : int,
+    "requestRemark" : string | null,
+    "offerPrice" : float | null,
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+    "message": "clone success"
 }
 ```
 
@@ -560,7 +599,7 @@
 
 ### 📍 5.4 User delete request image
 
-| [DELETE] | /api/request/image/:imageId |
+| [PUT] | /api/request/image/:imageId |
 | -------- | --------------------------- |
 
 > ⬇️ Req Body:
@@ -605,7 +644,7 @@
 
 ### 📍 5.6 Delete User Request Done~
 
-| [DELETE] | /api/request/:requestId |
+| [PUT] | /api/request/:requestId |
 | -------- | ----------------------- |
 "chanage image is active"
 > ⬆️ Resp:
@@ -623,10 +662,39 @@
     "message" : "fail to put request"
 }
 ```
+### 📍 5.7 Find my reuqest history
+
+| [GET] | /api/request/history |
+| -------- | ----------------------- |
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+[
+{
+    "requestId" : string (ulid),
+    "createdBy": string(user.username),
+    "locationName" : string(location.name),
+    "item" : string,
+    "primaryImage" : string,
+    "offerPrice"? : float,
+    "createdAt": DateTime,
+    "updatedAt": DateTime
+},.../* Max 30 Requests */]
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : "fail to get my inactive request"
+}
+```
+
 
 ## 📎 6. Offer Route
 
-### 📍 6.1 Create New Offer Done~
+### 📍 6.1.1 Create New Offer Done~
 
 | [POST] | /api/offer |
 | ------ | ---------- |
@@ -654,6 +722,61 @@
 🔴 [400] BAD REQUEST
 {
     "message" : fail to post offer
+}
+```
+### 📍 6.1.2 GET Offer (provider) Done~
+
+| [GET] | /api/offer/myOffer |
+| ------ | ---------- |
+ "jwt"
+> ⬇️ Req Body:
+
+```js
+{
+    "requestId"? : ulid(request.request_id),
+    "price"? : int,
+    "estimatedProcessTime"? : int,
+    "offerRemark"? : string | undefined
+}
+```
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to change offer
+}
+```
+```
+### 📍 6.1.2 Amend Offer (provider) 
+
+| [GET] | /api/offer/:offerId |
+| ------ | ---------- |
+ "jwt"
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+[  {
+    "requestId" : ulid(request.request_id),
+    "offerId" : ulid(offer.offer_id),
+    "createdBy" : String,
+    "item": String,
+    "primaryImage": String,
+    "price" : int,
+    "estimatedProcessTime" : int,
+    "status": String
+}      ,...]
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to get offer
 }
 ```
 
@@ -705,41 +828,37 @@
 
 ```js
 {
-    "offerId" : int(offer.offer_id),
     "userAddressId": int,
-    XXXXX "price": int //Fred comment: price should not provide by request,but check via SQL by offerId
 }
 ```
+> ⬆️ Resp:
+
 ```js
 🟢 [200]  OK
-REDIRECT TO PAYMENT PAGE
+{
+    "offerId" : string (offer.offer_id)
+    "userAddressId": int
+    "price": float
+}
 ```
+
 ```js
 🔴 [400] BAD REQUEST
 {
     "message" : fail to get offer
 }
-```
 ---
 
 ## 📎 7. Order Route
 
-### 📍 7.1 Order Request
+### 📍 7.1 Create Order (Payment Success)
 "jwt"
+(Mock Payment website callback)
 "Change request status, offer status"
-| [POST]| /api/order |
+Success
+| [GET]| /api/order?success=true&offerId={offerId}&userAddressId={userAddressId}&price={price} |
 | ----- | ------------- |
-(Payment website callback)
-"jwt"
-> ⬇️ Req Body:
 
-```js
-{
-    "offerId" : int(offer.offer_id),
-    "userAddressId": int,
-    "price": int
-}
-```
 
 > ⬆️ Resp:
 
@@ -754,6 +873,18 @@ REDIRECT TO PAYMENT PAGE
 🔴 [400] BAD REQUEST
 {
     "message" : fail to post order
+}
+```
+
+### 📍 7.1.2 Create Order (Payment Cancelled)
+| [GET]| /api/order?cancelled=true&offerId={offerId}&userAddressId={userAddressId}&price={price} |
+| ----- | ------------- |
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+    "message": "payment cancelled"
 }
 ```
 
