@@ -18,6 +18,7 @@ export function Navbar() {
       {/* nav_responsive */}
       <div className="max-md:flex md:hidden">
         <Link to={siteMap(RouteEnum.Home)}>
+          <img src="/image/Linkmart@128.png" title="Linkmart" />
           <div className="text-primary-400 text-3xl font-bold flex justify-center items-center">
             <span className="material-symbols-rounded text-5xl font-bold">
               shopping_cart_checkout
@@ -30,13 +31,12 @@ export function Navbar() {
       <div className="flex justify-between max-w-7xl max-xl:px-2 mx-auto max-md:hidden">
         {/* logo -> home page*/}
         <div className="flex gap-10 items-center">
-          <Link to={siteMap(RouteEnum.Home)}>
-            <div className="text-primary-400 text-3xl font-bold flex items-center">
-              <span className="material-symbols-rounded text-5xl font-bold">
-                shopping_cart_checkout
-              </span>
-              Link<b className="text-slate-300 font-normal">mart</b>
-            </div>
+          <Link to={siteMap(RouteEnum.Home)} className="max-w-[200px]">
+            <img
+              src="/image/Linkmart@512.png"
+              title="Linkmart"
+              className="object-contain"
+            />
           </Link>
           {/* nav_link_buttons */}
           <ButtonWithIcon
