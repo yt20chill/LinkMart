@@ -3,19 +3,23 @@ import { PostAddressDto } from "../../schemas/requestSchema";
 import {
 	AddressDto,
 	GetOrderDto,
+	RequestDto,
 	addressesResponseSchema,
 	getOrdersSchema,
+	requestsResponseSchema,
 } from "../../schemas/responseSchema";
 
 const userApiRoutes = Object.freeze({
 	ADDRESS: "/api/user/address",
 	ORDER: "/api/user/order",
+	REQUEST: "/api/user/request",
 });
 
 export {
 	deleteAddressAJAX,
 	getAddressAJAX,
 	getOrdersByUserAJAX,
+	getRequestsByUserAJAX,
 	postAddressAJAX,
 	updatePrimaryAddressAJAX,
 };
@@ -50,5 +54,11 @@ const getAddressAJAX = async () => {
 const getOrdersByUserAJAX = async () => {
 	return await axiosWrapper<void, GetOrderDto[]>(userApiRoutes.ORDER, {
 		schema: getOrdersSchema,
+	});
+};
+
+const getRequestsByUserAJAX = async () => {
+	return await axiosWrapper<void, RequestDto[]>(userApiRoutes.REQUEST, {
+		schema: requestsResponseSchema,
 	});
 };

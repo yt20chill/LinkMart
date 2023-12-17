@@ -21,15 +21,15 @@ import {
 import {
 	OrderDetailsPage,
 	PaymentPage,
+	PostRequestPage,
 	ProfilePage,
 	ProviderRegisterPage,
 	RequestDetailsPage,
 	UserOrderPage,
+	UserRequestDetailsPage,
 	UserRequestsPage,
 } from "../pages/user";
 
-import PostRequestPage from "../pages/user/PostRequestPage";
-import UserRequestDetailsPage from "../pages/user/RequestDetails/UserRequestDetailsPage";
 import { AuthorizeLevels } from "../types/authModels";
 
 interface TRouteConfig {
