@@ -642,11 +642,11 @@
 }
 ```
 
-### 📍 5.6 Delete User Request Image Done~
+### 📍 5.6 Delete User Request Done~
 
-| [PUT] | /api/request/image/:requestId |
+| [DELETE] | /api/request/:requestId |
 | -------- | ----------------------- |
-"chanage image is active"
+"chanage is active = false"
 > ⬆️ Resp:
 
 ```js
