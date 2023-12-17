@@ -828,41 +828,37 @@
 
 ```js
 {
-    "offerId" : int(offer.offer_id),
     "userAddressId": int,
-    XXXXX "price": int //Fred comment: price should not provide by request,but check via SQL by offerId
 }
 ```
+> ⬆️ Resp:
+
 ```js
 🟢 [200]  OK
-REDIRECT TO PAYMENT PAGE
+{
+    "offerId" : string (offer.offer_id)
+    "userAddressId": int
+    "price": float
+}
 ```
+
 ```js
 🔴 [400] BAD REQUEST
 {
     "message" : fail to get offer
 }
-```
 ---
 
 ## 📎 7. Order Route
 
-### 📍 7.1 Order Request
+### 📍 7.1 Create Order (Payment Success)
 "jwt"
+(Mock Payment website callback)
 "Change request status, offer status"
-| [POST]| /api/order |
+Success
+| [GET]| /api/order?success=true&offerId={offerId}&userAddressId={userAddressId}&price={price} |
 | ----- | ------------- |
-(Payment website callback)
-"jwt"
-> ⬇️ Req Body:
 
-```js
-{
-    "offerId" : String//ulid(offer.offer_id),
-    "userAddressId": int,
-    "price": int
-}
-```
 
 > ⬆️ Resp:
 
@@ -877,6 +873,18 @@ REDIRECT TO PAYMENT PAGE
 🔴 [400] BAD REQUEST
 {
     "message" : fail to post order
+}
+```
+
+### 📍 7.1.2 Create Order (Payment Cancelled)
+| [GET]| /api/order?cancelled=true&offerId={offerId}&userAddressId={userAddressId}&price={price} |
+| ----- | ------------- |
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+    "message": "payment cancelled"
 }
 ```
 
