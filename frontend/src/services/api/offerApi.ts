@@ -11,7 +11,7 @@ import {
 	requestOffersResponseSchema,
 } from "../../schemas/responseSchema";
 
-export { acceptOfferAJAX, getAllOffersAJAX, postOfferAJAX };
+export { acceptOfferAJAX, getAllOffersByRequestIdAJAX, postOfferAJAX };
 
 const offerApiRoutes = Object.freeze({
 	OFFER: `/api/offer`,
@@ -38,7 +38,7 @@ const acceptOfferAJAX = async (
 	);
 };
 
-const getAllOffersAJAX = async (
+const getAllOffersByRequestIdAJAX = async (
 	requestId: string
 ): Promise<RequestOfferDto[] | undefined> => {
 	return await axiosWrapper<void, RequestOfferDto[]>(
