@@ -662,6 +662,36 @@
     "message" : "fail to put request"
 }
 ```
+### 📍 5.7 Find my cancel reuqest
+
+| [GET] | /api/request/history |
+| -------- | ----------------------- |
+"chanage image is inactive"
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+[
+{
+    "requestId" : string (ulid),
+    "createdBy": string(user.username),
+    "locationName" : string(location.name),
+    "item" : string,
+    "primaryImage" : string,
+    "offerPrice"? : float,
+    "createdAt": DateTime,
+    "updatedAt": DateTime
+},.../* Max 30 Requests */]
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : "fail to get my inactive request"
+}
+```
+
 
 ## 📎 6. Offer Route
 
