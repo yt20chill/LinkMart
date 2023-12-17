@@ -7,6 +7,7 @@ import PrimaryButton from "../../../../components/ui/PrimaryButton";
 import AcceptOfferForm from "../../../../features/forms/AcceptOfferForm";
 import { fireAlert, sweetAlertDefaultOptions } from "../../../../lib/formUtils";
 import { camelToTitleCase } from "../../../../lib/utils";
+import { ControlModalContext } from "../../../../services/context/ControlModalContext";
 import { useOfferDetailsContext } from "../../../../services/context/OfferDetailsContext";
 import Rating from "./Rating";
 
@@ -62,20 +63,20 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 					/>
 					<CancelButton
 						label="Decline"
-						onClick={() =>
-							fireAlert({
-								options: sweetAlertOptions,
-								onConfirmed: () => onDecline(offerId),
-							})
-						}
+						onClick={fireAlert({
+							options: sweetAlertOptions,
+							onConfirmed: () => onDecline(offerId),
+						})}
 					/>
 				</div>
 			</div>
-			{showAcceptForm && (
+			<ControlModalContext.Provider
+				value={{ isShow: showAcceptForm, setIsShow: setShowAcceptForm }}
+			>
 				<FormModal>
 					<AcceptOfferForm offerId={offerId} />
 				</FormModal>
-			)}
+			</ControlModalContext.Provider>
 		</>
 	);
 };
