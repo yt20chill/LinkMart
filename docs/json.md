@@ -431,7 +431,7 @@
 ** HOLD **
 // [{
 //     "username" :
-//     "provider_id" :
+//     "providerId" :
 // }]
 ```
 
