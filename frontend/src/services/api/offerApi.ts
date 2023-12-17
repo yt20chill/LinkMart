@@ -6,13 +6,16 @@ import {
 } from "../../schemas/requestSchema";
 import {
 	AcceptOfferResponseDto,
+	RequestOfferDto,
 	acceptOfferResponseSchema,
+	requestOffersResponseSchema,
 } from "../../schemas/responseSchema";
 
-export { acceptOfferAJAX, postOfferAJAX };
+export { acceptOfferAJAX, getAllOffersAJAX, postOfferAJAX };
 
 const offerApiRoutes = Object.freeze({
 	OFFER: `/api/offer`,
+	OFFER_BY_REQUEST: `/api/offer/request`,
 });
 
 const postOfferAJAX = async (offerForm: PostOfferDto): Promise<void> => {
@@ -31,6 +34,17 @@ const acceptOfferAJAX = async (
 			method: "post",
 			data: { userAddressId: acceptOfferDto.userAddressId },
 			schema: acceptOfferResponseSchema,
+		}
+	);
+};
+
+const getAllOffersAJAX = async (
+	requestId: string
+): Promise<RequestOfferDto[] | undefined> => {
+	return await axiosWrapper<void, RequestOfferDto[]>(
+		`${offerApiRoutes.OFFER_BY_REQUEST}/${requestId}`,
+		{
+			schema: requestOffersResponseSchema,
 		}
 	);
 };

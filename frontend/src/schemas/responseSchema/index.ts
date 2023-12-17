@@ -2,7 +2,9 @@ import { AuthDto, authResponseSchema } from "./authResponseSchema";
 import { ErrorResponseDto, errorResponseSchema } from "./baseResponseSchema";
 import {
 	AcceptOfferResponseDto,
+	RequestOfferDto,
 	acceptOfferResponseSchema,
+	requestOffersResponseSchema,
 } from "./offerResponseSchema";
 import {
 	CreateOrderDto,
@@ -39,6 +41,7 @@ export {
 	errorResponseSchema,
 	locationsResponseSchema,
 	requestDetailsResponseSchema,
+	requestOffersResponseSchema,
 	requestsResponseSchema,
 	userResponseSchema,
 };
@@ -55,5 +58,6 @@ export type {
 	LocationDto,
 	RequestDetailsDto,
 	RequestDto,
+	RequestOfferDto,
 	UserDto,
 };
