@@ -44,7 +44,15 @@ function PostAddressForm({ isShow, setIsShow }: PostAddressFormProps) {
 	return (
 		isShow && (
 			<form>
-				<FormInput name={"address"} register={register} errors={errors} />
+				{Object.keys(defaultValues).map((name) => (
+					<FormInput
+						key={name}
+						name={name as keyof PostAddressDto}
+						register={register}
+						errors={errors}
+					/>
+				))}
+
 				<div className="flex justify-center gap-2">
 					<FormSubmitButton
 						label="Confirm"
