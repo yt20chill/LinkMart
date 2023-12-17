@@ -431,7 +431,7 @@
 ** HOLD **
 // [{
 //     "username" :
-//     "provider_id" :
+//     "providerId" :
 // }]
 ```
 
@@ -621,9 +621,9 @@
 }
 ```
 
-### 📍 5.5 Update User Request
+### 📍 5.5 Update User Request Detail
 
-| [PUT] | /api/request/update/:requestId |
+| [PUT] | /api/request/:requestId |
 | ----- | ----------------------- |
 
 > ⬇️ Req Body:
@@ -644,9 +644,9 @@
 
 ### 📍 5.6 Delete User Request Done~
 
-| [PUT] | /api/request/:requestId |
+| [DELETE] | /api/request/:requestId |
 | -------- | ----------------------- |
-"chanage image is active"
+"chanage is active = false"
 > ⬆️ Resp:
 
 ```js
@@ -659,7 +659,7 @@
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : "fail to put request"
+    "message" : "fail to put request image"
 }
 ```
 ### 📍 5.7 Find my reuqest history
@@ -757,6 +757,7 @@
 | [GET] | /api/offer/:offerId |
 | ------ | ---------- |
  "jwt"
+```
 > ⬆️ Resp:
 
 ```js
@@ -848,6 +849,7 @@ url: FRONTEND_DOMAIN/payment/:offerId?addressId={addressId}&price={price}
 {
     "message" : fail to get offer
 }
+```
 ---
 
 ## 📎 7. Order Route
@@ -886,6 +888,32 @@ Success
 🟢 [200]  OK
 {
     "message": "payment cancelled"
+}
+```
+
+### 📍 7.2 Get All Order By UserId
+| [GET]| /api/user/:userId/order |
+| ----- | ------------- |
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+[{
+  "orderId": string,
+  "orderStatus": string,
+  "providerId": int,
+  "providerName": string,
+  "item": string,
+  "primaryImage": string,
+  "quantity": int,
+  "price": float,
+  "createdAt": Date,
+},...],
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get orders
 }
 ```
 
