@@ -16,6 +16,7 @@ import {
 	acceptOfferSchema,
 } from "../../schemas/requestSchema";
 import { acceptOfferAJAX } from "../../services/api/orderApi";
+import { useControlModalContext } from "../../services/context/closeModalContext";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 import { useQueryContainer } from "../hooks/useQueryContainer";
@@ -53,12 +54,13 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 			navigate(`${siteMap(RouteEnum.Payment)}/${result.orderId}`);
 		},
 	});
+	const { setIsShow } = useControlModalContext();
+
 	const onSubmit = async (formData: TAcceptOfferForm) => {
 		const acceptOfferDto = acceptOfferSchema.safeParse({
 			...formData,
 			offerId,
 		});
-		console.log(formData);
 		if (!acceptOfferDto.success) {
 			console.error(acceptOfferDto.error);
 			return toast.error("Something went wrong! Please try again later");
@@ -70,7 +72,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 			icon: "question",
 			showCancelButton: true,
 		});
-		if (!option.isConfirmed) return;
+		if (!option.isConfirmed) return setIsShow(false);
 		await acceptOffer(acceptOfferDto.data);
 	};
 	return (
