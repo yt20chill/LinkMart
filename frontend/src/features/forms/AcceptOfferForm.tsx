@@ -57,7 +57,8 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 			navigate(
 				`${siteMap(RouteEnum.Payment)}/${result.offerId}?address=${
 					result.userAddressId
-				}&price=${result.price}`
+				}&price=${result.price}`,
+				{ replace: true }
 			);
 		},
 	});
