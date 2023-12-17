@@ -6,7 +6,7 @@ import {
 } from "../../schemas/requestSchema";
 import {
 	AcceptOfferResponseDto,
-	RequestOfferDto,
+	OfferDetailsDto,
 	acceptOfferResponseSchema,
 	requestOffersResponseSchema,
 } from "../../schemas/responseSchema";
@@ -40,8 +40,8 @@ const acceptOfferAJAX = async (
 
 const getAllOffersByRequestIdAJAX = async (
 	requestId: string
-): Promise<RequestOfferDto[] | undefined> => {
-	return await axiosWrapper<void, RequestOfferDto[]>(
+): Promise<OfferDetailsDto[] | undefined> => {
+	return await axiosWrapper<void, OfferDetailsDto[]>(
 		`${offerApiRoutes.OFFER_BY_REQUEST}/${requestId}`,
 		{
 			schema: requestOffersResponseSchema,
