@@ -439,9 +439,9 @@
 
 ## 📎 5. Request Route
 
-### 📍 5.1 Create Request Done~
+### 📍 5.1.1 Create Request Done~
 
-| [POST] | /request |
+| [POST] | /api/request |
 | ------ | ------------ |
 
 > ⬇️ Req Body:
@@ -468,6 +468,45 @@
 🟢 [200]  OK
 {
     "message": "success"
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : "fail to post request"
+}
+```
+### 📍 5.1.2 Create Clone Request
+
+| [POST] | /api/request/clone |
+| ------ | ------------ |
+
+> ⬇️ Req Body:
+
+```js
+//with JWT header
+//format: FormData
+{
+    "locationId" : int(location.location_id),
+    "categoryId" : int(category.category_id),
+    "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
+    "item" : string,
+    "primaryImage" : String
+    "imageFile" : [string, ...]  (FormData Files) or (String url)
+    "url" : string | null,
+    "quantity" : int,
+    "requestRemark" : string | null,
+    "offerPrice" : float | null,
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+    "message": "clone success"
 }
 ```
 
