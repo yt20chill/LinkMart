@@ -599,7 +599,7 @@
 
 ### 📍 5.4 User delete request image
 
-| [DELETE] | /api/request/image/:imageId |
+| [PUT] | /api/request/image/:imageId |
 | -------- | --------------------------- |
 
 > ⬇️ Req Body:
@@ -644,7 +644,7 @@
 
 ### 📍 5.6 Delete User Request Done~
 
-| [DELETE] | /api/request/:requestId |
+| [PUT] | /api/request/:requestId |
 | -------- | ----------------------- |
 "chanage image is active"
 > ⬆️ Resp:
