@@ -17,6 +17,28 @@ module.exports = {
     },
     extend: {
       colors: {
+        primary: {
+          100: "hsl(347deg,77%,90%)",
+          200: "hsl(347deg,77%,80%)",
+          300: "hsl(347deg,77%,70%)",
+          400: "hsl(347deg,77%,60%)",
+          500: "hsl(347deg,77%,50%)",
+          600: "hsl(347deg,77%,40%)",
+          700: "hsl(347deg,77%,30%)",
+          800: "hsl(347deg,77%,20%)",
+          900: "hsl(347deg,77%,10%)",
+        },
+        secondary: {
+          100: "hsl(214deg,100%,90%)",
+          200: "hsl(214deg,100%,80%)",
+          300: "hsl(214deg,100%,70%)",
+          400: "hsl(214deg,100%,60%)",
+          500: "hsl(214deg,100%,50%)",
+          600: "hsl(214deg,100%,40%)",
+          700: "hsl(214deg,100%,30%)",
+          800: "hsl(214deg,100%,20%)",
+          900: "hsl(214deg,100%,10%)",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -83,7 +105,7 @@ module.exports = {
       {
         light: {
           ...require("daisyui/src/theming/themes")["light"],
-          primary: "#22d3ee",
+          primary: "#be123c",
           "primary-content": "#fff",
           accent: "#b75737",
           secondary: "#2dd4bf",
@@ -93,7 +115,7 @@ module.exports = {
         },
         dark: {
           ...require("daisyui/src/theming/themes")["dark"],
-          primary: "#22d3ee",
+          primary: "#be123c",
           "primary-content": "#fff",
           accent: "#b75737",
           secondary: "#2dd4bf",

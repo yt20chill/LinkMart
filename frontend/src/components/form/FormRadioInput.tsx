@@ -19,7 +19,7 @@ const FormRadioInput = <T extends FieldValues>({
     <div className="space-y-8 flex flex-col">
       <p>{label}</p>
       {optionItems.map((item, index) => (
-        <div key={item.value} className=" shadow-rose-200">
+        <div key={item.value} className=" shadow-primary-200">
           <input
             type="radio"
             className="me-5"
