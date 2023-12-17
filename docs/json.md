@@ -666,7 +666,6 @@
 
 | [GET] | /api/request/history |
 | -------- | ----------------------- |
-"chanage image is inactive"
 > ⬆️ Resp:
 
 ```js
