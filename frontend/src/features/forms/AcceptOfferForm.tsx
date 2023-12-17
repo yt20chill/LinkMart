@@ -11,11 +11,12 @@ import FormSubmitButton from "../../components/form/FormSubmitButton";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import { generateDefaultValues } from "../../lib/formUtils";
 import {
+	AcceptOfferDto,
 	TAcceptOfferForm,
-	acceptOfferFormSchema,
+	acceptOfferDtoSchema,
 	acceptOfferSchema,
 } from "../../schemas/requestSchema";
-import { acceptOfferAJAX } from "../../services/api/orderApi";
+import { acceptOfferAJAX } from "../../services/api/offerApi";
 import { useControlModalContext } from "../../services/context/closeModalContext";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
@@ -27,7 +28,7 @@ type AcceptOfferFormProps = {
 	offerId: string;
 };
 
-const defaultValues = generateDefaultValues(acceptOfferFormSchema);
+const defaultValues = generateDefaultValues(acceptOfferSchema);
 
 const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 	const [showAddAddress, setShowAddAddress] = useState(false);
@@ -36,7 +37,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		formState: { errors },
 		register,
 	} = useForm<TAcceptOfferForm>({
-		resolver: zodResolver(acceptOfferFormSchema),
+		resolver: zodResolver(acceptOfferSchema),
 		defaultValues,
 		mode: "onSubmit",
 	});
@@ -47,22 +48,28 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 	const { mutateAsync: acceptOffer, isLoading } = useMutation({
-		mutationFn: acceptOfferAJAX,
+		mutationFn: (dto: AcceptOfferDto) => acceptOfferAJAX(dto),
 		onSuccess: async (result) => {
 			if (!result) return;
 			await queryClient.invalidateQueries(queryKey.ORDER);
-			navigate(`${siteMap(RouteEnum.Payment)}/${result.orderId}`);
+			setIsShow(false);
+			setShowAddAddress(false);
+			navigate(
+				`${siteMap(RouteEnum.Payment)}/${result.offerId}?address=${
+					result.userAddressId
+				}&price=${result.price}`
+			);
 		},
 	});
 	const { setIsShow } = useControlModalContext();
 
 	const onSubmit = async (formData: TAcceptOfferForm) => {
-		const acceptOfferDto = acceptOfferSchema.safeParse({
+		const dto = acceptOfferDtoSchema.safeParse({
 			...formData,
 			offerId,
 		});
-		if (!acceptOfferDto.success) {
-			console.error(acceptOfferDto.error);
+		if (!dto.success) {
+			console.error(dto.error);
 			return toast.error("Something went wrong! Please try again later");
 		}
 
@@ -73,7 +80,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 			showCancelButton: true,
 		});
 		if (!option.isConfirmed) return setIsShow(false);
-		await acceptOffer(acceptOfferDto.data);
+		await acceptOffer(dto.data);
 	};
 	return (
 		<>

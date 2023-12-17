@@ -3,7 +3,12 @@ import { ErrorResponseDto, errorResponseSchema } from "./baseResponseSchema";
 import {
 	AcceptOfferResponseDto,
 	acceptOfferResponseSchema,
+} from "./offerResponseSchema";
+import {
+	CreateOrderDto,
+	createOrderResponseSchema,
 } from "./orderResponseSchema";
+
 import {
 	CategoryDto,
 	CategoryFieldDto,
@@ -30,6 +35,7 @@ export {
 	authResponseSchema,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
+	createOrderResponseSchema,
 	errorResponseSchema,
 	locationsResponseSchema,
 	requestDetailsResponseSchema,
@@ -43,6 +49,7 @@ export type {
 	AuthDto,
 	CategoryDto,
 	CategoryFieldDto,
+	CreateOrderDto,
 	ErrorResponseDto,
 	ImageDto,
 	LocationDto,
