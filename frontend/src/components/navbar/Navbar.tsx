@@ -16,15 +16,13 @@ export function Navbar() {
   return (
     <nav className="py-5 shadow-md border-b-8 border-primary-500 text-slate-500 bg-base-100">
       {/* nav_responsive */}
-      <div className="max-md:flex md:hidden">
-        <Link to={siteMap(RouteEnum.Home)}>
-          <img src="/image/Linkmart@128.png" title="Linkmart" />
-          <div className="text-primary-400 text-3xl font-bold flex justify-center items-center">
-            <span className="material-symbols-rounded text-5xl font-bold">
-              shopping_cart_checkout
-            </span>
-            Link<b className="text-slate-300 font-normal">mart</b>
-          </div>
+      <div className="max-md:flex md:hidden justify-center">
+        <Link to={siteMap(RouteEnum.Home)} className="w-1/3">
+          <img
+            src="/image/Linkmart@512.png"
+            className="object-contain"
+            title="Linkmart"
+          />
         </Link>
       </div>
       {/* nav_desktop */}
