@@ -621,9 +621,9 @@
 }
 ```
 
-### 📍 5.5 Update User Request
+### 📍 5.5 Update User Request Detail
 
-| [PUT] | /api/request/update/:requestId |
+| [PUT] | /api/request/:requestId |
 | ----- | ----------------------- |
 
 > ⬇️ Req Body:
@@ -642,9 +642,9 @@
 }
 ```
 
-### 📍 5.6 Delete User Request Done~
+### 📍 5.6 Delete User Request Image Done~
 
-| [PUT] | /api/request/:requestId |
+| [PUT] | /api/request/image/:requestId |
 | -------- | ----------------------- |
 "chanage image is active"
 > ⬆️ Resp:
@@ -659,7 +659,7 @@
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : "fail to put request"
+    "message" : "fail to put request image"
 }
 ```
 ### 📍 5.7 Find my reuqest history
