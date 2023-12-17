@@ -852,6 +852,36 @@ url: FRONTEND_DOMAIN/payment/:offerId?addressId={addressId}&price={price}
 ```
 ---
 
+### 📍 6.4 Reject offer
+
+| [DELETE] | /api/offer/:offerId |
+| ----- | ------------------ |
+
+"jwt"
+
+> ⬇️ Req Body:
+
+```js
+{
+}
+```
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to reject offer
+}
+```
+---
+
 ## 📎 7. Order Route
 
 ### 📍 7.1 Create Order (Payment Success)
