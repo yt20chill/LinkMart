@@ -12,6 +12,7 @@ import {
 	ImagePreview,
 } from "../../components/form";
 import FormFileInput from "../../components/form/FormFileInput";
+import CancelButton from "../../components/ui/CancelButton";
 import { appendFormData } from "../../lib/formUtils";
 import {
 	RequestForm,
@@ -199,11 +200,22 @@ const PostRequestForm = () => {
 							}
 						/>
 					)}
-					<FormSubmitButton
-						label="Create Post"
-						onClick={handleSubmit(onSubmit)}
-						disabled={isLoading}
-					/>
+					<div className="flex">
+						<FormSubmitButton
+							className="mt-5"
+							label="Create Post"
+							onClick={handleSubmit(onSubmit)}
+							disabled={isLoading}
+						/>
+						<CancelButton
+							className="ms-5 mt-5"
+							label="Back"
+							onClick={(e) => {
+								e.preventDefault();
+								navigate(-1);
+							}}
+						/>
+					</div>
 				</form>
 			) : (
 				<SkeletonForm />

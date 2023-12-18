@@ -1,5 +1,6 @@
 type FormSubmitButtonProps<C = unknown, T = unknown> = {
 	label: string;
+	className?: string;
 	onClick: (
 		e?: React.BaseSyntheticEvent<object, C, T> | undefined
 	) => Promise<void>;
@@ -11,9 +12,10 @@ const FormSubmitButton = ({
 	label,
 	onClick,
 	disabled = false,
+	className = "",
 }: FormSubmitButtonProps) => {
 	return (
-		<div className="block my-5">
+		<div className={className}>
 			<button className="btn btn-warning" onClick={onClick} disabled={disabled}>
 				{label}
 				{disabled && (
