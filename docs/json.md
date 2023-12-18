@@ -984,7 +984,7 @@ Success
   "providerName": string,
   "item": string,
   "primaryImage": string,
-  "quantity": int,
+  "quantity": string,
   "price": float,
   "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
   "createdAt": Date,
@@ -1040,6 +1040,41 @@ Success
   "price": float,
   "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
   "createdAt": Date,
+},...],
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get orders
+}
+```
+
+### 📍 7.4 Get Order details by orderId
+| [GET]| /api/order/:orderId |
+| ----- | ------------- |
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+[{
+  "orderId": string,
+  "orderStatus": string,
+  "providerId": int,
+  "providerName": string,
+  "item": string,
+  "primaryImage": string,
+  "quantity": int,
+  "price": float,
+  "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
+  "createdAt": Date,
+  "updatedAt": Date
+  "requestId": string,
+  "locationName": string,
+  "createdBy": string,
+  "images": string[] (imagePath),
+  "itemDetail": JSON or null,
+  "url": string,
+  "requestRemark" string,
 },...],
 ```
 ```js
