@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 
 @Controller()
 export class AuthController {
@@ -6,7 +6,7 @@ export class AuthController {
   signup() {
     return { jwt: '1' };
   }
-  @Get('login')
+  @Post('login')
   login() {
     return { jwt: '1' };
   }

@@ -79,4 +79,33 @@ export class UserController {
       },
     ];
   }
+  @Get('order')
+  getAllOrders() {
+    return [
+      {
+        orderId: '01HHVY6Z37TZVDWJW8SCGF37RD',
+        orderStatus: 'Pending',
+        providerId: '01HHVY6Z37TZVDWJW8SCGF37RD',
+        providerName: 'ProviderEX',
+        item: '明日香',
+        primaryImage: 'https://dummyimage.com/600x400/000/eee',
+        quantity: '1',
+        price: 100,
+        estimatedProcessTime: 14,
+        createdAt: '2023-12-13 11:24',
+      },
+      {
+        orderId: '01HHVY6Z37TZVDWJW8SCGF12RD',
+        orderStatus: 'Pending',
+        providerId: '01HHVY6Z37TZVDWJW8SCGF37RD',
+        providerName: 'ProviderEX',
+        item: 'Uniqlo Jacket',
+        primaryImage: 'https://dummyimage.com/600x400/000/eee',
+        quantity: '1',
+        price: 100,
+        estimatedProcessTime: 14,
+        createdAt: '2023-12-13 11:24',
+      },
+    ];
+  }
 }
