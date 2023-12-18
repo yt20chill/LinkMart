@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SweetAlert from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -44,18 +45,13 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		getAddresses: { isLoading: isGettingAddresses },
 	} = useQueryContainer();
 	const queryClient = useQueryClient();
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 	const { mutateAsync: acceptOffer, isLoading } = useMutation({
 		mutationFn: (dto: AcceptOfferDto) => acceptOfferAJAX(dto),
 		onSuccess: async (result) => {
 			if (!result) return;
 			await queryClient.invalidateQueries([queryKey.OFFER, { offerId }]);
-			// navigate(
-			// 	`${siteMap(RouteEnum.Payment)}/${result.offerId}?address=${
-			// 		result.userAddressId
-			// 	}`,
-			// 	{ replace: true }
-			// );
+			navigate(result.url, { replace: true });
 		},
 	});
 	const { setIsShow } = useControlModalContext();
