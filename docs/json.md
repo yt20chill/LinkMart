@@ -466,9 +466,30 @@
 
 ```js
 🟢 [200]  OK
-{
-    "message": "success"
-}
+
+    {
+	"requestId": String,
+	"createdBy": String,
+	"locationId": int,
+	"categoryId": int,
+	"itemDetail": null || { },
+	"primaryImage": String,
+	"item": String,
+	"url": String,
+	"quantity": String,
+	"offerPrice": int,
+	"requestRemark": null || String,
+	"createdAt": "2023-12-18 11:58:57.507984",
+	"updatedAt": "2023-12-18 11:58:57.507984",
+	"images": [
+		{
+			"imageId": int,
+			"requestId": String,
+			"imagePath": String,
+			"createdAt": 1702871937518,
+			"updatedAt": 1702871937518
+		}
+
 ```
 
 ```js
@@ -505,9 +526,30 @@
 
 ```js
 🟢 [200]  OK
-{
-    "message": "clone success"
-}
+
+    {
+	"requestId": String,
+	"createdBy": String,
+	"locationId": int,
+	"categoryId": int,
+	"itemDetail": null || { },
+	"primaryImage": String,
+	"item": String,
+	"url": String,
+	"quantity": String,
+	"offerPrice": int,
+	"requestRemark": null || String,
+	"createdAt": "2023-12-18 11:58:57.507984",
+	"updatedAt": "2023-12-18 11:58:57.507984",
+	"images": [
+		{
+			"imageId": int,
+			"requestId": String,
+			"imagePath": String,
+			"createdAt": 1702871937518,
+			"updatedAt": 1702871937518
+		}
+
 ```
 
 ```js
@@ -524,12 +566,12 @@
 
 ##### 📍 5.2.1 Get All - with queries  Done(waiting for test)
 
-| [Get] | /api/request?p={page}&category={category}&location={location} |
+| [Get] | /request?p={page}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
 
 ##### 📍 5.2.2 Get All - by userId (via created_by) Done~
 
-| [Get] | /api/user/request (userId in jwt header) |
+| [Get] | /api/request (userId in jwt header) |
 | ----- | ---------------------------------------- |
 
 > ⬆️ Resp:
@@ -732,12 +774,19 @@
 > ⬇️ Req Body:
 
 ```js
-{
-    "requestId"? : ulid(request.request_id),
-    "price"? : int,
-    "estimatedProcessTime"? : int,
-    "offerRemark"? : string | undefined
-}
+[
+	{
+		"item": String,
+		"offerStatus": String,
+		"estimatedProcessTime": int,
+		"createdBy": String (user),
+		"primaryImage": String,
+		"requestId": int,
+		"offerId": int,
+		"price": int (provider offer price)
+	},
+	...
+]
 ```
 > ⬆️ Resp:
 
@@ -751,7 +800,7 @@
     "message" : fail to change offer
 }
 ```
-```
+
 ### 📍 6.1.2 Amend Offer (provider) 
 
 | [GET] | /api/offer/:offerId |
@@ -852,6 +901,36 @@ url: FRONTEND_DOMAIN/payment/:offerId?addressId={addressId}&price={price}
 ```
 ---
 
+### 📍 6.4 Reject offer
+
+| [DELETE] | /api/offer/:offerId |
+| ----- | ------------------ |
+
+"jwt"
+
+> ⬇️ Req Body:
+
+```js
+{
+}
+```
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to reject offer
+}
+```
+---
+
 ## 📎 7. Order Route
 
 ### 📍 7.1 Create Order (Payment Success)
@@ -892,7 +971,7 @@ Success
 ```
 
 ### 📍 7.2 Get All Order By UserId
-| [GET]| /api/user/:userId/order |
+| [GET]| /api/user/order |
 | ----- | ------------- |
 "jwt"
 > ⬆️ Resp:
@@ -907,6 +986,7 @@ Success
   "primaryImage": string,
   "quantity": int,
   "price": float,
+  "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
   "createdAt": Date,
 },...],
 ```
