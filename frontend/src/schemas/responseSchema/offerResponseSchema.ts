@@ -23,7 +23,7 @@ type OfferDetailsDto = z.infer<typeof requestOfferResponseSchema>;
 
 // for mock payment
 const acceptOfferResponseSchema = z.object({
-	url: z.string().refine((val) => val.startsWith("/payment")),
+	url: z.string().refine((val) => val.startsWith("/user/payment")),
 	offerId: ulid,
 	userAddressId: resultId,
 	price: z.number().positive(),
