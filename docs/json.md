@@ -1029,7 +1029,7 @@ Success
 > ⬆️ Resp:
 ```js
 🟢 [200]  OK
-[{
+{
   "orderId": string,
   "orderStatus": string,
   "providerId": int,
@@ -1040,7 +1040,7 @@ Success
   "price": float,
   "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
   "createdAt": Date,
-},...],
+},
 ```
 ```js
 🔴 [400] BAD REQUEST
