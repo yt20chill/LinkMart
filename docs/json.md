@@ -774,12 +774,19 @@
 > ⬇️ Req Body:
 
 ```js
-{
-    "requestId"? : ulid(request.request_id),
-    "price"? : int,
-    "estimatedProcessTime"? : int,
-    "offerRemark"? : string | undefined
-}
+[
+	{
+		"item": String,
+		"offerStatus": String,
+		"estimatedProcessTime": int,
+		"createdBy": String (user),
+		"primaryImage": String,
+		"requestId": int,
+		"offerId": int,
+		"price": int (provider offer price)
+	},
+	...
+]
 ```
 > ⬆️ Resp:
 
@@ -793,7 +800,7 @@
     "message" : fail to change offer
 }
 ```
-```
+
 ### 📍 6.1.2 Amend Offer (provider) 
 
 | [GET] | /api/offer/:offerId |
