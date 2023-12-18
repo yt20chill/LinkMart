@@ -8,7 +8,7 @@ type BaseImagePreviewProps = {
 
 type ExistingImagePreviewProps = BaseImagePreviewProps & {
 	imageId: number;
-	onDelete: (options: { imageId: number }) => Promise<void>;
+	onDelete: (options: { imageId: number }) => Promise<void> | void;
 };
 
 type NewImagePreviewProps = BaseImagePreviewProps & {
@@ -28,7 +28,6 @@ const ImagePreview = (
 		isObjOfType<ExistingImagePreviewProps>(props, "imageId")
 			? await props.onDelete({ imageId: props.imageId })
 			: props.onDelete({ name: props.name });
-
 	return (
 		<div className="relative w-64 h-64">
 			<img alt="" src={props.src} className="w-full h-auto" />

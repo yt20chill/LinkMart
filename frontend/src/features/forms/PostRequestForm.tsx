@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FieldErrors, UseFormRegister, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -19,6 +19,7 @@ import {
 	allowedFileTypes,
 	postRequestSchema,
 } from "../../schemas/requestSchema";
+import { ImageDto } from "../../schemas/responseSchema";
 import {
 	cloneRequestAJAX,
 	deleteRequestImageAJAX,
@@ -40,7 +41,9 @@ const PostRequestForm = () => {
 	const requestId =
 		searchParams.get("cloneId") || searchParams.get("requestId");
 	const isClone = searchParams.has("cloneId");
-	const { defaultValuesByField, images } = useUpdateRequestForm(requestId);
+	const { defaultValuesByField, images, primaryImage } =
+		useUpdateRequestForm(requestId);
+	const [imagesClone, setImagesClone] = useState<Array<ImageDto>>(images);
 	const defaultValues = useMemo(
 		() => ({
 			...defaultValuesByField.text,
@@ -93,7 +96,9 @@ const PostRequestForm = () => {
 	useEffect(() => {
 		reset(defaultValues);
 	}, [defaultValues, reset]);
-
+	useEffect(() => {
+		if (images.length > 0) setImagesClone(images);
+	}, [images]);
 	const categoryId = watch("categoryId");
 	const { base64Images, onDelete } = usePreviewFormImages<RequestForm>(
 		watch,
@@ -103,14 +108,16 @@ const PostRequestForm = () => {
 	useEffect(() => {
 		setValue("itemDetail", {});
 	}, [categoryId, setValue]);
+	const removeImageFromArray = ({ imageId }: { imageId: number }) =>
+		setImagesClone((prev) => prev.filter((img) => img.imageId !== imageId));
+	const onDeleteExisting = isClone ? removeImageFromArray : deleteImage;
 	const onSubmit = async (data: RequestForm) => {
-		// append category fields result to form data (as json) first
 		const formData = new FormData();
 		appendFormData(data, formData);
 		if (isClone)
 			appendFormData(
 				{
-					imageUrl: images.map((img) => img.imagePath),
+					imageUrl: imagesClone.map((img) => img.imagePath),
 				},
 				formData
 			);
@@ -156,23 +163,29 @@ const PostRequestForm = () => {
 						multiple={true}
 						accept={allowedFileTypes.join(",")}
 					/>
-					{/* TODO: Allow user to delete default images */}
+					{primaryImage && (
+						<ImagePreview
+							name={primaryImage}
+							src={primaryImage}
+							canDelete={false}
+							onDelete={() => {}}
+						/>
+					)}
 					{base64Images.length > 0 &&
 						base64Images
 							.reverse()
 							.map((img) => (
 								<ImagePreview key={img.name} {...img} onDelete={onDelete} />
 							))}
-					{images.length > 0 &&
-						images
+					{imagesClone.length > 0 &&
+						imagesClone
 							.reverse()
 							.map((img) => (
 								<ImagePreview
 									key={img.imageId}
 									imageId={img.imageId}
 									src={img.imagePath}
-									onDelete={deleteImage}
-									canDelete={!isClone}
+									onDelete={onDeleteExisting}
 								/>
 							))}
 

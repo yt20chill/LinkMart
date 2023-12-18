@@ -66,7 +66,7 @@ function useUpdateRequestForm(requestId: string | null) {
 		defaultValuesByField.text =
 			dtoToString<Record<keyof RequestFormTextFields, string>>(rest);
 		defaultValuesByField.others = { imageFile: [], itemDetail };
-		return { defaultValuesByField, images };
+		return { defaultValuesByField, images, primaryImage };
 	}, [data]);
 }
 
