@@ -131,7 +131,7 @@ routeConfigMap
 	})
 	.set(RouteEnum.OrderDetail, {
 		name: "Order Detail",
-		path: "order-detail/:id",
+		path: "order-detail/:orderId",
 		authorizeLevel: AuthorizeLevels.USER,
 		component: OrderDetailsPage,
 	})

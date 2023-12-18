@@ -1,4 +1,4 @@
-export { enumToMap, mapDate, removeParams };
+export { enumToMap, mapDate, remainingDays, removeParams };
 
 const mapDate = (date: Date | string) => {
 	const timeDiff = Date.now() - Date.parse(date.toString());
@@ -13,6 +13,20 @@ const mapDate = (date: Date | string) => {
 	} else {
 		return date.toString().slice(0, 10);
 	}
+};
+
+/**
+ *
+ * @param from start date
+ * @param days number of days to add to start date
+ * @returns date string in format: dd/mm/yyyy
+ */
+const remainingDays = (from: string, days: number): string => {
+	return new Date(
+		new Date(from).valueOf() + days * 86400000 //1 day in ms
+	)
+		.toLocaleString()
+		.split(",")[0];
 };
 
 type EnumArray<T> = {

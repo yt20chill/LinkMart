@@ -8,7 +8,11 @@ import {
 } from "./offerResponseSchema";
 import {
 	CreateOrderDto,
+	GetOrderDto,
+	OrderDetailsDto,
 	createOrderResponseSchema,
+	getOrdersSchema,
+	orderDetailsSchema,
 } from "./orderResponseSchema";
 
 import {
@@ -28,10 +32,8 @@ import {
 } from "./requestResponseSchema";
 import {
 	AddressDto,
-	GetOrderDto,
 	UserDto,
 	addressesResponseSchema,
-	getOrdersSchema,
 	userResponseSchema,
 } from "./userResponseSchema";
 
@@ -45,6 +47,7 @@ export {
 	errorResponseSchema,
 	getOrdersSchema,
 	locationsResponseSchema,
+	orderDetailsSchema,
 	postRequestResponseSchema,
 	requestDetailsResponseSchema,
 	requestOffersResponseSchema,
@@ -64,6 +67,7 @@ export type {
 	ImageDto,
 	LocationDto,
 	OfferDetailsDto,
+	OrderDetailsDto,
 	PostRequestResponseDto,
 	RequestDetailsDto,
 	RequestDto,

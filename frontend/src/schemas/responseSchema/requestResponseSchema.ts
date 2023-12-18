@@ -84,7 +84,6 @@ const requestDetailsResponseSchema = requestResponseSchema.extend({
 	requestRemark: z.string().nullable(),
 	createdAt: z.string(),
 });
-// .omit({ primaryImage: true });
 
 type RequestDetailsDto = z.infer<typeof requestDetailsResponseSchema>;
 

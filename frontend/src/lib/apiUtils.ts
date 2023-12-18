@@ -1,4 +1,4 @@
-import axios, { isAxiosError } from "axios";
+import axios, { AxiosError, isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { ZodError, ZodType } from "zod";
 import { ErrorResponseDto } from "../schemas/responseSchema";
@@ -96,7 +96,9 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 		)
 			return options.schema.parse(response.data);
 	} catch (error) {
-		toast.error("Something went wrong");
+		// skip unauthorized error
+		if (!(error instanceof AxiosError && error.status === 401))
+			toast.error("Something went wrong");
 		if (isAxiosError<ErrorResponseDto>(error)) {
 			throw new FetchError(
 				error.status,

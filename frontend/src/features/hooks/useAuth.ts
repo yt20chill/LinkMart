@@ -26,6 +26,7 @@ const useAuth = () => {
 	const authStore = useAuthStore(useShallow((state) => state));
 	const signInHandler = useCallback(
 		async (jwt: string | undefined): Promise<void> => {
+			console.log("signInHandler");
 			if (!jwt) throw new FetchError(401, "Invalid token");
 			window.localStorage.setItem("access_token", jwt);
 			setCommonAuthorizationHeader();
@@ -36,6 +37,7 @@ const useAuth = () => {
 	);
 
 	const signOutHandler = useCallback(async (): Promise<void> => {
+		console.log("signOutHandler");
 		window.localStorage.removeItem("access_token");
 		setCommonAuthorizationHeader(false);
 		await queryClient.invalidateQueries(queryKey.AUTH);

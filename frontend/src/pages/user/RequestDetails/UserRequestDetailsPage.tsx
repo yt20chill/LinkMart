@@ -10,11 +10,14 @@ const UserRequestDetailsPage = () => {
 	const [showAcceptForm, setShowAcceptForm] = useState(false);
 	if (!requestId) navigate(siteMap(RouteEnum.UserRequests), { replace: true });
 	return (
-		<ControlModalContext.Provider
-			value={{ isShow: showAcceptForm, setIsShow: setShowAcceptForm }}
-		>
-			<OfferDetailsList requestId={requestId!} />;
-		</ControlModalContext.Provider>
+		<>
+			<div>UserRequestDetailsPage</div>
+			<ControlModalContext.Provider
+				value={{ isShow: showAcceptForm, setIsShow: setShowAcceptForm }}
+			>
+				<OfferDetailsList requestId={requestId!} />
+			</ControlModalContext.Provider>
+		</>
 	);
 };
 
