@@ -867,7 +867,7 @@
 }
 ```
 
-### 📍 6.3 Accpet offer
+### 📍 6.3 Accpet offer Done
 
 | [POST] | /api/offer/:offerId |
 | ----- | ------------------ |
@@ -885,11 +885,60 @@
 
 ```js
 🟢 [303]  Redirect
-url: FRONTEND_DOMAIN/payment/:offerId?addressId={addressId}&price={price}
+url: BACKEND_DOMAIN/api/offer/paymentInfo/" + offerId + "/" + addressId
 {
     "offerId" : string (offer.offer_id)
     "userAddressId": int
     "price": float
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to get offer
+}
+```
+---
+### 📍 6.3 Payment process Done
+
+| [GET] | /api/offer/paymentInfo/{offerId}/{addressId} |
+| ----- | ------------------ |
+
+"jwt"
+
+> ⬇️ Req Body:
+
+```js
+{
+    
+}
+```
+> ⬆️ Resp:
+
+```js
+🟢 [200]  ok
+
+{
+  "offerId": "string",
+  "userUsername": "string",
+  "userEmail": "string",
+  "userAddress": {
+    "address": "string"
+  },
+  "providerUsername": "string",
+  "location": "string",
+  "item": "string",
+  "primary_image": "string",
+  "quantity": "string",
+  "price": 0,
+  "userPaymentMethod": {
+    "payment_method_id": 0,
+    "payment_method": "string",
+    "card_no": "string",
+    "card_holder_name": "string",
+    "expiry_date": "string"
+  }
 }
 ```
 
