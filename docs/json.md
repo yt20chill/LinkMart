@@ -1071,3 +1071,68 @@ Success
 ```
 
 ---
+## 📎 11. For Nic
+
+### 📍 11.1 payment
+
+| [POST] | /api/offer/:offerId |
+| ----- | --------------------- |
+"jwt" :
+> ⬇️ Req Body:
+
+```
+{
+	"userAddresId" : int
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"url" : /user/payment?addressId={}&price={}
+	"offerId" : String,
+	"userAddressId" : int,
+	"price": int
+	
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : message" : fail to redirect
+}
+```
+
+---
+### 📍 11.2 payment success
+
+| [GET] | /api/order?success=true&offer={}&userAddressId={}&price={} |
+| ----- | --------------------- |
+"jwt" :
+> ⬇️ Req Body:
+
+```
+{
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"offerId" : String
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to pay 
+}
+```
+
+---
