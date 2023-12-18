@@ -996,6 +996,58 @@ Success
     "message" : failed to get orders
 }
 ```
+### 📍 7.3 Get All inProgress Order By UserId
+| [GET]| /api/user/order/inProgress |
+| ----- | ------------- |
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+[{
+  "orderId": string,
+  "orderStatus": string,
+  "providerId": int,
+  "providerName": string,
+  "item": string,
+  "primaryImage": string,
+  "quantity": int,
+  "price": float,
+  "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
+  "createdAt": Date,
+},...],
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get orders
+}
+```
+### 📍 7.4 Get All completed Order By UserId
+| [GET]| /api/user/order/complete |
+| ----- | ------------- |
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+[{
+  "orderId": string,
+  "orderStatus": string,
+  "providerId": int,
+  "providerName": string,
+  "item": string,
+  "primaryImage": string,
+  "quantity": int,
+  "price": float,
+  "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
+  "createdAt": Date,
+},...],
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get orders
+}
+```
 
 ## 📎 8. Location Route Done~
 
