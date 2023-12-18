@@ -42,16 +42,20 @@ export function Navbar() {
             icon="storefront"
             label="Explore"
           />
-          <ButtonWithIcon
-            linkTo={RouteEnum.UserRequests}
-            icon="receipt_long"
-            label="Request"
-          />
-          <ButtonWithIcon
-            linkTo={RouteEnum.UserOrder}
-            icon="all_inbox"
-            label="Order"
-          />
+          {isAuthenticated && (
+            <>
+              <ButtonWithIcon
+                linkTo={RouteEnum.UserRequests}
+                icon="receipt_long"
+                label="Request"
+              />
+              <ButtonWithIcon
+                linkTo={RouteEnum.UserOrder}
+                icon="all_inbox"
+                label="Order"
+              />
+            </>
+          )}
         </div>
         {/* nav_login_info */}
         <div className="flex gap-10 items-center">
@@ -72,18 +76,23 @@ export function Navbar() {
                   tabIndex={0}
                   className="menu dropdown-content z-[1] shadow bg-base-100/50 backdrop-blur-lg rounded-box w-52 mt-1"
                 >
+                  {role === AuthorizeLevels.PROVIDER && (
+                    <ButtonWithIcon
+                      linkTo={RouteEnum.ProviderProfile}
+                      icon="local_mall"
+                      label="Provider"
+                    />
+                  )}
                   <ButtonWithIcon
                     linkTo={RouteEnum.Profile}
                     icon="person"
                     label="Profile"
                   />
-                  {role === AuthorizeLevels.PROVIDER && (
-                    <ButtonWithIcon
-                      linkTo={RouteEnum.Profile}
-                      icon="person"
-                      label="Provider"
-                    />
-                  )}
+                  <ButtonWithIcon
+                    linkTo={RouteEnum.Requests}
+                    icon="logout"
+                    label="Sign Out"
+                  />
                 </div>
               </div>
             </>
