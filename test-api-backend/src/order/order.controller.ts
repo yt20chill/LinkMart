@@ -8,7 +8,6 @@ export class OrderController {
   }
   @Get('/:id')
   getOrderDetails() {
-    console.log('in');
     return {
       orderId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
       orderStatus: 'In progress',
