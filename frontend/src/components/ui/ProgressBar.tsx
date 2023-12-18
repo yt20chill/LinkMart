@@ -8,7 +8,7 @@ const ProgressBar = <T extends string[]>({
 	currentStep,
 }: ProgressBarProps<T>) => {
 	// if currentStep not in steps, default to 0
-	const found = Math.min(steps.indexOf(currentStep), 0);
+	const found = Math.max(steps.indexOf(currentStep), 0);
 	return (
 		<ul className="steps steps-vertical">
 			{steps.map((step, index) => (
