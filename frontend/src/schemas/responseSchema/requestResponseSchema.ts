@@ -68,7 +68,7 @@ const imageSchema = z.object({
 type ImageDto = z.infer<typeof imageSchema>;
 
 const requestDetailsResponseSchema = requestResponseSchema.extend({
-	itemDetail: z.record(z.string()),
+	itemDetail: z.record(z.string()).nullable(),
 	locationId: resultId,
 	categoryId: resultId,
 	categoryName: z.string().min(1),
