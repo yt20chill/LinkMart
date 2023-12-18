@@ -34,8 +34,6 @@ const OrderDetailsPage = () => {
 		...orderDto
 	} = details;
 
-	console.log(orderStatus);
-
 	return (
 		<>
 			<OrderCard {...orderDto} orderStatus={orderStatus} />
