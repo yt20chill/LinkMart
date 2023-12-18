@@ -29,12 +29,14 @@ export const postRequestSchema = z.object({
 	url: emptyStringToNull.pipe(
 		z.string().url({ message: "invalid url" }).nullish()
 	),
-	quantity: z.string().min(1, { message: "required" }),
+	quantity: z
+		.string()
+		.refine((val) => !isNaN(parseInt(val)), { message: "Invalid quantity" }),
 	requestRemark: emptyStringToNull.nullable(),
 	offerPrice: stringToPositiveNumber({ isFloat: true }).pipe(
 		z.number().positive().nullish()
 	),
-	itemDetail: z.record(z.string()),
+	itemDetail: z.record(z.string()).nullish(),
 });
 
 export const requestIdSchema = z.object({
@@ -60,5 +62,5 @@ export type RequestForm = Record<
 	string
 > & {
 	imageFile: File[];
-	itemDetail: Record<string, string>;
+	itemDetail: Record<string, string> | null;
 };

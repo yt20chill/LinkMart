@@ -93,12 +93,16 @@ const PostRequestForm = () => {
 	useEffect(() => {
 		reset(defaultValues);
 	}, [defaultValues, reset]);
+
 	const categoryId = watch("categoryId");
 	const { base64Images, onDelete } = usePreviewFormImages<RequestForm>(
 		watch,
 		"imageFile",
 		setValue
 	);
+	useEffect(() => {
+		setValue("itemDetail", {});
+	}, [categoryId, setValue]);
 	const onSubmit = async (data: RequestForm) => {
 		// append category fields result to form data (as json) first
 		const formData = new FormData();

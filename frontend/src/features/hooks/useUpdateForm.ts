@@ -5,11 +5,8 @@ import { RequestForm } from "../../schemas/requestSchema";
 import { getRequestDetailsAJAX } from "../../services/api/requestApi";
 import { queryKey } from "../../services/query.config";
 
-type RequestFormDropDownFields = { locationId: string; categoryId: string };
-type RequestFormOtherFields = {
-	imageFile: File[];
-	itemDetail: Record<string, string>;
-};
+type RequestFormDropDownFields = Pick<RequestForm, "locationId" | "categoryId">;
+type RequestFormOtherFields = Pick<RequestForm, "imageFile" | "itemDetail">;
 export type RequestFormTextFields = Omit<
 	RequestForm,
 	keyof RequestFormDropDownFields | keyof RequestFormOtherFields
