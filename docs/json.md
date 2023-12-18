@@ -867,7 +867,7 @@
 }
 ```
 
-### 📍 6.3 Accpet offer
+### 📍 6.3 Accpet offer Done
 
 | [POST] | /api/offer/:offerId |
 | ----- | ------------------ |
@@ -885,11 +885,60 @@
 
 ```js
 🟢 [303]  Redirect
-url: FRONTEND_DOMAIN/payment/:offerId?addressId={addressId}&price={price}
+url: BACKEND_DOMAIN/api/offer/paymentInfo/" + offerId + "/" + addressId
 {
     "offerId" : string (offer.offer_id)
     "userAddressId": int
     "price": float
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to get offer
+}
+```
+---
+### 📍 6.3 Payment process Done
+
+| [GET] | /api/offer/paymentInfo/{offerId}/{addressId} |
+| ----- | ------------------ |
+
+"jwt"
+
+> ⬇️ Req Body:
+
+```js
+{
+    
+}
+```
+> ⬆️ Resp:
+
+```js
+🟢 [200]  ok
+
+{
+  "offerId": "string",
+  "userUsername": "string",
+  "userEmail": "string",
+  "userAddress": {
+    "address": "string"
+  },
+  "providerUsername": "string",
+  "location": "string",
+  "item": "string",
+  "primary_image": "string",
+  "quantity": "string",
+  "price": 0,
+  "userPaymentMethod": {
+    "payment_method_id": 0,
+    "payment_method": "string",
+    "card_no": "string",
+    "card_holder_name": "string",
+    "expiry_date": "string"
+  }
 }
 ```
 
@@ -984,10 +1033,97 @@ Success
   "providerName": string,
   "item": string,
   "primaryImage": string,
+  "quantity": string,
+  "price": float,
+  "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
+  "createdAt": Date,
+},...],
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get orders
+}
+```
+### 📍 7.3 Get All inProgress Order By UserId
+| [GET]| /api/user/order/inProgress |
+| ----- | ------------- |
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+[{
+  "orderId": string,
+  "orderStatus": string,
+  "providerId": int,
+  "providerName": string,
+  "item": string,
+  "primaryImage": string,
   "quantity": int,
   "price": float,
   "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
   "createdAt": Date,
+},...],
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get orders
+}
+```
+### 📍 7.4 Get All completed Order By UserId
+| [GET]| /api/user/order/complete |
+| ----- | ------------- |
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+{
+  "orderId": string,
+  "orderStatus": string,
+  "providerId": int,
+  "providerName": string,
+  "item": string,
+  "primaryImage": string,
+  "quantity": int,
+  "price": float,
+  "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
+  "createdAt": Date,
+},
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get orders
+}
+```
+
+### 📍 7.4 Get Order details by orderId
+| [GET]| /api/order/:orderId |
+| ----- | ------------- |
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+[{
+  "orderId": string,
+  "orderStatus": string,
+  "providerId": int,
+  "providerName": string,
+  "item": string,
+  "primaryImage": string,
+  "quantity": int,
+  "price": float,
+  "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
+  "createdAt": Date,
+  "updatedAt": Date
+  "requestId": string,
+  "locationName": string,
+  "createdBy": string,
+  "images": string[] (imagePath),
+  "itemDetail": JSON or null,
+  "url": string,
+  "requestRemark" string,
 },...],
 ```
 ```js
@@ -1067,6 +1203,71 @@ Success
 🔴 [400] BAD REQUEST
 {
     "message" : message" : invalid Token / locationId 
+}
+```
+
+---
+## 📎 11. For Nic
+
+### 📍 11.1 payment
+
+| [POST] | /api/offer/:offerId |
+| ----- | --------------------- |
+"jwt" :
+> ⬇️ Req Body:
+
+```
+{
+	"userAddresId" : int
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"url" : /user/payment?addressId={}&price={}
+	"offerId" : String,
+	"userAddressId" : int,
+	"price": int
+	
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : message" : fail to redirect
+}
+```
+
+---
+### 📍 11.2 payment success
+
+| [GET] | /api/order?success=true&offer={}&userAddressId={}&price={} |
+| ----- | --------------------- |
+"jwt" :
+> ⬇️ Req Body:
+
+```
+{
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"offerId" : String
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to pay 
 }
 ```
 
