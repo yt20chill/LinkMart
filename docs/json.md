@@ -466,9 +466,30 @@
 
 ```js
 🟢 [200]  OK
-{
-    "message": "success"
-}
+
+    {
+	"requestId": String,
+	"createdBy": String,
+	"locationId": int,
+	"categoryId": int,
+	"itemDetail": null || { },
+	"primaryImage": String,
+	"item": String,
+	"url": String,
+	"quantity": String,
+	"offerPrice": int,
+	"requestRemark": null || String,
+	"createdAt": "2023-12-18 11:58:57.507984",
+	"updatedAt": "2023-12-18 11:58:57.507984",
+	"images": [
+		{
+			"imageId": int,
+			"requestId": String,
+			"imagePath": String,
+			"createdAt": 1702871937518,
+			"updatedAt": 1702871937518
+		}
+
 ```
 
 ```js
@@ -505,9 +526,30 @@
 
 ```js
 🟢 [200]  OK
-{
-    "message": "clone success"
-}
+
+    {
+	"requestId": String,
+	"createdBy": String,
+	"locationId": int,
+	"categoryId": int,
+	"itemDetail": null || { },
+	"primaryImage": String,
+	"item": String,
+	"url": String,
+	"quantity": String,
+	"offerPrice": int,
+	"requestRemark": null || String,
+	"createdAt": "2023-12-18 11:58:57.507984",
+	"updatedAt": "2023-12-18 11:58:57.507984",
+	"images": [
+		{
+			"imageId": int,
+			"requestId": String,
+			"imagePath": String,
+			"createdAt": 1702871937518,
+			"updatedAt": 1702871937518
+		}
+
 ```
 
 ```js
