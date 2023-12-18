@@ -24,7 +24,13 @@ const appendFormData = <T extends object>(
 	const formData = oldFormData ?? new FormData();
 	for (const key in data) {
 		const value = data[key];
-		if (formData.has(key) || value === undefined || value === null) continue;
+		if (
+			formData.has(key) ||
+			value === undefined ||
+			value === null ||
+			(typeof value === "object" && Object.keys(value).length === 0)
+		)
+			continue;
 		if (Array.isArray(value) || value instanceof FileList) {
 			for (const elem of value) {
 				formData.append(key, elem as string | Blob);

@@ -5,6 +5,7 @@ export {
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
 	locationsResponseSchema,
+	postRequestResponseSchema,
 	requestDetailsResponseSchema,
 	requestsResponseSchema,
 };
@@ -14,6 +15,7 @@ export type {
 	CategoryFieldDto,
 	ImageDto,
 	LocationDto,
+	PostRequestResponseDto,
 	RequestDetailsDto,
 	RequestDto,
 };
@@ -81,3 +83,9 @@ const requestDetailsResponseSchema = requestResponseSchema.extend({
 // .omit({ primaryImage: true });
 
 type RequestDetailsDto = z.infer<typeof requestDetailsResponseSchema>;
+
+const postRequestResponseSchema = z.object({
+	requestId: ulid,
+});
+
+type PostRequestResponseDto = z.infer<typeof postRequestResponseSchema>;

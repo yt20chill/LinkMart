@@ -10,11 +10,13 @@ import {
 	CategoryDto,
 	CategoryFieldDto,
 	LocationDto,
+	PostRequestResponseDto,
 	RequestDetailsDto,
 	RequestDto,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
 	locationsResponseSchema,
+	postRequestResponseSchema,
 	requestDetailsResponseSchema,
 	requestsResponseSchema,
 } from "../../schemas/responseSchema";
@@ -66,10 +68,14 @@ const getAllLocationsAJAX = async () => {
 
 const postRequestAJAX = async (formData: FormData) => {
 	printFormData(formData);
-	return await axiosWrapper<FormData>(requestApiRoutes.POST_REQUEST, {
-		method: "post",
-		data: formData,
-	});
+	return await axiosWrapper<FormData, PostRequestResponseDto>(
+		requestApiRoutes.POST_REQUEST,
+		{
+			method: "post",
+			data: formData,
+			schema: postRequestResponseSchema,
+		}
+	);
 };
 
 /**

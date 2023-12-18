@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useMemo } from "react";
 import { FieldErrors, UseFormRegister, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
 	CategoryFieldsForm,
@@ -25,6 +25,7 @@ import {
 	putRequestAJAX,
 } from "../../services/api/requestApi";
 import { queryKey } from "../../services/query.config";
+import { RouteEnum, siteMap } from "../../services/routes.config";
 import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 import {
@@ -48,13 +49,16 @@ const PostRequestForm = () => {
 	);
 	const { categories, locations } = useQueryContainer();
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
 		mutationFn: (formData: FormData) => {
 			return postRequestAJAX(formData);
 		},
-		onSuccess: async () => {
+		onSuccess: async (result) => {
+			if (!result) return toast.error("Something went wrong");
 			toast.success("Request posted!");
 			await queryClient.invalidateQueries([queryKey.REQUEST]);
+			navigate(`${siteMap(RouteEnum.RequestDetail)}/${result.requestId}`);
 		},
 	});
 	const { mutateAsync: editRequest, isLoading: isEditing } = useMutation({
@@ -185,13 +189,14 @@ const PostRequestForm = () => {
 					{categoryId && (
 						<CategoryFieldsForm
 							keyName="itemDetail"
-							//TODO: how not to as unknown as UseFormRegister<Record<string, unknown>>?
 							register={
 								register as unknown as UseFormRegister<Record<string, unknown>>
 							}
 							errors={errors as FieldErrors<Record<string, string>>}
 							categoryId={+categoryId}
-							defaultValuesJSON={defaultValuesByField.others.itemDetail}
+							defaultValuesJSON={
+								defaultValuesByField.others.itemDetail ?? undefined
+							}
 						/>
 					)}
 					<FormSubmitButton
