@@ -524,12 +524,12 @@
 
 ##### 📍 5.2.1 Get All - with queries  Done(waiting for test)
 
-| [Get] | /api/request?p={page}&category={category}&location={location} |
+| [Get] | /request?p={page}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
 
 ##### 📍 5.2.2 Get All - by userId (via created_by) Done~
 
-| [Get] | /api/user/request (userId in jwt header) |
+| [Get] | /api/request (userId in jwt header) |
 | ----- | ---------------------------------------- |
 
 > ⬆️ Resp:
