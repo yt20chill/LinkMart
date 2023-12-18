@@ -55,6 +55,7 @@ const PostRequestForm = () => {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
+	// Create, clone or edit request
 	const { mutateAsync: mutateRequest, isLoading } = useMutation({
 		mutationFn: (formData: FormData) => {
 			if (isClone) return cloneRequestAJAX(formData);
@@ -70,6 +71,8 @@ const PostRequestForm = () => {
 			});
 		},
 	});
+
+	// Owner delete images
 	const { mutateAsync: deleteImage } = useMutation({
 		mutationFn: deleteRequestImageAJAX,
 		onSuccess: async () => {
@@ -77,6 +80,8 @@ const PostRequestForm = () => {
 			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
 		},
 	});
+
+	// Form
 	const {
 		register,
 		handleSubmit,
@@ -93,24 +98,35 @@ const PostRequestForm = () => {
 		defaultValues,
 		mode: "onSubmit",
 	});
+
+	// reset form on defaultValue change
 	useEffect(() => {
 		reset(defaultValues);
 	}, [defaultValues, reset]);
+
+	// initialize imagesClone when images change
 	useEffect(() => {
 		if (images.length > 0) setImagesClone(images);
 	}, [images]);
-	const categoryId = watch("categoryId");
+
+	// set delete images functions
 	const { base64Images, onDelete } = usePreviewFormImages<RequestForm>(
 		watch,
 		"imageFile",
 		setValue
 	);
-	useEffect(() => {
-		setValue("itemDetail", {});
-	}, [categoryId, setValue]);
 	const removeImageFromArray = ({ imageId }: { imageId: number }) =>
 		setImagesClone((prev) => prev.filter((img) => img.imageId !== imageId));
 	const onDeleteExisting = isClone ? removeImageFromArray : deleteImage;
+
+	// watch categoryId to display corresponding fields
+	const categoryId = watch("categoryId");
+
+	// reset itemDetail when categoryId changes
+	useEffect(() => {
+		setValue("itemDetail", {});
+	}, [categoryId, setValue]);
+
 	const onSubmit = async (data: RequestForm) => {
 		const formData = new FormData();
 		appendFormData(data, formData);
