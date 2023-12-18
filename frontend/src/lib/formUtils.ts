@@ -61,9 +61,9 @@ const dtoToString = <T extends Record<string, unknown>>(
 	dto: Record<keyof T, unknown>
 ) => {
 	return Object.entries(dto).reduce((acc, [key, value]) => {
-		if (typeof value === "object")
+		if (value instanceof Object)
 			acc[key as keyof T] = JSON.stringify(value) ?? "";
-		else acc[key as keyof T] = value?.toString() ?? "";
+		else acc[key as keyof T] = value ? value.toString() : "";
 		return acc;
 	}, {} as Record<keyof T, string>);
 };

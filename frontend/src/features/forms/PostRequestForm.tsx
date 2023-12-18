@@ -12,7 +12,6 @@ import {
 	ImagePreview,
 } from "../../components/form";
 import FormFileInput from "../../components/form/FormFileInput";
-import { FetchError } from "../../lib/apiUtils";
 import { appendFormData } from "../../lib/formUtils";
 import {
 	RequestForm,
@@ -20,6 +19,7 @@ import {
 	postRequestSchema,
 } from "../../schemas/requestSchema";
 import {
+	cloneRequestAJAX,
 	deleteRequestImageAJAX,
 	postRequestAJAX,
 	putRequestAJAX,
@@ -50,25 +50,20 @@ const PostRequestForm = () => {
 	const { categories, locations } = useQueryContainer();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
-	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
+
+	const { mutateAsync: mutateRequest, isLoading } = useMutation({
 		mutationFn: (formData: FormData) => {
+			if (isClone) return cloneRequestAJAX(formData);
+			if (requestId) return putRequestAJAX(requestId, formData);
 			return postRequestAJAX(formData);
 		},
 		onSuccess: async (result) => {
 			if (!result) return toast.error("Something went wrong");
 			toast.success("Request posted!");
 			await queryClient.invalidateQueries([queryKey.REQUEST]);
-			navigate(`${siteMap(RouteEnum.RequestDetail)}/${result.requestId}`);
-		},
-	});
-	const { mutateAsync: editRequest, isLoading: isEditing } = useMutation({
-		mutationFn: (formData: FormData) => {
-			if (!requestId) throw new FetchError(400, "invalid request id");
-			return putRequestAJAX(requestId, formData);
-		},
-		onSuccess: async () => {
-			toast.success("edited");
-			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
+			navigate(`${siteMap(RouteEnum.RequestDetail)}/${result.requestId}`, {
+				replace: true,
+			});
 		},
 	});
 	const { mutateAsync: deleteImage } = useMutation({
@@ -111,10 +106,14 @@ const PostRequestForm = () => {
 		// append category fields result to form data (as json) first
 		const formData = new FormData();
 		appendFormData(data, formData);
-		// has requestId and not clone => edit, else post
-		requestId && !isClone
-			? await editRequest(formData)
-			: await postRequest(formData);
+		if (isClone)
+			appendFormData(
+				{
+					imageUrl: images.map((img) => img.imagePath),
+				},
+				formData
+			);
+		await mutateRequest(formData);
 	};
 	return (
 		<>
@@ -156,6 +155,7 @@ const PostRequestForm = () => {
 						multiple={true}
 						accept={allowedFileTypes.join(",")}
 					/>
+					{/* TODO: Allow user to delete default images */}
 					{base64Images.length > 0 &&
 						base64Images
 							.reverse()
@@ -202,7 +202,7 @@ const PostRequestForm = () => {
 					<FormSubmitButton
 						label="Create Post"
 						onClick={handleSubmit(onSubmit)}
-						disabled={isEditing || isPosting}
+						disabled={isLoading}
 					/>
 				</form>
 			) : (
