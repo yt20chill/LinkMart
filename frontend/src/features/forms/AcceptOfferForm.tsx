@@ -19,7 +19,7 @@ import {
 import { acceptOfferAJAX } from "../../services/api/offerApi";
 import { useControlModalContext } from "../../services/context/ControlModalContext";
 import { queryKey } from "../../services/query.config";
-import { useQueryContainer } from "../hooks/useQueryContainer";
+import { useGuardedQueryContainer } from "../hooks/useGuardedQueryContainer";
 import PostAddressForm from "./PostAddressForm";
 import SkeletonForm from "./SkeletonForm";
 
@@ -43,7 +43,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 	const {
 		addresses,
 		getAddresses: { isLoading: isGettingAddresses },
-	} = useQueryContainer();
+	} = useGuardedQueryContainer();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 	const { mutateAsync: acceptOffer, isLoading } = useMutation({

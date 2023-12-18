@@ -24,7 +24,13 @@ const appendFormData = <T extends object>(
 	const formData = oldFormData ?? new FormData();
 	for (const key in data) {
 		const value = data[key];
-		if (formData.has(key) || value === undefined || value === null) continue;
+		if (
+			formData.has(key) ||
+			value === undefined ||
+			value === null ||
+			(typeof value === "object" && Object.keys(value).length === 0)
+		)
+			continue;
 		if (Array.isArray(value) || value instanceof FileList) {
 			for (const elem of value) {
 				formData.append(key, elem as string | Blob);
@@ -55,9 +61,9 @@ const dtoToString = <T extends Record<string, unknown>>(
 	dto: Record<keyof T, unknown>
 ) => {
 	return Object.entries(dto).reduce((acc, [key, value]) => {
-		if (typeof value === "object")
+		if (value instanceof Object)
 			acc[key as keyof T] = JSON.stringify(value) ?? "";
-		else acc[key as keyof T] = value?.toString() ?? "";
+		else acc[key as keyof T] = value ? value.toString() : "";
 		return acc;
 	}, {} as Record<keyof T, string>);
 };

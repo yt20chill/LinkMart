@@ -1,12 +1,11 @@
 import { useQuery } from "react-query";
 import { RequestId } from "../../schemas/requestSchema";
-import { AddressDto, RequestDetailsDto } from "../../schemas/responseSchema";
+import { RequestDetailsDto } from "../../schemas/responseSchema";
 import {
 	getAllCategoriesAJAX,
 	getAllLocationsAJAX,
 	getRequestDetailsAJAX,
 } from "../../services/api/requestApi";
-import { getAddressAJAX } from "../../services/api/userApi";
 import { queryKey } from "../../services/query.config";
 
 export function useQueryContainer() {
@@ -27,17 +26,14 @@ export function useQueryContainer() {
 			queryFn: () => getRequestDetailsAJAX(requestId),
 		});
 	};
-	const getAddresses = useQuery<AddressDto[]>({
-		queryKey: [queryKey.USER, "address"],
-		queryFn: getAddressAJAX,
-	});
+
 	return {
 		getAllCategories,
 		getAllLocations,
-		getAddresses,
+
 		categories: getAllCategories.data,
 		locations: getAllLocations.data,
-		addresses: getAddresses.data,
+
 		useGetRequestDetails,
 	};
 }

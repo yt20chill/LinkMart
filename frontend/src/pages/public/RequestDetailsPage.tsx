@@ -97,15 +97,17 @@ const RequestDetailsPage = () => {
 								label={"From"}
 								value={details.locationName.split(" ").slice(1, 10).join(" ")}
 							/>
-							{Object.entries(details.itemDetail).map(([key, val]) => (
-								<DetailDisplay
-									key={`${key}-${val}`}
-									className={val.length > 20 ? "col-span-2" : ""}
-									label={key}
-									value={val}
-									title={val}
-								/>
-							))}
+							{Object.entries(details.itemDetail ?? []).map(([key, val]) => {
+								return (
+									<DetailDisplay
+										key={`${key}-${val}`}
+										className={val && val.length > 20 ? "col-span-2" : ""}
+										label={key}
+										value={val ?? ""}
+										title={val ?? ""}
+									/>
+								);
+							})}
 							{details.requestRemark && (
 								<DetailDisplay
 									icon="info"

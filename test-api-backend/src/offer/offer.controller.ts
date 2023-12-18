@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
 
 @Controller('api/offer')
 export class OfferController {
@@ -30,5 +30,20 @@ export class OfferController {
         offerRemark: 'Sorry',
       },
     ];
+  }
+
+  @Delete('/:id')
+  declineOffer() {
+    return { success: true };
+  }
+
+  @Post('/:id')
+  acceptOffer(@Param('id') id: string) {
+    return {
+      url: `/user/payment/${id}?addressId=1&price=100`,
+      offerId: id,
+      userAddressId: 1,
+      price: 100,
+    };
   }
 }

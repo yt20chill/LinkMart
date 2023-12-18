@@ -5,6 +5,7 @@ export {
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
 	locationsResponseSchema,
+	postRequestResponseSchema,
 	requestDetailsResponseSchema,
 	requestsResponseSchema,
 };
@@ -14,6 +15,7 @@ export type {
 	CategoryFieldDto,
 	ImageDto,
 	LocationDto,
+	PostRequestResponseDto,
 	RequestDetailsDto,
 	RequestDto,
 };
@@ -51,7 +53,11 @@ const requestResponseSchema = z.object({
 	locationName: z.string().min(1),
 	item: z.string().min(1),
 	primaryImage: z.string().url(),
-	offerPrice: z.number().nonnegative().nullable(),
+	offerPrice: z
+		.number()
+		.nonnegative()
+		.transform((val) => (val === 0 ? null : val))
+		.nullable(),
 	createdBy: z.string().min(1),
 	updatedAt: z.string(),
 });
@@ -68,7 +74,7 @@ const imageSchema = z.object({
 type ImageDto = z.infer<typeof imageSchema>;
 
 const requestDetailsResponseSchema = requestResponseSchema.extend({
-	itemDetail: z.record(z.string()),
+	itemDetail: z.record(z.string()).nullable(),
 	locationId: resultId,
 	categoryId: resultId,
 	categoryName: z.string().min(1),
@@ -81,3 +87,9 @@ const requestDetailsResponseSchema = requestResponseSchema.extend({
 // .omit({ primaryImage: true });
 
 type RequestDetailsDto = z.infer<typeof requestDetailsResponseSchema>;
+
+const postRequestResponseSchema = z.object({
+	requestId: ulid,
+});
+
+type PostRequestResponseDto = z.infer<typeof postRequestResponseSchema>;

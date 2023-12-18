@@ -1,5 +1,4 @@
 import { axiosWrapper } from "../../lib/apiUtils";
-import { printFormData } from "../../lib/formUtils";
 import { DeleteImageParams } from "../../schemas/requestSchema";
 import {
 	CategoryId,
@@ -10,11 +9,13 @@ import {
 	CategoryDto,
 	CategoryFieldDto,
 	LocationDto,
+	PostRequestResponseDto,
 	RequestDetailsDto,
 	RequestDto,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
 	locationsResponseSchema,
+	postRequestResponseSchema,
 	requestDetailsResponseSchema,
 	requestsResponseSchema,
 } from "../../schemas/responseSchema";
@@ -25,9 +26,11 @@ const requestApiRoutes = Object.freeze({
 	REQUEST: `/request`,
 	POST_REQUEST: `/api/request`,
 	IMAGE: `/api/request/image`,
+	CLONE_REQUEST: `/api/request/clone`,
 });
 
 export {
+	cloneRequestAJAX,
 	deleteRequestAJAX,
 	deleteRequestImageAJAX,
 	getAllCategoriesAJAX,
@@ -65,11 +68,36 @@ const getAllLocationsAJAX = async () => {
 };
 
 const postRequestAJAX = async (formData: FormData) => {
-	printFormData(formData);
-	return await axiosWrapper<FormData>(requestApiRoutes.POST_REQUEST, {
-		method: "post",
-		data: formData,
-	});
+	return await axiosWrapper<FormData, PostRequestResponseDto>(
+		requestApiRoutes.POST_REQUEST,
+		{
+			method: "post",
+			data: formData,
+			schema: postRequestResponseSchema,
+		}
+	);
+};
+
+const cloneRequestAJAX = async (formData: FormData) => {
+	return await axiosWrapper<FormData, PostRequestResponseDto>(
+		requestApiRoutes.CLONE_REQUEST,
+		{
+			method: "post",
+			data: formData,
+			schema: postRequestResponseSchema,
+		}
+	);
+};
+
+const putRequestAJAX = async (requestId: string, formData: FormData) => {
+	return await axiosWrapper<FormData, PostRequestResponseDto>(
+		`${requestApiRoutes.POST_REQUEST}/${requestId}`,
+		{
+			method: "put",
+			data: formData,
+			schema: postRequestResponseSchema,
+		}
+	);
 };
 
 /**
@@ -90,16 +118,6 @@ const getRequestDetailsAJAX = async ({ requestId }: RequestId) => {
 	return await axiosWrapper<void, RequestDetailsDto>(
 		`${requestApiRoutes.REQUEST}/${requestId}`,
 		{ schema: requestDetailsResponseSchema }
-	);
-};
-
-const putRequestAJAX = async (requestId: string, formData: FormData) => {
-	return await axiosWrapper<FormData>(
-		`${requestApiRoutes.POST_REQUEST}/${requestId}`,
-		{
-			method: "put",
-			data: formData,
-		}
 	);
 };
 

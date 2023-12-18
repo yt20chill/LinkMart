@@ -19,7 +19,7 @@ import {
 	updatePrimaryAddressAJAX,
 } from "../../services/api/userApi";
 import { queryKey } from "../../services/query.config";
-import { useQueryContainer } from "../hooks/useQueryContainer";
+import { useGuardedQueryContainer } from "../hooks/useGuardedQueryContainer";
 
 const defaultValues = generateDefaultValues(updateAddressFormSchema);
 const sweetAlertOptions = {
@@ -39,7 +39,7 @@ const SelectPrimaryAddressForm = () => {
 	const {
 		addresses,
 		getAddresses: { isLoading: isGettingAddresses },
-	} = useQueryContainer();
+	} = useGuardedQueryContainer();
 	const queryClient = useQueryClient();
 
 	const { mutateAsync: updatePrimaryAddress, isLoading: isUpdating } =

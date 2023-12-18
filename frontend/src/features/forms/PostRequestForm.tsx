@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useMemo } from "react";
 import { FieldErrors, UseFormRegister, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
 	CategoryFieldsForm,
@@ -12,7 +12,6 @@ import {
 	ImagePreview,
 } from "../../components/form";
 import FormFileInput from "../../components/form/FormFileInput";
-import { FetchError } from "../../lib/apiUtils";
 import { appendFormData } from "../../lib/formUtils";
 import {
 	RequestForm,
@@ -20,11 +19,13 @@ import {
 	postRequestSchema,
 } from "../../schemas/requestSchema";
 import {
+	cloneRequestAJAX,
 	deleteRequestImageAJAX,
 	postRequestAJAX,
 	putRequestAJAX,
 } from "../../services/api/requestApi";
 import { queryKey } from "../../services/query.config";
+import { RouteEnum, siteMap } from "../../services/routes.config";
 import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 import {
@@ -48,23 +49,21 @@ const PostRequestForm = () => {
 	);
 	const { categories, locations } = useQueryContainer();
 	const queryClient = useQueryClient();
-	const { mutateAsync: postRequest, isLoading: isPosting } = useMutation({
+	const navigate = useNavigate();
+
+	const { mutateAsync: mutateRequest, isLoading } = useMutation({
 		mutationFn: (formData: FormData) => {
+			if (isClone) return cloneRequestAJAX(formData);
+			if (requestId) return putRequestAJAX(requestId, formData);
 			return postRequestAJAX(formData);
 		},
-		onSuccess: async () => {
+		onSuccess: async (result) => {
+			if (!result) return toast.error("Something went wrong");
 			toast.success("Request posted!");
 			await queryClient.invalidateQueries([queryKey.REQUEST]);
-		},
-	});
-	const { mutateAsync: editRequest, isLoading: isEditing } = useMutation({
-		mutationFn: (formData: FormData) => {
-			if (!requestId) throw new FetchError(400, "invalid request id");
-			return putRequestAJAX(requestId, formData);
-		},
-		onSuccess: async () => {
-			toast.success("edited");
-			await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
+			navigate(`${siteMap(RouteEnum.RequestDetail)}/${result.requestId}`, {
+				replace: true,
+			});
 		},
 	});
 	const { mutateAsync: deleteImage } = useMutation({
@@ -93,20 +92,28 @@ const PostRequestForm = () => {
 	useEffect(() => {
 		reset(defaultValues);
 	}, [defaultValues, reset]);
+
 	const categoryId = watch("categoryId");
 	const { base64Images, onDelete } = usePreviewFormImages<RequestForm>(
 		watch,
 		"imageFile",
 		setValue
 	);
+	useEffect(() => {
+		setValue("itemDetail", {});
+	}, [categoryId, setValue]);
 	const onSubmit = async (data: RequestForm) => {
 		// append category fields result to form data (as json) first
 		const formData = new FormData();
 		appendFormData(data, formData);
-		// has requestId and not clone => edit, else post
-		requestId && !isClone
-			? await editRequest(formData)
-			: await postRequest(formData);
+		if (isClone)
+			appendFormData(
+				{
+					imageUrl: images.map((img) => img.imagePath),
+				},
+				formData
+			);
+		await mutateRequest(formData);
 	};
 	return (
 		<>
@@ -148,6 +155,7 @@ const PostRequestForm = () => {
 						multiple={true}
 						accept={allowedFileTypes.join(",")}
 					/>
+					{/* TODO: Allow user to delete default images */}
 					{base64Images.length > 0 &&
 						base64Images
 							.reverse()
@@ -181,19 +189,20 @@ const PostRequestForm = () => {
 					{categoryId && (
 						<CategoryFieldsForm
 							keyName="itemDetail"
-							//TODO: how not to as unknown as UseFormRegister<Record<string, unknown>>?
 							register={
 								register as unknown as UseFormRegister<Record<string, unknown>>
 							}
 							errors={errors as FieldErrors<Record<string, string>>}
 							categoryId={+categoryId}
-							defaultValuesJSON={defaultValuesByField.others.itemDetail}
+							defaultValuesJSON={
+								defaultValuesByField.others.itemDetail ?? undefined
+							}
 						/>
 					)}
 					<FormSubmitButton
 						label="Create Post"
 						onClick={handleSubmit(onSubmit)}
-						disabled={isEditing || isPosting}
+						disabled={isLoading}
 					/>
 				</form>
 			) : (

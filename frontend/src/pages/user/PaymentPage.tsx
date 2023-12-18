@@ -10,7 +10,7 @@ import { RouteEnum, siteMap } from "../../services/routes.config";
 const PaymentPage = () => {
 	const { offerId } = useParams();
 	const [searchParams] = useSearchParams();
-	const userAddressId = searchParams.get("address");
+	const userAddressId = searchParams.get("addressId");
 	const price = searchParams.get("price");
 	const navigate = useNavigate();
 	const { mutateAsync: pay, isLoading } = useMutation({

@@ -8,11 +8,12 @@ import {
 	getOrdersSchema,
 	requestsResponseSchema,
 } from "../../schemas/responseSchema";
+const baseUserApiRoute = `/api/user`;
 
 const userApiRoutes = Object.freeze({
-	ADDRESS: "/api/user/address",
-	ORDER: "/api/user/order",
-	REQUEST: "/api/user/request",
+	ADDRESS: `${baseUserApiRoute}/address`,
+	ORDER: `${baseUserApiRoute}/order`,
+	REQUEST: `/api/request`,
 });
 
 export {
