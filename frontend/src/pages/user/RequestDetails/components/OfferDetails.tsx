@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { DetailDisplay } from "../../../../components/display/DetailDisplay";
 import { IconCircleFrame } from "../../../../components/frame/IconCircleFrame";
 import FormModal from "../../../../components/modal/FormModal";
@@ -7,7 +6,7 @@ import PrimaryButton from "../../../../components/ui/PrimaryButton";
 import AcceptOfferForm from "../../../../features/forms/AcceptOfferForm";
 import { fireAlert, sweetAlertDefaultOptions } from "../../../../lib/formUtils";
 import { camelToTitleCase } from "../../../../lib/utils";
-import { ControlModalContext } from "../../../../services/context/ControlModalContext";
+import { useControlModalContext } from "../../../../services/context/ControlModalContext";
 import { useOfferDetailsContext } from "../../../../services/context/OfferDetailsContext";
 import Rating from "./Rating";
 
@@ -22,7 +21,7 @@ const sweetAlertOptions = {
 
 const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 	const { offerDetails, onDecline } = useOfferDetailsContext(offerId);
-	const [showAcceptForm, setShowAcceptForm] = useState(false);
+	const { setIsShow } = useControlModalContext();
 	if (!offerDetails) return null;
 	// TODO: missing a page show provider details
 	const {
@@ -35,6 +34,7 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 		...displayDetails
 	} = offerDetails;
 	const score = (efficiency + attitude) / 2;
+
 	return (
 		<>
 			<div className="flex">
@@ -57,10 +57,7 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 				/>
 				<span>({reviewCount})</span>
 				<div className="flex">
-					<PrimaryButton
-						label="Accept"
-						onClick={() => setShowAcceptForm(true)}
-					/>
+					<PrimaryButton label="Accept" onClick={() => setIsShow(true)} />
 					<CancelButton
 						label="Decline"
 						onClick={fireAlert({
@@ -70,13 +67,9 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 					/>
 				</div>
 			</div>
-			<ControlModalContext.Provider
-				value={{ isShow: showAcceptForm, setIsShow: setShowAcceptForm }}
-			>
-				<FormModal>
-					<AcceptOfferForm offerId={offerId} />
-				</FormModal>
-			</ControlModalContext.Provider>
+			<FormModal>
+				<AcceptOfferForm offerId={offerId} />
+			</FormModal>
 		</>
 	);
 };
