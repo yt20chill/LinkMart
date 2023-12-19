@@ -1049,8 +1049,9 @@ Success
 }
 ```
 ### 📍 7.3 Get All inProgress Order By UserId Done orderStatus = {create, in-progress,shipped,completed}
-| [GET]| /api/user/order/{orderStatus} |
-| ----- | ------------- |
+| [GET]| /api/user/order/inProgress | status=in-progress&shipped|
+| [GET]| /api/user/order/complete|status=completed&cancelled| 
+| ----- | ------------- |--|
 "jwt"
 > ⬆️ Resp:
 ```js
