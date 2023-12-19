@@ -1,4 +1,4 @@
-export { orderStatusTabs };
+export { orderStatusTabs, orderStatuses };
 export type { BaseButtonProps, OrderStatusTabs };
 
 type BaseButtonProps = {
@@ -10,3 +10,10 @@ type BaseButtonProps = {
 
 const orderStatusTabs = ["inProgress", "history"] as const;
 type OrderStatusTabs = (typeof orderStatusTabs)[number];
+
+const orderStatuses = Object.freeze([
+	"In progress",
+	"Shipping",
+	"Review",
+	"Completed",
+]);

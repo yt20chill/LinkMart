@@ -17,7 +17,6 @@ export {
 	isObjOfType,
 	isShallowEqual,
 	mapIconUrl,
-	orderStatuses,
 	toDataURLAsync,
 };
 
@@ -90,10 +89,3 @@ const mapIconUrl = (username: string, type?: IconType) => {
 		hashData
 	)}?d=${type ?? "retro"}&f=y`;
 };
-
-const orderStatuses = Object.freeze([
-	"In progress",
-	"Shipping",
-	"Review",
-	"Completed",
-]);
