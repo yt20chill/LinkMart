@@ -14,15 +14,20 @@ export type TabContextType<T extends string> = {
 };
 
 /**
- *
+ * @param name Basically for error message
  * @returns [TabContext, useTabContext], where TabContext is the context object and useTabContext is the hook to use the context
  */
-const createTabContext = <T extends string>() => {
+const createTabContext = <T extends string>(name?: string) => {
 	const TabContext = createContext<TabContextType<T> | undefined>(undefined);
 
 	const useTabContext = () => {
 		const context = useContext(TabContext);
-		if (!context) throw new Error(`Tab Context must be used within a Provider`);
+		if (!context)
+			throw new Error(
+				`${name ?? "Tab"} Context must be used within a ${
+					name ?? "Tab"
+				} Provider`
+			);
 		return context;
 	};
 	return { TabContext, useTabContext };
@@ -31,7 +36,7 @@ const createTabContext = <T extends string>() => {
 const {
 	TabContext: OrderStatusTabContext,
 	useTabContext: useOrderStatusTabContext,
-} = createTabContext<OrderStatusTabs>();
+} = createTabContext<OrderStatusTabs>("OrderStatusTab");
 
 const { TabContext: UserInfoTabContext, useTabContext: useUserInfoTabContext } =
-	createTabContext<UserInfoTabs>();
+	createTabContext<UserInfoTabs>("UserInfoTab");
