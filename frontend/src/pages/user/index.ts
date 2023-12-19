@@ -5,7 +5,7 @@ import PostRequestPage from "./PostRequestPage";
 import ProfilePage from "./ProfilePage";
 import ProviderRegisterPage from "./ProviderRegisterPage";
 import UserRequestDetailsPage from "./RequestDetails/UserRequestDetailsPage";
-import UserOrderPage from "./UserOrderPage";
+import UserOrderPage from "./UserOrder/UserOrderPage";
 import UserRequestsPage from "./UserRequestsPage";
 
 export {
