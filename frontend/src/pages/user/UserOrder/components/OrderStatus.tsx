@@ -6,20 +6,20 @@ import {
 	getOrdersHistoryAJAX,
 	getOrdersInProgressAJAX,
 } from "../../../../services/api/orderApi";
+import { useOfferStatusContext } from "../../../../services/context/OrderStatusContext";
 import { queryKey } from "../../../../services/query.config";
 import { RouteEnum, siteMap } from "../../../../services/routes.config";
-import { OrderStatusTabs } from "../UserOrderPage";
 
-export type OrderStatusProps = {
-	status: OrderStatusTabs;
-};
-
-const OrderStatus = ({ status }: OrderStatusProps) => {
+const OrderStatus = () => {
+	const { activeTab } = useOfferStatusContext();
 	const { data: orders, isLoading } = useQuery({
-		queryKey: [queryKey.ORDER, status],
+		queryKey: [queryKey.ORDER, activeTab],
 		queryFn:
-			status === "inProgress" ? getOrdersInProgressAJAX : getOrdersHistoryAJAX,
+			activeTab === "inProgress"
+				? getOrdersInProgressAJAX
+				: getOrdersHistoryAJAX,
 	});
+	console.dir(orders);
 	const navigate = useNavigate();
 	return (
 		<div className="p-4">

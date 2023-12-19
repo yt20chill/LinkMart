@@ -1,35 +1,30 @@
 import { useState } from "react";
+import { OrderStatusContext } from "../../../services/context/OrderStatusContext";
+import {
+	OrderStatusTabs,
+	orderStatusTabs,
+} from "../../../types/sharePropsModel";
 import OrderStatus from "./components/OrderStatus";
-
-export type OrderStatusTabs = "inProgress" | "history";
+import OrderStatusTab from "./components/OrderStatusTab";
 
 const UserOrderPage = () => {
 	const [tab, setTab] = useState<OrderStatusTabs>("inProgress");
 
 	return (
-		<div className="mt-12 max-w-5xl w-full flex flex-col mx-auto px-6">
-			<div className="w-full bg-base-100/50 h-auto shadow rounded-xl">
-				<div className="flex w-full border-b pt-4">
-					<div
-						className={`border-b-4 border-slate-300 hover:border-primary-300 px-12 py-2 ${
-							tab === "inProgress" ? "border-primary-300" : ""
-						}`}
-						onClick={() => setTab("inProgress")}
-					>
-						In-progress
+		<OrderStatusContext.Provider
+			value={{ activeTab: tab, setActiveTab: setTab }}
+		>
+			<div className="mt-12 max-w-5xl w-full flex flex-col mx-auto px-6">
+				<div className="w-full bg-base-100/50 h-auto shadow rounded-xl">
+					<div className="flex w-full border-b pt-4">
+						{orderStatusTabs.map((tab) => (
+							<OrderStatusTab key={tab} status={tab} />
+						))}
 					</div>
-					<div
-						className={`border-b-4 border-slate-300 hover:border-primary-300 px-12 py-2 ${
-							tab === "history" ? "border-primary-300" : ""
-						}`}
-						onClick={() => setTab("history")}
-					>
-						Order History
-					</div>
+					<OrderStatus />
 				</div>
-				<OrderStatus status={tab} />
 			</div>
-		</div>
+		</OrderStatusContext.Provider>
 	);
 };
 

@@ -92,7 +92,6 @@ const mapIconUrl = (username: string, type?: IconType) => {
 };
 
 const orderStatuses = Object.freeze([
-	"Pending",
 	"In progress",
 	"Shipping",
 	"Review",
