@@ -108,4 +108,62 @@ export class UserController {
       },
     ];
   }
+  @Get('order/inProgress')
+  getAllOrdersInProgress() {
+    return [
+      {
+        orderId: '01HHVY6Z37TZVDWJW8SCGF37RD',
+        orderStatus: 'Pending',
+        providerId: '01HHVY6Z37TZVDWJW8SCGF37RD',
+        providerName: 'ProviderEX',
+        item: '明日香',
+        primaryImage: 'https://dummyimage.com/600x400/000/eee',
+        quantity: '1',
+        price: 100,
+        estimatedProcessTime: 14,
+        createdAt: '2023-12-13 11:24',
+      },
+      {
+        orderId: '01HHVY6Z37TZVDWJW8SCGF12RD',
+        orderStatus: 'In progress',
+        providerId: '01HHVY6Z37TZVDWJW8SCGF37RD',
+        providerName: 'ProviderEX',
+        item: 'Uniqlo Jacket',
+        primaryImage: 'https://dummyimage.com/600x400/000/eee',
+        quantity: '1',
+        price: 100,
+        estimatedProcessTime: 14,
+        createdAt: '2023-12-13 11:24',
+      },
+    ];
+  }
+  @Get('order/complete')
+  getAllOrdersHistory() {
+    return [
+      {
+        orderId: '01HHVY6Z37TZVDWJW8SCGF37RD',
+        orderStatus: 'Completed',
+        providerId: '01HHVY6Z37TZVDWJW8SCGF37RD',
+        providerName: 'ProviderEX',
+        item: 'Asuka',
+        primaryImage: 'https://dummyimage.com/600x400/000/eee',
+        quantity: '1',
+        price: 101829,
+        estimatedProcessTime: 14,
+        createdAt: '2023-12-13 11:24',
+      },
+      {
+        orderId: '01HHVY6Z37TZVDWJW8SCGF12RD',
+        orderStatus: 'Completed',
+        providerId: '01HHVY6Z37TZVDWJW8SCGF37RD',
+        providerName: 'ProviderEX',
+        item: 'Uniqlo Jacket',
+        primaryImage: 'https://dummyimage.com/600x400/000/eee',
+        quantity: '1',
+        price: 100000,
+        estimatedProcessTime: 14,
+        createdAt: '2023-12-13 11:24',
+      },
+    ];
+  }
 }
