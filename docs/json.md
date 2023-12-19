@@ -982,7 +982,7 @@ url: BACKEND_DOMAIN/api/offer/paymentInfo/" + offerId + "/" + addressId
 
 ## 📎 7. Order Route
 
-### 📍 7.1 Create Order (Payment Success)
+### 📍 7.1 Create Order (Payment Success)Done
 "jwt"
 (Mock Payment website callback)
 "Change request status, offer status"
@@ -1007,7 +1007,7 @@ Success
 }
 ```
 
-### 📍 7.1.2 Create Order (Payment Cancelled)
+### 📍 7.1.2 Create Order (Payment Cancelled)Done
 | [GET]| /api/order?cancelled=true&offerId={offerId}&userAddressId={userAddressId}&price={price} |
 | ----- | ------------- |
 > ⬆️ Resp:
@@ -1019,7 +1019,7 @@ Success
 }
 ```
 
-### 📍 7.2 Get All Order By UserId
+### 📍 7.2 Get All Order By UserId Done
 | [GET]| /api/user/order |
 | ----- | ------------- |
 "jwt"
@@ -1045,8 +1045,8 @@ Success
     "message" : failed to get orders
 }
 ```
-### 📍 7.3 Get All inProgress Order By UserId
-| [GET]| /api/user/order/inProgress |
+### 📍 7.3 Get All inProgress Order By UserId Done orderStatus = {create, in-progress,shipped,completed}
+| [GET]| /api/user/order/{orderStatus} |
 | ----- | ------------- |
 "jwt"
 > ⬆️ Resp:
@@ -1071,7 +1071,7 @@ Success
     "message" : failed to get orders
 }
 ```
-### 📍 7.4 Get All completed Order By UserId
+### 📍 7.4 Get All completed Order By UserId Done
 | [GET]| /api/user/order/complete |
 | ----- | ------------- |
 "jwt"
