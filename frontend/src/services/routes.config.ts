@@ -174,7 +174,7 @@ routeConfigMap
 	})
 	.set(RouteEnum.TaskDetail, {
 		name: "Task Details",
-		path: "task-details/:id",
+		path: "task-details/:orderId",
 		authorizeLevel: AuthorizeLevels.PROVIDER,
 		component: TaskDetailsPage,
 	})
@@ -190,13 +190,13 @@ routeConfigMap
 		authorizeLevel: AuthorizeLevels.ADMIN,
 		component: AdminSignInPage,
 	})
-	.set(RouteEnum.Task, {
+	.set(RouteEnum.AdminTask, {
 		name: "task",
 		path: "task",
 		authorizeLevel: AuthorizeLevels.ADMIN,
 		component: AdminTasksPage,
 	})
-	.set(RouteEnum.TaskDetail, {
+	.set(RouteEnum.AdminTaskDetail, {
 		name: "taskDetail",
 		path: "task-detail/:id",
 		authorizeLevel: AuthorizeLevels.ADMIN,

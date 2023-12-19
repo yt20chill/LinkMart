@@ -1,8 +1,16 @@
 import { z } from "zod";
-import { ulid } from "../../lib/schemaUtils";
+import { requiredId, ulid } from "../../lib/schemaUtils";
 
-export { createOrderParamsSchema };
-export type { CreateOrderParams };
+export {
+	createOrderParamsSchema,
+	postLogisticCompanyFormSchema,
+	uploadShippingFormSchema,
+};
+export type {
+	CreateOrderParams,
+	TPostLogisticCompanyForm,
+	TUploadShippingForm,
+};
 
 const createOrderParamsSchema = z.object({
 	success: z
@@ -17,3 +25,23 @@ const createOrderParamsSchema = z.object({
 	// }),
 });
 type CreateOrderParams = z.infer<typeof createOrderParamsSchema>;
+
+const postLogisticCompanyFormSchema = z.object({
+	companyName: z.string().min(1),
+	companyUrl: z.string().url(),
+});
+
+type TPostLogisticCompanyForm = z.infer<typeof postLogisticCompanyFormSchema>;
+
+const uploadShippingFormSchema = z.object({
+	logisticCompanyId: requiredId,
+	shippingOrderNo: z.string().min(1),
+	shippingInvoice: z
+		.instanceof(FileList)
+		.refine((fileList) => fileList.length > 0, { message: "required" }),
+});
+
+type TUploadShippingForm = Record<
+	Exclude<keyof z.infer<typeof uploadShippingFormSchema>, "shippingInvoice">,
+	string
+> & { shippingInvoice: File | null };

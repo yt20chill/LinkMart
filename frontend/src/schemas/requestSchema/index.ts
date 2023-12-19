@@ -14,7 +14,14 @@ import {
 	acceptOfferSchema,
 	postOfferSchema,
 } from "./offerSchema";
-import { CreateOrderParams, createOrderParamsSchema } from "./orderSchema";
+import {
+	CreateOrderParams,
+	TPostLogisticCompanyForm,
+	TUploadShippingForm,
+	createOrderParamsSchema,
+	postLogisticCompanyFormSchema,
+	uploadShippingFormSchema,
+} from "./orderSchema";
 
 import {
 	CategoryId,
@@ -43,12 +50,14 @@ export {
 	createOrderParamsSchema,
 	deleteImageParamsSchema,
 	postAddressSchema,
+	postLogisticCompanyFormSchema,
 	postOfferSchema,
 	postRequestSchema,
 	requestIdSchema,
 	signInSchema,
 	signUpSchema,
 	updateAddressFormSchema,
+	uploadShippingFormSchema,
 };
 
 export type {
@@ -63,8 +72,10 @@ export type {
 	RequestForm,
 	RequestId,
 	TAcceptOfferForm,
+	TPostLogisticCompanyForm,
 	TSignInForm,
 	TSignUpForm,
+	TUploadShippingForm,
 	UpdateAddressDto,
 	UpdateAddressForm,
 };

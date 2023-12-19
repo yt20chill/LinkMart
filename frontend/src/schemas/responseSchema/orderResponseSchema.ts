@@ -1,8 +1,20 @@
 import { z } from "zod";
 import { ulid } from "../../lib/schemaUtils";
 
-export { createOrderResponseSchema, getOrdersSchema, orderDetailsSchema };
-export type { CreateOrderDto, GetOrderDto, OrderDetailsDto };
+export {
+	createOrderResponseSchema,
+	getLogisticsSchema,
+	getOrdersSchema,
+	orderDetailsSchema,
+	postLogisticsSchema,
+};
+export type {
+	CreateOrderDto,
+	GetOrderDto,
+	LogisticsDto,
+	OrderDetailsDto,
+	PostLogisticDto,
+};
 
 const createOrderResponseSchema = z.object({
 	orderId: ulid,
@@ -39,3 +51,18 @@ const orderDetailsSchema = getOrderResponseSchema.extend({
 });
 
 type OrderDetailsDto = z.infer<typeof orderDetailsSchema>;
+
+const logisticsSchema = z.object({
+	logisticCompanyId: z.number().int().positive(),
+	companyName: z.string().min(1),
+	companyUrl: z.string().url(),
+});
+
+const getLogisticsSchema = z.array(logisticsSchema);
+type LogisticsDto = z.infer<typeof logisticsSchema>;
+
+const postLogisticsSchema = z.object({
+	logisticCompanyId: z.number().int().positive(),
+});
+
+type PostLogisticDto = z.infer<typeof postLogisticsSchema>;

@@ -9,10 +9,14 @@ import {
 import {
 	CreateOrderDto,
 	GetOrderDto,
+	LogisticsDto,
 	OrderDetailsDto,
+	PostLogisticDto,
 	createOrderResponseSchema,
+	getLogisticsSchema,
 	getOrdersSchema,
 	orderDetailsSchema,
+	postLogisticsSchema,
 } from "./orderResponseSchema";
 
 import {
@@ -45,9 +49,11 @@ export {
 	categoryFieldsResponseSchema,
 	createOrderResponseSchema,
 	errorResponseSchema,
+	getLogisticsSchema,
 	getOrdersSchema,
 	locationsResponseSchema,
 	orderDetailsSchema,
+	postLogisticsSchema,
 	postRequestResponseSchema,
 	requestDetailsResponseSchema,
 	requestOffersResponseSchema,
@@ -66,8 +72,10 @@ export type {
 	GetOrderDto,
 	ImageDto,
 	LocationDto,
+	LogisticsDto,
 	OfferDetailsDto,
 	OrderDetailsDto,
+	PostLogisticDto,
 	PostRequestResponseDto,
 	RequestDetailsDto,
 	RequestDto,
