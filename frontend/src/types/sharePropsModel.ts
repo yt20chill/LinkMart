@@ -1,5 +1,5 @@
-export { orderStatusTabs, orderStatuses };
-export type { BaseButtonProps, OrderStatusTabs };
+export { orderStatusTabs, orderStatuses, userInfoTabs };
+export type { BaseButtonProps, OrderStatusTabs, UserInfoTabs };
 
 type BaseButtonProps = {
 	label: string;
@@ -17,3 +17,6 @@ const orderStatuses = Object.freeze([
 	"Review",
 	"Completed",
 ]);
+
+const userInfoTabs = ["General", "Address"] as const;
+type UserInfoTabs = (typeof userInfoTabs)[number];

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { OrderStatusContext } from "../../../services/context/OrderStatusContext";
+import { OrderStatusTabContext } from "../../../services/context/TabsContext";
 import {
 	OrderStatusTabs,
 	orderStatusTabs,
@@ -11,7 +11,7 @@ const UserOrderPage = () => {
 	const [tab, setTab] = useState<OrderStatusTabs>("inProgress");
 
 	return (
-		<OrderStatusContext.Provider
+		<OrderStatusTabContext.Provider
 			value={{ activeTab: tab, setActiveTab: setTab }}
 		>
 			<div className="mt-12 max-w-5xl w-full flex flex-col mx-auto px-6">
@@ -24,7 +24,7 @@ const UserOrderPage = () => {
 					<OrderStatus />
 				</div>
 			</div>
-		</OrderStatusContext.Provider>
+		</OrderStatusTabContext.Provider>
 	);
 };
 

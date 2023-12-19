@@ -1,5 +1,5 @@
 import { camelToTitleCase } from "../../../../lib/utils";
-import { useOfferStatusContext } from "../../../../services/context/OrderStatusContext";
+import { useOrderStatusTabContext } from "../../../../services/context/TabsContext";
 import { OrderStatusTabs } from "../../../../types/sharePropsModel";
 
 type OrderStatusTabProps = {
@@ -11,7 +11,7 @@ const OrderStatusTab = ({
 	status,
 	label = camelToTitleCase(status),
 }: OrderStatusTabProps) => {
-	const { activeTab, setActiveTab } = useOfferStatusContext();
+	const { activeTab, setActiveTab } = useOrderStatusTabContext();
 	return (
 		<div
 			className={`border-b-4 hover:border-primary-300 px-12 py-2 ${
