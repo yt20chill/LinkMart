@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
 
 @Controller('api')
 export class ApiController {
@@ -41,9 +41,22 @@ export class ApiController {
   deleteRequest() {
     return { message: 'request deleted' };
   }
+  @Post('request')
+  createRequest() {
+    return { requestId: '01HHHJBZXAT9TGB4H0JCE9BGPV' };
+  }
 
   @Post('logisticCompany')
   addCompany() {
     return { logisticCompanyId: 3 };
+  }
+
+  @Post('offer')
+  createOffer() {
+    return { success: true };
+  }
+  @Put('order/:id')
+  updateOrder() {
+    return { success: true };
   }
 }
