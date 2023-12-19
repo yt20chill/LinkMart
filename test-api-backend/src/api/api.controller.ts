@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Delete, Get, Post } from '@nestjs/common';
 
 @Controller('api')
 export class ApiController {
@@ -36,5 +36,14 @@ export class ApiController {
           'http://cdn.linkmart.com.s3-website-ap-southeast-1.amazonaws.com/profiles/profile-1702470483882.avif',
       },
     ];
+  }
+  @Delete('request/:id')
+  deleteRequest() {
+    return { message: 'request deleted' };
+  }
+
+  @Post('logisticCompany')
+  addCompany() {
+    return { logisticCompanyId: 3 };
   }
 }

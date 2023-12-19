@@ -11,6 +11,7 @@ import { RequestModule } from './request/request.module';
 import { UserModule } from './user/user.module';
 import { OfferModule } from './offer/offer.module';
 import { OrderModule } from './order/order.module';
+import { LogisticCompanyModule } from './logistic-company/logistic-company.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { OrderModule } from './order/order.module';
     AuthModule,
     OfferModule,
     OrderModule,
+    LogisticCompanyModule,
   ],
   controllers: [AppController, RequestController, ApiController],
   providers: [AppService],
