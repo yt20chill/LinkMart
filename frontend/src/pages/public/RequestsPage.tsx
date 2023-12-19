@@ -63,7 +63,7 @@ function RequestsPage() {
         to={siteMap(RouteEnum.PostRequest)}
         className="fixed text-base-100 bottom-0 right-0 mb-3 mr-3 md:mb-12 md:mr-12"
       >
-        <div className="flex justify-center items-center bg-gradient-to-br from-primary-400 from-30% via-primary-200/50 to-secondary-300/50 bg-primary-400 hover:bg-secondary-500 p-4 gap-1 rounded-badge shadow backdrop-blur-xl ring-offset-0 hover:shadow-lg hover:-translate-y-1 hover:ring-primary-300 hover:ring-2 hover:ring-offset-2 transition-all duration-500">
+        <div className="flex justify-center items-center bg-gradient-to-br from-primary-400 from-30% via-primary-200/50 to-secondary-300/50 bg-primary-400 hover:bg-secondary-500 p-4 gap-1 rounded-badge shadow-md backdrop-blur-xl ring-offset-0 hover:shadow-lg hover:-translate-y-1 hover:ring-primary-300 hover:ring-2 hover:ring-offset-2 transition-all duration-500">
           <span className="material-symbols-rounded">add_circle</span>
           <span className="max-md:hidden">Create Request</span>
         </div>
