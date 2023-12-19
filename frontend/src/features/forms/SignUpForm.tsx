@@ -13,53 +13,67 @@ import { useAuth } from "../hooks/useAuth";
 const defaultValues = generateDefaultValues(signUpSchema);
 
 const SignUpForm = () => {
-	const {
-		handleSubmit,
-		register,
-		formState: { errors },
-		setError,
-	} = useForm<TSignUpForm>({
-		resolver: zodResolver(signUpSchema),
-		defaultValues,
-		mode: "onTouched",
-	});
-	const { signInHandler } = useAuth();
-	const {
-		mutateAsync: signUp,
-		error,
-		isLoading,
-	} = useMutation({
-		mutationFn: (signUpDto: Omit<TSignUpForm, "confirmPassword">) =>
-			signUpAJAX(signUpDto),
-		onSuccess: async (result) => {
-			await signInHandler(result?.jwt);
-		},
-	});
-	const onSubmit = async (formData: TSignUpForm) => {
-		const { confirmPassword, ...rest } = formData;
-		if (rest.password !== confirmPassword)
-			setError("confirmPassword", { message: "Passwords do not match" });
-		await signUp(rest);
-	};
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    setError,
+  } = useForm<TSignUpForm>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues,
+    mode: "onTouched",
+  });
+  const { signInHandler } = useAuth();
+  const {
+    mutateAsync: signUp,
+    error,
+    isLoading,
+  } = useMutation({
+    mutationFn: (signUpDto: Omit<TSignUpForm, "confirmPassword">) =>
+      signUpAJAX(signUpDto),
+    onSuccess: async (result) => {
+      await signInHandler(result?.jwt);
+    },
+  });
+  const onSubmit = async (formData: TSignUpForm) => {
+    const { confirmPassword, ...rest } = formData;
+    if (rest.password !== confirmPassword)
+      setError("confirmPassword", { message: "Passwords do not match" });
+    await signUp(rest);
+  };
 
-	return (
-		<form className="space-y-8">
-			{Object.keys(defaultValues).map((name) => (
-				<FormInput
-					key={name}
-					name={name as keyof TSignUpForm}
-					register={register}
-					errors={errors}
-				/>
-			))}
-			{error instanceof FetchError && <ErrorMessage message={error.message} />}
-			<FormSubmitButton
-				label="Sign Up"
-				onClick={handleSubmit(onSubmit)}
-				disabled={isLoading}
-			/>
-		</form>
-	);
+  return (
+    <form className="mx-auto bg-base-100 w-96 flex flex-col shadow-lg rounded-xl py-6 mt-24">
+      <div className="px-9 pb-4 border-b font-bold text-secondary-400 text-lg">
+        SIGN UP
+      </div>
+      <div className="bg-gradient-to-tr from-secondary-400 to-primary-100 flex items-center justify-center py-16 border-b">
+        <img
+          src="/image/Linkmart-mono@512.png"
+          className="w-2/3 drop-shadow"
+          alt=""
+        />
+      </div>
+      <div className="px-9 pt-6 pb-3 flex flex-col gap-4">
+        {Object.keys(defaultValues).map((name) => (
+          <FormInput
+            key={name}
+            name={name as keyof TSignUpForm}
+            register={register}
+            errors={errors}
+          />
+        ))}
+        {error instanceof FetchError && (
+          <ErrorMessage message={error.message} />
+        )}
+        <FormSubmitButton
+          label="Sign Up"
+          onClick={handleSubmit(onSubmit)}
+          disabled={isLoading}
+        />
+      </div>
+    </form>
+  );
 };
 
 export default SignUpForm;
