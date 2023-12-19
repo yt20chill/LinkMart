@@ -15,10 +15,11 @@ const AuthGuard = ({
 	const authStore = useAuthStore(useShallow((state) => state));
 	const location = useLocation();
 
-	// if validating user info
-	if (authStore.isAuthenticated === null) return <Loading />;
 	// if not logged in
-	if (authStore.isAuthenticated === false)
+	if (
+		!window.localStorage.getItem("access_token") ||
+		authStore.isAuthenticated === false
+	)
 		return (
 			<Navigate
 				to={siteMap(RouteEnum.SignIn)}
@@ -26,6 +27,8 @@ const AuthGuard = ({
 				replace
 			/>
 		);
+	// if validating user info
+	if (authStore.isAuthenticated === null) return <Loading />;
 	// if user info validated but not authorized
 	else if (authStore.isAuthenticated && authStore.role < authorizeLevel)
 		return <Navigate to={siteMap(RouteEnum.Home)} replace />;
