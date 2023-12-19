@@ -1,54 +1,55 @@
 import { useCallback } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 import { FetchError, setCommonAuthorizationHeader } from "../../lib/apiUtils";
 import { getAuthAJAX } from "../../services/api/authApi";
-import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 import { useAuthStore } from "../../services/stores/authStore";
 import { useNavigateToPreviousPage } from "./useNavigateToPreviousPage";
 
 const useAuth = () => {
-	const queryClient = useQueryClient();
 	const navigatePrev = useNavigateToPreviousPage();
 	const navigate = useNavigate();
+	const authStore = useAuthStore(useShallow((state) => state));
+
 	const {
 		data: userInfo,
 		isLoading,
 		isError,
 		error,
 	} = useQuery({
-		queryKey: queryKey.AUTH,
 		queryFn: getAuthAJAX,
-		enabled: !!window.localStorage.getItem("access_token"),
+		enabled: !!authStore.isAuthenticated,
 	});
-	const authStore = useAuthStore(useShallow((state) => state));
+
 	const signInHandler = useCallback(
-		async (jwt: string | undefined): Promise<void> => {
+		(jwt: string | undefined): void => {
 			if (!jwt) throw new FetchError(401, "Invalid token");
 			window.localStorage.setItem("access_token", jwt);
 			setCommonAuthorizationHeader();
-			await queryClient.invalidateQueries(queryKey.AUTH);
+			authStore.setIsAuthenticated(true);
 			navigatePrev();
 		},
-		[navigatePrev, queryClient]
+		[navigatePrev, authStore]
 	);
 
-	const signOutHandler = useCallback(async (): Promise<void> => {
+	const signOutHandler = useCallback((): void => {
 		window.localStorage.removeItem("access_token");
 		setCommonAuthorizationHeader(false);
-		await queryClient.invalidateQueries(queryKey.AUTH);
+		authStore.reset();
 		navigate(siteMap(RouteEnum.Home));
-	}, [navigate, queryClient]);
+	}, [navigate, authStore]);
 
+	//FIXME: did not get the latest userInfo?
 	const updateAuthStore = useCallback((): void => {
 		if (isLoading) return authStore.setIsAuthenticated(null);
 		else if (isError && error instanceof FetchError && error.status === 401) {
-			signOutHandler().catch((error) => console.error(error));
+			signOutHandler();
 			return authStore.reset();
-		} else if (userInfo)
+		} else if (userInfo) {
 			return authStore.login(userInfo.username, userInfo.role);
+		}
 	}, [authStore, error, isError, isLoading, userInfo, signOutHandler]);
 
 	return { signInHandler, signOutHandler, updateAuthStore };

@@ -3,7 +3,6 @@ import { useAuthStore } from "@/services/stores/authStore";
 import { AuthorizeLevels } from "@/types/authModels";
 import { MouseEvent } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useShallow } from "zustand/react/shallow";
 import { useAuth } from "../../features/hooks/useAuth";
 import { ButtonWithIcon } from "../button/ButtonWithIcon";
@@ -19,7 +18,7 @@ export function Navbar() {
 	const { signOutHandler } = useAuth();
 	const signOut = (e: MouseEvent) => {
 		e.preventDefault();
-		signOutHandler().catch(() => toast.error("Something went wrong"));
+		signOutHandler();
 	};
 	return (
 		<nav className="py-5 shadow-md border-b-8 border-primary-500 text-slate-500 bg-base-100">

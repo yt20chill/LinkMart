@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 import { createSelectors } from "../../lib/utils";
 import { AuthorizeLevels } from "../../types/authModels";
 
@@ -20,13 +21,15 @@ const initAuthState: AuthState = Object.freeze({
 	role: AuthorizeLevels.PUBLIC,
 });
 
-const useAuthStoreBase = create<AuthState & AuthActions>()((set) => ({
-	...initAuthState,
-	login: (username: string | null, role: AuthorizeLevels) =>
-		set({ username, role, isAuthenticated: role > AuthorizeLevels.PUBLIC }),
-	reset: () => set(initAuthState),
-	setIsAuthenticated: (isAuthenticated: boolean | null) =>
-		set({ isAuthenticated }),
-}));
+const useAuthStoreBase = create<AuthState & AuthActions>()(
+	devtools((set) => ({
+		...initAuthState,
+		login: (username: string | null, role: AuthorizeLevels) =>
+			set({ username, role, isAuthenticated: role > AuthorizeLevels.PUBLIC }),
+		reset: () => set(initAuthState),
+		setIsAuthenticated: (isAuthenticated: boolean | null) =>
+			set({ isAuthenticated }),
+	}))
+);
 
 export const useAuthStore = createSelectors(useAuthStoreBase);
