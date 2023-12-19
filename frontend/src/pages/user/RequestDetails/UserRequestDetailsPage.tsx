@@ -3,22 +3,121 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ControlModalContext } from "../../../services/context/ControlModalContext";
 import { RouteEnum, siteMap } from "../../../services/routes.config";
 import OfferDetailsList from "./components/OfferDetailsList";
+import { DateBadge } from "@/components/badge/DateBadge";
+import { PillBadge } from "@/components/badge/PillBadge";
+import { RequestCardSkeleton } from "@/components/card/RequestCardSkeleton";
+import { DetailDisplay } from "@/components/display/DetailDisplay";
+import { PriceDisplay } from "@/components/display/PriceDisplay";
+import { IconCircleFrame } from "@/components/frame/IconCircleFrame";
+import { MainImageFrame } from "@/components/imageFrame/MainImageFrame";
+import { SubImageFrame } from "@/components/imageFrame/SubImageFrame";
+import FormModal from "@/components/modal/FormModal";
+import { SectionTitle } from "@/components/title/SectionTitle";
+import PrimaryButton from "@/components/ui/PrimaryButton";
+import PostOfferForm from "@/features/forms/PostOfferForm";
+import { AuthorizeLevels } from "@/types/authModels";
+import { useQueryContainer } from "@/features/hooks/useQueryContainer";
 
 const UserRequestDetailsPage = () => {
-	const { requestId } = useParams();
-	const navigate = useNavigate();
-	const [showAcceptForm, setShowAcceptForm] = useState(false);
-	if (!requestId) navigate(siteMap(RouteEnum.UserRequests), { replace: true });
-	return (
-		<>
-			<div>UserRequestDetailsPage</div>
-			<ControlModalContext.Provider
-				value={{ isShow: showAcceptForm, setIsShow: setShowAcceptForm }}
-			>
-				<OfferDetailsList requestId={requestId!} />
-			</ControlModalContext.Provider>
-		</>
-	);
+  const { requestId } = useParams();
+  const navigate = useNavigate();
+  const [showAcceptForm, setShowAcceptForm] = useState(false);
+  if (!requestId) navigate(siteMap(RouteEnum.UserRequests), { replace: true });
+  if (requestId === undefined) navigate("/404", { replace: true });
+  const { useGetRequestDetails } = useQueryContainer();
+  const { data: details } = useGetRequestDetails({ requestId: requestId! });
+  const [currentImage, setCurrentImage] = useState<string>("");
+  return details ? (
+    <ControlModalContext.Provider
+      value={{ isShow: showAcceptForm, setIsShow: setShowAcceptForm }}
+    >
+      <div className="bg-base-200/80 backdrop-blur-3xl mt-12 py-12 border-y border-base-300">
+        <div className="max-w-7xl max-xl:px-2 mx-auto">
+          <main className="flex flex-wrap max-md:px-6 px-12">
+            {/*Request Img */}
+            <div className="max-md:w-full w-2/5 flex flex-col flex-wrap max-md:order-2">
+              <MainImageFrame title={details.item} imagePath={currentImage} />
+              <div className="mt-2 grid grid-cols-5 relative gap-2">
+                {details.images.map((itm) => (
+                  <SubImageFrame
+                    key={itm.imagePath}
+                    imagePath={itm.imagePath}
+                    onClick={(e) =>
+                      setCurrentImage((e.target as HTMLImageElement).src)
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+            {/*Request Info */}
+            <div className="max-md:w-full w-3/5 flex flex-col flex-wrap max-md:pl-0 max-md:pt-6 pl-12 mb-3">
+              <SectionTitle icon="package_2" content={"Request Item"} />
+              <div className="inline-flex max-md:text-2xl text-3xl font-bold mb-2">
+                {details.item}
+              </div>
+
+              <div className="flex justify-between items-start mb-5">
+                <div className="flex gap-2">
+                  <PillBadge content={details.locationName} />
+                  <PillBadge content={details.categoryName} />
+                </div>
+                <DateBadge date={details.updatedAt} />
+              </div>
+              <div className="flex flex-wrap justify-end items-center">
+                <IconCircleFrame username="fakeRequest.createdBy" />
+                <div>
+                  <span className="text-slate-400/80 flex items-center gap-1 font-roboto tracking-wide text-xs leading-none">
+                    Created By
+                  </span>
+                  {details.createdBy}
+                </div>
+              </div>
+              <hr className="border-base-300 my-4" />
+              <SectionTitle icon="view_list" content={"Details"} />
+              <div className="grid max-md:grid-cols-2 grid-cols-3 gap-2 p-5">
+                <DetailDisplay
+                  title={details.locationName}
+                  label={"From"}
+                  value={details.locationName.split(" ").slice(1, 10).join(" ")}
+                />
+                {Object.entries(details.itemDetail ?? []).map(([key, val]) => {
+                  return (
+                    <DetailDisplay
+                      key={`${key}-${val}`}
+                      className={val && val.length > 20 ? "col-span-2" : ""}
+                      label={key}
+                      value={val ?? ""}
+                      title={val ?? ""}
+                    />
+                  );
+                })}
+                {details.requestRemark && (
+                  <DetailDisplay
+                    icon="info"
+                    className="col-span-3"
+                    label="Remark"
+                    value={details.requestRemark}
+                  />
+                )}
+              </div>
+              <div className="text-right">
+                <PriceDisplay
+                  badge={true}
+                  badgeContent="Offer"
+                  price={details.offerPrice}
+                />
+              </div>
+
+              <hr className="border-base-300 my-4" />
+              <OfferDetailsList requestId={requestId!} />
+            </div>
+          </main>
+        </div>
+      </div>
+    </ControlModalContext.Provider>
+  ) : (
+    <RequestCardSkeleton />
+  );
 };
 
 export default UserRequestDetailsPage;

@@ -10,37 +10,37 @@ import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 
 const OrderDetailsPage = () => {
-	const { orderId } = useParams();
-	const navigate = useNavigate();
-	if (!orderId) {
-		toast.error("Order not found");
-		navigate(siteMap(RouteEnum.UserRequests), { replace: true });
-	}
-	const { data: details } = useQuery({
-		queryKey: [queryKey.ORDER, { orderId }],
-		queryFn: () => orderDetailsAJAX(orderId!),
-	});
-	if (!details) return <Loading />;
-	const {
-		requestId,
-		updatedAt,
-		locationName,
-		images,
-		itemDetail,
-		url,
-		requestRemark,
-		createdBy,
-		orderStatus,
-		...orderDto
-	} = details;
+  const { orderId } = useParams();
+  const navigate = useNavigate();
+  if (!orderId) {
+    toast.error("Order not found");
+    navigate(siteMap(RouteEnum.UserRequests), { replace: true });
+  }
+  const { data: details } = useQuery({
+    queryKey: [queryKey.ORDER, { orderId }],
+    queryFn: () => orderDetailsAJAX(orderId!),
+  });
+  if (!details) return <Loading />;
+  const {
+    requestId,
+    updatedAt,
+    locationName,
+    images,
+    itemDetail,
+    url,
+    requestRemark,
+    createdBy,
+    orderStatus,
+    ...orderDto
+  } = details;
 
-	return (
-		<>
-			<div>OrderDetailsPage</div>
-			<OrderCard {...orderDto} orderStatus={orderStatus} />
-			<ProgressBar steps={[...orderStatuses]} currentStep={orderStatus} />
-		</>
-	);
+  return (
+    <>
+      <div>OrderDetailsPage</div>
+      <OrderCard {...orderDto} orderStatus={orderStatus} />
+      <ProgressBar steps={[...orderStatuses]} currentStep={orderStatus} />
+    </>
+  );
 };
 
 export default OrderDetailsPage;
