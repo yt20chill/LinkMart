@@ -569,6 +569,9 @@
 | [Get] | /request?p={page}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
 
+"Total active request"
+"Number of page(active request / limit )"
+
 ##### 📍 5.2.2 Get All - by userId (via created_by) Done~
 
 | [Get] | /api/request (userId in jwt header) |
