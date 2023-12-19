@@ -51,7 +51,16 @@ const UserRequestDetailsPage = () => {
 								<DateBadge date={details.updatedAt} />
 							</div>
 							<div className="flex gap-2">
-								<button className="flex items-center justify-center bg-secondary-400 hover:bg-secondary-500 hover:-translate-y-1 text-white py-1 rounded-btn grow h-12 transition-all hover:ring-4 ring-secondary-200">
+								{/* TODO: Can it be changed to use UI button? */}
+								<button
+									className="flex items-center justify-center bg-secondary-400 hover:bg-secondary-500 hover:-translate-y-1 text-white py-1 rounded-btn grow h-12 transition-all hover:ring-4 ring-secondary-200"
+									onClick={(e) => {
+										e.preventDefault();
+										navigate(
+											`${siteMap(RouteEnum.PostRequest)}?requestId=${requestId}`
+										);
+									}}
+								>
 									<span className="material-symbols-rounded text text-lg">
 										edit
 									</span>
