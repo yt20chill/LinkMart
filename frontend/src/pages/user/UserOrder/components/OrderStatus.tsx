@@ -19,7 +19,6 @@ const OrderStatus = () => {
 				? getOrdersInProgressAJAX
 				: getOrdersHistoryAJAX,
 	});
-	console.dir(orders);
 	const navigate = useNavigate();
 	return (
 		<div className="p-4">
