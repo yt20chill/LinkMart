@@ -1153,7 +1153,7 @@ Success
 
 ### 📍 9.1 Logistic Company
 
-| [GET] | /logistic_company |
+| [GET] | /logisticCompany |
 | ----- | --------------------- |
 
 > ⬆️ Resp:
@@ -1171,6 +1171,27 @@ Success
 🔴 [400] BAD REQUEST
 {
     "message" : failed to get order status name
+}
+```
+### 📍 9.2 Upload Logistic Company
+
+| [GET] | /api/logisticCompany |
+| ----- | --------------------- |
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"companyName" : "ABC",
+	"companyUrl" : "123"
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to upload logistic company
 }
 ```
 
