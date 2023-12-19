@@ -34,9 +34,15 @@ const OfferDetailsList = ({ requestId }: OfferDetailsListProps) => {
         <OfferDetailsContext.Provider
           value={{ offersDetails: offers, onDecline }}
         >
-          {offers.map((offer) => (
-            <OfferDetails key={offer.offerId} offerId={offer.offerId} />
-          ))}
+          {offers.length > 0 ? (
+            offers.map((offer) => (
+              <OfferDetails key={offer.offerId} offerId={offer.offerId} />
+            ))
+          ) : (
+            <div className="flex items-center justify-center text-gray-300 py-12">
+              No Offer
+            </div>
+          )}
         </OfferDetailsContext.Provider>
       )}
     </>

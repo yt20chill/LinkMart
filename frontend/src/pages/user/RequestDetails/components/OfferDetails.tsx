@@ -1,5 +1,3 @@
-import { PriceDisplay } from "@/components/display/PriceDisplay";
-import { DetailDisplay } from "../../../../components/display/DetailDisplay";
 import { IconCircleFrame } from "../../../../components/frame/IconCircleFrame";
 import FormModal from "../../../../components/modal/FormModal";
 import CancelButton from "../../../../components/ui/CancelButton";
@@ -30,14 +28,13 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
     providerName,
     providerId,
     reviewCount,
-    offerId: offerIdFromAPI,
     ...displayDetails
   } = offerDetails;
   const score = (efficiency + attitude) / 2;
 
   return (
     <>
-      <div className="bg-base-100 rounded-lg overflow-hidden w-full mb-2 shadow">
+      <div className="bg-base-100 rounded-lg w-full mb-2 shadow">
         <div className="flex items-center border-b p-2">
           <IconCircleFrame username={providerName} />
           <span>{providerName}</span>
@@ -52,23 +49,45 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
             <span className="text-sm">({reviewCount})</span>
           </div>
         </div>
-        <div className="px-6 py-3">
-          <div className="grid grid-cols-2">
-            <div className="col-span-2 flex justify-end">
-              <PriceDisplay className="" price={displayDetails.price} />
+        <div className="max-md:px-3 px-6 py-3">
+          <div className="flex flex-wrap gap-12 mb-2">
+            <div
+              className="flex items-center gap-[2px] tooltip"
+              data-tip="Offer Price"
+            >
+              <span className="material-symbols-rounded icn-fill text-slate-300 text-lg">
+                attach_money
+              </span>
+              <b className="font-normal">
+                {displayDetails.price.toLocaleString("en")}
+              </b>
             </div>
-
-            <DetailDisplay
-              label="Estimated Time"
-              value={displayDetails.estimatedProcessTime + " Days"}
-            />
-            {displayDetails.offerRemark && (
-              <DetailDisplay
-                label="Remarks"
-                value={displayDetails.offerRemark}
-              />
-            )}
+            <div
+              className="flex items-center gap-[2px] tooltip"
+              data-tip="Estimated Process Time"
+            >
+              <span className="material-symbols-rounded icn-fill text-slate-300 text-lg">
+                schedule
+              </span>
+              <b className="font-normal">
+                {displayDetails.estimatedProcessTime}
+                <span className="pl-1 text-sm text-slate-400">Days</span>
+              </b>
+            </div>
           </div>
+
+          {displayDetails.offerRemark && (
+            <div
+              className="inline-flex items-center gap-[2px] tooltip"
+              data-tip="Provider Remarks"
+            >
+              <span className="material-symbols-rounded icn-fill text-slate-300 text-lg">
+                contact_support
+              </span>
+              <span className="truncate">{displayDetails.offerRemark}</span>
+            </div>
+          )}
+
           <div className="">
             <div className="flex justify-end items-center gap-2">
               <PrimaryButton label="Accept" onClick={() => setIsShow(true)} />
