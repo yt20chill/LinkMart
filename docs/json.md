@@ -1232,7 +1232,7 @@ Success
 
 ### 📍 11.1 payment
 
-| [POST] | /api/offer/:offerId |
+| [PUT] | /api/offer/:offerId |
 | ----- | --------------------- |
 "jwt" :
 > ⬇️ Req Body:
