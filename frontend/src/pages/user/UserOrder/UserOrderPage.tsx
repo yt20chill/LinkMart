@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { OrderStatusTabContext } from "../../../services/context/TabsContext";
+import Tab from "../../../components/ui/Tab";
+import {
+	OrderStatusTabContext,
+	useOrderStatusTabContext,
+} from "../../../services/context/TabsContext";
 import {
 	OrderStatusTabs,
 	orderStatusTabs,
 } from "../../../types/sharePropsModel";
 import OrderStatus from "./components/OrderStatus";
-import OrderStatusTab from "./components/OrderStatusTab";
 
 const UserOrderPage = () => {
 	const [tab, setTab] = useState<OrderStatusTabs>("inProgress");
-
 	return (
 		<OrderStatusTabContext.Provider
 			value={{ activeTab: tab, setActiveTab: setTab }}
@@ -18,7 +20,12 @@ const UserOrderPage = () => {
 				<div className="w-full bg-base-100/50 h-auto shadow rounded-xl">
 					<div className="flex w-full border-b pt-4">
 						{orderStatusTabs.map((tab) => (
-							<OrderStatusTab key={tab} status={tab} />
+							// <OrderStatusTab key={tab} status={tab} />
+							<Tab
+								key={tab}
+								status={tab}
+								useTabContext={useOrderStatusTabContext}
+							/>
 						))}
 					</div>
 					<OrderStatus />

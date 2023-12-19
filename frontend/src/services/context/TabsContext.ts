@@ -8,31 +8,30 @@ export {
 	useUserInfoTabContext,
 };
 
-type TabContextType<T extends string> = {
+export type TabContextType<T extends string> = {
 	activeTab: T;
 	setActiveTab: (active: T) => void;
 };
 
-const OrderStatusTabContext = createContext<
-	TabContextType<OrderStatusTabs> | undefined
->(undefined);
+/**
+ *
+ * @returns [TabContext, useTabContext], where TabContext is the context object and useTabContext is the hook to use the context
+ */
+const createTabContext = <T extends string>() => {
+	const TabContext = createContext<TabContextType<T> | undefined>(undefined);
 
-const UserInfoTabContext = createContext<UserInfoTabs | undefined>(undefined);
-
-const useOrderStatusTabContext = () => {
-	const context = useContext(OrderStatusTabContext);
-	if (!context)
-		throw new Error(
-			"OrderStatusContext must be used within a OrderStatusContext Provider"
-		);
-	return context;
+	const useTabContext = () => {
+		const context = useContext(TabContext);
+		if (!context) throw new Error(`Tab Context must be used within a Provider`);
+		return context;
+	};
+	return { TabContext, useTabContext };
 };
 
-const useUserInfoTabContext = () => {
-	const context = useContext(UserInfoTabContext);
-	if (!context)
-		throw new Error(
-			"UserInfoTabContext must be used within a UserInfoTabContext Provider"
-		);
-	return context;
-};
+const {
+	TabContext: OrderStatusTabContext,
+	useTabContext: useOrderStatusTabContext,
+} = createTabContext<OrderStatusTabs>();
+
+const { TabContext: UserInfoTabContext, useTabContext: useUserInfoTabContext } =
+	createTabContext<UserInfoTabs>();
