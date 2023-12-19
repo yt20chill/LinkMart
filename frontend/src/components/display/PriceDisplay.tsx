@@ -1,6 +1,6 @@
 type PriceDisplayProps = {
   badge?: boolean;
-  badgeContent: string;
+  badgeContent?: string;
   price: number | null;
   className?: string;
 };

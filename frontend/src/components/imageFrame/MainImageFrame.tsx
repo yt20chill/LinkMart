@@ -13,7 +13,7 @@ export function MainImageFrame(props: MainImageFrameProps) {
     >
       <img
         title={props.title}
-        className="object-cover hover:object-contain origin-top-left "
+        className="object-cover hover:object-contain origin-top-left"
         src={props.imagePath}
         onMouseMove={(e) => imageHoverView(e)}
         onMouseLeave={(e) => imageHoverEnd(e)}

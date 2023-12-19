@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 import Skeleton from "../../../../components/skeletons/Skeleton";
 import { RequestId } from "../../../../schemas/requestSchema";
 import {
-	declineOfferAJAX,
-	getAllOffersByRequestIdAJAX,
+  declineOfferAJAX,
+  getAllOffersByRequestIdAJAX,
 } from "../../../../services/api/offerApi";
 import { OfferDetailsContext } from "../../../../services/context/OfferDetailsContext";
 import { queryKey } from "../../../../services/query.config";
@@ -13,34 +13,34 @@ import OfferDetails from "./OfferDetails";
 type OfferDetailsListProps = RequestId;
 
 const OfferDetailsList = ({ requestId }: OfferDetailsListProps) => {
-	const { data: offers, isLoading: isGettingOffers } = useQuery({
-		queryKey: [queryKey.OFFER, { requestId }],
-		queryFn: () => getAllOffersByRequestIdAJAX({ requestId }),
-	});
-	const queryClient = useQueryClient();
-	const { mutateAsync: onDecline } = useMutation({
-		mutationFn: declineOfferAJAX,
-		onSuccess: async () => {
-			toast.success("Offer has been declined");
-			await queryClient.invalidateQueries([queryKey.OFFER, { requestId }]);
-		},
-	});
+  const { data: offers, isLoading: isGettingOffers } = useQuery({
+    queryKey: [queryKey.OFFER, { requestId }],
+    queryFn: () => getAllOffersByRequestIdAJAX({ requestId }),
+  });
+  const queryClient = useQueryClient();
+  const { mutateAsync: onDecline } = useMutation({
+    mutationFn: declineOfferAJAX,
+    onSuccess: async () => {
+      toast.success("Offer has been declined");
+      await queryClient.invalidateQueries([queryKey.OFFER, { requestId }]);
+    },
+  });
 
-	return (
-		<>
-			{isGettingOffers && <Skeleton />}
+  return (
+    <>
+      {isGettingOffers && <Skeleton />}
 
-			{offers && (
-				<OfferDetailsContext.Provider
-					value={{ offersDetails: offers, onDecline }}
-				>
-					{offers.map((offer) => (
-						<OfferDetails key={offer.offerId} offerId={offer.offerId} />
-					))}
-				</OfferDetailsContext.Provider>
-			)}
-		</>
-	);
+      {offers && (
+        <OfferDetailsContext.Provider
+          value={{ offersDetails: offers, onDecline }}
+        >
+          {offers.map((offer) => (
+            <OfferDetails key={offer.offerId} offerId={offer.offerId} />
+          ))}
+        </OfferDetailsContext.Provider>
+      )}
+    </>
+  );
 };
 
 export default OfferDetailsList;
