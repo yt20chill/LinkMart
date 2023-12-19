@@ -9,10 +9,20 @@ import { SectionTitle } from "@/components/title/SectionTitle";
 // import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
 import { useQueryContainer } from "@/features/hooks/useQueryContainer";
 import { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { fireAlert, sweetAlertDefaultOptions } from "../../../lib/formUtils";
+import { deleteRequestAJAX } from "../../../services/api/requestApi";
 import { ControlModalContext } from "../../../services/context/ControlModalContext";
+import { queryKey } from "../../../services/query.config";
 import { RouteEnum, siteMap } from "../../../services/routes.config";
 import OfferDetailsList from "./components/OfferDetailsList";
+
+const sweetAlertOptions = {
+	...sweetAlertDefaultOptions,
+	text: "Are you sure you want to delete this?",
+};
 
 const UserRequestDetailsPage = () => {
 	const { requestId } = useParams();
@@ -26,6 +36,16 @@ const UserRequestDetailsPage = () => {
 	useEffect(() => {
 		if (details) setCurrentImage(details.primaryImage);
 	}, [details]);
+
+	const queryClient = useQueryClient();
+	const { mutateAsync: deleteRequest } = useMutation({
+		mutationFn: deleteRequestAJAX,
+		onSuccess: async () => {
+			toast.success("Deleted request");
+			await queryClient.invalidateQueries([queryKey.REQUEST]);
+			navigate(siteMap(RouteEnum.UserRequests), { replace: true });
+		},
+	});
 	return details ? (
 		<ControlModalContext.Provider
 			value={{ isShow: showAcceptForm, setIsShow: setShowAcceptForm }}
@@ -66,7 +86,13 @@ const UserRequestDetailsPage = () => {
 									</span>
 									Edit Request
 								</button>
-								<button className="p-2 border border-rose-400 hover:bg-rose-400 [&_span]:hover:text-white rounded-btn hover:-translate-y-1 overflow-hidden h-12 w-12 transition-all hover:ring-4 ring-rose-200">
+								<button
+									className="p-2 border border-rose-400 hover:bg-rose-400 [&_span]:hover:text-white rounded-btn hover:-translate-y-1 overflow-hidden h-12 w-12 transition-all hover:ring-4 ring-rose-200"
+									onClick={fireAlert({
+										options: sweetAlertOptions,
+										onConfirmed: () => deleteRequest({ requestId: requestId! }),
+									})}
+								>
 									<span className="material-symbols-rounded text-rose-400 text-2xl">
 										delete
 									</span>
