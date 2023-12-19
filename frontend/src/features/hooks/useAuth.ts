@@ -20,7 +20,7 @@ const useAuth = () => {
 		error,
 	} = useQuery({
 		queryFn: getAuthAJAX,
-		enabled: !!authStore.isAuthenticated,
+		enabled: !!window.localStorage.getItem("access_token"),
 	});
 
 	const signInHandler = useCallback(
