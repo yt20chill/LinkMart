@@ -69,7 +69,6 @@ const UploadShippingForm = ({ orderId }: UploadShippingFormProps) => {
 		setShowAddCompany(false);
 	};
 	if (!logistics) return <Skeleton />;
-	console.log(companyId);
 	return (
 		<>
 			<form>

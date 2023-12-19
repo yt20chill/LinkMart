@@ -14,12 +14,14 @@ const postOfferSchema = z.object({
 	requestId: ulid,
 	price: z
 		.string()
-		.transform((val) => parseFloat(val))
+		.or(z.number())
+		.transform((val) => +val)
 		.pipe(z.number().positive())
 		.refine((value) => value > 0, { message: "Invalid Price" }),
 	estimatedProcessTime: z
 		.string()
-		.transform((val) => parseInt(val))
+		.or(z.number())
+		.transform((val) => +val)
 		.pipe(z.number().positive())
 		.refine((value) => value > 0, {
 			message: "Invalid Process Time",

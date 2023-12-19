@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ErrorMessage, FormInput } from "../../components/form";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
@@ -24,10 +25,11 @@ const PostOfferForm = ({ requestId }: RequestId) => {
 		formState: { errors },
 		handleSubmit,
 	} = useForm<OfferForm>({
-		resolver: zodResolver(postOfferSchema),
+		resolver: zodResolver(postOfferSchema.omit({ requestId: true })),
 		defaultValues,
 	});
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 	const {
 		mutateAsync: postOffer,
 		error,
@@ -37,6 +39,7 @@ const PostOfferForm = ({ requestId }: RequestId) => {
 		onSuccess: async () => {
 			toast.success(`Offer has been made successfully!`);
 			await queryClient.invalidateQueries(queryKey.OFFER);
+			navigate(-1);
 		},
 	});
 	const onSubmit = async (formData: OfferForm) => {
