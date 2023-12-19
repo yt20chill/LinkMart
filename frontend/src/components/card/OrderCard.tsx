@@ -2,9 +2,10 @@ import { GetOrderDto } from "@/schemas/responseSchema";
 import { remainingDays } from "../../lib/formattingUtils";
 import { PriceDisplay } from "../display/PriceDisplay";
 
-type OrderCardProps = GetOrderDto & { completed?: boolean };
+type OrderCardProps = GetOrderDto;
 export function OrderCard(props: OrderCardProps) {
-	const textColor = props.completed ? "text-slate-400" : "text-base-content";
+	const isCompleted = props.orderStatus === "completed";
+	const textColor = isCompleted ? "text-slate-400" : "text-base-content";
 	return (
 		<div className="bg-base-100 rounded-2xl shadow flex flex-wrap overflow-hidden mb-4 hover:ring-2 hover:ring-secondary-500 hover:shadow-lg hover:-translate-y-1 transition-all border">
 			<div className="w-full border-b py-2 pl-4 text-sm text-slate-500 tracking-tight flex items-center">
@@ -25,7 +26,7 @@ export function OrderCard(props: OrderCardProps) {
 					<div className={`text-xl ${textColor}`}>{props.item}</div>
 					<div
 						className={`${
-							props.completed ? "text-slate-400" : " text-emerald-400"
+							isCompleted ? "text-slate-400" : " text-emerald-400"
 						} me-1 font-bold text-sm`}
 					>
 						{props.orderStatus.toUpperCase()}

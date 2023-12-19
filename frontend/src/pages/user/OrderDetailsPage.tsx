@@ -36,7 +36,6 @@ const OrderDetailsPage = () => {
 
   return (
     <>
-      <div>OrderDetailsPage</div>
       <OrderCard {...orderDto} orderStatus={orderStatus} />
       <ProgressBar steps={[...orderStatuses]} currentStep={orderStatus} />
     </>

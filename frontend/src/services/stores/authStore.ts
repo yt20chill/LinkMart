@@ -16,7 +16,7 @@ type AuthActions = {
 
 const initAuthState: AuthState = Object.freeze({
 	username: null,
-	isAuthenticated: false,
+	isAuthenticated: null,
 	role: AuthorizeLevels.PUBLIC,
 });
 
