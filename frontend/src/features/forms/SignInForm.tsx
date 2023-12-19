@@ -39,10 +39,10 @@ const SignInForm = () => {
 
   return (
     <form className="mx-auto bg-base-100 w-96 flex flex-col shadow-lg rounded-xl py-6 mt-24">
-      <div className="px-9 pb-4 border-b font-bold text-secondary-400 text-lg">
+      <div className="px-9 pb-4 border-b font-bold text-primary-400 text-lg">
         SIGN IN
       </div>
-      <div className="bg-gradient-to-tr from-secondary-400 to-primary-100 flex items-center justify-center py-16 border-b">
+      <div className="bg-gradient-to-tr from-primary-400 to-secondary-100 flex items-center justify-center py-16 border-b">
         <img
           src="/image/Linkmart-mono@512.png"
           className="w-2/3 drop-shadow"
@@ -62,6 +62,7 @@ const SignInForm = () => {
           <ErrorMessage message={error.message} />
         )}
         <FormSubmitButton
+          color="primary"
           label="Sign In"
           onClick={handleSubmit(onSubmit)}
           disabled={isLoading}
