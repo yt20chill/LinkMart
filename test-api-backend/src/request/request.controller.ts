@@ -105,7 +105,7 @@ export class RequestController {
       quantity: '1',
       requestRemark: '無縫羽絨連帽外套',
       offerPrice: 1900,
-      createdBy: 'JasonLi',
+      createdBy: 'Jason',
       createdAt: '2023-12-12 20:22:54.04832',
       updatedAt: '2023-12-12 20:22:54.04832',
     };
