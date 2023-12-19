@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const signInSchema = z.object({
 	email: z.string().email("Invalid email"),
-	password: z.string(),
+	password: z.string().min(1, { message: "Password cannot be empty" }),
 });
 export const signUpSchema = z
 	.object({
