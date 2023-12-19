@@ -7,6 +7,7 @@ import Skeleton from "../../components/skeletons/Skeleton";
 import { generateDefaultValues } from "../../lib/formUtils";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import FormModal from "../../components/modal/FormModal";
 import {
@@ -19,6 +20,7 @@ import {
 } from "../../services/api/orderApi";
 import { ControlModalContext } from "../../services/context/ControlModalContext";
 import { queryKey } from "../../services/query.config";
+import { RouteEnum, siteMap } from "../../services/routes.config";
 import PostLogisticCompanyForm from "./PostLogisticCompanyForm";
 
 type UploadShippingFormProps = {
@@ -38,6 +40,7 @@ const UploadShippingForm = ({ orderId }: UploadShippingFormProps) => {
 		queryKey: [queryKey.ORDER, "logistics"],
 		queryFn: getLogisticCompanyAJAX,
 	});
+	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const { mutateAsync: uploadShipping, isLoading } = useMutation({
 		mutationFn: (form: TUploadShippingForm) =>
@@ -45,6 +48,7 @@ const UploadShippingForm = ({ orderId }: UploadShippingFormProps) => {
 		onSuccess: async () => {
 			toast.success("Updated order status");
 			await queryClient.invalidateQueries([queryKey.ORDER, { orderId }]);
+			navigate(siteMap(RouteEnum.Task), { replace: true });
 		},
 	});
 
