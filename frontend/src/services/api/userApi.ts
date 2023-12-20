@@ -3,9 +3,11 @@ import { PostAddressDto, UpdateProfileForm } from "../../schemas/requestSchema";
 import {
 	AddressDto,
 	GetOrderDto,
+	PostAddressResponseDto,
 	RequestDto,
 	addressesResponseSchema,
 	getOrdersSchema,
+	postAddressResponseSchema,
 	requestsResponseSchema,
 } from "../../schemas/responseSchema";
 const baseUserApiRoute = `/api/user`;
@@ -28,20 +30,24 @@ export {
 };
 
 const postAddressAJAX = async (data: PostAddressDto) => {
-	await axiosWrapper<PostAddressDto>(userApiRoutes.ADDRESS, {
-		method: "post",
-		data,
-	});
+	return await axiosWrapper<PostAddressDto, PostAddressResponseDto>(
+		userApiRoutes.ADDRESS,
+		{
+			method: "post",
+			data,
+			schema: postAddressResponseSchema,
+		}
+	);
 };
 
 const updatePrimaryAddressAJAX = async (addressId: string) => {
-	await axiosWrapper(`${userApiRoutes.ADDRESS}/${addressId}`, {
+	return await axiosWrapper(`${userApiRoutes.ADDRESS}/${addressId}`, {
 		method: "put",
 	});
 };
 
 const deleteAddressAJAX = async (addressId: string) => {
-	await axiosWrapper(`${userApiRoutes.ADDRESS}/${addressId}`, {
+	return await axiosWrapper(`${userApiRoutes.ADDRESS}/${addressId}`, {
 		method: "delete",
 	});
 };

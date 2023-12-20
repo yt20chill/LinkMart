@@ -78,13 +78,8 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		await acceptOffer(dto.data);
 	};
 	// Get the largest addressId and set to drop down
-	const postAddressCallback = () => {
-		const newAddressId =
-			addresses &&
-			addresses.reduce((result, addr) => {
-				return addr.addressId > result ? addr.addressId : result;
-			}, 0);
-		newAddressId && setValue("userAddressId", newAddressId + "");
+	const postAddressCallback = (addressId: number) => {
+		setValue("userAddressId", addressId + "");
 	};
 	return (
 		<>

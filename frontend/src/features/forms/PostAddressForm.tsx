@@ -12,7 +12,7 @@ import { queryKey } from "../../services/query.config";
 type PostAddressFormProps = {
 	isShow: boolean;
 	setIsShow: (isShow: boolean) => void;
-	onSubmitCallback?: () => void;
+	onSubmitCallback?: (addressId: number) => void;
 };
 
 const defaultValues = generateDefaultValues(postAddressSchema);
@@ -36,17 +36,18 @@ function PostAddressForm({
 	// Backend can response with the latest address Id after post
 	const { mutateAsync: postAddress, isLoading: isPosting } = useMutation({
 		mutationFn: postAddressAJAX,
-		onSuccess: async () => {
-			toast.success("Address added successfully!");
+		onSuccess: async (result) => {
 			await queryClient.invalidateQueries([queryKey.USER, "address"]);
+			if (!result) return toast.error("Something went wrong");
+			toast.success("Address added successfully!");
+			reset();
+			setIsShow(false);
+			onSubmitCallback && onSubmitCallback(result.addressId);
 		},
 	});
 
 	const onSubmit = async (data: PostAddressDto) => {
 		await postAddress(data);
-		reset();
-		setIsShow(false);
-		onSubmitCallback && onSubmitCallback();
 	};
 	return (
 		isShow && (
