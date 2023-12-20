@@ -13,19 +13,23 @@ const ProfilePage = () => {
 	const [activeTab, setActiveTab] = useState<UserInfoTabs>("General");
 	return (
 		<>
-			<UserInfoTabContext.Provider value={{ activeTab, setActiveTab }}>
-				{userInfoTabs.map((tab) => (
-					<Tab
-						key={tab}
-						status={tab}
-						useTabContext={
-							useUserInfoTabContext as () => TabContextType<string>
-						}
-					/>
-				))}
-			</UserInfoTabContext.Provider>
-			{activeTab === "General" && <GeneralProfile />}
-			{activeTab === "Address" && <AddressProfile />}
+			<div className="flex w-96 ms-10">
+				<UserInfoTabContext.Provider value={{ activeTab, setActiveTab }}>
+					{userInfoTabs.map((tab) => (
+						<Tab
+							key={tab}
+							status={tab}
+							useTabContext={
+								useUserInfoTabContext as () => TabContextType<string>
+							}
+						/>
+					))}
+				</UserInfoTabContext.Provider>
+			</div>
+			<div className="ms-10">
+				{activeTab === "General" && <GeneralProfile />}
+				{activeTab === "Address" && <AddressProfile />}
+			</div>
 		</>
 	);
 };
