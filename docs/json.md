@@ -665,7 +665,6 @@
     "createdBy" : string(username),
     "createdAt" : Date,
     "updatedAt" : Date
-    "imageId":
 }
 🔴 [400]
 {
@@ -863,7 +862,6 @@
     "createdBy" : string(username),
     "createdAt" : Date,
     "updatedAt" : Date
-    "imageId": int,
     "offerStatus" : String,
     "estimatedProcessTime" : int,
     "price": int,
