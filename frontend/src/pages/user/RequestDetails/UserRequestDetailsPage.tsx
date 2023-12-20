@@ -1,8 +1,6 @@
 import { DateBadge } from "@/components/badge/DateBadge";
 import { PillBadge } from "@/components/badge/PillBadge";
 import { RequestCardSkeleton } from "@/components/card/RequestCardSkeleton";
-import { DetailDisplay } from "@/components/display/DetailDisplay";
-import { PriceDisplay } from "@/components/display/PriceDisplay";
 import { MainImageFrame } from "@/components/imageFrame/MainImageFrame";
 import { SubImageFrame } from "@/components/imageFrame/SubImageFrame";
 import { SectionTitle } from "@/components/title/SectionTitle";
@@ -17,8 +15,9 @@ import { deleteRequestAJAX } from "../../../services/api/requestApi";
 import { ControlModalContext } from "../../../services/context/ControlModalContext";
 import { queryKey } from "../../../services/query.config";
 import { RouteEnum, siteMap } from "../../../services/routes.config";
-import OfferDetailsList from "./components/OfferDetailsList";
 import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
+import { DetailInfoDisplay } from "@/components/display/DetailInfoDisplay";
+import OfferDetailsList from "./components/OfferDetailsList";
 
 const sweetAlertOptions = {
   ...sweetAlertDefaultOptions,
@@ -101,41 +100,7 @@ const UserRequestDetailsPage = () => {
               </div>
 
               <hr className="border-base-300 my-4" />
-              <SectionTitle icon="view_list" content={"Details"} />
-              <div className="grid max-md:grid-cols-2 grid-cols-3 gap-2 p-5">
-                <DetailDisplay
-                  title={details.locationName}
-                  label={"From"}
-                  value={details.locationName.split(" ").slice(1, 10).join(" ")}
-                />
-                {Object.entries(details.itemDetail ?? []).map(([key, val]) => {
-                  return (
-                    <DetailDisplay
-                      key={`${key}-${val}`}
-                      className={val && val.length > 20 ? "col-span-2" : ""}
-                      label={key}
-                      value={val ?? ""}
-                      title={val ?? ""}
-                    />
-                  );
-                })}
-                {details.requestRemark && (
-                  <DetailDisplay
-                    icon="info"
-                    className="col-span-3"
-                    label="Remark"
-                    value={details.requestRemark}
-                  />
-                )}
-              </div>
-              <div className="text-right">
-                <PriceDisplay
-                  badge={true}
-                  badgeContent="Offer"
-                  price={details.offerPrice}
-                />
-              </div>
-              <hr className="border-base-300 my-4" />
+              <DetailInfoDisplay {...details} />
               {/*Request Img */}
               <MainImageFrame
                 title={details.item}
