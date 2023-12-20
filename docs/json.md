@@ -436,6 +436,32 @@
 ```
 
 ---
+### 📍 4.6 Change username and password Done~
+
+| [PUT] | /api/user/info |
+| ----- | ----------------- |
+> ⬇️ Req Body:
+"JWT in header" "Change is_Primary" 
+```js
+{
+	"username"?: String,
+	"password"?: String
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : "fail to update info"
+}
+```
+
+---
 
 ## 📎 5. Request Route
 
@@ -564,12 +590,15 @@
 | [Get] | /request |
 | ----- | ------------ |
 
-##### 📍 5.2.1 Get All - with queries  Done(waiting for test)
+### 📍 5.2.1 Get All - with queries  Done(waiting for test)
 
 | [Get] | /request?p={page}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
 
-##### 📍 5.2.2 Get All - by userId (via created_by) Done~
+"Total active request"
+"Number of page(active request / limit )"
+
+### 📍 5.2.2 Get All - by userId (ACTIVE) Done~
 
 | [Get] | /api/request (userId in jwt header) |
 | ----- | ---------------------------------------- |
@@ -577,6 +606,37 @@
 > ⬆️ Resp:
 
 > Sort by updated_at desc && isActive === true
+
+```js
+🟢 [200]  OK
+[
+{
+    "requestId" : string (ulid),
+    "createdBy": string(user.username),
+    "locationName" : string(location.name),
+    "item" : string,
+    "primaryImage" : string,
+    "offerPrice"? : float,
+    "createdAt": DateTime,
+    "updatedAt": DateTime
+},.../* Max 30 Requests */]
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : "fail to get request"
+}
+```
+### 📍 5.2.3 Get All - by userId (INACTIVE) Done~
+
+| [Get] | /api/request (userId in jwt header) |
+| ----- | ---------------------------------------- |
+
+> ⬆️ Resp:
+
+> Sort by updated_at desc && isActive === false
 
 ```js
 🟢 [200]  OK
@@ -631,7 +691,6 @@
     "createdBy" : string(username),
     "createdAt" : Date,
     "updatedAt" : Date
-    "imageId":
 }
 🔴 [400]
 {
@@ -732,6 +791,27 @@
     "message" : "fail to get my inactive request"
 }
 ```
+### 📍 5.8 Check request if this provider has offered
+
+| [GET] | /api/request/provider/:requestId |
+| -------- | ----------------------- |
+"jwt"
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+[
+{
+	"hasOffered": boolean
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message": fail to get data from database
+}
+```
 
 
 ## 📎 6. Offer Route
@@ -771,9 +851,11 @@
 | [GET] | /api/offer/myOffer |
 | ------ | ---------- |
  "jwt"
-> ⬇️ Req Body:
+
+> ⬆️ Resp:
 
 ```js
+🟢 [200]  OK
 [
 	{
 		"item": String,
@@ -788,6 +870,76 @@
 	...
 ]
 ```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to change offer
+}
+```
+
+### 📍 6.1.3 GET Offer detail (provider)
+
+| [GET] | /api/offer/:offerId |
+| ------ | ---------- |
+ "jwt"
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]
+{
+    "requestId" : string (ulid),
+    "locationId" : int(location.location_id),
+    "locationName": string,
+    "categoryId" : int(category.category_id),
+    "categoryName" : string,
+    "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
+    "item" : string,
+    "primaryImage" : String,
+    "images" : [{
+        "requestId" : String,
+        "imageId" : int,
+        "imagePath" : string
+    },.../*images*/]
+    "url" : string | null,
+    "quantity" : int,
+    "requestRemark" : string | null,
+    "offerPrice" : float | null,
+    "createdBy" : string(username),
+    "createdAt" : Date,
+    "updatedAt" : Date
+    "offerStatus" : String,
+    "estimatedProcessTime" : int,
+    "price": int,
+    "offerRemark": String
+}
+RequestDetails (5.3) + offerStatus + estimatedProcessTime + price + offerRemark
+
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to change offer
+}
+```
+
+### 📍 6.1.4 Amend Offer (provider) 
+
+| [PUT] | /api/offer/:offerId |
+| ------ | ---------- |
+ "jwt"
+> ⬇️ Req Body:
+
+```js
+{
+    "price" : float,
+    "estimatedProcessTime" : int,
+    "offerRemark" : string | undefined
+}
+```
+```
 > ⬆️ Resp:
 
 ```js
@@ -800,10 +952,9 @@
     "message" : fail to change offer
 }
 ```
+### 📍 6.1.5 DELETE Offer (provider) Change Status Aborted
 
-### 📍 6.1.2 Amend Offer (provider) 
-
-| [GET] | /api/offer/:offerId |
+| [DELETE] | /api/offer/:offerId |
 | ------ | ---------- |
  "jwt"
 ```
@@ -811,22 +962,12 @@
 
 ```js
 🟢 [200]  OK
-[  {
-    "requestId" : ulid(request.request_id),
-    "offerId" : ulid(offer.offer_id),
-    "createdBy" : String,
-    "item": String,
-    "primaryImage": String,
-    "price" : int,
-    "estimatedProcessTime" : int,
-    "status": String
-}      ,...]
 ```
 
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : fail to get offer
+    "message" : fail to delete offer
 }
 ```
 
@@ -851,12 +992,13 @@
     "requestId" : int(request.request_id),
     "providerId" : int(provider.provider_id),
     "providerName": string(user.username),
-    "efficiency": float (max 5)
-    "attitude": float (max 5)
+    "efficiency": float (max 5),
+    "attitude": float (max 5),
+    "reviewCount": int,
     "statusName": string
     "price" : float,
-    "estimatedProcessTime": int (days),
-    "offerRemark"? : string   
+    "estimatedProcessTime": int, //(days)
+    "offerRemark"? : string,
 },...]
 ```
 
@@ -982,7 +1124,7 @@ url: BACKEND_DOMAIN/api/offer/paymentInfo/" + offerId + "/" + addressId
 
 ## 📎 7. Order Route
 
-### 📍 7.1 Create Order (Payment Success)
+### 📍 7.1 Create Order (Payment Success)Done
 "jwt"
 (Mock Payment website callback)
 "Change request status, offer status"
@@ -1007,7 +1149,7 @@ Success
 }
 ```
 
-### 📍 7.1.2 Create Order (Payment Cancelled)
+### 📍 7.1.2 Create Order (Payment Cancelled)Done
 | [GET]| /api/order?cancelled=true&offerId={offerId}&userAddressId={userAddressId}&price={price} |
 | ----- | ------------- |
 > ⬆️ Resp:
@@ -1019,7 +1161,7 @@ Success
 }
 ```
 
-### 📍 7.2 Get All Order By UserId
+### 📍 7.2 Get All Order By UserId Done
 | [GET]| /api/user/order |
 | ----- | ------------- |
 "jwt"
@@ -1045,9 +1187,11 @@ Success
     "message" : failed to get orders
 }
 ```
-### 📍 7.3 Get All inProgress Order By UserId
-| [GET]| /api/user/order/inProgress |
-| ----- | ------------- |
+### 📍 7.3 Get All inProgress Order By UserId Done orderStatus = {create, in-progress,shipped,completed}
+| [GET]| /api/user/order/inProgress | status=in-progress&shipped|
+| ----- | ------------- |--|
+| [GET]| /api/user/order/complete | status=completed&cancelled| 
+| ----- | ------------- |--|
 "jwt"
 > ⬆️ Resp:
 ```js
@@ -1071,7 +1215,7 @@ Success
     "message" : failed to get orders
 }
 ```
-### 📍 7.4 Get All completed Order By UserId
+### 📍 7.4 Get All completed Order By UserId Done
 | [GET]| /api/user/order/complete |
 | ----- | ------------- |
 "jwt"
@@ -1098,7 +1242,7 @@ Success
 }
 ```
 
-### 📍 7.4 Get Order details by orderId
+### 📍 7.5 Get Order details by orderId
 | [GET]| /api/order/:orderId |
 | ----- | ------------- |
 "jwt"
@@ -1132,6 +1276,29 @@ Success
     "message" : failed to get orders
 }
 ```
+### 📍 7.6 Provider update shipping detail DONE
+| [PUT]| /api/order/:orderId |
+| ----- | ------------- |
+"jwt"
+> ⬇️ Req Body:
+
+```js
+{
+	"logisticCompanyId" : int
+	"shippingOrderNo" : String
+}
+```
+
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to update order shipping detail
+}
+```
 
 ## 📎 8. Location Route Done~
 
@@ -1153,7 +1320,7 @@ Success
 
 ### 📍 9.1 Logistic Company
 
-| [GET] | /logistic_company |
+| [GET] | /logisticCompany |
 | ----- | --------------------- |
 
 > ⬆️ Resp:
@@ -1171,6 +1338,27 @@ Success
 🔴 [400] BAD REQUEST
 {
     "message" : failed to get order status name
+}
+```
+### 📍 9.2 Upload Logistic Company
+
+| [GET] | /api/logisticCompany |
+| ----- | --------------------- |
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"companyName" : "ABC",
+	"companyUrl" : "123"
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to upload logistic company
 }
 ```
 
@@ -1211,7 +1399,7 @@ Success
 
 ### 📍 11.1 payment
 
-| [POST] | /api/offer/:offerId |
+| [PUT] | /api/offer/:offerId |
 | ----- | --------------------- |
 "jwt" :
 > ⬇️ Req Body:
