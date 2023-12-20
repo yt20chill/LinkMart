@@ -96,12 +96,14 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 		)
 			return options.schema.parse(response.data);
 	} catch (error) {
-		// skip unauthorized error
-		if (!(error instanceof AxiosError && error.status === 401))
-			toast.error("Something went wrong");
+		if (error instanceof AxiosError && error.status === 401) {
+			toast.error("Permission denied");
+			throw new FetchError(401, "Permission denied");
+		}
+		toast.error("Something went wrong");
 		if (isAxiosError<ErrorResponseDto>(error)) {
 			throw new FetchError(
-				error.status,
+				error.response?.status,
 				error.response?.data.message ?? error.code ?? error.message
 			);
 		}
