@@ -1,9 +1,6 @@
-import { createContext, useContext } from "react";
-import {
-	OrderStatusTabs,
-	ProviderTabs,
-	UserInfoTabs,
-} from "../../types/sharePropsModel";
+import { Context, createContext, useContext } from "react";
+import { OrderStatusTabs, UserInfoTabs } from "../../types/sharePropsModel";
+import { ProviderTabs } from "../routes.config";
 
 export {
 	OrderStatusTabContext,
@@ -19,11 +16,18 @@ export type TabContextType<T extends string> = {
 	setActiveTab: (active: T) => void;
 };
 
+type CreateTabContextReturnType<T extends string> = {
+	TabContext: Context<TabContextType<T> | undefined>;
+	useTabContext: () => TabContextType<T>;
+};
+
 /**
  * @param name Basically for error message
  * @returns [TabContext, useTabContext], where TabContext is the context object and useTabContext is the hook to use the context
  */
-const createTabContext = <T extends string>(name?: string) => {
+const createTabContext = <T extends string>(
+	name?: string
+): CreateTabContextReturnType<T> => {
 	const TabContext = createContext<TabContextType<T> | undefined>(undefined);
 
 	const useTabContext = () => {

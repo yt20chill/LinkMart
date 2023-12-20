@@ -8,15 +8,15 @@ type BaseButtonProps = {
 	className?: string;
 };
 
-const orderStatusTabs = Object.freeze(["inProgress", "history"]);
+const orderStatusTabs = ["inProgress", "complete"] as const;
 type OrderStatusTabs = (typeof orderStatusTabs)[number];
 
-const orderStatuses = Object.freeze([
+const orderStatuses = [
 	"In progress",
 	"Shipping",
 	"Review",
 	"Completed",
-]);
+] as const;
 
-const userInfoTabs = Object.freeze(["General", "Address"]);
+const userInfoTabs = ["General", "Address"] as const;
 type UserInfoTabs = (typeof userInfoTabs)[number];
