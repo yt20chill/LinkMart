@@ -832,6 +832,27 @@
 }
 ```
 
+### 📍 6.1.2 GET Offer detail (provider) Done~
+
+| [GET] | /api/offer/:offerId |
+| ------ | ---------- |
+ "jwt"
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+RequestDetails (5.3) + offerStatus + estimatedProcessTime + price + offerRemark
+
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to change offer
+}
+```
+
 ### 📍 6.1.3 Amend Offer (provider) 
 
 | [PUT] | /api/offer/:offerId |
