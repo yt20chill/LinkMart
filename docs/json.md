@@ -1276,7 +1276,7 @@ Success
     "message" : failed to get orders
 }
 ```
-### 📍 7.6 Provider update shipping detail Hi Kenneth~
+### 📍 7.6 Provider update shipping detail DONE
 | [PUT]| /api/order/:orderId |
 | ----- | ------------- |
 "jwt"
