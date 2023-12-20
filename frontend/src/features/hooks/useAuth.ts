@@ -40,7 +40,8 @@ const useAuth = () => {
 		window.localStorage.removeItem("access_token");
 		setCommonAuthorizationHeader(false);
 		authStore.reset();
-		queryClient.removeQueries(queryKey.AUTH);
+		// remove all cache on logout
+		queryClient.removeQueries();
 		navigate(siteMap(RouteEnum.Home));
 	}, [navigate, authStore, queryClient]);
 
