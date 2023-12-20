@@ -1,17 +1,16 @@
 import { z } from "zod";
 import { requiredId, ulid } from "../../lib/schemaUtils";
 
-export { acceptOfferDtoSchema, acceptOfferSchema, postOfferSchema };
+export { acceptOfferDtoSchema, acceptOfferSchema, offerSchema };
 export type {
 	AcceptOfferDto,
 	AcceptOfferPayload,
-	OfferForm,
-	PostOfferDto,
+	OfferDto,
 	TAcceptOfferForm,
+	TOfferForm,
 };
 
-const postOfferSchema = z.object({
-	requestId: ulid,
+const offerSchema = z.object({
 	price: z
 		.string()
 		.or(z.number())
@@ -29,9 +28,8 @@ const postOfferSchema = z.object({
 	offerRemark: z.string().nullable(),
 });
 
-type PostOfferDto = z.infer<typeof postOfferSchema>;
-
-type OfferForm = Record<Exclude<keyof PostOfferDto, "requestId">, string>;
+type TOfferForm = Record<keyof z.infer<typeof offerSchema>, string>;
+type OfferDto = z.infer<typeof offerSchema>;
 
 const acceptOfferSchema = z.object({
 	userAddressId: requiredId.or(z.number().int().positive()),

@@ -2,9 +2,13 @@ import { axiosWrapper } from "../../lib/apiUtils";
 import {
 	AcceptOfferDto,
 	AcceptOfferPayload,
-	PostOfferDto,
 	RequestId,
 } from "../../schemas/requestSchema";
+import {
+	OfferDto,
+	TOfferForm,
+	offerSchema,
+} from "../../schemas/requestSchema/offerSchema";
 import {
 	AcceptOfferResponseDto,
 	OfferDetailsDto,
@@ -17,6 +21,7 @@ export {
 	declineOfferAJAX,
 	getAllOffersByRequestIdAJAX,
 	postOfferAJAX,
+	putOfferAJAX,
 };
 
 const offerApiRoutes = Object.freeze({
@@ -24,10 +29,28 @@ const offerApiRoutes = Object.freeze({
 	OFFER_BY_REQUEST: `/api/offer/request`,
 });
 
-const postOfferAJAX = async (offerForm: PostOfferDto): Promise<void> => {
-	return await axiosWrapper<PostOfferDto>(offerApiRoutes.OFFER, {
-		method: "post",
-		data: offerForm,
+const postOfferAJAX = async (
+	requestId: string,
+	form: TOfferForm
+): Promise<void> => {
+	const data = offerSchema.parse(form);
+	return await axiosWrapper<OfferDto & { requestId: string }>(
+		offerApiRoutes.OFFER,
+		{
+			method: "post",
+			data: { ...data, requestId },
+		}
+	);
+};
+
+const putOfferAJAX = async (
+	offerId: string,
+	form: TOfferForm
+): Promise<void> => {
+	const data = offerSchema.parse(form);
+	return await axiosWrapper<OfferDto>(`${offerApiRoutes.OFFER}/${offerId}`, {
+		method: "put",
+		data,
 	});
 };
 

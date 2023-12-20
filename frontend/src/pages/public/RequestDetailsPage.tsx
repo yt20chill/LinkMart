@@ -13,7 +13,7 @@ import { useShallow } from "zustand/react/shallow";
 import { RequestCardSkeleton } from "../../components/card/RequestCardSkeleton";
 import FormModal from "../../components/modal/FormModal";
 import PrimaryButton from "../../components/ui/PrimaryButton";
-import PostOfferForm from "../../features/forms/PostOfferForm";
+import OfferForm from "../../features/forms/OfferForm";
 import { useQueryContainer } from "../../features/hooks/useQueryContainer";
 import { ControlModalContext } from "../../services/context/ControlModalContext";
 import { RouteEnum, siteMap } from "../../services/routes.config";
@@ -152,7 +152,7 @@ const RequestDetailsPage = () => {
 					}}
 				>
 					<FormModal>
-						<PostOfferForm requestId={requestId!} />
+						<OfferForm requestId={requestId!} />
 					</FormModal>
 				</ControlModalContext.Provider>
 			)}

@@ -6,52 +6,61 @@ import { toast } from "react-toastify";
 import { ErrorMessage, FormInput } from "../../components/form";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import { FetchError } from "../../lib/apiUtils";
-import { generateDefaultValues } from "../../lib/formUtils";
-import {
-	OfferForm,
-	RequestId,
-	postOfferSchema,
-} from "../../schemas/requestSchema";
-import { postOfferAJAX } from "../../services/api/offerApi";
+import { dtoToString, generateDefaultValues } from "../../lib/formUtils";
+import { TOfferForm, offerSchema } from "../../schemas/requestSchema";
+import { postOfferAJAX, putOfferAJAX } from "../../services/api/offerApi";
 import { queryKey } from "../../services/query.config";
 
-const defaultValues = generateDefaultValues(postOfferSchema, {
-	exclude: ["requestId"],
-});
+const defaultEmptyValues = generateDefaultValues(offerSchema);
 
-const PostOfferForm = ({ requestId }: RequestId) => {
+type TPostOfferFormProps = {
+	requestId: string;
+};
+type TPutOfferFormProps = {
+	offerId: string;
+	defaultValues: TOfferForm;
+};
+
+type OfferFormProps = TPostOfferFormProps | TPutOfferFormProps;
+
+const OfferForm = (props: OfferFormProps) => {
+	const isEdit = "offerId" in props;
+	const id = isEdit ? props.offerId : props.requestId;
+	const defaultValues = isEdit
+		? dtoToString(props.defaultValues)
+		: defaultEmptyValues;
 	const {
 		register,
 		formState: { errors },
 		handleSubmit,
-	} = useForm<OfferForm>({
-		resolver: zodResolver(postOfferSchema.omit({ requestId: true })),
+	} = useForm<TOfferForm>({
+		resolver: zodResolver(offerSchema),
 		defaultValues,
 	});
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 	const {
-		mutateAsync: postOffer,
+		mutateAsync: mutateOffer,
 		error,
 		isLoading,
 	} = useMutation({
-		mutationFn: postOfferAJAX,
+		mutationFn: (data: TOfferForm) =>
+			"requestId" in props ? postOfferAJAX(id, data) : putOfferAJAX(id, data),
 		onSuccess: async () => {
 			toast.success(`Offer has been made successfully!`);
 			await queryClient.invalidateQueries(queryKey.OFFER);
 			navigate(-1);
 		},
 	});
-	const onSubmit = async (formData: OfferForm) => {
-		const validated = postOfferSchema.parse({ ...formData, requestId });
-		await postOffer(validated);
+	const onSubmit = async (form: TOfferForm) => {
+		await mutateOffer(form);
 	};
 	return (
 		<form>
 			{Object.keys(defaultValues).map((name) => (
 				<FormInput
 					key={name}
-					name={name as keyof OfferForm}
+					name={name as keyof TOfferForm}
 					register={register}
 					errors={errors}
 				/>
@@ -66,4 +75,4 @@ const PostOfferForm = ({ requestId }: RequestId) => {
 	);
 };
 
-export default PostOfferForm;
+export default OfferForm;
