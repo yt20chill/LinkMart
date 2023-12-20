@@ -3,12 +3,14 @@ import { resultId, ulid } from "../../lib/schemaUtils";
 import { requestDetailsResponseSchema } from "./requestResponseSchema";
 export {
 	acceptOfferResponseSchema,
+	hasOfferedResponseSchema,
 	providerOfferDetailSchema,
 	providerOfferResponseSchema,
 	requestOffersResponseSchema,
 };
 export type {
 	AcceptOfferResponseDto,
+	HasOfferedDto,
 	OfferDetailsDto,
 	ProviderOfferDetailDto,
 	ProviderOfferDto,
@@ -62,3 +64,9 @@ const providerOfferDetailSchema = requestDetailsResponseSchema.extend({
 });
 
 type ProviderOfferDetailDto = z.infer<typeof providerOfferDetailSchema>;
+
+const hasOfferedResponseSchema = z.object({
+	hasOffered: z.boolean(),
+});
+
+type HasOfferedDto = z.infer<typeof hasOfferedResponseSchema>;

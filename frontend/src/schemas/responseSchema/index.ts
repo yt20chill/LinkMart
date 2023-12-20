@@ -2,10 +2,12 @@ import { AuthDto, authResponseSchema } from "./authResponseSchema";
 import { ErrorResponseDto, errorResponseSchema } from "./baseResponseSchema";
 import {
 	AcceptOfferResponseDto,
+	HasOfferedDto,
 	OfferDetailsDto,
 	ProviderOfferDetailDto,
 	ProviderOfferDto,
 	acceptOfferResponseSchema,
+	hasOfferedResponseSchema,
 	providerOfferDetailSchema,
 	providerOfferResponseSchema,
 	requestOffersResponseSchema,
@@ -57,6 +59,7 @@ export {
 	errorResponseSchema,
 	getLogisticsSchema,
 	getOrdersSchema,
+	hasOfferedResponseSchema,
 	locationsResponseSchema,
 	orderDetailsSchema,
 	postAddressResponseSchema,
@@ -79,6 +82,7 @@ export type {
 	CreateOrderDto,
 	ErrorResponseDto,
 	GetOrderDto,
+	HasOfferedDto,
 	ImageDto,
 	LocationDto,
 	LogisticsDto,

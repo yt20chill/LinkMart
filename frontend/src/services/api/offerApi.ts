@@ -11,10 +11,12 @@ import {
 } from "../../schemas/requestSchema/offerSchema";
 import {
 	AcceptOfferResponseDto,
+	HasOfferedDto,
 	OfferDetailsDto,
 	ProviderOfferDetailDto,
 	ProviderOfferDto,
 	acceptOfferResponseSchema,
+	hasOfferedResponseSchema,
 	providerOfferDetailSchema,
 	providerOfferResponseSchema,
 	requestOffersResponseSchema,
@@ -22,6 +24,7 @@ import {
 
 export {
 	acceptOfferAJAX,
+	checkHasOfferedAJAX,
 	declineOfferAJAX,
 	getAllOffersByRequestIdAJAX,
 	getProviderOfferDetailAJAX,
@@ -33,6 +36,7 @@ export {
 const offerApiRoutes = Object.freeze({
 	OFFER: `/api/offer`,
 	OFFER_BY_REQUEST: `/api/offer/request`,
+	HAS_OFFERED: `/api/request/provider`,
 });
 
 const postOfferAJAX = async (
@@ -105,5 +109,12 @@ const getProviderOfferDetailAJAX = async (offerId: string) => {
 		{
 			schema: providerOfferDetailSchema,
 		}
+	);
+};
+
+const checkHasOfferedAJAX = async (requestId: string) => {
+	return await axiosWrapper<void, HasOfferedDto>(
+		`${offerApiRoutes.HAS_OFFERED}/${requestId}`,
+		{ schema: hasOfferedResponseSchema }
 	);
 };
