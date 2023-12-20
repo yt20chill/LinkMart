@@ -1244,9 +1244,6 @@ Success
 > ⬆️ Resp:
 ```js
 🟢 [200]  OK
-{
-	"orderId": int	
-},
 ```
 ```js
 🔴 [400] BAD REQUEST
