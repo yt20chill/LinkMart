@@ -1,9 +1,10 @@
 import { useCallback } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 import { FetchError, setCommonAuthorizationHeader } from "../../lib/apiUtils";
 import { getAuthAJAX } from "../../services/api/authApi";
+import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 import { useAuthStore } from "../../services/stores/authStore";
 import { useNavigateToPreviousPage } from "./useNavigateToPreviousPage";
@@ -12,13 +13,14 @@ const useAuth = () => {
 	const navigatePrev = useNavigateToPreviousPage();
 	const navigate = useNavigate();
 	const authStore = useAuthStore(useShallow((state) => state));
-
+	const queryClient = useQueryClient();
 	const {
 		data: userInfo,
 		isLoading,
 		isError,
 		error,
 	} = useQuery({
+		queryKey: [queryKey.AUTH],
 		queryFn: getAuthAJAX,
 		enabled: !!window.localStorage.getItem("access_token"),
 	});
@@ -38,8 +40,9 @@ const useAuth = () => {
 		window.localStorage.removeItem("access_token");
 		setCommonAuthorizationHeader(false);
 		authStore.reset();
+		queryClient.removeQueries(queryKey.AUTH);
 		navigate(siteMap(RouteEnum.Home));
-	}, [navigate, authStore]);
+	}, [navigate, authStore, queryClient]);
 
 	//FIXME: did not get the latest userInfo?
 	const updateAuthStore = useCallback((): void => {
