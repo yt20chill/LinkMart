@@ -45,14 +45,17 @@ const useAuth = () => {
 	}, [navigate, authStore, queryClient]);
 
 	const updateAuthStore = useCallback((): void => {
+		if (isError) {
+			if (error instanceof FetchError && error.status === 401) {
+				signOutHandler();
+				return authStore.reset();
+			}
+			console.error(error);
+			throw error;
+		}
 		if (isLoading) return authStore.setIsAuthenticated(null);
-		else if (isError && error instanceof FetchError && error.status === 401) {
-			signOutHandler();
-			return authStore.reset();
-		} else if (userInfo) {
+		else if (userInfo) {
 			return authStore.login(userInfo.username, userInfo.role);
-		} else {
-			throw new FetchError();
 		}
 	}, [authStore, error, isError, isLoading, userInfo, signOutHandler]);
 
