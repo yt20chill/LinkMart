@@ -22,14 +22,31 @@ const initAuthState: AuthState = Object.freeze({
 });
 
 const useAuthStoreBase = create<AuthState & AuthActions>()(
-	devtools((set) => ({
-		...initAuthState,
-		login: (username: string | null, role: AuthorizeLevels) =>
-			set({ username, role, isAuthenticated: role > AuthorizeLevels.PUBLIC }),
-		reset: () => set(initAuthState),
-		setIsAuthenticated: (isAuthenticated: boolean | null) =>
-			set({ isAuthenticated }),
-	}))
+	import.meta.env.PROD
+		? (set) => ({
+				...initAuthState,
+				login: (username: string | null, role: AuthorizeLevels) =>
+					set({
+						username,
+						role,
+						isAuthenticated: role > AuthorizeLevels.PUBLIC,
+					}),
+				reset: () => set(initAuthState),
+				setIsAuthenticated: (isAuthenticated: boolean | null) =>
+					set({ isAuthenticated }),
+		  })
+		: devtools((set) => ({
+				...initAuthState,
+				login: (username: string | null, role: AuthorizeLevels) =>
+					set({
+						username,
+						role,
+						isAuthenticated: role > AuthorizeLevels.PUBLIC,
+					}),
+				reset: () => set(initAuthState),
+				setIsAuthenticated: (isAuthenticated: boolean | null) =>
+					set({ isAuthenticated }),
+		  }))
 );
 
 export const useAuthStore = createSelectors(useAuthStoreBase);
