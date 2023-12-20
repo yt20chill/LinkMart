@@ -1,15 +1,12 @@
 import { useState } from "react";
-import Tab from "../../../components/ui/Tab";
+import Tab from "../../components/ui/Tab";
 import {
 	OrderStatusTabContext,
 	TabContextType,
 	useOrderStatusTabContext,
-} from "../../../services/context/TabsContext";
-import {
-	OrderStatusTabs,
-	orderStatusTabs,
-} from "../../../types/sharePropsModel";
-import OrderStatus from "./components/OrderStatus";
+} from "../../services/context/TabsContext";
+import { OrderStatusTabs, orderStatusTabs } from "../../types/sharePropsModel";
+import OrderStatus from "./userOrder/components/OrderStatus";
 
 const UserOrderPage = () => {
 	const [tab, setTab] = useState<OrderStatusTabs>("inProgress");

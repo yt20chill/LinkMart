@@ -2,11 +2,11 @@ import RequestDetailsPage from "../public/RequestDetailsPage";
 import OrderDetailsPage from "./OrderDetailsPage";
 import PaymentPage from "./PaymentPage";
 import PostRequestPage from "./PostRequestPage";
-import ProfilePage from "./profile/ProfilePage";
 import ProviderRegisterPage from "./ProviderRegisterPage";
-import UserRequestDetailsPage from "./requestDetails/UserRequestDetailsPage";
-import UserOrderPage from "./userOrder/UserOrderPage";
+import UserOrderPage from "./UserOrderPage";
+import UserRequestDetailsPage from "./UserRequestDetailsPage";
 import UserRequestsPage from "./UserRequestsPage";
+import ProfilePage from "./profile/ProfilePage";
 
 export {
 	OrderDetailsPage,
