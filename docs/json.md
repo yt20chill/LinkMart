@@ -564,7 +564,7 @@
 | [Get] | /request |
 | ----- | ------------ |
 
-##### 📍 5.2.1 Get All - with queries  Done(waiting for test)
+### 📍 5.2.1 Get All - with queries  Done(waiting for test)
 
 | [Get] | /request?p={page}&category={category}&location={location} |
 | ----- | ------------------------------------------------------------- |
@@ -572,7 +572,7 @@
 "Total active request"
 "Number of page(active request / limit )"
 
-##### 📍 5.2.2 Get All - by userId (ACTIVE) Done~
+### 📍 5.2.2 Get All - by userId (ACTIVE) Done~
 
 | [Get] | /api/request (userId in jwt header) |
 | ----- | ---------------------------------------- |
@@ -603,7 +603,7 @@
     "message" : "fail to get request"
 }
 ```
-##### 📍 5.2.3 Get All - by userId (INACTIVE) Done~
+### 📍 5.2.3 Get All - by userId (INACTIVE) Done~
 
 | [Get] | /api/request (userId in jwt header) |
 | ----- | ---------------------------------------- |
