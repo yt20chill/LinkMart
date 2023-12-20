@@ -774,9 +774,11 @@
 | [GET] | /api/offer/myOffer |
 | ------ | ---------- |
  "jwt"
-> ⬇️ Req Body:
+
+> ⬆️ Resp:
 
 ```js
+🟢 [200]  OK
 [
 	{
 		"item": String,
@@ -790,11 +792,6 @@
 	},
 	...
 ]
-```
-> ⬆️ Resp:
-
-```js
-🟢 [200]  OK
 ```
 
 ```js
@@ -812,19 +809,11 @@
 > ⬇️ Req Body:
 
 ```js
-[
-	{
-		"item": String,
-		"offerStatus": String,
-		"estimatedProcessTime": int,
-		"createdBy": String (user),
-		"primaryImage": String,
-		"requestId": int,
-		"offerId": int,
-		"price": int (provider offer price)
-	},
-	...
-]
+{
+    "price" : float,
+    "estimatedProcessTime" : int,
+    "offerRemark" : string | undefined
+}
 ```
 ```
 > ⬆️ Resp:
@@ -841,7 +830,7 @@
 ```
 ### 📍 6.1.4 DELETE Offer (provider) Change Status Aborted
 
-| [PUT] | /api/offer/:offerId |
+| [DELETE] | /api/offer/:offerId |
 | ------ | ---------- |
  "jwt"
 ```
