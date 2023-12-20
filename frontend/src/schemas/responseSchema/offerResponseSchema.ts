@@ -1,8 +1,12 @@
 import { z } from "zod";
 import { resultId, ulid } from "../../lib/schemaUtils";
 
-export { acceptOfferResponseSchema, requestOffersResponseSchema };
-export type { AcceptOfferResponseDto, OfferDetailsDto };
+export {
+	acceptOfferResponseSchema,
+	providerOfferResponseSchema,
+	requestOffersResponseSchema,
+};
+export type { AcceptOfferResponseDto, OfferDetailsDto, ProviderOfferDto };
 
 const requestOfferResponseSchema = z.object({
 	offerId: ulid,
@@ -30,3 +34,16 @@ const acceptOfferResponseSchema = z.object({
 });
 
 type AcceptOfferResponseDto = z.infer<typeof acceptOfferResponseSchema>;
+
+const providerOfferResponseSchema = z.object({
+	offerId: ulid,
+	requestId: ulid,
+	item: z.string().min(1),
+	offerStatus: z.string().min(1),
+	estimatedProcessTime: z.number().positive(),
+	createdBy: z.string().min(1),
+	primaryImage: z.string().url(),
+	price: z.number().positive(),
+});
+
+type ProviderOfferDto = z.infer<typeof providerOfferResponseSchema>;
