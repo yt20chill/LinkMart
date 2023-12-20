@@ -37,7 +37,9 @@ import {
 	PostAddressDto,
 	UpdateAddressDto,
 	UpdateAddressForm,
+	UpdateProfileForm,
 	postAddressSchema,
+	putProfileSchema,
 	updateAddressFormSchema,
 } from "./userSchema";
 
@@ -52,6 +54,7 @@ export {
 	postAddressSchema,
 	postLogisticCompanyFormSchema,
 	postRequestSchema,
+	putProfileSchema,
 	requestIdSchema,
 	signInSchema,
 	signUpSchema,
@@ -76,4 +79,5 @@ export type {
 	TUploadShippingForm,
 	UpdateAddressDto,
 	UpdateAddressForm,
+	UpdateProfileForm,
 };

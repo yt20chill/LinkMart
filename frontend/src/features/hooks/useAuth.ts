@@ -48,16 +48,24 @@ const useAuth = () => {
 		if (isError) {
 			if (error instanceof FetchError && error.status === 401) {
 				signOutHandler();
-				return authStore.reset();
+				authStore.reset();
 			}
 			console.error(error);
-			throw error;
+			navigate(siteMap(RouteEnum.Home));
 		}
 		if (isLoading) return authStore.setIsAuthenticated(null);
 		else if (userInfo) {
 			return authStore.login(userInfo.username, userInfo.role);
 		}
-	}, [authStore, error, isError, isLoading, userInfo, signOutHandler]);
+	}, [
+		authStore,
+		error,
+		isError,
+		isLoading,
+		userInfo,
+		signOutHandler,
+		navigate,
+	]);
 
 	return { signInHandler, signOutHandler, updateAuthStore };
 };
