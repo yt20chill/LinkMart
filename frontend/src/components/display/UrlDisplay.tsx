@@ -2,12 +2,11 @@ type DetailDisplayProps = {
   title?: string;
   icon?: string;
   label: string;
-  value: string;
+  url: string;
   className?: string;
 };
 
-export function DetailDisplay(props: DetailDisplayProps) {
-  const mappedValue = props.value.split(/\\n/g);
+export function UrlDisplay(props: DetailDisplayProps) {
   return (
     <div className={`mb-5 ${props.className}`}>
       <div className="flex items-center font-roboto text-xs text-slate-400/80 tracking-wider leading-none h-4 select-none">
@@ -18,11 +17,20 @@ export function DetailDisplay(props: DetailDisplayProps) {
         )}
         {props.label}
       </div>
-      <div className="leading-tight" title={props.title}>
-        {typeof mappedValue !== "string"
-          ? mappedValue.map((val) => <p key={val}>{val}</p>)
-          : mappedValue}
-      </div>
+      <a
+        className="leading-tight text-blue-600 hover:text-blue-9s00 underline decoration-1"
+        href={props.url}
+        title={props.title}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {"https://" +
+          props.url
+            .replace("http://", "")
+            .replace("https://", "")
+            .split("/")[0] +
+          "/"}
+      </a>
     </div>
   );
 }
