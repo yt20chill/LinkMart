@@ -12,7 +12,11 @@ import {
 import {
 	AcceptOfferResponseDto,
 	OfferDetailsDto,
+	ProviderOfferDetailDto,
+	ProviderOfferDto,
 	acceptOfferResponseSchema,
+	providerOfferDetailSchema,
+	providerOfferResponseSchema,
 	requestOffersResponseSchema,
 } from "../../schemas/responseSchema";
 
@@ -20,6 +24,8 @@ export {
 	acceptOfferAJAX,
 	declineOfferAJAX,
 	getAllOffersByRequestIdAJAX,
+	getProviderOfferDetailAJAX,
+	getProviderOffersAJAX,
 	postOfferAJAX,
 	putOfferAJAX,
 };
@@ -82,4 +88,22 @@ const declineOfferAJAX = async (offerId: string): Promise<void> => {
 	return await axiosWrapper(`${offerApiRoutes.OFFER}/${offerId}`, {
 		method: "delete",
 	});
+};
+
+const getProviderOffersAJAX = async () => {
+	return await axiosWrapper<void, ProviderOfferDto>(
+		`${offerApiRoutes.OFFER}/myOffer`,
+		{
+			schema: providerOfferResponseSchema,
+		}
+	);
+};
+
+const getProviderOfferDetailAJAX = async (offerId: string) => {
+	return await axiosWrapper<void, ProviderOfferDetailDto>(
+		`${offerApiRoutes.OFFER}/${offerId}`,
+		{
+			schema: providerOfferDetailSchema,
+		}
+	);
 };

@@ -1,10 +1,16 @@
 import { createContext, useContext } from "react";
-import { OrderStatusTabs, UserInfoTabs } from "../../types/sharePropsModel";
+import {
+	OrderStatusTabs,
+	ProviderTabs,
+	UserInfoTabs,
+} from "../../types/sharePropsModel";
 
 export {
 	OrderStatusTabContext,
+	ProviderTabContext,
 	UserInfoTabContext,
 	useOrderStatusTabContext,
+	useProviderTabContext,
 	useUserInfoTabContext,
 };
 
@@ -40,3 +46,6 @@ const {
 
 const { TabContext: UserInfoTabContext, useTabContext: useUserInfoTabContext } =
 	createTabContext<UserInfoTabs>("UserInfoTab");
+
+const { TabContext: ProviderTabContext, useTabContext: useProviderTabContext } =
+	createTabContext<ProviderTabs>("ProviderTab");

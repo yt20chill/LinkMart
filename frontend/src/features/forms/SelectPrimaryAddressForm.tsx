@@ -40,6 +40,7 @@ const SelectPrimaryAddressForm = () => {
 		addresses,
 		getAddresses: { isLoading: isGettingAddresses },
 	} = useGuardedQueryContainer();
+
 	const queryClient = useQueryClient();
 
 	const { mutateAsync: updatePrimaryAddress, isLoading: isUpdating } =
@@ -75,9 +76,11 @@ const SelectPrimaryAddressForm = () => {
 					label="Choose Your Primary Address"
 					register={register}
 					errors={errors}
-					optionItems={addresses.map((address) => ({
+					optionItems={addresses.map((address, index) => ({
 						value: address.addressId + "",
-						displayValue: address.address,
+						displayValue: `${address.address}${
+							index === 0 ? " (Primary)" : ""
+						}`,
 					}))}
 				/>
 			)}

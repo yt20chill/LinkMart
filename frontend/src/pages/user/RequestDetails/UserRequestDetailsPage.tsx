@@ -5,17 +5,18 @@ import { MainImageFrame } from "@/components/imageFrame/MainImageFrame";
 import { SubImageFrame } from "@/components/imageFrame/SubImageFrame";
 import { SectionTitle } from "@/components/title/SectionTitle";
 // import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
+import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
 import { useQueryContainer } from "@/features/hooks/useQueryContainer";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import EditButton from "../../../components/ui/EditButton";
 import { fireAlert, sweetAlertDefaultOptions } from "../../../lib/formUtils";
 import { deleteRequestAJAX } from "../../../services/api/requestApi";
 import { ControlModalContext } from "../../../services/context/ControlModalContext";
 import { queryKey } from "../../../services/query.config";
 import { RouteEnum, siteMap } from "../../../services/routes.config";
-import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
 import { DetailInfoDisplay } from "@/components/display/DetailInfoDisplay";
 import OfferDetailsList from "./components/OfferDetailsList";
 
@@ -71,21 +72,15 @@ const UserRequestDetailsPage = () => {
                 <DateBadge date={details.updatedAt} />
               </div>
               <div className="flex gap-2">
-                {/* TODO: Can it be changed to use UI button? */}
-                <button
-                  className="flex items-center justify-center bg-secondary-400 hover:bg-secondary-500 hover:-translate-y-1 text-white py-1 rounded-btn grow h-12 transition-all hover:ring-4 ring-secondary-200"
-                  onClick={(e) => {
+                <EditButton
+                  label="Edit Request"
+                  onClick={(e: MouseEvent) => {
                     e.preventDefault();
                     navigate(
                       `${siteMap(RouteEnum.PostRequest)}?requestId=${requestId}`
                     );
                   }}
-                >
-                  <span className="material-symbols-rounded text text-lg">
-                    edit
-                  </span>
-                  Edit Request
-                </button>
+                />
                 <button
                   className="p-2 border border-rose-400 hover:bg-rose-400 [&_span]:hover:text-white rounded-btn hover:-translate-y-1 overflow-hidden h-12 w-12 transition-all hover:ring-4 ring-rose-200"
                   onClick={fireAlert({

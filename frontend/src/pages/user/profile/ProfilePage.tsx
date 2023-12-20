@@ -6,12 +6,13 @@ import {
 	useUserInfoTabContext,
 } from "../../../services/context/TabsContext";
 import { UserInfoTabs, userInfoTabs } from "../../../types/sharePropsModel";
+import AddressProfile from "./AddressProfile";
+import GeneralProfile from "./GeneralProfile";
 
 const ProfilePage = () => {
 	const [activeTab, setActiveTab] = useState<UserInfoTabs>("General");
 	return (
 		<>
-			<div>ProfilePage</div>
 			<UserInfoTabContext.Provider value={{ activeTab, setActiveTab }}>
 				{userInfoTabs.map((tab) => (
 					<Tab
@@ -23,6 +24,8 @@ const ProfilePage = () => {
 					/>
 				))}
 			</UserInfoTabContext.Provider>
+			{activeTab === "General" && <GeneralProfile />}
+			{activeTab === "Address" && <AddressProfile />}
 		</>
 	);
 };

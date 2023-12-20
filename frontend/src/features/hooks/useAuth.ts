@@ -51,6 +51,8 @@ const useAuth = () => {
 			return authStore.reset();
 		} else if (userInfo) {
 			return authStore.login(userInfo.username, userInfo.role);
+		} else {
+			throw new FetchError();
 		}
 	}, [authStore, error, isError, isLoading, userInfo, signOutHandler]);
 

@@ -29,9 +29,17 @@ import {
 	UserRequestDetailsPage,
 	UserRequestsPage,
 } from "../pages/user";
-
 import { AuthorizeLevels } from "../types/authModels";
 
+export {
+	authorizedLevelMap,
+	authorizedLevelToPrefix,
+	providerTabs,
+	routeConfigArray,
+	siteMap,
+};
+
+export type { ProviderTabs };
 interface TRouteConfig {
 	name: string;
 	path: string;
@@ -162,7 +170,7 @@ routeConfigMap
 	})
 	.set(RouteEnum.OfferDetail, {
 		name: "Offer Details",
-		path: "offer-details/:id",
+		path: "offer-details/:offerId",
 		authorizeLevel: AuthorizeLevels.PROVIDER,
 		component: OfferDetailsPage,
 	})
@@ -221,11 +229,14 @@ const authorizedLevelToPrefix = (authorizedLevel: AuthorizeLevels): string => {
 	return level && level !== "PUBLIC" ? level.toLowerCase() : "";
 };
 
-export {
-	authorizedLevelMap,
-	authorizedLevelToPrefix,
-	routeConfigArray,
-	siteMap,
-};
+// TODO: generate from array, object has no order
+const providerTabs = Object.freeze({
+	Profile: siteMap(RouteEnum.ProviderProfile),
+	Dashboard: siteMap(RouteEnum.Dashboard),
+	Offers: siteMap(RouteEnum.MyOffer),
+	Tasks: siteMap(RouteEnum.Task),
+});
+
+type ProviderTabs = keyof typeof providerTabs;
 
 export default Object.freeze(routeConfigMap);
