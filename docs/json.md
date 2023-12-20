@@ -971,12 +971,13 @@ RequestDetails (5.3) + offerStatus + estimatedProcessTime + price + offerRemark
     "requestId" : int(request.request_id),
     "providerId" : int(provider.provider_id),
     "providerName": string(user.username),
-    "efficiency": float (max 5)
-    "attitude": float (max 5)
+    "efficiency": float (max 5),
+    "attitude": float (max 5),
+    "reviewCount": int,
     "statusName": string
     "price" : float,
-    "estimatedProcessTime": int (days),
-    "offerRemark"? : string   
+    "estimatedProcessTime": int, //(days)
+    "offerRemark"? : string,
 },...]
 ```
 
