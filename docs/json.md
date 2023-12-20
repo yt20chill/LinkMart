@@ -791,6 +791,27 @@
     "message" : "fail to get my inactive request"
 }
 ```
+### 📍 5.8 Check request if this provider has offered
+
+| [GET] | /api/request/provider/:requestId |
+| -------- | ----------------------- |
+"jwt"
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+[
+{
+	"hasOffered": boolean
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message": fail to get data from database
+}
+```
 
 
 ## 📎 6. Offer Route
