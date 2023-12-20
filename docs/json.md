@@ -841,7 +841,34 @@
 > ⬆️ Resp:
 
 ```js
-🟢 [200]  OK
+🟢 [200]
+{
+    "requestId" : string (ulid),
+    "locationId" : int(location.location_id),
+    "locationName": string,
+    "categoryId" : int(category.category_id),
+    "categoryName" : string,
+    "itemDetail": JSON {category_field.name: category_field_value/option_name, ...}
+    "item" : string,
+    "primaryImage" : String,
+    "images" : [{
+        "requestId" : String,
+        "imageId" : int,
+        "imagePath" : string
+    },.../*images*/]
+    "url" : string | null,
+    "quantity" : int,
+    "requestRemark" : string | null,
+    "offerPrice" : float | null,
+    "createdBy" : string(username),
+    "createdAt" : Date,
+    "updatedAt" : Date
+    "imageId": int,
+    "offerStatus" : String,
+    "estimatedProcessTime" : int,
+    "price": int,
+    "offerRemark": String
+}
 RequestDetails (5.3) + offerStatus + estimatedProcessTime + price + offerRemark
 
 ```
