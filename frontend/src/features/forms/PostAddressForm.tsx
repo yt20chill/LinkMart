@@ -12,11 +12,16 @@ import { queryKey } from "../../services/query.config";
 type PostAddressFormProps = {
 	isShow: boolean;
 	setIsShow: (isShow: boolean) => void;
+	onSubmitCallback?: () => void;
 };
 
 const defaultValues = generateDefaultValues(postAddressSchema);
 
-function PostAddressForm({ isShow, setIsShow }: PostAddressFormProps) {
+function PostAddressForm({
+	isShow,
+	setIsShow,
+	onSubmitCallback,
+}: PostAddressFormProps) {
 	const {
 		handleSubmit,
 		formState: { errors },
@@ -40,6 +45,7 @@ function PostAddressForm({ isShow, setIsShow }: PostAddressFormProps) {
 		await postAddress(data);
 		reset();
 		setIsShow(false);
+		onSubmitCallback && onSubmitCallback();
 	};
 	return (
 		isShow && (

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SweetAlert from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { FormSelect } from "../../components/form";
+import FormRadioInput from "../../components/form/FormRadioInput";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import { generateDefaultValues } from "../../lib/formUtils";
@@ -35,6 +35,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		handleSubmit,
 		formState: { errors },
 		register,
+		setValue,
 	} = useForm<TAcceptOfferForm>({
 		resolver: zodResolver(acceptOfferSchema),
 		defaultValues,
@@ -76,19 +77,29 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		if (!option.isConfirmed) return setIsShow(false);
 		await acceptOffer(dto.data);
 	};
+	// Get the largest addressId and set to drop down
+	const postAddressCallback = () => {
+		const newAddressId =
+			addresses &&
+			addresses.reduce((result, addr) => {
+				return addr.addressId > result ? addr.addressId : result;
+			}, 0);
+		newAddressId && setValue("userAddressId", newAddressId + "");
+	};
 	return (
 		<>
 			<form>
 				{isGettingAddresses && <SkeletonForm />}
 				{addresses && (
 					<>
-						<FormSelect
+						<FormRadioInput
 							name="userAddressId"
+							label="Select Shipping Address"
 							register={register}
 							errors={errors}
-							optionItems={addresses.map((addresses) => ({
-								value: addresses.addressId + "",
-								displayValue: addresses.address,
+							optionItems={addresses.map((address) => ({
+								value: address.addressId + "",
+								displayValue: address.address,
 							}))}
 						/>
 						<FormSubmitButton
@@ -107,6 +118,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 				<PostAddressForm
 					isShow={showAddAddress}
 					setIsShow={setShowAddAddress}
+					onSubmitCallback={postAddressCallback}
 				/>
 			)}
 		</>
