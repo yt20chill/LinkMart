@@ -1194,7 +1194,7 @@ Success
 }
 ```
 
-### 📍 7.4 Get Order details by orderId
+### 📍 7.5 Get Order details by orderId
 | [GET]| /api/order/:orderId |
 | ----- | ------------- |
 "jwt"
@@ -1226,6 +1226,32 @@ Success
 🔴 [400] BAD REQUEST
 {
     "message" : failed to get orders
+}
+```
+### 📍 7.6 Provider update shipping detail Hi Kenneth~
+| [PUT]| /api/order/:orderId |
+| ----- | ------------- |
+"jwt"
+> ⬇️ Req Body:
+
+```js
+{
+	"logisticCompanyId" : int
+	"shippingOrderNo" : String
+}
+```
+
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+{
+	"orderId": int	
+},
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to update order shipping detail
 }
 ```
 
