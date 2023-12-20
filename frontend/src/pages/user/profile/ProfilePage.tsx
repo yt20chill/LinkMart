@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Tab from "../../../components/ui/Tab";
 import {
+	TabContextType,
 	UserInfoTabContext,
 	useUserInfoTabContext,
 } from "../../../services/context/TabsContext";
@@ -13,7 +14,13 @@ const ProfilePage = () => {
 			<div>ProfilePage</div>
 			<UserInfoTabContext.Provider value={{ activeTab, setActiveTab }}>
 				{userInfoTabs.map((tab) => (
-					<Tab key={tab} status={tab} useTabContext={useUserInfoTabContext} />
+					<Tab
+						key={tab}
+						status={tab}
+						useTabContext={
+							useUserInfoTabContext as unknown as () => TabContextType<string>
+						}
+					/>
 				))}
 			</UserInfoTabContext.Provider>
 		</>
