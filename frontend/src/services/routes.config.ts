@@ -8,6 +8,7 @@ import {
 	DashboardPage,
 	OfferDetailsPage,
 	OfferPage,
+	ProviderPage,
 	ProviderProfilePage,
 	TaskDetailsPage,
 	TaskPage,
@@ -53,6 +54,7 @@ export enum RouteEnum {
 	UserOrder,
 	OrderDetail,
 	ProviderRegister,
+	ProviderIndex,
 	ProviderProfile,
 	MyOffer,
 	OfferDetail,
@@ -146,6 +148,12 @@ routeConfigMap
 		path: "provider/register",
 		authorizeLevel: AuthorizeLevels.USER,
 		component: ProviderRegisterPage,
+	})
+	.set(RouteEnum.ProviderIndex, {
+		name: "Provider",
+		path: "",
+		authorizeLevel: AuthorizeLevels.PROVIDER,
+		component: ProviderPage,
 	})
 	.set(RouteEnum.ProviderProfile, {
 		name: "Profile",
