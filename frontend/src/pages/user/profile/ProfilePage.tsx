@@ -18,7 +18,7 @@ const ProfilePage = () => {
 						key={tab}
 						status={tab}
 						useTabContext={
-							useUserInfoTabContext as unknown as () => TabContextType<string>
+							useUserInfoTabContext as () => TabContextType<string>
 						}
 					/>
 				))}
