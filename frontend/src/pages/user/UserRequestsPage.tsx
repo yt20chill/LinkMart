@@ -10,7 +10,7 @@ const UserRequestsPage = () => {
     queryFn: getRequestsByUserAJAX,
   });
   return (
-    <div className="mt-12 max-w-5xl w-full mx-auto px-6">
+    <div className="my-5 max-w-5xl w-full mx-auto px-6">
       <div className="flex flex-col mx-auto bg-base-100/50 border border-slate-300 rounded-xl overflow-hidden shadow">
         <div className="py-4 indent-5 text-slate-500 bg-base-100 border-b border-slate-300">
           My Request
