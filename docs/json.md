@@ -436,7 +436,7 @@
 ```
 
 ---
-### 📍 4.6 Change username and password 
+### 📍 4.6 Change username and password Done~
 
 | [PUT] | /api/user/info |
 | ----- | ----------------- |
