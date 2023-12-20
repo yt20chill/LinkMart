@@ -1,6 +1,6 @@
 import z from "zod";
 import {
-	emptyStringToNull,
+	emptyStringToUndefined,
 	requiredId,
 	stringToPositiveNumber,
 } from "../../lib/schemaUtils";
@@ -26,13 +26,13 @@ export const postRequestSchema = z.object({
 		)
 		.refine((files) => files.length > 0, { message: "required" }),
 	item: z.string().min(1, { message: "required" }),
-	url: emptyStringToNull.pipe(
+	url: emptyStringToUndefined.pipe(
 		z.string().url({ message: "invalid url" }).nullish()
 	),
 	quantity: z
 		.string()
 		.refine((val) => !isNaN(parseInt(val)), { message: "Invalid quantity" }),
-	requestRemark: emptyStringToNull.nullable(),
+	requestRemark: emptyStringToUndefined.nullable(),
 	offerPrice: stringToPositiveNumber({ isFloat: true }).pipe(
 		z.number().positive().nullish()
 	),

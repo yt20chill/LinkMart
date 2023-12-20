@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { requiredId } from "../../lib/schemaUtils";
+import { emptyStringToUndefined, requiredId } from "../../lib/schemaUtils";
 
 export { postAddressSchema, putProfileSchema, updateAddressFormSchema };
 export type {
@@ -27,13 +27,14 @@ type UpdateAddressDto = z.infer<typeof updateAddressFormSchema>;
 
 const putProfileSchema = z
 	.object({
-		password: z
-			.string()
-			.refine((val) => /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/.test(val), {
+		password: emptyStringToUndefined.refine(
+			(val) => !val || /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/.test(val),
+			{
 				message:
 					"Password must contain at least one letter, one number and be > 8 characters long",
-			}),
-		confirmPassword: z.string(),
+			}
+		),
+		confirmPassword: emptyStringToUndefined,
 		username: z
 			.string()
 			.min(5, { message: "Username must be at least 5 characters long" })

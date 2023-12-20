@@ -39,7 +39,7 @@ const zeroToNull = z
 	.nullable();
 
 export {
-	emptyStringToUndefined as emptyStringToNull,
+	emptyStringToUndefined,
 	requiredId,
 	resultId,
 	stringToPositiveNumber,

@@ -1,5 +1,7 @@
+import PutUserProfileForm from "../../../features/forms/PutUserProfileForm";
+
 const GeneralProfile = () => {
-	return <div>GeneralProfile</div>;
+	return <PutUserProfileForm />;
 };
 
 export default GeneralProfile;

@@ -1,5 +1,5 @@
 import { axiosWrapper } from "../../lib/apiUtils";
-import { PostAddressDto } from "../../schemas/requestSchema";
+import { PostAddressDto, UpdateProfileForm } from "../../schemas/requestSchema";
 import {
 	AddressDto,
 	GetOrderDto,
@@ -14,6 +14,7 @@ const userApiRoutes = Object.freeze({
 	ADDRESS: `${baseUserApiRoute}/address`,
 	ORDER: `${baseUserApiRoute}/order`,
 	REQUEST: `/api/request`,
+	PROFILE: `${baseUserApiRoute}/info`,
 });
 
 export {
@@ -23,6 +24,7 @@ export {
 	getRequestsByUserAJAX,
 	postAddressAJAX,
 	updatePrimaryAddressAJAX,
+	updateProfileAJAX,
 };
 
 const postAddressAJAX = async (data: PostAddressDto) => {
@@ -61,5 +63,12 @@ const getOrdersByUserAJAX = async () => {
 const getRequestsByUserAJAX = async () => {
 	return await axiosWrapper<void, RequestDto[]>(userApiRoutes.REQUEST, {
 		schema: requestsResponseSchema,
+	});
+};
+
+const updateProfileAJAX = async (data: UpdateProfileForm) => {
+	return await axiosWrapper<UpdateProfileForm>(userApiRoutes.PROFILE, {
+		method: "put",
+		data,
 	});
 };
