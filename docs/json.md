@@ -804,9 +804,44 @@
 }
 ```
 
-### 📍 6.1.2 Amend Offer (provider) 
+### 📍 6.1.3 Amend Offer (provider) 
 
-| [GET] | /api/offer/:offerId |
+| [PUT] | /api/offer/:offerId |
+| ------ | ---------- |
+ "jwt"
+> ⬇️ Req Body:
+
+```js
+[
+	{
+		"item": String,
+		"offerStatus": String,
+		"estimatedProcessTime": int,
+		"createdBy": String (user),
+		"primaryImage": String,
+		"requestId": int,
+		"offerId": int,
+		"price": int (provider offer price)
+	},
+	...
+]
+```
+```
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : fail to change offer
+}
+```
+### 📍 6.1.4 DELETE Offer (provider) Change Status Aborted
+
+| [PUT] | /api/offer/:offerId |
 | ------ | ---------- |
  "jwt"
 ```
@@ -814,22 +849,12 @@
 
 ```js
 🟢 [200]  OK
-[  {
-    "requestId" : ulid(request.request_id),
-    "offerId" : ulid(offer.offer_id),
-    "createdBy" : String,
-    "item": String,
-    "primaryImage": String,
-    "price" : int,
-    "estimatedProcessTime" : int,
-    "status": String
-}      ,...]
 ```
 
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : fail to get offer
+    "message" : fail to delete offer
 }
 ```
 
