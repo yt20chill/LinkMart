@@ -1,8 +1,8 @@
 import { camelToTitleCase } from "@/lib/utils";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { useCategoryOptions } from "../../features/hooks/useCategoryOptions";
-import FormInput from "./FormInput";
-import FormSelect from "./FormSelect";
+import FormInput from "../../components/form/FormInput";
+import FormSelect from "../../components/form/FormSelect";
+import { useCategoryOptions } from "../hooks/useCategoryOptions";
 
 type CategoryFieldsFormProps<
 	T extends Record<string, unknown> = Record<string, unknown>

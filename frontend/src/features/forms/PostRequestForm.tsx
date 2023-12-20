@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
-	CategoryFieldsForm,
 	FormInput,
 	FormSelect,
 	FormSubmitButton,
@@ -34,6 +33,7 @@ import {
 	RequestFormTextFields,
 	useUpdateRequestForm,
 } from "../hooks/useUpdateForm";
+import CategoryFieldsForm from "./CategoryFields";
 import SkeletonForm from "./SkeletonForm";
 
 const PostRequestForm = () => {

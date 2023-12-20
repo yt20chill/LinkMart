@@ -33,6 +33,7 @@ function PostAddressForm({
 		mode: "onTouched",
 	});
 	const queryClient = useQueryClient();
+	// Backend can response with the latest address Id after post
 	const { mutateAsync: postAddress, isLoading: isPosting } = useMutation({
 		mutationFn: postAddressAJAX,
 		onSuccess: async () => {
