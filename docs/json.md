@@ -436,6 +436,32 @@
 ```
 
 ---
+### 📍 4.6 Change username and password 
+
+| [PUT] | /api/user/info |
+| ----- | ----------------- |
+> ⬇️ Req Body:
+"JWT in header" "Change is_Primary" 
+```js
+{
+	"username"?: String,
+	"password"?: String
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : "fail to update info"
+}
+```
+
+---
 
 ## 📎 5. Request Route
 
