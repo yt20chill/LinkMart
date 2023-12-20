@@ -1,5 +1,5 @@
 export { orderStatusTabs, orderStatuses, userInfoTabs };
-export type { BaseButtonProps, OrderStatusTabs, UserInfoTabs };
+export type { BaseButtonProps, OrderStatusTabs, OrderStatuses, UserInfoTabs };
 
 type BaseButtonProps = {
 	label: string;
@@ -17,6 +17,8 @@ const orderStatuses = [
 	"Review",
 	"Completed",
 ] as const;
+
+type OrderStatuses = (typeof orderStatuses)[number];
 
 const userInfoTabs = ["General", "Address"] as const;
 type UserInfoTabs = (typeof userInfoTabs)[number];

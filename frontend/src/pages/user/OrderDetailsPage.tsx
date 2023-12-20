@@ -7,7 +7,7 @@ import ProgressBar from "../../components/ui/ProgressBar";
 import { orderDetailsAJAX } from "../../services/api/orderApi";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
-import { orderStatuses } from "../../types/sharePropsModel";
+import { OrderStatuses, orderStatuses } from "../../types/sharePropsModel";
 
 const OrderDetailsPage = () => {
 	const { orderId } = useParams();
@@ -37,7 +37,10 @@ const OrderDetailsPage = () => {
 	return (
 		<>
 			<OrderCard {...orderDto} orderStatus={orderStatus} />
-			<ProgressBar steps={[...orderStatuses]} currentStep={orderStatus} />
+			<ProgressBar
+				steps={[...orderStatuses]}
+				currentStep={orderStatus as OrderStatuses}
+			/>
 		</>
 	);
 };

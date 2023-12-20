@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import {
 	ProviderTabContext,
+	TabContextType,
 	useProviderTabContext,
 } from "../../services/context/TabsContext";
 import { ProviderTabs, providerTabs } from "../../services/routes.config";
@@ -12,7 +13,10 @@ const ProviderLayout = () => {
 	return (
 		<>
 			<ProviderTabContext.Provider value={{ activeTab, setActiveTab }}>
-				<NavTab tabs={providerTabs} useTabContext={useProviderTabContext} />
+				<NavTab
+					tabs={providerTabs}
+					useTabContext={useProviderTabContext as () => TabContextType<string>}
+				/>
 				<Outlet />
 			</ProviderTabContext.Provider>
 		</>

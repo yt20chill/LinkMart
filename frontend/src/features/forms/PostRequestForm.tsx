@@ -37,10 +37,7 @@ import {
 import CategoryFieldsForm from "./CategoryFields";
 import SkeletonForm from "./SkeletonForm";
 
-type PostRequestFormType = {
-	formTitle: string;
-};
-const PostRequestForm = (props: PostRequestFormType) => {
+const PostRequestForm = () => {
 	const [searchParams] = useSearchParams();
 	const requestId =
 		searchParams.get("cloneId") || searchParams.get("requestId");
@@ -150,7 +147,11 @@ const PostRequestForm = (props: PostRequestFormType) => {
 			{categories && locations ? (
 				<form className="max-w-lg mx-auto p-12">
 					<div className="inline-flex border-b-8  border-slate-300 text-xl font-bold text-slate-500">
-						{props.formTitle}
+						{isClone
+							? `Clone ${defaultValues.item}`
+							: requestId
+							? `Edit ${defaultValues.item}`
+							: "Create Request"}
 					</div>
 					{categories && (
 						<FormSelect
