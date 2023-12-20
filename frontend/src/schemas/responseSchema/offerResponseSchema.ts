@@ -66,7 +66,7 @@ const providerOfferDetailSchema = requestDetailsResponseSchema.extend({
 type ProviderOfferDetailDto = z.infer<typeof providerOfferDetailSchema>;
 
 const hasOfferedResponseSchema = z.object({
-	hasOffered: z.boolean(),
+	hasOffer: z.boolean(),
 });
 
 type HasOfferedDto = z.infer<typeof hasOfferedResponseSchema>;

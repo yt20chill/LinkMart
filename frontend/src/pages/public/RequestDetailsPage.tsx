@@ -104,7 +104,7 @@ const RequestDetailsPage = () => {
 						{role === AuthorizeLevels.PROVIDER && (
 							<PrimaryButton
 								// if checkOffer === undefined, still allow offer, validate by backend
-								label={!checkOffer?.hasOffered ? "Offer" : "Offered"}
+								label={!checkOffer?.hasOffer ? "Offer" : "Offered"}
 								onClick={() => setShowPostOfferModal(true)}
 								disabled={checkingOffer}
 							/>
