@@ -44,7 +44,6 @@ const useAuth = () => {
 		navigate(siteMap(RouteEnum.Home));
 	}, [navigate, authStore, queryClient]);
 
-	//FIXME: did not get the latest userInfo?
 	const updateAuthStore = useCallback((): void => {
 		if (isLoading) return authStore.setIsAuthenticated(null);
 		else if (isError && error instanceof FetchError && error.status === 401) {
