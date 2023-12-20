@@ -35,9 +35,12 @@ import {
 } from "../hooks/useUpdateForm";
 import CategoryFieldsForm from "./CategoryFields";
 import SkeletonForm from "./SkeletonForm";
-import { camelToTitleCase, textToTitleCase } from "@/lib/utils";
+import { textToTitleCase } from "@/lib/utils";
 
-const PostRequestForm = () => {
+type PostRequestFormType = {
+  formTitle: string;
+};
+const PostRequestForm = (props: PostRequestFormType) => {
   const [searchParams] = useSearchParams();
   const requestId =
     searchParams.get("cloneId") || searchParams.get("requestId");
@@ -144,6 +147,9 @@ const PostRequestForm = () => {
     <>
       {categories && locations ? (
         <form className="max-w-lg mx-auto p-12">
+          <div className="inline-flex border-b-8  border-slate-300 text-xl font-bold text-slate-500">
+            {props.formTitle}
+          </div>
           {categories && (
             <FormSelect
               register={register}
@@ -219,7 +225,7 @@ const PostRequestForm = () => {
               errors={errors}
             />
           ))}
-          {categoryId && (
+          {categoryId ? (
             <CategoryFieldsForm
               keyName="itemDetail"
               register={
@@ -237,10 +243,10 @@ const PostRequestForm = () => {
                 defaultValuesByField.others.itemDetail ?? undefined
               }
             />
-          )}
+          ) : null}
           <div className="flex justify-end mt-8 gap-2">
             <FormSubmitButton
-              label="Create Post"
+              label="Confirm"
               onClick={handleSubmit(onSubmit)}
               disabled={isLoading}
             />
