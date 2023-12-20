@@ -3,8 +3,10 @@ import { ErrorResponseDto, errorResponseSchema } from "./baseResponseSchema";
 import {
 	AcceptOfferResponseDto,
 	OfferDetailsDto,
+	ProviderOfferDetailDto,
 	ProviderOfferDto,
 	acceptOfferResponseSchema,
+	providerOfferDetailSchema,
 	providerOfferResponseSchema,
 	requestOffersResponseSchema,
 } from "./offerResponseSchema";
@@ -60,6 +62,7 @@ export {
 	postAddressResponseSchema,
 	postLogisticsSchema,
 	postRequestResponseSchema,
+	providerOfferDetailSchema,
 	providerOfferResponseSchema,
 	requestDetailsResponseSchema,
 	requestOffersResponseSchema,
@@ -84,6 +87,7 @@ export type {
 	PostAddressResponseDto,
 	PostLogisticDto,
 	PostRequestResponseDto,
+	ProviderOfferDetailDto,
 	ProviderOfferDto,
 	RequestDetailsDto,
 	RequestDto,

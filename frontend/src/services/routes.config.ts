@@ -162,7 +162,7 @@ routeConfigMap
 	})
 	.set(RouteEnum.OfferDetail, {
 		name: "Offer Details",
-		path: "offer-details/:id",
+		path: "offer-details/:offerId",
 		authorizeLevel: AuthorizeLevels.PROVIDER,
 		component: OfferDetailsPage,
 	})
