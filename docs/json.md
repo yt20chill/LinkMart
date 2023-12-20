@@ -832,7 +832,7 @@
 }
 ```
 
-### 📍 6.1.2 GET Offer detail (provider) Done~
+### 📍 6.1.3 GET Offer detail (provider)
 
 | [GET] | /api/offer/:offerId |
 | ------ | ---------- |
@@ -853,7 +853,7 @@ RequestDetails (5.3) + offerStatus + estimatedProcessTime + price + offerRemark
 }
 ```
 
-### 📍 6.1.3 Amend Offer (provider) 
+### 📍 6.1.4 Amend Offer (provider) 
 
 | [PUT] | /api/offer/:offerId |
 | ------ | ---------- |
@@ -880,7 +880,7 @@ RequestDetails (5.3) + offerStatus + estimatedProcessTime + price + offerRemark
     "message" : fail to change offer
 }
 ```
-### 📍 6.1.4 DELETE Offer (provider) Change Status Aborted
+### 📍 6.1.5 DELETE Offer (provider) Change Status Aborted
 
 | [DELETE] | /api/offer/:offerId |
 | ------ | ---------- |
