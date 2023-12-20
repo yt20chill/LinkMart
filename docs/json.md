@@ -572,7 +572,7 @@
 "Total active request"
 "Number of page(active request / limit )"
 
-##### 📍 5.2.2 Get All - by userId (via created_by) Done~
+##### 📍 5.2.2 Get All - by userId (ACTIVE) Done~
 
 | [Get] | /api/request (userId in jwt header) |
 | ----- | ---------------------------------------- |
@@ -580,6 +580,37 @@
 > ⬆️ Resp:
 
 > Sort by updated_at desc && isActive === true
+
+```js
+🟢 [200]  OK
+[
+{
+    "requestId" : string (ulid),
+    "createdBy": string(user.username),
+    "locationName" : string(location.name),
+    "item" : string,
+    "primaryImage" : string,
+    "offerPrice"? : float,
+    "createdAt": DateTime,
+    "updatedAt": DateTime
+},.../* Max 30 Requests */]
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : "fail to get request"
+}
+```
+##### 📍 5.2.3 Get All - by userId (INACTIVE) Done~
+
+| [Get] | /api/request (userId in jwt header) |
+| ----- | ---------------------------------------- |
+
+> ⬆️ Resp:
+
+> Sort by updated_at desc && isActive === false
 
 ```js
 🟢 [200]  OK
