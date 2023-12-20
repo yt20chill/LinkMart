@@ -8,7 +8,7 @@ export function DetailInfoDisplay(props: RequestDetailsDto) {
   return (
     <>
       <SectionTitle icon="view_list" content={"Details"} />
-      <div className="grid max-md:grid-cols-2 grid-cols-3 gap-2 p-5">
+      <div className="grid max-md:grid-cols-2 grid-cols-3 gap-2 p-5 pb-0">
         <DetailDisplay
           title={props.locationName}
           label={"From"}

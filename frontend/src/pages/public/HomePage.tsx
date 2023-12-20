@@ -1,5 +1,3 @@
-import { FormSubmitButton } from "@/components/form";
-import PrimaryButton from "@/components/ui/PrimaryButton";
 import { RouteEnum, siteMap } from "@/services/routes.config";
 import { useNavigate } from "react-router-dom";
 
@@ -10,16 +8,16 @@ function HomePage() {
       <div className="relative h-fit overflow-hidden">
         <div className="max-w-7xl max-lg:px-2 mx-auto flex w-fit p-12">
           <div
-            className="rounded-lg flex shadow w-fit cursor-pointer overflow-hidden"
+            className="rounded-lg flex shadow w-fit cursor-pointer overflow-hidden ring-8 ring-offset-1 ring-white/25"
             onClick={() => navigate(siteMap(RouteEnum.Requests))}
           >
-            <img src="/image/event/Banner.jpg" className="contrast-75" />
+            <img src="/image/event/Banner.jpg" className="contrast-[0.9]" />
           </div>
         </div>
         <div className="bg-[url('/image/event/Banner.jpg')] bg-cover bg-top w-screen backdrop-blur-3xl absolute inset-0 -z-10 blur-3xl"></div>
       </div>
       <div className="w-screen">
-        <div className="max-w-7xl max-lg:px-2 w-screen mx-auto ">
+        <div className="max-w-7xl max-lg:px-2 w-screen mx-auto flex max-lg:relative">
           <div className="max-lg:w-full w-1/2 p-12">
             <h1 className="text-left text-5xl mb-3">
               <span className="font-bold text-primary-400">Link</span>
@@ -43,6 +41,9 @@ function HomePage() {
             >
               Explore
             </button>
+          </div>
+          <div className="w-1/2 flex items-center justify-center max-lg:absolute right-0 -bottom-16  -z-10">
+            <img src="/image/tags/tag_shopping_bag.png" />
           </div>
         </div>
       </div>
