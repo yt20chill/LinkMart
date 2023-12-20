@@ -12,6 +12,7 @@ const NavTab = <T extends string[]>({
 }: NavTabProps<T>) => {
 	const { activeTab, setActiveTab } = useTabContext();
 	const navigate = useNavigate();
+
 	return (
 		<div className="flex flex-col w-96 gap-2 bg-base-100 grow">
 			{Object.keys(tabs).map((tab) => (
@@ -23,6 +24,7 @@ const NavTab = <T extends string[]>({
 					onClick={(e) => {
 						e.preventDefault();
 						setActiveTab(tab);
+						console.log(tab);
 						navigate(tabs[tab as keyof typeof tabs]);
 					}}
 				>
