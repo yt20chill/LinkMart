@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import {
 	ProviderTabContext,
 	useProviderTabContext,
@@ -6,17 +7,13 @@ import {
 import { ProviderTabs, providerTabs } from "../../services/routes.config";
 import NavTab from "./NavTab";
 
-type ProviderLayoutProps = {
-	children: React.ReactNode;
-};
-
-const ProviderLayout = ({ children }: ProviderLayoutProps) => {
+const ProviderLayout = () => {
 	const [activeTab, setActiveTab] = useState<ProviderTabs>("Offers");
 	return (
 		<>
 			<ProviderTabContext.Provider value={{ activeTab, setActiveTab }}>
 				<NavTab tabs={providerTabs} useTabContext={useProviderTabContext} />
-				{children}
+				<Outlet />
 			</ProviderTabContext.Provider>
 		</>
 	);

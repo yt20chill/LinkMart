@@ -24,7 +24,6 @@ const NavTab = <T extends string[]>({
 					onClick={(e) => {
 						e.preventDefault();
 						setActiveTab(tab);
-						console.log(tab);
 						navigate(tabs[tab as keyof typeof tabs]);
 					}}
 				>

@@ -4,11 +4,11 @@ import { ToastContainer } from "react-toastify";
 import AuthGuard from "./components/AuthGuard";
 import { Footer } from "./components/footer/Footer";
 import { Navbar } from "./components/navbar/Navbar";
+import ProviderLayout from "./components/navbar/ProviderNavTab";
 import { AnimatedBG } from "./features/animatedBackground/AnimatedBG";
 import { useAuth } from "./features/hooks/useAuth";
 import { NotFoundPage } from "./pages/public";
 import {
-	authorizedLevelMap,
 	authorizedLevelToPrefix,
 	routeConfigArray,
 } from "./services/routes.config";
@@ -36,38 +36,63 @@ function App() {
 				limit={5}
 			/>
 			<Routes>
-				{Array.from(authorizedLevelMap.keys()).map((level) =>
-					// <RoutesByRole key={level} authorizeLevel={level} />
-					// need authGuard
-					level > AuthorizeLevels.PUBLIC ? (
-						<Route
-							key={level}
-							path={authorizedLevelToPrefix(level)}
-							element={<AuthGuard authorizeLevel={level} />}
-						>
-							{routeConfigArray
-								.filter((route) => route.authorizeLevel === level)
-								.map((route) => (
-									<Route
-										key={route.path}
-										path={route.path}
-										element={<route.component />}
-									/>
-								))}
-						</Route>
-					) : (
-						// public
-						routeConfigArray
-							.filter((route) => route.authorizeLevel === level)
+				(
+				<Route
+					path={authorizedLevelToPrefix(AuthorizeLevels.ADMIN)}
+					element={<AuthGuard authorizeLevel={AuthorizeLevels.ADMIN} />}
+				>
+					{routeConfigArray
+						.filter((route) => route.authorizeLevel === AuthorizeLevels.ADMIN)
+						.map((route) => (
+							<Route
+								key={route.path}
+								path={route.path}
+								element={<route.component />}
+							/>
+						))}
+				</Route>
+				<Route element={<ProviderLayout />}>
+					<Route
+						path={authorizedLevelToPrefix(AuthorizeLevels.PROVIDER)}
+						element={<AuthGuard authorizeLevel={AuthorizeLevels.PROVIDER} />}
+					>
+						{routeConfigArray
+							.filter(
+								(route) => route.authorizeLevel === AuthorizeLevels.PROVIDER
+							)
 							.map((route) => (
 								<Route
 									key={route.path}
 									path={route.path}
 									element={<route.component />}
 								/>
-							))
-					)
-				)}
+							))}
+					</Route>
+				</Route>
+				<Route
+					path={authorizedLevelToPrefix(AuthorizeLevels.USER)}
+					element={<AuthGuard authorizeLevel={AuthorizeLevels.USER} />}
+				>
+					{routeConfigArray
+						.filter((route) => route.authorizeLevel === AuthorizeLevels.USER)
+						.map((route) => (
+							<Route
+								key={route.path}
+								path={route.path}
+								element={<route.component />}
+							/>
+						))}
+				</Route>
+				{routeConfigArray
+					.filter((route) => route.authorizeLevel === AuthorizeLevels.PUBLIC)
+					.map((route) => (
+						<Route
+							key={route.path}
+							path={route.path}
+							element={<route.component />}
+						/>
+					))}
+				)
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 			<div className="my-6"></div>

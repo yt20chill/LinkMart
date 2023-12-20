@@ -1,11 +1,5 @@
-import ProviderLayout from "../../components/navbar/ProviderNavTab";
-
 const OfferPage = () => {
-	return (
-		<ProviderLayout>
-			<div>OfferPage</div>
-		</ProviderLayout>
-	);
+	return <div>OfferPage</div>;
 };
 
 export default OfferPage;

@@ -1,11 +1,5 @@
-import ProfilePageLayout from "../../components/navbar/ProviderNavTab";
-
 const ProviderProfilePage = () => {
-	return (
-		<ProfilePageLayout>
-			<div>ProviderProfilePage</div>
-		</ProfilePageLayout>
-	);
+	return <div>ProviderProfilePage</div>;
 };
 
 export default ProviderProfilePage;

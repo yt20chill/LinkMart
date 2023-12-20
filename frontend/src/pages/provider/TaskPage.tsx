@@ -1,11 +1,5 @@
-import ProviderLayout from "../../components/navbar/ProviderNavTab";
-
 const TaskPage = () => {
-	return (
-		<ProviderLayout>
-			<div>TaskPage</div>
-		</ProviderLayout>
-	);
+	return <div>TaskPage</div>;
 };
 
 export default TaskPage;

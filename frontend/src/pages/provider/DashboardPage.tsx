@@ -1,11 +1,5 @@
-import ProviderLayout from "../../components/navbar/ProviderNavTab";
-
 const DashboardPage = () => {
-	return (
-		<ProviderLayout>
-			<div>DashboardPage</div>
-		</ProviderLayout>
-	);
+	return <div>DashboardPage</div>;
 };
 
 export default DashboardPage;
