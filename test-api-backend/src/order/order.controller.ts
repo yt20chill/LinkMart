@@ -10,7 +10,7 @@ export class OrderController {
   getOrderDetails() {
     return {
       orderId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
-      orderStatus: 'In progress',
+      orderStatus: 'Review',
       providerId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
       providerName: 'Jason',
       item: 'This',
@@ -30,6 +30,7 @@ export class OrderController {
       requestRemark: 'Thanks',
       offerPrice: 1000,
       categoryName: 'Clothes',
+      address: 'Main St 123',
     };
   }
 }
