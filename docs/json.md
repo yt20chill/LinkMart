@@ -1310,8 +1310,8 @@ Success
 
 ```js
 {
-	"efficiency": int 0-5
-	"attitude": int 0-5
+	"efficiency": float 0-5
+	"attitude": float 0-5
 	"comments": string | undefined
 }
 ```
