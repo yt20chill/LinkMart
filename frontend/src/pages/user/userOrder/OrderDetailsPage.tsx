@@ -2,9 +2,11 @@ import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { OrderCard } from "../../../components/card/OrderCard";
+import { DetailInfoDisplay } from "../../../components/display/DetailInfoDisplay";
 import Skeleton from "../../../components/skeletons/Skeleton";
 import Loading from "../../../components/ui/Loading";
 import ProgressBar from "../../../components/ui/ProgressBar";
+import { GetOrderDto } from "../../../schemas/responseSchema";
 import { orderDetailsAJAX } from "../../../services/api/orderApi";
 import { queryKey } from "../../../services/query.config";
 import { RouteEnum, siteMap } from "../../../services/routes.config";
@@ -20,25 +22,51 @@ const OrderDetailsPage = () => {
 	const { data: details, isLoading } = useQuery({
 		queryKey: [queryKey.ORDER, { orderId }],
 		queryFn: () => orderDetailsAJAX(orderId!),
+		enabled: !!orderId,
 	});
 	if (isLoading) return <Loading />;
 	if (!details) return <Skeleton />;
 	const {
-		requestId,
-		updatedAt,
+		orderStatus,
+		providerId,
+		providerName,
+		item,
+		primaryImage,
+		quantity,
+		price,
+		estimatedProcessTime,
+		createdAt,
 		locationName,
-		images,
 		itemDetail,
 		url,
 		requestRemark,
-		createdBy,
-		orderStatus,
-		...orderDto
+		offerPrice,
 	} = details;
 
+	const orderDto: GetOrderDto = {
+		orderId: orderId!,
+		orderStatus,
+		providerId,
+		providerName,
+		item,
+		primaryImage,
+		quantity,
+		price,
+		estimatedProcessTime,
+		createdAt,
+	};
+
+	const requestDetailsDto = {
+		locationName,
+		itemDetail,
+		requestRemark,
+		offerPrice,
+		url,
+	};
 	return (
 		<>
-			<OrderCard {...orderDto} orderStatus={orderStatus} />
+			<OrderCard {...orderDto} />
+			<DetailInfoDisplay {...requestDetailsDto} />
 			<ProgressBar
 				steps={[...orderStatuses]}
 				currentStep={orderStatus as OrderStatuses}
