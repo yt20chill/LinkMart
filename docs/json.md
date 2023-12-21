@@ -1305,7 +1305,7 @@ Success
 }
 ```
 
-### 📍 7.6 Review Order
+### 📍 7.7 Review Order
 | [POST]| /api/order/:orderId/review |
 | ----- | ------------- |
 "jwt"
