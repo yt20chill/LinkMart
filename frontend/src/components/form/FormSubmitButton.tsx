@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge";
 
 type FormSubmitButtonProps<C = unknown, T = unknown> = {
   color?: "primary" | "secondary";
-  label: string;
+  label?: string;
   className?: string;
   onClick: (
     e?: React.BaseSyntheticEvent<object, C, T> | undefined
@@ -13,7 +13,7 @@ type FormSubmitButtonProps<C = unknown, T = unknown> = {
 // passed onClick here to support multiple form handling
 const FormSubmitButton = ({
   color = "secondary",
-  label,
+  label = "Submit",
   onClick,
   disabled = false,
   className = "",

@@ -1,14 +1,20 @@
 import { z } from "zod";
-import { requiredId, ulid } from "../../lib/schemaUtils";
+import {
+	emptyStringToUndefined,
+	requiredId,
+	ulid,
+} from "../../lib/schemaUtils";
 
 export {
 	createOrderParamsSchema,
 	postLogisticCompanyFormSchema,
+	reviewOrderFormSchema,
 	uploadShippingFormSchema,
 };
 export type {
 	CreateOrderParams,
 	TPostLogisticCompanyForm,
+	TReviewOrderForm,
 	TUploadShippingForm,
 };
 
@@ -45,3 +51,20 @@ type TUploadShippingForm = Record<
 	Exclude<keyof z.infer<typeof uploadShippingFormSchema>, "shippingInvoice">,
 	string
 > & { shippingInvoice: File | null };
+
+const reviewOrderFormSchema = z.object({
+	efficiency: z
+		.string()
+		.transform((val) => +val / 2)
+		.pipe(z.number().min(0).max(5)),
+	attitude: z
+		.string()
+		.transform((val) => +val / 2)
+		.pipe(z.number().min(0).max(5)),
+	comments: emptyStringToUndefined,
+});
+
+type TReviewOrderForm = Record<
+	keyof z.infer<typeof reviewOrderFormSchema>,
+	string
+>;

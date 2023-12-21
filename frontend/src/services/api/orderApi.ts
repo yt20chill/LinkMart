@@ -3,6 +3,7 @@ import { appendFormData } from "../../lib/formUtils";
 import {
 	CreateOrderParams,
 	TPostLogisticCompanyForm,
+	TReviewOrderForm,
 	TUploadShippingForm,
 } from "../../schemas/requestSchema";
 import {
@@ -31,6 +32,7 @@ export {
 	getLogisticCompanyAJAX,
 	getUserOrdersAJAX,
 	orderDetailsAJAX,
+	reviewOrderAJAX,
 	uploadShippingAJAX,
 };
 
@@ -87,4 +89,14 @@ const uploadShippingAJAX = async (
 		method: "put",
 		data,
 	});
+};
+
+const reviewOrderAJAX = async (orderId: string, form: TReviewOrderForm) => {
+	return await axiosWrapper<TReviewOrderForm>(
+		`${orderApiRoutes.ORDER}/${orderId}/review`,
+		{
+			method: "put",
+			data: form,
+		}
+	);
 };

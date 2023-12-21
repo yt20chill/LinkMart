@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { OrderCard } from "../../../components/card/OrderCard";
+import Skeleton from "../../../components/skeletons/Skeleton";
 import Loading from "../../../components/ui/Loading";
 import ProgressBar from "../../../components/ui/ProgressBar";
 import { orderDetailsAJAX } from "../../../services/api/orderApi";
@@ -16,11 +17,12 @@ const OrderDetailsPage = () => {
 		toast.error("Order not found");
 		navigate(siteMap(RouteEnum.UserRequests), { replace: true });
 	}
-	const { data: details } = useQuery({
+	const { data: details, isLoading } = useQuery({
 		queryKey: [queryKey.ORDER, { orderId }],
 		queryFn: () => orderDetailsAJAX(orderId!),
 	});
-	if (!details) return <Loading />;
+	if (isLoading) return <Loading />;
+	if (!details) return <Skeleton />;
 	const {
 		requestId,
 		updatedAt,
