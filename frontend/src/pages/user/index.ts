@@ -4,11 +4,11 @@ import ProviderRegisterPage from "./ProviderRegisterPage";
 import UserRequestsPage from "./UserRequestsPage";
 import ProfilePage from "./profile/ProfilePage";
 import UserRequestDetailsPage from "./requestDetails/UserRequestDetailsPage";
-import OrderDetailsPage from "./userOrder/OrderDetailsPage";
+import UserOrderDetailsPage from "./userOrder/UserOrderDetailsPage";
 import UserOrderPage from "./userOrder/UserOrderPage";
 
 export {
-	OrderDetailsPage,
+	UserOrderDetailsPage as OrderDetailsPage,
 	PaymentPage,
 	PostRequestPage,
 	ProfilePage,

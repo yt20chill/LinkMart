@@ -50,6 +50,7 @@ const orderDetailsSchema = getOrderResponseSchema.extend({
 	requestRemark: z.string().nullable(),
 	offerPrice: z.number().positive().nullable(),
 	categoryName: z.string().min(1),
+	address: z.string().min(1),
 });
 
 type OrderDetailsDto = z.infer<typeof orderDetailsSchema>;
