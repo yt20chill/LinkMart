@@ -16,9 +16,11 @@ import {
 import {
 	CreateOrderParams,
 	TPostLogisticCompanyForm,
+	TReviewOrderForm,
 	TUploadShippingForm,
 	createOrderParamsSchema,
 	postLogisticCompanyFormSchema,
+	reviewOrderFormSchema,
 	uploadShippingFormSchema,
 } from "./orderSchema";
 
@@ -56,6 +58,7 @@ export {
 	postRequestSchema,
 	putProfileSchema,
 	requestIdSchema,
+	reviewOrderFormSchema,
 	signInSchema,
 	signUpSchema,
 	updateAddressFormSchema,
@@ -74,6 +77,7 @@ export type {
 	TAcceptOfferForm,
 	TOfferForm,
 	TPostLogisticCompanyForm,
+	TReviewOrderForm,
 	TSignInForm,
 	TSignUpForm,
 	TUploadShippingForm,
