@@ -2,7 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
-import { FormInput, FormSubmitButton } from "../../components/form";
+import { FormSubmitButton } from "../../components/form";
+import FormTextAreaInput from "../../components/form/FormTextAreaInput";
 import CancelButton from "../../components/ui/CancelButton";
 import { generateDefaultValues } from "../../lib/formUtils";
 import { PostAddressDto, postAddressSchema } from "../../schemas/requestSchema";
@@ -53,7 +54,7 @@ function PostAddressForm({
 		isShow && (
 			<form>
 				{Object.keys(defaultValues).map((name) => (
-					<FormInput
+					<FormTextAreaInput
 						key={name}
 						name={name as keyof PostAddressDto}
 						register={register}

@@ -12,6 +12,7 @@ import {
 	ImagePreview,
 } from "../../components/form";
 import FormFileInput from "../../components/form/FormFileInput";
+import FormTextAreaInput from "../../components/form/FormTextAreaInput";
 import CancelButton from "../../components/ui/CancelButton";
 import { appendFormData } from "../../lib/formUtils";
 import {
@@ -217,17 +218,33 @@ const PostRequestForm = () => {
 								))}
 					</div>
 
-					{Object.keys(defaultValuesByField.text).map((field) => (
-						<FormInput
-							key={field}
-							name={field as keyof RequestForm}
-							defaultValue={
-								defaultValuesByField.text[field as keyof RequestFormTextFields]
-							}
-							register={register}
-							errors={errors}
-						/>
-					))}
+					{Object.keys(defaultValuesByField.text).map((field) =>
+						/remark/gi.test(field) ? (
+							<FormTextAreaInput
+								key={field}
+								name={field as keyof RequestForm}
+								defaultValue={
+									defaultValuesByField.text[
+										field as keyof RequestFormTextFields
+									]
+								}
+								register={register}
+								errors={errors}
+							/>
+						) : (
+							<FormInput
+								key={field}
+								name={field as keyof RequestForm}
+								defaultValue={
+									defaultValuesByField.text[
+										field as keyof RequestFormTextFields
+									]
+								}
+								register={register}
+								errors={errors}
+							/>
+						)
+					)}
 					{categoryId ? (
 						<CategoryFieldsForm
 							keyName="itemDetail"
