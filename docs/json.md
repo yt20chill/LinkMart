@@ -1358,6 +1358,28 @@ Success
     "message" : failed to update order shipping detail
 }
 ```
+### 📍 7.8 SSE Order Status Done
+| [GET]| /api/order/sse |
+| ----- | ------------- |
+"jwt"
+> ⬇️ Req Body:
+
+```Note: Please use EventSourse and the eventSourse.onmessage for reciving the event
+```
+
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+```
+{
+	"Orderid" : String 
+}
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to update order shipping detail
+}
+```
 
 ## 📎 8. Location Route Done~
 
