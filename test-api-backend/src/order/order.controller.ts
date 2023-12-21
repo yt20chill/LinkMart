@@ -28,6 +28,8 @@ export class OrderController {
       itemDetail: { Color: 'Red' },
       url: 'https://google.com',
       requestRemark: 'Thanks',
+      offerPrice: 1000,
+      categoryName: 'Clothes',
     };
   }
 }
