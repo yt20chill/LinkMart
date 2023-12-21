@@ -34,7 +34,7 @@ const UserOrderPage = () => {
 							{/*Tab gap border*/}
 						</div>
 					</div>
-					<OrderStatus />
+					<OrderStatus role="user" />
 				</div>
 			</div>
 		</OrderStatusTabContext.Provider>
