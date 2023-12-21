@@ -35,7 +35,11 @@ const OrderStatus = ({ role }: OrderStatusProps) => {
 								onClick={(e) => {
 									e.preventDefault();
 									navigate(
-										`${siteMap(RouteEnum.OrderDetail)}/${order.orderId}`
+										`${siteMap(
+											role === "user"
+												? RouteEnum.OrderDetail
+												: RouteEnum.TaskDetail
+										)}/${order.orderId}`
 									);
 								}}
 							>
