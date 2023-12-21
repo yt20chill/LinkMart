@@ -42,7 +42,7 @@ function HomePage() {
               Explore
             </button>
           </div>
-          <div className="w-1/2 flex items-center justify-center max-lg:absolute right-0 -bottom-16  -z-10">
+          <div className="w-1/2 flex items-center justify-center max-lg:absolute right-0 -bottom-16  -z-10 mb-4">
             <img src="/image/tags/tag_shopping_bag.png" />
           </div>
         </div>

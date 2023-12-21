@@ -55,74 +55,76 @@ const RequestDetailsPage = () => {
     }
   }, [memoizedDetails, username, requestId, navigate]);
   return details ? (
-    <div className="bg-base-200/80 backdrop-blur-3xl py-12 border-y border-base-300">
-      <div className="max-w-7xl max-xl:px-2 mx-auto">
-        <main className="flex flex-wrap max-md:px-6 px-12">
-          {/*Request Img */}
-          <div className="max-md:w-full w-2/5 flex flex-col flex-wrap max-md:order-2">
-            <MainImageFrame title={details.item} imagePath={currentImage} />
-            <div className="mt-2 grid grid-cols-5 relative gap-2">
-              {details.images.map((itm) => (
-                <SubImageFrame
-                  key={itm.imagePath}
-                  imagePath={itm.imagePath}
-                  onClick={(e) =>
-                    setCurrentImage((e.target as HTMLImageElement).src)
-                  }
-                />
-              ))}
-            </div>
-          </div>
-          {/*Request Info */}
-          <div className="max-md:w-full w-3/5 flex flex-col flex-wrap max-md:pl-0 max-md:pt-6 pl-12 mb-3">
-            <SectionTitle icon="package_2" content={"Request Item"} />
-            <div className="inline-flex max-md:text-2xl text-3xl font-bold mb-2">
-              {details.item}
-            </div>
-            <div className="flex justify-between items-start mb-5">
-              <div className="flex gap-2">
-                <PillBadge content={details.locationName} />
-                <PillBadge content={details.categoryName} />
+    <>
+      <div className="bg-base-200/80 backdrop-blur-3xl py-12 border-y border-base-300">
+        <div className="max-w-7xl max-xl:px-2 mx-auto">
+          <main className="flex flex-wrap max-md:px-6 px-12">
+            {/*Request Img */}
+            <div className="max-md:w-full w-2/5 flex flex-col flex-wrap max-md:order-2">
+              <MainImageFrame title={details.item} imagePath={currentImage} />
+              <div className="mt-2 grid grid-cols-5 relative gap-2">
+                {details.images.map((itm) => (
+                  <SubImageFrame
+                    key={itm.imagePath}
+                    imagePath={itm.imagePath}
+                    onClick={(e) =>
+                      setCurrentImage((e.target as HTMLImageElement).src)
+                    }
+                  />
+                ))}
               </div>
-              <DateBadge date={details.updatedAt} />
             </div>
-            <div className="flex justify-end">
-              <PrimaryButton
-                icon="add_shopping_cart"
-                className="px-6 py-3 me-auto bg-primary-400 hover:bg-primary-500 hover:ring-primary-400/20 border-primary-400 rounded-[30px]"
-                label="Want Too"
-                onClick={() => {
-                  navigate(
-                    `${siteMap(RouteEnum.PostRequest)}?cloneId=${requestId}`
-                  );
-                }}
-              />
-              <div className="flex flex-wrap justify-end items-center">
-                <IconCircleFrame username="fakeRequest.createdBy" />
-                <div>
-                  <span className="text-slate-400/80 flex items-center gap-1 font-roboto tracking-wide text-xs leading-none">
-                    Created By
-                  </span>
-                  {details.createdBy}
+            {/*Request Info */}
+            <div className="max-md:w-full w-3/5 flex flex-col flex-wrap max-md:pl-0 max-md:pt-6 pl-12 mb-3">
+              <SectionTitle icon="package_2" content={"Request Item"} />
+              <div className="inline-flex max-md:text-2xl text-3xl font-bold mb-2">
+                {details.item}
+              </div>
+              <div className="flex justify-between items-start mb-5">
+                <div className="flex gap-2">
+                  <PillBadge content={details.locationName} />
+                  <PillBadge content={details.categoryName} />
+                </div>
+                <DateBadge date={details.updatedAt} />
+              </div>
+              <div className="flex justify-end">
+                <PrimaryButton
+                  icon="add_shopping_cart"
+                  className="px-6 py-3 me-auto bg-primary-400 hover:bg-primary-500 hover:ring-primary-400/20 border-primary-400 rounded-[30px]"
+                  label="Want Too"
+                  onClick={() => {
+                    navigate(
+                      `${siteMap(RouteEnum.PostRequest)}?cloneId=${requestId}`
+                    );
+                  }}
+                />
+                <div className="flex flex-wrap justify-end items-center">
+                  <IconCircleFrame username="fakeRequest.createdBy" />
+                  <div>
+                    <span className="text-slate-400/80 flex items-center gap-1 font-roboto tracking-wide text-xs leading-none">
+                      Created By
+                    </span>
+                    {details.createdBy}
+                  </div>
                 </div>
               </div>
-            </div>
 
+              <hr className="border-base-300 my-4" />
+              <DetailInfoDisplay {...details} />
+              {role === AuthorizeLevels.PROVIDER && (
+                <PrimaryButton
+                  icon="note_stack_add"
+                  className="py-3"
+                  // if checkOffer === undefined, still allow offer, validate by backend
+                  label={!checkOffer?.hasOffer ? "Make An Offer" : "Offered"}
+                  onClick={() => setShowPostOfferModal(true)}
+                  disabled={checkingOffer}
+                />
+              )}
+            </div>
             <hr className="border-base-300 my-4" />
-            <DetailInfoDisplay {...details} />
-            {role === AuthorizeLevels.PROVIDER && (
-              <PrimaryButton
-                icon="note_stack_add"
-                className="py-3"
-                // if checkOffer === undefined, still allow offer, validate by backend
-                label={!checkOffer?.hasOffer ? "Make An Offer" : "Offered"}
-                onClick={() => setShowPostOfferModal(true)}
-                disabled={checkingOffer}
-              />
-            )}
-          </div>
-          <hr className="border-base-300 my-4" />
-        </main>
+          </main>
+        </div>
       </div>
       {showPostOfferModal && (
         <ControlModalContext.Provider
@@ -136,7 +138,7 @@ const RequestDetailsPage = () => {
           </FormModal>
         </ControlModalContext.Provider>
       )}
-    </div>
+    </>
   ) : (
     <RequestCardSkeleton />
   );

@@ -4,40 +4,42 @@ import { BaseFormInputProps, OptionItem } from "../../types/formModels";
 import ErrorMessage from "./ErrorMessage";
 
 type FormRadioInputProps<T extends FieldValues> = BaseFormInputProps<T> & {
-	optionItems: OptionItem[];
+  optionItems: OptionItem[];
 };
 
 const FormRadioInput = <T extends FieldValues>({
-	name,
-	label = camelToTitleCase(name),
-	optionItems,
-	register,
-	errors,
+  name,
+  label = camelToTitleCase(name),
+  optionItems,
+  register,
+  errors,
 }: FormRadioInputProps<T>) => {
-	const error = errors?.[name]?.message as string | undefined;
-	return (
-		<div className="flex flex-col gap-2">
-			<div className="text-sm text-gray-400 pointer-events-auto select-auto">
-				{label}
-			</div>
-			{optionItems.map((item, index) => (
-				<label
-					key={item.value}
-					className="border-2 rounded-lg p-4 shadow-primary-200 bg-base-200 cursor-pointer select-auto"
-				>
-					<input
-						type="radio"
-						className="me-5 [&~label]:checked:text-primary-400"
-						value={item.value}
-						defaultChecked={index === 0}
-						{...register(name)}
-					/>
-					<span>{item.displayValue}</span>
-				</label>
-			))}
-			{error && <ErrorMessage message={error} />}
-		</div>
-	);
+  const error = errors?.[name]?.message as string | undefined;
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="text-sm text-gray-400 pointer-events-auto select-auto">
+        {label}
+      </div>
+      <div className="flex flex-col gap-2 h-48 overflow-y-scroll p-2 pb-12">
+        {optionItems.map((item, index) => (
+          <label key={item.value} className="cursor-pointer">
+            <input
+              type="radio"
+              className="hidden [&+span]:checked:text-primary-400 [&+span]:checked:bg-base-100 [&+span]:checked:ring-2 [&+span]:checked:ring-offset-2"
+              value={item.value}
+              defaultChecked={index === 0}
+              {...register(name)}
+            />
+            <span className="flex flex-col w-full border-2 rounded-lg p-4 shadow-primary-200 text-gray-400 bg-base-200 ring-primary-400/50">
+              <span className="text-gray-400 text-xs">Address {index + 1}</span>
+              {item.displayValue}
+            </span>
+          </label>
+        ))}
+        {error && <ErrorMessage message={error} />}
+      </div>
+    </div>
+  );
 };
 
 export default FormRadioInput;

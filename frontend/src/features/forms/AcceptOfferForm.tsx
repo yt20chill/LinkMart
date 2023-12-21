@@ -101,6 +101,9 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
                 displayValue: address.address,
               }))}
             />
+            <div className="w-full relative h-0">
+              <div className="w-full absolute bottom-0 bg-gradient-to-t from-base-100 to-base-100/0 h-12"></div>
+            </div>
             <FormSubmitButton
               className="flex ms-auto mt-2"
               label="Accept Offer"
@@ -115,20 +118,21 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
         )}
       </form>
       <div className="p-3">
-        <div className="p-3 border rounded-xl bg-slate-100">
-          <PrimaryButton
-            label="Add New Address"
-            className="bg-transparent hover:bg-transparent text-primary-400 px-2 py-1"
-            onClick={() => setShowAddAddress(true)}
-          />
-          {showAddAddress && (
+        <PrimaryButton
+          label="Add New Address"
+          className="bg-transparent hover:bg-transparent text-primary-400 px-2 py-1"
+          onClick={() => setShowAddAddress(true)}
+        />
+
+        {showAddAddress && (
+          <div className="p-3 border rounded-xl bg-slate-100">
             <PostAddressForm
               isShow={showAddAddress}
               setIsShow={setShowAddAddress}
               onSubmitCallback={postAddressCallback}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </>
   );
