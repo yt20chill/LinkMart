@@ -1187,10 +1187,10 @@ Success
     "message" : failed to get orders
 }
 ```
-### 📍 7.3 Get All inProgress Order By UserId Done orderStatus = {create, in-progress,shipped,completed}
-| [GET]| /api/user/order/inProgress | status=in-progress&shipped|
+### 📍 7.3.1 Get All inProgress Order By UserId Done orderStatus = {create, in-progress,shipped,completed}
+| [GET]| /api/prvoider/order/inProgress | status=in-progress&shipped|
 | ----- | ------------- |--|
-| [GET]| /api/user/order/complete | status=completed&cancelled| 
+| [GET]| /api/provider/order/complete | status=completed&cancelled| 
 | ----- | ------------- |--|
 "jwt"
 > ⬆️ Resp:
@@ -1205,7 +1205,35 @@ Success
   "primaryImage": string,
   "quantity": int,
   "price": float,
-  "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
+  "estimatedProcessTime": int
+  "createdAt": Date,
+},...],
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get orders
+}
+```
+### 📍 7.3.2 Get All inProgress Order By UserId orderStatus = {create, in-progress,shipped,completed}
+| [GET]| /api/user/order/inProgress | status=in-progress&shipped|
+| ----- | ------------- |--|
+| [GET]| /api/user/order/complete | status=completed&cancelled| 
+| ----- | ------------- |--|
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+[{
+  "orderId": string,
+  "orderStatus": string,
+  "userId": int,
+  "createdBy": string,
+  "item": string,
+  "primaryImage": string,
+  "quantity": int,
+  "price": float,
+  "estimatedProcessTime": int 
   "createdAt": Date,
 },...],
 ```
@@ -1242,7 +1270,7 @@ Success
 }
 ```
 
-### 📍 7.5 Get Order details by orderId
+### 📍 7.5 Get Order details by orderId Done
 | [GET]| /api/order/:orderId |
 | ----- | ------------- |
 "jwt"
@@ -1268,6 +1296,10 @@ Success
   "itemDetail": JSON or null,
   "url": string,
   "requestRemark" string,
+  "shipmentProof": null,
+  "shippingOrderNo": "1234567890",
+  "logisticCompanyName": "DHL"
+  "Address": String
 },...],
 ```
 ```js
@@ -1281,11 +1313,38 @@ Success
 | ----- | ------------- |
 "jwt"
 > ⬇️ Req Body:
+> FormData
 
 ```js
 {
 	"logisticCompanyId" : int
 	"shippingOrderNo" : String
+	"shipmentProof": File
+}
+```
+
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to update order shipping detail
+}
+```
+
+### 📍 7.7 Review Order
+| [POST]| /api/order/:orderId/review |
+| ----- | ------------- |
+"jwt"
+> ⬇️ Req Body:
+
+```js
+{
+	"efficiency": float 0-5
+	"attitude": float 0-5
+	"comments": string | undefined
 }
 ```
 
