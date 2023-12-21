@@ -1,4 +1,3 @@
-import RequestDetailsPage from "../public/RequestDetailsPage";
 import OrderDetailsPage from "./OrderDetailsPage";
 import PaymentPage from "./PaymentPage";
 import PostRequestPage from "./PostRequestPage";
@@ -14,7 +13,6 @@ export {
 	PostRequestPage,
 	ProfilePage,
 	ProviderRegisterPage,
-	RequestDetailsPage,
 	UserOrderPage,
 	UserRequestDetailsPage,
 	UserRequestsPage,
