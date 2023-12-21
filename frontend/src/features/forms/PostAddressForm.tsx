@@ -11,75 +11,75 @@ import { postAddressAJAX } from "../../services/api/userApi";
 import { queryKey } from "../../services/query.config";
 
 type PostAddressFormProps = {
-	isShow: boolean;
-	setIsShow: (isShow: boolean) => void;
-	onSubmitCallback?: (addressId: number) => void;
+  isShow: boolean;
+  setIsShow: (isShow: boolean) => void;
+  onSubmitCallback?: (addressId: number) => void;
 };
 
 const defaultValues = generateDefaultValues(postAddressSchema);
 
 function PostAddressForm({
-	isShow,
-	setIsShow,
-	onSubmitCallback,
+  isShow,
+  setIsShow,
+  onSubmitCallback,
 }: PostAddressFormProps) {
-	const {
-		handleSubmit,
-		formState: { errors },
-		register,
-		reset,
-	} = useForm<PostAddressDto>({
-		resolver: zodResolver(postAddressSchema),
-		defaultValues,
-		mode: "onTouched",
-	});
-	const queryClient = useQueryClient();
-	// Backend can response with the latest address Id after post
-	const { mutateAsync: postAddress, isLoading: isPosting } = useMutation({
-		mutationFn: postAddressAJAX,
-		onSuccess: async (result) => {
-			await queryClient.invalidateQueries([queryKey.USER, "address"]);
-			if (!result) return toast.error("Something went wrong");
-			toast.success("Address added successfully!");
-			reset();
-			setIsShow(false);
-			onSubmitCallback && onSubmitCallback(result.addressId);
-		},
-	});
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+    reset,
+  } = useForm<PostAddressDto>({
+    resolver: zodResolver(postAddressSchema),
+    defaultValues,
+    mode: "onTouched",
+  });
+  const queryClient = useQueryClient();
+  // Backend can response with the latest address Id after post
+  const { mutateAsync: postAddress, isLoading: isPosting } = useMutation({
+    mutationFn: postAddressAJAX,
+    onSuccess: async (result) => {
+      await queryClient.invalidateQueries([queryKey.USER, "address"]);
+      if (!result) return toast.error("Something went wrong");
+      toast.success("Address added successfully!");
+      reset();
+      setIsShow(false);
+      onSubmitCallback && onSubmitCallback(result.addressId);
+    },
+  });
 
-	const onSubmit = async (data: PostAddressDto) => {
-		await postAddress(data);
-	};
-	return (
-		isShow && (
-			<form>
-				{Object.keys(defaultValues).map((name) => (
-					<FormTextAreaInput
-						key={name}
-						name={name as keyof PostAddressDto}
-						register={register}
-						errors={errors}
-					/>
-				))}
+  const onSubmit = async (data: PostAddressDto) => {
+    await postAddress(data);
+  };
+  return (
+    isShow && (
+      <form>
+        {Object.keys(defaultValues).map((name) => (
+          <FormTextAreaInput
+            key={name}
+            name={name as keyof PostAddressDto}
+            register={register}
+            errors={errors}
+          />
+        ))}
 
-				<div className="flex justify-center gap-2">
-					<FormSubmitButton
-						label="Confirm"
-						onClick={handleSubmit(onSubmit)}
-						disabled={isPosting}
-					/>
-					<CancelButton
-						onClick={(e) => {
-							e.preventDefault();
-							setIsShow(false);
-							reset();
-						}}
-						label="Cancel"
-					/>
-				</div>
-			</form>
-		)
-	);
+        <div className="flex justify-end gap-2 mt-2">
+          <FormSubmitButton
+            label="Confirm"
+            onClick={handleSubmit(onSubmit)}
+            disabled={isPosting}
+          />
+          <CancelButton
+            onClick={(e) => {
+              e.preventDefault();
+              setIsShow(false);
+              reset();
+            }}
+            label="Cancel"
+          />
+        </div>
+      </form>
+    )
+  );
 }
 
 export default PostAddressForm;

@@ -10,7 +10,7 @@ const FormModal = ({ children }: FormModalProps) => {
   return (
     isShow && (
       <div className="flex items-center justify-center inset-0 fixed select-none pointer-events-none">
-        <div className="flex flex-col max-w-md w-screen bg-base-100 rounded-2xl shadow select-all pointer-events-auto relative z-20">
+        <div className="flex flex-col max-w-md w-screen bg-base-100 rounded-xl shadow select-auto pointer-events-auto relative z-50">
           <button
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
             onClick={() => {
@@ -22,7 +22,7 @@ const FormModal = ({ children }: FormModalProps) => {
           <>{children}</>
         </div>
         <div
-          className="inset-0 fixed bg-black/50 select-all pointer-events-auto z-10 h-full"
+          className="inset-0 fixed bg-black/50 select-auto pointer-events-auto z-10 h-full"
           onClick={() => setIsShow(false)}
         ></div>
       </div>

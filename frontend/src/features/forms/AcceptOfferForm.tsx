@@ -114,18 +114,21 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
           </>
         )}
       </form>
-      <div className="p-6">
-        <PrimaryButton
-          label="Add New Address"
-          onClick={() => setShowAddAddress(true)}
-        />
-        {showAddAddress && (
-          <PostAddressForm
-            isShow={showAddAddress}
-            setIsShow={setShowAddAddress}
-            onSubmitCallback={postAddressCallback}
+      <div className="p-3">
+        <div className="p-3 border rounded-xl bg-slate-100">
+          <PrimaryButton
+            label="Add New Address"
+            className="bg-transparent hover:bg-transparent text-primary-400 px-2 py-1"
+            onClick={() => setShowAddAddress(true)}
           />
-        )}
+          {showAddAddress && (
+            <PostAddressForm
+              isShow={showAddAddress}
+              setIsShow={setShowAddAddress}
+              onSubmitCallback={postAddressCallback}
+            />
+          )}
+        </div>
       </div>
     </>
   );
