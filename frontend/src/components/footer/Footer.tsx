@@ -1,5 +1,6 @@
 import { RouteEnum, siteMap } from "@/services/routes.config";
 import { Link } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
 
 type FooterProps = {
   className?: string;
@@ -7,7 +8,9 @@ type FooterProps = {
 
 export function Footer(props: FooterProps) {
   return (
-    <div className={`mt-auto bg-slate-700 ${props.className} py-12`}>
+    <div
+      className={twMerge("mt-auto bg-slate-700 py-12", props.className ?? "")}
+    >
       <div className="mx-auto max-w-7xl py-3 mb-2 gap-3 text-slate-300 flex justify-center items-end">
         <Link to={siteMap(RouteEnum.Home)}>
           <img

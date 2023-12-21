@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 type PriceDisplayProps = {
   badge?: boolean;
   badgeContent?: string;
@@ -13,7 +15,12 @@ export function PriceDisplay(props: PriceDisplayProps) {
         </div>
       )}
       {props.price ? (
-        <span className={`text-3xl tracking-tighter ${props.className}`}>
+        <span
+          className={twMerge(
+            "text-3xl tracking-tighter",
+            props.className ?? ""
+          )}
+        >
           <span className="text-base">HK $</span>
           {props.price.toLocaleString("en")}
         </span>

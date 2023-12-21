@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 type DetailDisplayProps = {
   title?: string;
   icon?: string;
@@ -8,7 +10,7 @@ type DetailDisplayProps = {
 
 export function UrlDisplay(props: DetailDisplayProps) {
   return (
-    <div className={`mb-5 ${props.className}`}>
+    <div className={twMerge("mb-5", props.className ?? "")}>
       <div className="flex items-center font-roboto text-xs text-slate-400/80 tracking-wider leading-none h-4 select-none">
         {props.icon && (
           <span className="material-symbols-rounded text-base icn-no-hvr">

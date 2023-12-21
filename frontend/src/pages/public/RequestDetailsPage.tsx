@@ -79,7 +79,6 @@ const RequestDetailsPage = () => {
             <div className="inline-flex max-md:text-2xl text-3xl font-bold mb-2">
               {details.item}
             </div>
-
             <div className="flex justify-between items-start mb-5">
               <div className="flex gap-2">
                 <PillBadge content={details.locationName} />
@@ -87,37 +86,42 @@ const RequestDetailsPage = () => {
               </div>
               <DateBadge date={details.updatedAt} />
             </div>
-            <div className="flex flex-wrap justify-end items-center">
-              <IconCircleFrame username="fakeRequest.createdBy" />
-              <div>
-                <span className="text-slate-400/80 flex items-center gap-1 font-roboto tracking-wide text-xs leading-none">
-                  Created By
-                </span>
-                {details.createdBy}
+            <div className="flex justify-end">
+              <PrimaryButton
+                icon="add_shopping_cart"
+                className="px-6 py-3 me-auto bg-primary-400 hover:bg-primary-500 hover:ring-primary-400/20 hover:border-primary-400 rounded-[30px]"
+                label="Want Too"
+                onClick={() => {
+                  navigate(
+                    `${siteMap(RouteEnum.PostRequest)}?cloneId=${requestId}`
+                  );
+                }}
+              />
+              <div className="flex flex-wrap justify-end items-center">
+                <IconCircleFrame username="fakeRequest.createdBy" />
+                <div>
+                  <span className="text-slate-400/80 flex items-center gap-1 font-roboto tracking-wide text-xs leading-none">
+                    Created By
+                  </span>
+                  {details.createdBy}
+                </div>
               </div>
             </div>
+
             <hr className="border-base-300 my-4" />
             <DetailInfoDisplay {...details} />
-          </div>
-          <hr className="border-base-300 my-4" />
-          <div className="flex">
             {role === AuthorizeLevels.PROVIDER && (
               <PrimaryButton
+                icon="note_stack_add"
+                className="py-3"
                 // if checkOffer === undefined, still allow offer, validate by backend
-                label={!checkOffer?.hasOffer ? "Offer" : "Offered"}
+                label={!checkOffer?.hasOffer ? "Make An Offer" : "Offered"}
                 onClick={() => setShowPostOfferModal(true)}
                 disabled={checkingOffer}
               />
             )}
-            <PrimaryButton
-              label="Want Too"
-              onClick={() => {
-                navigate(
-                  `${siteMap(RouteEnum.PostRequest)}?cloneId=${requestId}`
-                );
-              }}
-            />
           </div>
+          <hr className="border-base-300 my-4" />
         </main>
       </div>
       {showPostOfferModal && (

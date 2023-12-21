@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import FilterGroup from "../../components/search/FilterGroup";
 import { useSearchParamsContext } from "../../services/context/SearchParamsWrapperContext";
 import { useQueryContainer } from "../hooks/useQueryContainer";
+import { twMerge } from "tailwind-merge";
 
 type FilterProps = {
   className?: string;
@@ -18,7 +19,7 @@ export function Filter(props: FilterProps) {
   );
   const { setSearchParams } = useSearchParamsContext();
   return (
-    <div className={`ml-3 ${props.className}`}>
+    <div className={twMerge("ml-3", props.className ?? "")}>
       <div className="">
         {categoriesName ? (
           <FilterGroup
