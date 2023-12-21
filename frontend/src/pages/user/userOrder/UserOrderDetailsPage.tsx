@@ -9,6 +9,7 @@ import { useGuardedQueryContainer } from "../../../features/hooks/useGuardedQuer
 import { GetOrderDto } from "../../../schemas/responseSchema";
 import { RouteEnum, siteMap } from "../../../services/routes.config";
 import { OrderStatuses, orderStatuses } from "../../../types/sharePropsModel";
+import OrderStatusActions from "./OrderStatusActions";
 
 const UserOrderDetailsPage = () => {
 	const { orderId } = useParams();
@@ -19,6 +20,7 @@ const UserOrderDetailsPage = () => {
 	}
 	const { data: details, isLoading } =
 		useGuardedQueryContainer().useOrderDetails(orderId!);
+
 	if (isLoading) return <Loading />;
 	if (!details) return <Skeleton />;
 
@@ -59,6 +61,7 @@ const UserOrderDetailsPage = () => {
 		offerPrice,
 		url,
 	};
+
 	return (
 		<>
 			<OrderCard {...orderDto} />
@@ -66,6 +69,10 @@ const UserOrderDetailsPage = () => {
 			<ProgressBar
 				steps={[...orderStatuses]}
 				currentStep={orderStatus as OrderStatuses}
+			/>
+			<OrderStatusActions
+				status={orderStatus as OrderStatuses}
+				orderId={orderId!}
 			/>
 		</>
 	);

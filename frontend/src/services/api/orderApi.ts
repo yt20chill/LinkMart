@@ -29,6 +29,7 @@ const orderApiRoutes = Object.freeze({
 
 export {
 	addLogisticCompanyAJAX,
+	confirmReceivedAJAX,
 	createOrderAJAX,
 	getLogisticCompanyAJAX,
 	getProviderTasksAJAX,
@@ -99,6 +100,12 @@ const uploadShippingAJAX = async (
 	return await axiosWrapper<FormData>(`${orderApiRoutes.ORDER}/${orderId}`, {
 		method: "put",
 		data,
+	});
+};
+
+const confirmReceivedAJAX = async (orderId: string) => {
+	return await axiosWrapper<void>(`${orderApiRoutes.ORDER}/${orderId}`, {
+		method: "put",
 	});
 };
 
