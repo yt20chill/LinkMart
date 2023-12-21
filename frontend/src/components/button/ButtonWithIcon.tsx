@@ -35,7 +35,9 @@ export function ButtonWithIcon({
     <>
       <button onClick={clickFn}>
         <div
-          className={`flex items-center p-3 rounded-lg hover:bg-slate-200/50 hover:shadow transition-all duration-300 [&>span]:hover:text-slate-500 hover:text-slate-600 ${className}`}
+          className={`flex items-center p-3 rounded-lg hover:bg-slate-200/50 hover:shadow transition-all duration-300 [&>span]:hover:text-slate-500 hover:text-slate-600 ${
+            className ?? ""
+          }`}
         >
           <span className="material-symbols-rounded mx-1">{icon}</span>
           {label}
