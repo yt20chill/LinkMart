@@ -1187,7 +1187,7 @@ Success
     "message" : failed to get orders
 }
 ```
-### 📍 7.3 Get All inProgress Order By UserId Done orderStatus = {create, in-progress,shipped,completed}
+### 📍 7.3.1 Get All inProgress Order By UserId Done orderStatus = {create, in-progress,shipped,completed}
 | [GET]| /api/prvoider/order/inProgress | status=in-progress&shipped|
 | ----- | ------------- |--|
 | [GET]| /api/provider/order/complete | status=completed&cancelled| 
@@ -1205,7 +1205,35 @@ Success
   "primaryImage": string,
   "quantity": int,
   "price": float,
-  "estimatedProcessTime": int (days), * added 17Dec 10:10PM by Fredy
+  "estimatedProcessTime": int
+  "createdAt": Date,
+},...],
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to get orders
+}
+```
+### 📍 7.3.2 Get All inProgress Order By UserId orderStatus = {create, in-progress,shipped,completed}
+| [GET]| /api/user/order/inProgress | status=in-progress&shipped|
+| ----- | ------------- |--|
+| [GET]| /api/user/order/complete | status=completed&cancelled| 
+| ----- | ------------- |--|
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+[{
+  "orderId": string,
+  "orderStatus": string,
+  "userId": int,
+  "createdBy": string,
+  "item": string,
+  "primaryImage": string,
+  "quantity": int,
+  "price": float,
+  "estimatedProcessTime": int 
   "createdAt": Date,
 },...],
 ```
