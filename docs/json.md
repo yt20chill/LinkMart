@@ -1299,6 +1299,7 @@ Success
   "shipmentProof": null,
   "shippingOrderNo": "1234567890",
   "logisticCompanyName": "DHL"
+  "Address": String
 },...],
 ```
 ```js
