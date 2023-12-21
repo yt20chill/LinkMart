@@ -21,7 +21,6 @@ const UserOrderPage = () => {
 				<div className="flex flex-col bg-base-100/50 border border-slate-300 rounded-xl overflow-hidden shadow">
 					<div className="flex w-full pt-4 text-slate-500 bg-base-100 border-slate-300 ring-b-[4px]">
 						{orderStatusTabs.map((tab) => (
-							// <OrderStatusTab key={tab} status={tab} />
 							<Tab
 								key={tab}
 								status={tab}
