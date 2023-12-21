@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ErrorMessage, FormInput } from "../../components/form";
 import FormSubmitButton from "../../components/form/FormSubmitButton";
+import FormTextAreaInput from "../../components/form/FormTextAreaInput";
 import { FetchError } from "../../lib/apiUtils";
 import { dtoToString, generateDefaultValues } from "../../lib/formUtils";
 import { TOfferForm, offerSchema } from "../../schemas/requestSchema";
@@ -57,14 +58,23 @@ const OfferForm = (props: OfferFormProps) => {
 	};
 	return (
 		<form>
-			{Object.keys(defaultValues).map((name) => (
-				<FormInput
-					key={name}
-					name={name as keyof TOfferForm}
-					register={register}
-					errors={errors}
-				/>
-			))}
+			{Object.keys(defaultValues).map((name) => {
+				return /remark/gi.test(name) ? (
+					<FormTextAreaInput
+						key={name}
+						name={name as keyof TOfferForm}
+						register={register}
+						errors={errors}
+					/>
+				) : (
+					<FormInput
+						key={name}
+						name={name as keyof TOfferForm}
+						register={register}
+						errors={errors}
+					/>
+				);
+			})}
 			{error instanceof FetchError && <ErrorMessage message={error.message} />}
 			<FormSubmitButton
 				label="Offer"
