@@ -21,16 +21,22 @@ const FormRatingInput = <T extends FieldValues>({
 	return (
 		<div className="rating rating-lg rating-half">
 			<p className="text-lg font-bold">{label}</p>
-			<input type="radio" name={name} value="0" className="rating-hidden" />
+			<input
+				type="radio"
+				name={name}
+				value="0"
+				className="rating-hidden"
+				defaultChecked={!defaultValue}
+			/>
 			{Array(maxScore * 2)
 				.fill(null)
 				.map((_, index) => (
 					<input
 						key={index}
 						type="radio"
-						value={index}
+						value={index + 1}
 						defaultChecked={defaultValue ? +defaultValue * 2 === index : false}
-						className={`bg-green-500 mask mask-star-2 ${
+						className={`bg-amber-500 mask mask-star-2 ${
 							maskHalfClassNames[index % 2]
 						}`}
 						{...register(name)}

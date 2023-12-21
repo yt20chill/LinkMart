@@ -1,11 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import {
-	FormInput,
-	FormRatingInput,
-	FormSubmitButton,
-} from "../../components/form";
+import { FormRatingInput, FormSubmitButton } from "../../components/form";
+import FormTextAreaInput from "../../components/form/FormTextAreaInput";
 import { generateDefaultValues } from "../../lib/formUtils";
 import {
 	TReviewOrderForm,
@@ -55,7 +52,7 @@ const ReviewForm = ({ orderId }: ReviewFormProps) => {
 				errors={errors}
 				maxScore={5}
 			/>
-			<FormInput name="comments" register={register} errors={errors} />
+			<FormTextAreaInput name="comments" register={register} errors={errors} />
 			<FormSubmitButton
 				onClick={handleSubmit(onSubmit)}
 				label="Submit"

@@ -54,14 +54,12 @@ type TUploadShippingForm = Record<
 
 const reviewOrderFormSchema = z.object({
 	efficiency: z
-		.number()
-		.int()
-		.transform((val) => val / 2)
+		.string()
+		.transform((val) => +val / 2)
 		.pipe(z.number().min(0).max(5)),
 	attitude: z
-		.number()
-		.int()
-		.transform((val) => val / 2)
+		.string()
+		.transform((val) => +val / 2)
 		.pipe(z.number().min(0).max(5)),
 	comments: emptyStringToUndefined,
 });
