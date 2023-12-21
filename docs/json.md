@@ -1300,6 +1300,31 @@ Success
 }
 ```
 
+### 📍 7.6 Review Order
+| [POST]| /api/order/:orderId/review |
+| ----- | ------------- |
+"jwt"
+> ⬇️ Req Body:
+
+```js
+{
+	"efficiency": int 0-5
+	"attitude": int 0-5
+	"comments": string | undefined
+}
+```
+
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+```
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to update order shipping detail
+}
+```
+
 ## 📎 8. Location Route Done~
 
 ### 8.1 Order Request
