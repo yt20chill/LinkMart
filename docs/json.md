@@ -1242,7 +1242,7 @@ Success
 }
 ```
 
-### 📍 7.5 Get Order details by orderId
+### 📍 7.5 Get Order details by orderId Done
 | [GET]| /api/order/:orderId |
 | ----- | ------------- |
 "jwt"
