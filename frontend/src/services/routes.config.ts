@@ -14,6 +14,7 @@ import {
 } from "../pages/provider";
 import {
 	HomePage,
+	RequestDetailsPage,
 	RequestsPage,
 	SignInPage,
 	SignUpPage,
@@ -24,7 +25,6 @@ import {
 	PostRequestPage,
 	ProfilePage,
 	ProviderRegisterPage,
-	RequestDetailsPage,
 	UserOrderPage,
 	UserRequestDetailsPage,
 	UserRequestsPage,
