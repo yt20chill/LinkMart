@@ -16,8 +16,8 @@ const FormRadioInput = <T extends FieldValues>({
 }: FormRadioInputProps<T>) => {
   const error = errors?.[name]?.message as string | undefined;
   return (
-    <div className="flex flex-col gap-2">
-      <div className="text-sm text-gray-400 pointer-events-auto select-auto">
+    <div className="flex flex-col">
+      <div className="text-sm text-gray-400 pointer-events-auto select-auto indent-3">
         {label}
       </div>
       <div className="flex flex-col gap-2 h-48 overflow-y-scroll p-2 pb-12">
