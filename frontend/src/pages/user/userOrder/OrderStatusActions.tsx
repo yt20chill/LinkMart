@@ -24,13 +24,17 @@ const sweetAlertOption: SweetAlertOptions = {
 const OrderStatusActions = ({ status, orderId }: OrderStatusActionsProps) => {
 	switch (status) {
 		case "In progress":
-			return null;
+			return (
+				<div className="text-5xl">
+					Waiting for the provider to upload shipment proof...
+				</div>
+			);
 		case "Shipping":
 			return <Shipping orderId={orderId} />;
 		case "Review":
 			return <Review orderId={orderId} />;
 		case "Completed":
-			return null;
+			return <div className="text-5xl">🥰</div>;
 		default:
 			return null;
 	}
