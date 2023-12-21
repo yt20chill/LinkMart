@@ -1,14 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { OrderCard } from "../../../components/card/OrderCard";
-import { DetailInfoDisplay } from "../../../components/display/DetailInfoDisplay";
 import Skeleton from "../../../components/skeletons/Skeleton";
 import Loading from "../../../components/ui/Loading";
-import ProgressBar from "../../../components/ui/ProgressBar";
 import { useGuardedQueryContainer } from "../../../features/hooks/useGuardedQueryContainer";
-import { GetOrderDto } from "../../../schemas/responseSchema";
+import OrderDetails from "../../../features/order/OrderDetails";
+import { OrderDetailsContext } from "../../../services/context/OrderDetailsContext";
 import { RouteEnum, siteMap } from "../../../services/routes.config";
-import { OrderStatuses, orderStatuses } from "../../../types/sharePropsModel";
+import { OrderStatuses } from "../../../types/sharePropsModel";
 import OrderStatusActions from "./OrderStatusActions";
 
 const UserOrderDetailsPage = () => {
@@ -24,54 +22,13 @@ const UserOrderDetailsPage = () => {
 	if (isLoading) return <Loading />;
 	if (!details) return <Skeleton />;
 
-	const {
-		orderStatus,
-		providerId,
-		providerName,
-		item,
-		primaryImage,
-		quantity,
-		price,
-		estimatedProcessTime,
-		createdAt,
-		locationName,
-		itemDetail,
-		url,
-		requestRemark,
-		offerPrice,
-	} = details;
-
-	const orderDto: GetOrderDto = {
-		orderId: orderId!,
-		orderStatus,
-		providerId,
-		providerName,
-		item,
-		primaryImage,
-		quantity,
-		price,
-		estimatedProcessTime,
-		createdAt,
-	};
-
-	const requestInfoDto = {
-		locationName,
-		itemDetail,
-		requestRemark,
-		offerPrice,
-		url,
-	};
-
 	return (
 		<>
-			<OrderCard {...orderDto} />
-			<DetailInfoDisplay {...requestInfoDto} />
-			<ProgressBar
-				steps={[...orderStatuses]}
-				currentStep={orderStatus as OrderStatuses}
-			/>
+			<OrderDetailsContext.Provider value={details}>
+				<OrderDetails />
+			</OrderDetailsContext.Provider>
 			<OrderStatusActions
-				status={orderStatus as OrderStatuses}
+				status={details.orderStatus as OrderStatuses}
 				orderId={orderId!}
 			/>
 		</>

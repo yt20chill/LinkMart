@@ -1,5 +1,5 @@
 import { GetOrderDto } from "@/schemas/responseSchema";
-import { remainingDays } from "../../lib/formattingUtils";
+import { calculateETA } from "../../lib/formattingUtils";
 import { PriceDisplay } from "../display/PriceDisplay";
 
 type OrderCardProps = GetOrderDto & { isCompleted?: boolean };
@@ -34,7 +34,7 @@ export function OrderCard(props: OrderCardProps) {
 						<div className="border-s-4 ps-2">
 							<span className="text-xs me-2">Estimated Date</span>
 							<span className="font-bold">
-								{remainingDays(props.createdAt, props.estimatedProcessTime)}
+								{calculateETA(props.createdAt, props.estimatedProcessTime)}
 							</span>
 						</div>
 						<div className="border-s-4 ps-2">

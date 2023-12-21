@@ -5,15 +5,10 @@ import ReviewForm from "../../../features/forms/ReviewForm";
 import { fireAlert, sweetAlertDefaultOptions } from "../../../lib/formUtils";
 import { confirmReceivedAJAX } from "../../../services/api/orderApi";
 import { queryKey } from "../../../services/query.config";
-import { OrderStatuses } from "../../../types/sharePropsModel";
-
-type ActionProps = {
-	orderId: string;
-};
-
-type OrderStatusActionsProps = ActionProps & {
-	status: OrderStatuses;
-};
+import {
+	BaseOrderActionProps,
+	OrderStatusActionsProps,
+} from "../../../types/sharePropsModel";
 
 const sweetAlertOption: SweetAlertOptions = {
 	...sweetAlertDefaultOptions,
@@ -42,7 +37,7 @@ const OrderStatusActions = ({ status, orderId }: OrderStatusActionsProps) => {
 
 export default OrderStatusActions;
 
-const Shipping = ({ orderId }: ActionProps) => {
+const Shipping = ({ orderId }: BaseOrderActionProps) => {
 	const queryClient = useQueryClient();
 	const { mutateAsync: confirmReceived } = useMutation({
 		mutationFn: () => confirmReceivedAJAX(orderId),
@@ -61,6 +56,6 @@ const Shipping = ({ orderId }: ActionProps) => {
 	);
 };
 
-const Review = ({ orderId }: ActionProps) => {
+const Review = ({ orderId }: BaseOrderActionProps) => {
 	return <ReviewForm orderId={orderId} />;
 };

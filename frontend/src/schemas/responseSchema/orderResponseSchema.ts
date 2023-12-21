@@ -44,13 +44,16 @@ const orderDetailsSchema = getOrderResponseSchema.extend({
 	requestId: ulid,
 	locationName: z.string().min(1),
 	createdBy: z.string().min(1),
-	images: z.array(z.string().url()).nullable(),
+	images: z.array(z.string().url()),
 	itemDetail: z.record(z.string()).nullable(),
 	url: z.string().url().nullable(),
 	requestRemark: z.string().nullable(),
 	offerPrice: z.number().positive().nullable(),
 	categoryName: z.string().min(1),
 	address: z.string().min(1),
+	shippingOrderNo: z.string().min(1).nullable(),
+	logisticCompanyName: z.string().min(1).nullable(),
+	logisticCompanyUrl: z.string().url().nullable(),
 });
 
 type OrderDetailsDto = z.infer<typeof orderDetailsSchema>;
