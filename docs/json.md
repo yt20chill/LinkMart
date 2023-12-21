@@ -1268,6 +1268,9 @@ Success
   "itemDetail": JSON or null,
   "url": string,
   "requestRemark" string,
+  "shipmentProof": null,
+  "shippingOrderNo": "1234567890",
+  "logisticCompanyName": "DHL"
 },...],
 ```
 ```js
