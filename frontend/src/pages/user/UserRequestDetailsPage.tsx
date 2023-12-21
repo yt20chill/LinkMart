@@ -8,6 +8,7 @@ import { SectionTitle } from "@/components/title/SectionTitle";
 import { DetailInfoDisplay } from "@/components/display/DetailInfoDisplay";
 import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
 import { useQueryContainer } from "@/features/hooks/useQueryContainer";
+import OfferDetailsList from "pages/user/requestDetails/components/OfferDetailsList";
 import { MouseEvent, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,7 +19,6 @@ import { deleteRequestAJAX } from "../../services/api/requestApi";
 import { ControlModalContext } from "../../services/context/ControlModalContext";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
-import OfferDetailsList from "./requestDetails/components/OfferDetailsList";
 
 const sweetAlertOptions = {
 	...sweetAlertDefaultOptions,
