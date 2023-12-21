@@ -1281,11 +1281,13 @@ Success
 | ----- | ------------- |
 "jwt"
 > ⬇️ Req Body:
+> FormData
 
 ```js
 {
 	"logisticCompanyId" : int
 	"shippingOrderNo" : String
+	"shipmentProof": File
 }
 ```
 
