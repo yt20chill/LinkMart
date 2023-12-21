@@ -1,14 +1,14 @@
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { OrderCard } from "../../../../components/card/OrderCard";
-import { OrderCardSkeleton } from "../../../../components/card/OrderCardSkeleton";
+import { OrderCard } from "../../components/card/OrderCard";
+import { OrderCardSkeleton } from "../../components/card/OrderCardSkeleton";
 import {
 	getProviderTasksAJAX,
 	getUserOrdersAJAX,
-} from "../../../../services/api/orderApi";
-import { useOrderStatusTabContext } from "../../../../services/context/TabsContext";
-import { queryKey } from "../../../../services/query.config";
-import { RouteEnum, siteMap } from "../../../../services/routes.config";
+} from "../../services/api/orderApi";
+import { useOrderStatusTabContext } from "../../services/context/TabsContext";
+import { queryKey } from "../../services/query.config";
+import { RouteEnum, siteMap } from "../../services/routes.config";
 
 type OrderStatusProps = {
 	role: "user" | "provider";

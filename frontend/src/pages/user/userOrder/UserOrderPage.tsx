@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Tab from "../../../components/ui/Tab";
+import OrderStatus from "../../../features/order/OrderStatus";
 import {
 	OrderStatusTabContext,
 	TabContextType,
@@ -9,7 +10,6 @@ import {
 	OrderStatusTabs,
 	orderStatusTabs,
 } from "../../../types/sharePropsModel";
-import OrderStatus from "./components/OrderStatus";
 
 const UserOrderPage = () => {
 	const [tab, setTab] = useState<OrderStatusTabs>("inProgress");

@@ -1,44 +1,68 @@
-import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { OrderCard } from "../../../components/card/OrderCard";
+import { DetailInfoDisplay } from "../../../components/display/DetailInfoDisplay";
 import Skeleton from "../../../components/skeletons/Skeleton";
 import Loading from "../../../components/ui/Loading";
 import ProgressBar from "../../../components/ui/ProgressBar";
-import { orderDetailsAJAX } from "../../../services/api/orderApi";
-import { queryKey } from "../../../services/query.config";
+import { useGuardedQueryContainer } from "../../../features/hooks/useGuardedQueryContainer";
+import { GetOrderDto } from "../../../schemas/responseSchema";
 import { RouteEnum, siteMap } from "../../../services/routes.config";
 import { OrderStatuses, orderStatuses } from "../../../types/sharePropsModel";
 
-const OrderDetailsPage = () => {
+const UserOrderDetailsPage = () => {
 	const { orderId } = useParams();
 	const navigate = useNavigate();
 	if (!orderId) {
 		toast.error("Order not found");
 		navigate(siteMap(RouteEnum.UserRequests), { replace: true });
 	}
-	const { data: details, isLoading } = useQuery({
-		queryKey: [queryKey.ORDER, { orderId }],
-		queryFn: () => orderDetailsAJAX(orderId!),
-	});
+	const { data: details, isLoading } =
+		useGuardedQueryContainer().useOrderDetails(orderId!);
 	if (isLoading) return <Loading />;
 	if (!details) return <Skeleton />;
+
 	const {
-		requestId,
-		updatedAt,
+		orderStatus,
+		providerId,
+		providerName,
+		item,
+		primaryImage,
+		quantity,
+		price,
+		estimatedProcessTime,
+		createdAt,
 		locationName,
-		images,
 		itemDetail,
 		url,
 		requestRemark,
-		createdBy,
-		orderStatus,
-		...orderDto
+		offerPrice,
 	} = details;
 
+	const orderDto: GetOrderDto = {
+		orderId: orderId!,
+		orderStatus,
+		providerId,
+		providerName,
+		item,
+		primaryImage,
+		quantity,
+		price,
+		estimatedProcessTime,
+		createdAt,
+	};
+
+	const requestInfoDto = {
+		locationName,
+		itemDetail,
+		requestRemark,
+		offerPrice,
+		url,
+	};
 	return (
 		<>
-			<OrderCard {...orderDto} orderStatus={orderStatus} />
+			<OrderCard {...orderDto} />
+			<DetailInfoDisplay {...requestInfoDto} />
 			<ProgressBar
 				steps={[...orderStatuses]}
 				currentStep={orderStatus as OrderStatuses}
@@ -47,4 +71,4 @@ const OrderDetailsPage = () => {
 	);
 };
 
-export default OrderDetailsPage;
+export default UserOrderDetailsPage;
