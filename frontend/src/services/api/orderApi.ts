@@ -22,6 +22,7 @@ import {
 const orderApiRoutes = Object.freeze({
 	ORDER: "/api/order",
 	USER_ORDER: "/api/user/order",
+	PROVIDER_TASK: "/api/provider/order",
 	LOGISTIC_COMPANY: "/logisticCompany",
 	POST_LOGISTIC_COMPANY: "/api/logisticCompany",
 });
@@ -30,6 +31,7 @@ export {
 	addLogisticCompanyAJAX,
 	createOrderAJAX,
 	getLogisticCompanyAJAX,
+	getProviderTasksAJAX,
 	getUserOrdersAJAX,
 	orderDetailsAJAX,
 	reviewOrderAJAX,
@@ -47,6 +49,15 @@ const createOrderAJAX = async (params: CreateOrderParams) => {
 const getUserOrdersAJAX = async (status: "inProgress" | "complete") => {
 	return await axiosWrapper<void, GetOrderDto[]>(
 		`${orderApiRoutes.USER_ORDER}/${status}`,
+		{
+			schema: getOrdersSchema,
+		}
+	);
+};
+
+const getProviderTasksAJAX = async (status: "inProgress" | "complete") => {
+	return await axiosWrapper<void, GetOrderDto[]>(
+		`${orderApiRoutes.PROVIDER_TASK}/${status}`,
 		{
 			schema: getOrdersSchema,
 		}
