@@ -1,24 +1,23 @@
 import { DateBadge } from "@/components/badge/DateBadge";
 import { PillBadge } from "@/components/badge/PillBadge";
 import { RequestCardSkeleton } from "@/components/card/RequestCardSkeleton";
+import { DetailInfoDisplay } from "@/components/display/DetailInfoDisplay";
 import { MainImageFrame } from "@/components/imageFrame/MainImageFrame";
 import { SubImageFrame } from "@/components/imageFrame/SubImageFrame";
 import { SectionTitle } from "@/components/title/SectionTitle";
-// import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
-import { DetailInfoDisplay } from "@/components/display/DetailInfoDisplay";
 import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
 import { useQueryContainer } from "@/features/hooks/useQueryContainer";
-import OfferDetailsList from "pages/user/requestDetails/components/OfferDetailsList";
 import { MouseEvent, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import EditButton from "../../components/ui/EditButton";
-import { fireAlert, sweetAlertDefaultOptions } from "../../lib/formUtils";
-import { deleteRequestAJAX } from "../../services/api/requestApi";
-import { ControlModalContext } from "../../services/context/ControlModalContext";
-import { queryKey } from "../../services/query.config";
-import { RouteEnum, siteMap } from "../../services/routes.config";
+import EditButton from "../../../components/ui/EditButton";
+import { fireAlert, sweetAlertDefaultOptions } from "../../../lib/formUtils";
+import { deleteRequestAJAX } from "../../../services/api/requestApi";
+import { ControlModalContext } from "../../../services/context/ControlModalContext";
+import { queryKey } from "../../../services/query.config";
+import { RouteEnum, siteMap } from "../../../services/routes.config";
+import OfferDetailsList from "./components/OfferDetailsList";
 
 const sweetAlertOptions = {
 	...sweetAlertDefaultOptions,
