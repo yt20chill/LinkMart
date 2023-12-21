@@ -89,7 +89,7 @@ const RequestDetailsPage = () => {
             <div className="flex justify-end">
               <PrimaryButton
                 icon="add_shopping_cart"
-                className="px-6 py-3 me-auto bg-primary-400 hover:bg-primary-500 hover:ring-primary-400/20 hover:border-primary-400 rounded-[30px]"
+                className="px-6 py-3 me-auto bg-primary-400 hover:bg-primary-500 hover:ring-primary-400/20 border-primary-400 rounded-[30px]"
                 label="Want Too"
                 onClick={() => {
                   navigate(
