@@ -37,10 +37,21 @@ const OfferDetailsPage = () => {
 				offerRemark: offer.offerRemark ?? "",
 		  }
 		: defaultEmptyForm;
-	const { itemDetail, images, ...rest } = offer ?? {};
 	return (
 		<>
-			{offer && <Table data={[rest]} />}
+			{offer && (
+				<Table
+					data={[
+						{
+							...offer,
+							itemDetail: offer.itemDetail
+								? JSON.stringify(offer.itemDetail)
+								: null,
+							images: offer.images ? offer.images[0].imagePath : null,
+						},
+					]}
+				/>
+			)}
 			<EditButton
 				label="Edit Offer"
 				onClick={(e) => {
