@@ -99,6 +99,7 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
         {addresses ? (
           <>
             <FormRadioInput
+              className="h-56"
               name="userAddressId"
               label="Order address"
               register={register}

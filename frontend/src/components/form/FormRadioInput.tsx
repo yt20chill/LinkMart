@@ -2,9 +2,11 @@ import { FieldValues } from "react-hook-form";
 import { camelToTitleCase } from "../../lib/utils";
 import { BaseFormInputProps, OptionItem } from "../../types/formModels";
 import ErrorMessage from "./ErrorMessage";
+import { twMerge } from "tailwind-merge";
 
 type FormRadioInputProps<T extends FieldValues> = BaseFormInputProps<T> & {
   optionItems: OptionItem[];
+  className?: string;
 };
 
 const FormRadioInput = <T extends FieldValues>({
@@ -13,6 +15,7 @@ const FormRadioInput = <T extends FieldValues>({
   optionItems,
   register,
   errors,
+  className,
 }: FormRadioInputProps<T>) => {
   const error = errors?.[name]?.message as string | undefined;
   return (
@@ -20,7 +23,12 @@ const FormRadioInput = <T extends FieldValues>({
       <div className="text-sm text-gray-400 pointer-events-auto select-auto indent-3">
         {label}
       </div>
-      <div className="flex flex-col gap-2 h-48 overflow-y-scroll p-2 pb-12">
+      <div
+        className={twMerge(
+          "flex flex-col gap-2 overflow-y-auto p-2 pb-12",
+          className ?? ""
+        )}
+      >
         {optionItems.map((item, index) => (
           <label key={item.value} className="cursor-pointer">
             <input

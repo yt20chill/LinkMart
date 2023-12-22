@@ -9,24 +9,26 @@ import { RouteEnum } from "../../../services/routes.config";
 import OrderStatusActions from "./OrderStatusActions";
 
 const UserOrderDetailsPage = () => {
-	const { orderId } = useParams();
+  const { orderId } = useParams();
 
-	useRedirectOnCondition(!orderId, RouteEnum.UserOrder, "Order not found");
+  useRedirectOnCondition(!orderId, RouteEnum.UserOrder, "Order not found");
 
-	const { data: details, isLoading } =
-		useGuardedQueryContainer().useOrderDetails(orderId!);
+  const { data: details, isLoading } =
+    useGuardedQueryContainer().useOrderDetails(orderId!);
 
-	if (isLoading) return <Loading />;
-	if (!details) return <Skeleton />;
+  if (isLoading) return <Loading />;
+  if (!details) return <Skeleton />;
 
-	return (
-		<>
-			<OrderDetailsContext.Provider value={details}>
-				<OrderDetails />
-				<OrderStatusActions />
-			</OrderDetailsContext.Provider>
-		</>
-	);
+  return (
+    <>
+      <div className="my-5 max-w-7xl w-screen flex flex-col mx-auto bg-base-100 overflow-hidden rounded-3xl shadow">
+        <OrderDetailsContext.Provider value={details}>
+          <OrderDetails />
+          <OrderStatusActions />
+        </OrderDetailsContext.Provider>
+      </div>
+    </>
+  );
 };
 
 export default UserOrderDetailsPage;
