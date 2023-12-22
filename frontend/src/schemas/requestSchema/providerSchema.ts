@@ -4,13 +4,13 @@ import { requiredFile, requiredId } from "../../lib/schemaUtils";
 export { applyProviderSchema };
 export type { TApplyProviderForm };
 
-type FileInputKeys = "addressDoc" | "identityDoc" | "bankDoc";
+type FileInputKeys = "addressDocument" | "idDocument" | "bankDocument";
 
 const applyProviderSchema = z.object({
 	locationId: requiredId,
-	addressDoc: requiredFile,
-	identityDoc: requiredFile,
-	bankDoc: requiredFile,
+	addressDocument: requiredFile,
+	idDocument: requiredFile,
+	bankDocument: requiredFile,
 });
 
 type TApplyProviderForm = Omit<

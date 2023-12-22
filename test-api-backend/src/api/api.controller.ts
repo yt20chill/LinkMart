@@ -4,7 +4,8 @@ import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
 export class ApiController {
   @Get('user')
   getUser() {
-    return { username: 'Jason', providerId: '01BX5ZZKBKACTAV9WEVGEMMVRZ' };
+    // return { username: 'Jason', providerId: '01BX5ZZKBKACTAV9WEVGEMMVRZ' };
+    return { username: 'Jason', providerId: null };
   }
   @Get('request')
   findAllRequests() {
@@ -58,6 +59,20 @@ export class ApiController {
   @Put('order/:id')
   updateOrder() {
     return { success: true };
+  }
+
+  @Get('provider')
+  getProvider() {
+    // return { data: null };
+    return {
+      data: {
+        verificationId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
+        statusName: 'Pending',
+        idDocument: 'https://loremflickr.com/320/240?random=1',
+        addressDocument: 'https://loremflickr.com/320/240?random=2',
+        bankDocument: 'https://loremflickr.com/320/240?random=3',
+      },
+    };
   }
 
   @Get('provider/order/:status')

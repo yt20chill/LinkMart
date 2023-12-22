@@ -17,9 +17,9 @@ import SkeletonForm from "./SkeletonForm";
 
 const defaultValues: TApplyProviderForm = {
 	locationId: "",
-	addressDoc: null,
-	identityDoc: null,
-	bankDoc: null,
+	addressDocument: null,
+	idDocument: null,
+	bankDocument: null,
 };
 
 const ApplyProviderForm = () => {
