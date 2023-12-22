@@ -7,6 +7,7 @@ import {
 } from "../../../services/context/TabsContext";
 import { UserInfoTabs, userInfoTabs } from "../../../types/sharePropsModel";
 import AddressProfile from "./AddressProfile";
+import ApplyProviderProfile from "./ApplyProviderProfile";
 import GeneralProfile from "./GeneralProfile";
 
 const ProfilePage = () => {
@@ -29,6 +30,7 @@ const ProfilePage = () => {
 			<div className="ms-10">
 				{activeTab === "General" && <GeneralProfile />}
 				{activeTab === "Address" && <AddressProfile />}
+				{activeTab === "Apply Provider" && <ApplyProviderProfile />}
 			</div>
 		</>
 	);

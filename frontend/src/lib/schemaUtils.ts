@@ -38,8 +38,13 @@ const zeroToNull = z
 	.transform((value) => (value === 0 ? null : value + ""))
 	.nullable();
 
+const requiredFile = z
+	.instanceof(FileList)
+	.refine((files) => files.length > 0, { message: "required" });
+
 export {
 	emptyStringToUndefined,
+	requiredFile,
 	requiredId,
 	resultId,
 	stringToPositiveNumber,
