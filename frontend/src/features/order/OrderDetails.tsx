@@ -1,6 +1,5 @@
 import { OrderCard } from "../../components/card/OrderCard";
 import ProgressBar from "../../components/ui/ProgressBar";
-import TaskStatusActions from "../../pages/provider/taskDetails/TaskStatusActions";
 import { useOrderDetailsContext } from "../../services/context/OrderDetailsContext";
 import { OrderStatuses, orderStatuses } from "../../types/sharePropsModel";
 
@@ -16,7 +15,6 @@ const OrderDetails = () => {
 			<OrderCard {...orderDto} />
 			<>{JSON.stringify(requestInfoDto)}</>
 			<>{JSON.stringify(requestImages)}</>
-			<TaskStatusActions />
 		</>
 	);
 };

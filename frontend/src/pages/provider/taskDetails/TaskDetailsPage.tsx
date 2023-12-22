@@ -5,6 +5,7 @@ import Loading from "../../../components/ui/Loading";
 import { useGuardedQueryContainer } from "../../../features/hooks/useGuardedQueryContainer";
 import OrderDetails from "../../../features/order/OrderDetails";
 import { OrderDetailsContext } from "../../../services/context/OrderDetailsContext";
+import TaskStatusActions from "./TaskStatusActions";
 
 const TaskDetailsPage = () => {
 	const { orderId } = useParams();
@@ -21,6 +22,7 @@ const TaskDetailsPage = () => {
 	return (
 		<OrderDetailsContext.Provider value={details}>
 			<OrderDetails />
+			<TaskStatusActions />
 		</OrderDetailsContext.Provider>
 	);
 };
