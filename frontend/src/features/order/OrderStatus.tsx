@@ -17,7 +17,7 @@ type OrderStatusProps = {
 const OrderStatus = ({ role }: OrderStatusProps) => {
 	const { activeTab } = useOrderStatusTabContext();
 	const { data: orders, isLoading } = useQuery({
-		queryKey: [queryKey.ORDER, activeTab],
+		queryKey: [queryKey.ORDER, activeTab, { role }],
 		queryFn:
 			role === "user"
 				? () => getUserOrdersAJAX(activeTab)

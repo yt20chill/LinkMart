@@ -32,7 +32,7 @@ const getOrderResponseSchema = z.object({
 	quantity: z.string().min(1),
 	price: z.number().positive(),
 	estimatedProcessTime: z.number().positive().int(),
-	createdAt: z.string(),
+	createdAt: z.number().int().positive(),
 });
 
 const getOrdersSchema = z.array(getOrderResponseSchema);
@@ -40,7 +40,7 @@ const getOrdersSchema = z.array(getOrderResponseSchema);
 type GetOrderDto = z.infer<typeof getOrderResponseSchema>;
 
 const orderDetailsSchema = getOrderResponseSchema.extend({
-	updatedAt: z.string(),
+	updatedAt: z.number().int().positive(),
 	requestId: ulid,
 	locationName: z.string().min(1),
 	createdBy: z.string().min(1),
@@ -48,8 +48,6 @@ const orderDetailsSchema = getOrderResponseSchema.extend({
 	itemDetail: z.record(z.string()).nullable(),
 	url: z.string().url().nullable(),
 	requestRemark: z.string().nullable(),
-	offerPrice: z.number().positive().nullable(),
-	categoryName: z.string().min(1),
 	address: z.string().min(1),
 	shippingOrderNo: z.string().min(1).nullable(),
 	logisticCompanyName: z.string().min(1).nullable(),
