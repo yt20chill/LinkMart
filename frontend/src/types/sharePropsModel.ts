@@ -2,7 +2,6 @@ export { orderStatusTabs, orderStatuses, userInfoTabs };
 export type {
 	BaseButtonProps,
 	BaseOrderActionProps,
-	OrderStatusActionsProps,
 	OrderStatusTabs,
 	OrderStatuses,
 	UserInfoTabs,
@@ -33,8 +32,4 @@ type UserInfoTabs = (typeof userInfoTabs)[number];
 
 type BaseOrderActionProps = {
 	orderId: string;
-};
-
-type OrderStatusActionsProps = BaseOrderActionProps & {
-	status: OrderStatuses;
 };

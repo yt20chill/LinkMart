@@ -4,11 +4,9 @@ import PrimaryButton from "../../../components/ui/PrimaryButton";
 import ReviewForm from "../../../features/forms/ReviewForm";
 import { fireAlert, sweetAlertDefaultOptions } from "../../../lib/formUtils";
 import { confirmReceivedAJAX } from "../../../services/api/orderApi";
+import { useOrderDetailsContext } from "../../../services/context/OrderDetailsContext";
 import { queryKey } from "../../../services/query.config";
-import {
-	BaseOrderActionProps,
-	OrderStatusActionsProps,
-} from "../../../types/sharePropsModel";
+import { BaseOrderActionProps } from "../../../types/sharePropsModel";
 
 const sweetAlertOption: SweetAlertOptions = {
 	...sweetAlertDefaultOptions,
@@ -16,8 +14,11 @@ const sweetAlertOption: SweetAlertOptions = {
 	text: "We will pay the provider upon your confirmation",
 	icon: "info",
 };
-const OrderStatusActions = ({ status, orderId }: OrderStatusActionsProps) => {
-	switch (status) {
+const OrderStatusActions = () => {
+	const {
+		orderDto: { orderId, orderStatus },
+	} = useOrderDetailsContext();
+	switch (orderStatus) {
 		case "In progress":
 			return (
 				<div className="text-5xl">

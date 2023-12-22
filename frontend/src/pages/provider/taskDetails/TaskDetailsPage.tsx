@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import Skeleton from "../../components/skeletons/Skeleton";
-import Loading from "../../components/ui/Loading";
-import { useGuardedQueryContainer } from "../../features/hooks/useGuardedQueryContainer";
-import OrderDetails from "../../features/order/OrderDetails";
-import { OrderDetailsContext } from "../../services/context/OrderDetailsContext";
+import Skeleton from "../../../components/skeletons/Skeleton";
+import Loading from "../../../components/ui/Loading";
+import { useGuardedQueryContainer } from "../../../features/hooks/useGuardedQueryContainer";
+import OrderDetails from "../../../features/order/OrderDetails";
+import { OrderDetailsContext } from "../../../services/context/OrderDetailsContext";
 
 const TaskDetailsPage = () => {
 	const { orderId } = useParams();

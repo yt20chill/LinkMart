@@ -1,21 +1,18 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 import Skeleton from "../../../components/skeletons/Skeleton";
 import Loading from "../../../components/ui/Loading";
 import { useGuardedQueryContainer } from "../../../features/hooks/useGuardedQueryContainer";
+import useRedirectOnCondition from "../../../features/hooks/useRedirectOnCondition";
 import OrderDetails from "../../../features/order/OrderDetails";
 import { OrderDetailsContext } from "../../../services/context/OrderDetailsContext";
-import { RouteEnum, siteMap } from "../../../services/routes.config";
-import { OrderStatuses } from "../../../types/sharePropsModel";
+import { RouteEnum } from "../../../services/routes.config";
 import OrderStatusActions from "./OrderStatusActions";
 
 const UserOrderDetailsPage = () => {
 	const { orderId } = useParams();
-	const navigate = useNavigate();
-	if (!orderId) {
-		toast.error("Order not found");
-		navigate(siteMap(RouteEnum.UserRequests), { replace: true });
-	}
+
+	useRedirectOnCondition(!orderId, RouteEnum.UserOrder, "Order not found");
+
 	const { data: details, isLoading } =
 		useGuardedQueryContainer().useOrderDetails(orderId!);
 
@@ -26,11 +23,8 @@ const UserOrderDetailsPage = () => {
 		<>
 			<OrderDetailsContext.Provider value={details}>
 				<OrderDetails />
+				<OrderStatusActions />
 			</OrderDetailsContext.Provider>
-			<OrderStatusActions
-				status={details.orderStatus as OrderStatuses}
-				orderId={orderId!}
-			/>
 		</>
 	);
 };
