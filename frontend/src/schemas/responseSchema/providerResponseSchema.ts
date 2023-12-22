@@ -2,7 +2,7 @@ import { z } from "zod";
 import { ulid } from "../../lib/schemaUtils";
 
 export { getApplicationStatusResponseSchema, postProviderDtoSchema };
-export type { ApplyProviderDto, GetApplicationStatusDto };
+export type { ApplicationStatus, ApplyProviderDto, GetApplicationStatusDto };
 
 const postProviderDtoSchema = z.object({
 	providerId: ulid,
@@ -17,6 +17,7 @@ const applicationStatusSchema = z.object({
 	addressDocument: z.string().url(),
 	bankDocument: z.string().url(),
 });
+type ApplicationStatus = z.infer<typeof applicationStatusSchema>;
 const getApplicationStatusResponseSchema = z.object({
 	data: applicationStatusSchema.nullable(),
 });

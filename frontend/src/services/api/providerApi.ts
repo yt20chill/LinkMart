@@ -8,7 +8,11 @@ import {
 	postProviderDtoSchema,
 } from "../../schemas/responseSchema";
 
-export { applyProviderAJAX, getProviderApplicationStatusAJAX };
+export {
+	abortApplicationAJAX,
+	applyProviderAJAX,
+	getProviderApplicationStatusAJAX,
+};
 
 const providerApiRoutes = {
 	PROVIDER: "/api/provider",
@@ -32,4 +36,10 @@ const getProviderApplicationStatusAJAX = async () => {
 			schema: getApplicationStatusResponseSchema,
 		}
 	);
+};
+
+const abortApplicationAJAX = async () => {
+	return await axiosWrapper(providerApiRoutes.PROVIDER, {
+		method: "delete",
+	});
 };
