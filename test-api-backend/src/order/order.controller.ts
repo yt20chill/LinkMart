@@ -31,6 +31,9 @@ export class OrderController {
       offerPrice: 1000,
       categoryName: 'Clothes',
       address: 'Main St 123',
+      shippingOrderNo: '123456789',
+      logisticCompanyName: 'FedEx',
+      logisticCompanyUrl: 'https://fedex.com',
     };
   }
 }
