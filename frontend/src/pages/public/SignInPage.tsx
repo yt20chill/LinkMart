@@ -8,7 +8,7 @@ function SignInPage() {
   return (
     <>
       <SignInForm />
-      <p className="my-3 mx-auto font-roboto text-base tracking-wide [&_a]:hover:text-secondary-500 [&_a]:hover:border-b-4  border-secondary-500">
+      <p className="my-3 mx-auto font-roboto text-base tracking-wide [&_a]:hover:text-secondary-500 [&_a]:hover:border-b-4 border-secondary-500">
         New user?{" "}
         <Link to={siteMap(RouteEnum.SignUp)} className="text-secondary-300">
           Sign up{" "}
