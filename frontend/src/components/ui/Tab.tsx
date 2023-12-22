@@ -15,7 +15,7 @@ const Tab = <T extends string[]>({
 	const { activeTab, setActiveTab } = useTabContext();
 	return (
 		<div
-			className={`border-b-4 hover:border-primary-300/50 px-12 py-2 ${
+			className={`border-b-4 hover:border-primary-300/50 px-12 py-2 uppercase font-bold ${
 				activeTab === status ? "border-primary-300" : " border-slate-300"
 			}`}
 			onClick={(e) => {

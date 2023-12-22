@@ -1,8 +1,16 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import { SweetAlertOptions } from "sweetalert2";
+import CancelButton from "../../../components/ui/CancelButton";
 import Table from "../../../components/ui/Table";
 import ApplyProviderForm from "../../../features/forms/ApplyProviderForm";
 import SkeletonForm from "../../../features/forms/SkeletonForm";
-import { getProviderApplicationStatusAJAX } from "../../../services/api/providerApi";
+import { fireAlert } from "../../../lib/formUtils";
+import { ApplicationStatus } from "../../../schemas/responseSchema";
+import {
+	abortApplicationAJAX,
+	getProviderApplicationStatusAJAX,
+} from "../../../services/api/providerApi";
 import { queryKey } from "../../../services/query.config";
 
 const ApplyProviderProfile = () => {
@@ -12,7 +20,42 @@ const ApplyProviderProfile = () => {
 	});
 	if (isLoading) return <SkeletonForm />;
 	if (status?.data === null) return <ApplyProviderForm />;
-	return status && status.data && <Table data={[status.data]} />;
+	return status && status.data && <PendingApproval {...status.data} />;
 };
 
 export default ApplyProviderProfile;
+
+const sweetAlertOptions: SweetAlertOptions = {
+	icon: "warning",
+	title: "Abort Application",
+	text: "Are you sure you want to abort your application?",
+	confirmButtonText: "Yes, abort it!",
+	showCancelButton: true,
+	cancelButtonText: "No, keep it!",
+};
+const PendingApproval = (data: ApplicationStatus) => {
+	const queryClient = useQueryClient();
+	const { mutateAsync: abortApplication, isLoading } = useMutation({
+		mutationFn: abortApplicationAJAX,
+		onSuccess: async () => {
+			toast.success("Application aborted");
+			await queryClient.invalidateQueries();
+		},
+	});
+	const onConfirmed = async () => {
+		await abortApplication();
+	};
+	return (
+		<>
+			<Table data={[data]} />
+			<CancelButton
+				label="Abort"
+				onClick={fireAlert({
+					options: sweetAlertOptions,
+					onConfirmed: onConfirmed,
+				})}
+				disabled={isLoading}
+			/>
+		</>
+	);
+};

@@ -19,12 +19,26 @@ const Table = <T extends Record<string, string>>({ data }: TableProps<T>) => {
 						))}
 					</tr>
 				</thead>
+				{/* body */}
 				<tbody>
 					{data.map((record, index) => (
 						<tr key={index}>
 							<th>{index + 1}</th>
 							{Object.values(record).map((value, index) => (
-								<td key={`${index}-${value}`}>{value}</td>
+								<td key={`${index}-${value}`}>
+									{value.startsWith("http") ? (
+										<a
+											href={value}
+											className="underline text-blue-500"
+											target="_blank"
+											rel="noreferrer"
+										>
+											{value}
+										</a>
+									) : (
+										<span>{value}</span>
+									)}
+								</td>
 							))}
 						</tr>
 					))}
