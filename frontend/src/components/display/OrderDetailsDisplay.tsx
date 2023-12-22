@@ -23,7 +23,7 @@ export function OrderDetailsDisplay(props: OrderCardProps) {
       <div className="flex flex-wrap justify-start grow px-6 gap-6 py-4">
         <div className="aspect-square rounded-xl overflow-hidden h-40 w-40 bg-slate-200 flex justify-center items-center border border-slate-200">
           <img
-            src="https://dummyimage.com/600x400/000/eee"
+            src={props.primaryImage}
             className="object-cover h-full"
             title={props.item}
           />
