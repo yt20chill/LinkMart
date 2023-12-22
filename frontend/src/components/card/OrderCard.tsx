@@ -24,7 +24,7 @@ export function OrderCard(props: OrderCardProps) {
       </div>
       <div className="m-2 aspect-square rounded-xl overflow-hidden h-20 w-20 bg-slate-200 flex justify-center items-center border border-slate-200">
         <img
-          src="https://dummyimage.com/600x400/000/eee"
+          src={props.primaryImage}
           className="object-cover h-full"
           title={props.item}
         />
