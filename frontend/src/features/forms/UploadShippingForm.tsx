@@ -1,8 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { FormInput, FormSelect, FormSubmitButton } from "../../components/form";
-import FormFileInput from "../../components/form/FormFileInput";
+import {
+	FormImageInput,
+	FormInput,
+	FormSelect,
+	FormSubmitButton,
+} from "../../components/form";
 import Skeleton from "../../components/skeletons/Skeleton";
 import { generateDefaultValues } from "../../lib/formUtils";
 
@@ -118,7 +122,7 @@ const UploadShippingForm = ({ orderId }: UploadShippingFormProps) => {
 							errors={errors}
 						/>
 					))}
-				<FormFileInput
+				<FormImageInput
 					name="shippingInvoice"
 					placeholder="Please Upload Your Shipping Prove Here"
 					register={register}

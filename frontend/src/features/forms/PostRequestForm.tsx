@@ -6,13 +6,13 @@ import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
+	FormImageInput,
 	FormInput,
 	FormSelect,
 	FormSubmitButton,
+	FormTextAreaInput,
 	ImagePreview,
 } from "../../components/form";
-import FormFileInput from "../../components/form/FormFileInput";
-import FormTextAreaInput from "../../components/form/FormTextAreaInput";
 import CancelButton from "../../components/ui/CancelButton";
 import { appendFormData } from "../../lib/formUtils";
 import {
@@ -182,7 +182,7 @@ const PostRequestForm = () => {
 							}))}
 						/>
 					)}
-					<FormFileInput
+					<FormImageInput
 						name="imageFile"
 						register={register}
 						setValue={setValue}

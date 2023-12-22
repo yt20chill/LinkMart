@@ -1,8 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import { FormSelect, FormSubmitButton } from "../../components/form";
-import FormFileInput from "../../components/form/FormFileInput";
+import {
+	FormFileInput,
+	FormSelect,
+	FormSubmitButton,
+} from "../../components/form";
 import {
 	TApplyProviderForm,
 	applyProviderSchema,
