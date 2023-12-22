@@ -127,6 +127,7 @@ const UploadShippingForm = ({ orderId }: UploadShippingFormProps) => {
 					placeholder="Please Upload Your Shipping Prove Here"
 					register={register}
 					errors={errors}
+					watch={watch}
 					setValue={setValue}
 					multiple={false}
 				/>

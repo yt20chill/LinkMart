@@ -29,7 +29,6 @@ import {
 } from "../../services/api/requestApi";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
-import { usePreviewFormImages } from "../hooks/usePreviewFormImages";
 import { useQueryContainer } from "../hooks/useQueryContainer";
 import {
 	RequestFormTextFields,
@@ -113,12 +112,6 @@ const PostRequestForm = () => {
 			setImagesClone(images.filter((img) => img.imagePath !== primaryImage));
 	}, [images, primaryImage]);
 
-	// set delete images functions
-	const { base64Images, onDelete } = usePreviewFormImages<RequestForm>(
-		watch,
-		"imageFile",
-		setValue
-	);
 	const removeImageFromArray = ({ imageId }: { imageId: number }) =>
 		setImagesClone((prev) => prev.filter((img) => img.imageId !== imageId));
 	const onDeleteExisting = isClone ? removeImageFromArray : deleteImage;
@@ -185,6 +178,7 @@ const PostRequestForm = () => {
 					<FormImageInput
 						name="imageFile"
 						register={register}
+						watch={watch}
 						setValue={setValue}
 						errors={errors}
 						multiple={true}
@@ -199,12 +193,7 @@ const PostRequestForm = () => {
 								onDelete={() => {}}
 							/>
 						)}
-						{base64Images.length > 0 &&
-							base64Images
-								.reverse()
-								.map((img) => (
-									<ImagePreview key={img.name} {...img} onDelete={onDelete} />
-								))}
+
 						{imagesClone.length > 0 &&
 							imagesClone
 								.reverse()
