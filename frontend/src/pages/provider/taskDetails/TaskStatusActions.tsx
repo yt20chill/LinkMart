@@ -1,3 +1,4 @@
+import Table from "../../../components/ui/Table";
 import UploadShippingForm from "../../../features/forms/UploadShippingForm";
 import { useOrderDetailsContext } from "../../../services/context/OrderDetailsContext";
 import { ShipmentInfoDto } from "../../../types/orderModels";
@@ -34,7 +35,7 @@ const UpdateShipment = ({ orderId }: BaseOrderActionProps) => {
 
 // TODO: show shipping info, may share between provider and user
 const Shipping = (shipmentInfoDto: ShipmentInfoDto) => {
-	return <div>{JSON.stringify(shipmentInfoDto)}</div>;
+	return <Table data={[shipmentInfoDto]} />;
 };
 
 const Review = () => {
