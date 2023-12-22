@@ -1475,6 +1475,40 @@ Success
 }
 ```
 
+### 📍 10.2 Create Provider
+**Please change the key name to match the col name for your convenience**
+
+| [POST] | /api/provider/|
+| ----- | --------------------- |
+"jwt" :
+> ⬇️ Req Body:
+> FormData
+
+```
+{
+    "locationId": int
+    "addressDoc": File
+    "identityDoc": File
+    "bankDoc": File
+}
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"providerId": string ulid (provider.id)
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : string
+}
+```
+
 ---
 ## 📎 11. For Nic
 
