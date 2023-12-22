@@ -5,6 +5,7 @@ export { OfferDetailsContext, useOfferDetailsContext };
 
 type OfferDetailsContextType = {
 	offersDetails: OfferDetailsDto[];
+	onAccept: (offerId: string) => void;
 	onDecline: (offerId: string) => void;
 };
 
@@ -35,6 +36,7 @@ function useOfferDetailsContext(offerId?: string) {
 	if (!offerDetails) throw new Error("Offer not found");
 	return {
 		offerDetails,
+		onAccept: offerDetailsContext.onAccept,
 		onDecline: offerDetailsContext.onDecline,
 	};
 }
