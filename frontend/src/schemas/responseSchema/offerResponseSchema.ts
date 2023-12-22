@@ -5,7 +5,7 @@ export {
 	acceptOfferResponseSchema,
 	hasOfferedResponseSchema,
 	providerOfferDetailSchema,
-	providerOfferResponseSchema,
+	providerOffersResponseSchema,
 	requestOffersResponseSchema,
 };
 export type {
@@ -53,6 +53,8 @@ const providerOfferResponseSchema = z.object({
 	primaryImage: z.string().url(),
 	price: z.number().positive(),
 });
+
+const providerOffersResponseSchema = z.array(providerOfferResponseSchema);
 
 type ProviderOfferDto = z.infer<typeof providerOfferResponseSchema>;
 

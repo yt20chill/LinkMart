@@ -1,10 +1,12 @@
 import { camelToTitleCase } from "../../lib/utils";
 
-type TableProps<T extends Record<string, string>> = {
+type TableProps<T extends Record<string, number | string | null>> = {
 	data: T[];
 };
 
-const Table = <T extends Record<string, string>>({ data }: TableProps<T>) => {
+const Table = <T extends Record<string, string | number | null>>({
+	data,
+}: TableProps<T>) => {
 	return (
 		<div className="overflow-x-auto">
 			<table className="table">
@@ -26,7 +28,7 @@ const Table = <T extends Record<string, string>>({ data }: TableProps<T>) => {
 							<th>{index + 1}</th>
 							{Object.values(record).map((value, index) => (
 								<td key={`${index}-${value}`}>
-									{value.startsWith("http") ? (
+									{typeof value === "string" && value.startsWith("http") ? (
 										<a
 											href={value}
 											className="underline text-blue-500"

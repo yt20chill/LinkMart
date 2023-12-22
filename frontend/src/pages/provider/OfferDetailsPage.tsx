@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import FormModal from "../../components/modal/FormModal";
 import EditButton from "../../components/ui/EditButton";
 import Loading from "../../components/ui/Loading";
+import Table from "../../components/ui/Table";
 import OfferForm from "../../features/forms/OfferForm";
 import { generateDefaultValues } from "../../lib/formUtils";
 import { TOfferForm, offerSchema } from "../../schemas/requestSchema";
@@ -36,9 +37,10 @@ const OfferDetailsPage = () => {
 				offerRemark: offer.offerRemark ?? "",
 		  }
 		: defaultEmptyForm;
+	const { itemDetail, images, ...rest } = offer ?? {};
 	return (
 		<>
-			{offer && <div>{JSON.stringify(offer)}</div>}
+			{offer && <Table data={[rest]} />}
 			<EditButton
 				label="Edit Offer"
 				onClick={(e) => {

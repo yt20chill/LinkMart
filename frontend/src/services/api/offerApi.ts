@@ -18,7 +18,7 @@ import {
 	acceptOfferResponseSchema,
 	hasOfferedResponseSchema,
 	providerOfferDetailSchema,
-	providerOfferResponseSchema,
+	providerOffersResponseSchema,
 	requestOffersResponseSchema,
 } from "../../schemas/responseSchema";
 
@@ -95,10 +95,10 @@ const declineOfferAJAX = async (offerId: string): Promise<void> => {
 };
 
 const getProviderOffersAJAX = async () => {
-	return await axiosWrapper<void, ProviderOfferDto>(
+	return await axiosWrapper<void, ProviderOfferDto[]>(
 		`${offerApiRoutes.OFFER}/myOffer`,
 		{
-			schema: providerOfferResponseSchema,
+			schema: providerOffersResponseSchema,
 		}
 	);
 };
