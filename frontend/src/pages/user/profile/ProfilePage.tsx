@@ -18,7 +18,7 @@ const ProfilePage = () => {
 	const [activeTab, setActiveTab] = useState<UserInfoTabs>("General");
 	return (
 		<>
-			<div className="flex w-96 ms-10">
+			<div className="flex h-30 py-5 items-end">
 				<UserInfoTabContext.Provider value={{ activeTab, setActiveTab }}>
 					{/* Skip apply as provider tab if already is a provider*/}
 					{userInfoTabs
