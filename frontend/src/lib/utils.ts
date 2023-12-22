@@ -99,3 +99,7 @@ const mapIconUrl = (username: string, type?: IconType) => {
     hashData
   )}?d=${type ?? "retro"}&f=y`;
 };
+
+export const toggleElement = (e: React.MouseEvent<HTMLElement>) => {
+  (e.currentTarget as HTMLElement).classList.toggle("active");
+};

@@ -21,7 +21,7 @@ export const FilterKey = ({ name, value }: FilterKeyProps) => {
   };
   return (
     <li className="form-control w-full rounded-lg overflow-hidden hover:shadow hover:bg-base-100 active:bg-slate-200 px-1">
-      <label className="label cursor-pointer">
+      <label className="label cursor-pointer capitalize">
         <span className="label-text">{value}</span>
         <input
           type="checkbox"

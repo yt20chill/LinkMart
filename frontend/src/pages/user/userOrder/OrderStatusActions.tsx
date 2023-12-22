@@ -9,54 +9,54 @@ import { queryKey } from "../../../services/query.config";
 import { BaseOrderActionProps } from "../../../types/sharePropsModel";
 
 const sweetAlertOption: SweetAlertOptions = {
-	...sweetAlertDefaultOptions,
-	title: "Confirm Received?",
-	text: "We will pay the provider upon your confirmation",
-	icon: "info",
+  ...sweetAlertDefaultOptions,
+  title: "Confirm Received?",
+  text: "We will pay the provider upon your confirmation",
+  icon: "info",
 };
 const OrderStatusActions = () => {
-	const {
-		orderDto: { orderId, orderStatus },
-	} = useOrderDetailsContext();
-	switch (orderStatus) {
-		case "In progress":
-			return (
-				<div className="text-5xl">
-					Waiting for the provider to upload shipment proof...
-				</div>
-			);
-		case "Shipping":
-			return <Shipping orderId={orderId} />;
-		case "Review":
-			return <Review orderId={orderId} />;
-		case "Completed":
-			return <div className="text-5xl">🥰</div>;
-		default:
-			return null;
-	}
+  const {
+    orderDto: { orderId, orderStatus },
+  } = useOrderDetailsContext();
+  switch (orderStatus) {
+    case "In progress":
+      return (
+        <div className="text-5xl">
+          Waiting for the provider to upload shipment proof...
+        </div>
+      );
+    case "Shipping":
+      return <Shipping orderId={orderId} />;
+    case "Review":
+      return <Review orderId={orderId} />;
+    case "Completed":
+      return <div className="text-5xl">🥰</div>;
+    default:
+      return null;
+  }
 };
 
 export default OrderStatusActions;
 
 const Shipping = ({ orderId }: BaseOrderActionProps) => {
-	const queryClient = useQueryClient();
-	const { mutateAsync: confirmReceived } = useMutation({
-		mutationFn: () => confirmReceivedAJAX(orderId),
-		onSuccess: async () => {
-			await queryClient.invalidateQueries([queryKey.ORDER, { orderId }]);
-		},
-	});
-	return (
-		<PrimaryButton
-			label="Received"
-			onClick={fireAlert({
-				options: sweetAlertOption,
-				onConfirmed: confirmReceived,
-			})}
-		/>
-	);
+  const queryClient = useQueryClient();
+  const { mutateAsync: confirmReceived } = useMutation({
+    mutationFn: () => confirmReceivedAJAX(orderId),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries([queryKey.ORDER, { orderId }]);
+    },
+  });
+  return (
+    <PrimaryButton
+      label="Received"
+      onClick={fireAlert({
+        options: sweetAlertOption,
+        onConfirmed: confirmReceived,
+      })}
+    />
+  );
 };
 
 const Review = ({ orderId }: BaseOrderActionProps) => {
-	return <ReviewForm orderId={orderId} />;
+  return <ReviewForm orderId={orderId} />;
 };

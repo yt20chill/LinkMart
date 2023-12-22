@@ -21,7 +21,7 @@ const mapDate = (date: Date | string) => {
  * @param days number of days to add to start date
  * @returns date string in format: dd/mm/yyyy
  */
-const calculateETA = (from: string, days: number): string => {
+const calculateETA = (from: string | number, days: number): string => {
   return new Date(
     new Date(from).valueOf() + days * 86400000 //1 day in ms
   )
