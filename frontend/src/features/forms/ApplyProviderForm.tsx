@@ -36,7 +36,6 @@ const ApplyProviderForm = () => {
 		handleSubmit,
 		formState: { errors },
 		register,
-		setValue,
 	} = useForm<TApplyProviderForm>({
 		resolver: zodResolver(applyProviderSchema),
 		defaultValues,
@@ -64,7 +63,6 @@ const ApplyProviderForm = () => {
 						name={key as keyof TApplyProviderForm}
 						register={register}
 						errors={errors}
-						setValue={setValue}
 					/>
 				))}
 			<FormSubmitButton onClick={handleSubmit(onSubmit)} disabled={isLoading} />

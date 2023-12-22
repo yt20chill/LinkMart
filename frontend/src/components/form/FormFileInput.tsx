@@ -1,4 +1,4 @@
-import { FieldValues, UseFormSetValue } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { camelToTitleCase } from "../../lib/utils";
 import { BaseFormInputProps } from "../../types/formModels";
 import ErrorMessage from "./ErrorMessage";
@@ -6,7 +6,6 @@ import ErrorMessage from "./ErrorMessage";
 type FormFileInputProps<T extends FieldValues> = BaseFormInputProps<T> & {
 	accept?: string;
 	multiple?: boolean;
-	setValue: UseFormSetValue<T>;
 };
 
 function FormFileInput<T extends FieldValues>({
@@ -18,24 +17,27 @@ function FormFileInput<T extends FieldValues>({
 	errors,
 }: FormFileInputProps<T>) {
 	const error = errors?.[name]?.message as string | undefined;
-
 	return (
 		<>
 			<div className="label">
 				<span className="label-text">{label}</span>
 			</div>
-			<label className="form-control w-full max-w-lg h-12 outline-slate-400 outline-2 outline-dashed rounded-btn my-6 py-16 bg-base-100/10 hover:bg-base-100/50 flex items-center justify-center cursor-pointer">
+			<label
+				htmlFor={name}
+				className="form-control w-full max-w-lg h-12 outline-slate-400 outline-2 outline-dashed rounded-btn my-6 py-16 bg-base-100/10 hover:bg-base-100/50 flex items-center justify-center cursor-pointer"
+			>
 				<i className="bi bi-file-earmark-arrow-up text-slate-400 text-5xl"></i>
 				<div className="text-slate-400">Upload File</div>
-				<input
-					type="file"
-					multiple={multiple}
-					accept={accept}
-					{...register(name)}
-					className="file-input file-input-bordered w-full max-w-lg hidden"
-				/>
-				{error && <ErrorMessage message={error} />}
 			</label>
+			<input
+				id={name}
+				type="file"
+				multiple={multiple}
+				accept={accept}
+				{...register(name)}
+				className="file-input file-input-bordered w-full max-w-lg"
+			/>
+			{error && <ErrorMessage message={error} />}
 		</>
 	);
 }
