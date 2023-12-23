@@ -24,6 +24,7 @@ export {
 const providerApiRoutes = {
 	PROVIDER: "/api/provider",
 	PROFILE: "/api/provider/profile",
+	PUBLIC_PROFILE: "/provider/profile",
 };
 
 const applyProviderAJAX = async (form: TApplyProviderForm) => {
@@ -52,14 +53,21 @@ const abortApplicationAJAX = async () => {
 	});
 };
 
-const getProviderProfileAJAX = async (providerId: string) => {
+async function getProviderProfileAJAX(
+	providerId?: string
+): Promise<GetProviderProfileDto | undefined> {
+	if (providerId)
+		return await axiosWrapper<void, GetProviderProfileDto>(
+			`${providerApiRoutes.PUBLIC_PROFILE}/${providerId}`,
+			{ schema: getProviderProfileSchema }
+		);
 	return await axiosWrapper<void, GetProviderProfileDto>(
-		`${providerApiRoutes.PROFILE}/${providerId}`,
+		providerApiRoutes.PROFILE,
 		{
 			schema: getProviderProfileSchema,
 		}
 	);
-};
+}
 
 const editProviderProfileAJAX = async (form: EditProviderProfileForm) => {
 	return await axiosWrapper<EditProviderProfileForm>(

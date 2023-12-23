@@ -52,6 +52,7 @@ export enum RouteEnum {
 	SignUp,
 	SignIn,
 	Requests,
+	ProviderProfile,
 	Profile,
 	UserRequests,
 	UserRequestDetail,
@@ -61,7 +62,7 @@ export enum RouteEnum {
 	UserOrder,
 	OrderDetail,
 	ProviderRegister,
-	ProviderProfile,
+	MyProviderProfile,
 	MyOffer,
 	OfferDetail,
 	Task,
@@ -107,7 +108,7 @@ routeConfigMap
 		component: RequestDetailsPage,
 	})
 	.set(RouteEnum.ProviderProfile, {
-		name: "Profile",
+		name: "Provider Profile",
 		path: "provider-profile/:providerId",
 		authorizeLevel: AuthorizeLevels.PUBLIC,
 		component: ProviderProfilePage,
@@ -160,6 +161,12 @@ routeConfigMap
 		path: "provider/register",
 		authorizeLevel: AuthorizeLevels.USER,
 		component: ProviderRegisterPage,
+	})
+	.set(RouteEnum.MyProviderProfile, {
+		name: "My Provider Profile",
+		path: "profile", // provider/profile < without providerId will goto this page
+		authorizeLevel: AuthorizeLevels.PROVIDER,
+		component: ProviderProfilePage,
 	})
 	.set(RouteEnum.MyOffer, {
 		// offer management
@@ -231,10 +238,10 @@ const authorizedLevelToPrefix = (authorizedLevel: AuthorizeLevels): string => {
 
 // TODO: generate from array, object has no order
 const providerTabs = Object.freeze({
-	Profile: siteMap(RouteEnum.ProviderProfile),
-	Dashboard: siteMap(RouteEnum.Dashboard),
-	Offers: siteMap(RouteEnum.MyOffer),
-	Tasks: siteMap(RouteEnum.Task),
+	Profile: RouteEnum.MyProviderProfile,
+	Dashboard: RouteEnum.Dashboard,
+	Offers: RouteEnum.MyOffer,
+	Tasks: RouteEnum.Task,
 });
 
 type ProviderTabs = keyof typeof providerTabs;

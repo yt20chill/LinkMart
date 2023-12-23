@@ -9,6 +9,7 @@ const useRedirectOnCondition = (
 	message: string = "Broken URL, redirecting..."
 ) => {
 	const navigate = useNavigate();
+	//FIXME: not working???
 	useEffect(() => {
 		if (condition) {
 			toast.error(message);
