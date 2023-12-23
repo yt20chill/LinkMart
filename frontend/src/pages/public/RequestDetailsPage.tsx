@@ -10,6 +10,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
+import { RequestCard } from "../../components/card/RequestCard";
 import { RequestCardSkeleton } from "../../components/card/RequestCardSkeleton";
 import FormModal from "../../components/modal/FormModal";
 import PrimaryButton from "../../components/ui/PrimaryButton";
@@ -17,11 +18,14 @@ import OfferForm from "../../features/forms/OfferForm";
 import { useQueryContainer } from "../../features/hooks/useQueryContainer";
 import useRedirectOnCondition from "../../features/hooks/useRedirectOnCondition";
 import { checkHasOfferedAJAX } from "../../services/api/offerApi";
+import { getAllRequestsAJAX } from "../../services/api/requestApi";
 import { ControlModalContext } from "../../services/context/ControlModalContext";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 import { useAuthStore } from "../../services/stores/authStore";
 import { AuthorizeLevels } from "../../types/authModels";
+
+const RECOMMENDATION_NUM = 5;
 
 const RequestDetailsPage = () => {
 	const { requestId } = useParams();
@@ -44,6 +48,23 @@ const RequestDetailsPage = () => {
 		() => details,
 		[details]
 	);
+	const { data: recommendations } = useQuery({
+		queryKey: [
+			queryKey.REQUEST,
+			{
+				location: details!.locationName,
+				category: details!.categoryName,
+			},
+		],
+		queryFn: () =>
+			getAllRequestsAJAX(
+				new URLSearchParams({
+					category: details!.categoryName,
+					location: details!.locationName,
+				})
+			),
+		enabled: !!details,
+	});
 	const [currentImage, setCurrentImage] = useState<string>("");
 	const [showPostOfferModal, setShowPostOfferModal] = useState(false);
 	useEffect(() => {
@@ -127,6 +148,15 @@ const RequestDetailsPage = () => {
 						<hr className="border-base-300 my-4" />
 					</main>
 				</div>
+			</div>
+			<div>
+				{recommendations
+					? recommendations
+							.filter((_, index) => index < RECOMMENDATION_NUM)
+							.map((request) => (
+								<RequestCard key={request.requestId} {...request} />
+							))
+					: Array(RECOMMENDATION_NUM).fill(<RequestCardSkeleton />)}
 			</div>
 
 			<ControlModalContext.Provider
