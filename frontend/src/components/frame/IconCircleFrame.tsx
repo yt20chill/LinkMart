@@ -16,6 +16,7 @@ export function IconCircleFrame(props: IconCircleFrameProps) {
       <img
         src={mapIconUrl(props.username, props.iconType)}
         title={props.username}
+        className="rounded-full"
       />
     </div>
   );
