@@ -68,10 +68,10 @@ const removeParams = (url: string) => {
  * @returns string inside targets array that matches value, ignoring case and spaces
  */
 export const ignoreCaseAndPlural = <T extends string>(
-	value: string,
+	value: string | undefined,
 	targets: T[]
 ): T | undefined => {
-	if (value === "") return undefined;
+	if (!value) return undefined;
 	// remove spaces and change to lowercase, and the trailing s then compare
 	return targets.find(
 		(target) =>

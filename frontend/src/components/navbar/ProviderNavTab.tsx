@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { ignoreCaseAndPlural } from "../../lib/formattingUtils";
 import {
 	ProviderTabContext,
@@ -10,13 +10,12 @@ import { ProviderTabs, providerTabs } from "../../services/routes.config";
 import NavTab from "./NavTab";
 
 const ProviderLayout = () => {
-	const lastParam = useLocation().pathname.split("/").at(-1) ?? "";
-	const tab =
+	const initialTab =
 		ignoreCaseAndPlural<ProviderTabs>(
-			lastParam,
+			window.location.pathname.split("/").at(-1),
 			Object.keys(providerTabs) as ProviderTabs[]
 		) ?? (Object.keys(providerTabs)[0] as ProviderTabs);
-	const [activeTab, setActiveTab] = useState<ProviderTabs>(tab);
+	const [activeTab, setActiveTab] = useState<ProviderTabs>(initialTab);
 	return (
 		<>
 			<ProviderTabContext.Provider value={{ activeTab, setActiveTab }}>
