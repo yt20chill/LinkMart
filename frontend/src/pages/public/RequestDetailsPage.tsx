@@ -6,7 +6,7 @@ import { MainImageFrame } from "@/components/imageFrame/MainImageFrame";
 import { SubImageFrame } from "@/components/imageFrame/SubImageFrame";
 import { SectionTitle } from "@/components/title/SectionTitle";
 import { RequestDetailsDto } from "@/schemas/responseSchema";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
@@ -37,11 +37,13 @@ const RequestDetailsPage = () => {
 			username: state.username,
 		}))
 	);
+
 	const { data: checkOffer, isLoading: checkingOffer } = useQuery({
 		queryKey: [queryKey.OFFER, { requestId }],
 		queryFn: () => checkHasOfferedAJAX(requestId!),
 		enabled: role === AuthorizeLevels.PROVIDER,
 	});
+	const searchParams = useRef(new URLSearchParams());
 	const { useGetRequestDetails } = useQueryContainer();
 	const { data: details } = useGetRequestDetails({ requestId: requestId! });
 	const memoizedDetails = useMemo<RequestDetailsDto | undefined>(
@@ -52,18 +54,11 @@ const RequestDetailsPage = () => {
 		queryKey: [
 			queryKey.REQUEST,
 			{
-				location: details!.locationName,
-				category: details!.categoryName,
+				searchParams: searchParams.current.toString(),
 			},
 		],
-		queryFn: () =>
-			getAllRequestsAJAX(
-				new URLSearchParams({
-					category: details!.categoryName,
-					location: details!.locationName,
-				})
-			),
-		enabled: !!details,
+		queryFn: () => getAllRequestsAJAX(searchParams.current),
+		enabled: !!memoizedDetails,
 	});
 	const [currentImage, setCurrentImage] = useState<string>("");
 	const [showPostOfferModal, setShowPostOfferModal] = useState(false);
@@ -74,19 +69,24 @@ const RequestDetailsPage = () => {
 				navigate(`${siteMap(RouteEnum.UserRequestDetail)}/${requestId}`, {
 					replace: true,
 				});
+			searchParams.current.set("location", memoizedDetails.locationName);
+			searchParams.current.set("category", memoizedDetails.categoryName);
 			setCurrentImage(memoizedDetails.primaryImage);
 		}
 	}, [memoizedDetails, username, requestId, navigate]);
-	return details ? (
+	return memoizedDetails ? (
 		<>
 			<div className="bg-base-200/80 backdrop-blur-3xl py-12 border-y border-base-300">
 				<div className="max-w-7xl max-xl:px-2 mx-auto">
 					<main className="flex flex-wrap max-md:px-6 px-12">
 						{/*Request Img */}
 						<div className="max-md:w-full w-2/5 flex flex-col flex-wrap max-md:order-2">
-							<MainImageFrame title={details.item} imagePath={currentImage} />
+							<MainImageFrame
+								title={memoizedDetails.item}
+								imagePath={currentImage}
+							/>
 							<div className="mt-2 grid grid-cols-5 relative gap-2">
-								{details.images.map((itm) => (
+								{memoizedDetails.images.map((itm) => (
 									<SubImageFrame
 										key={itm.imagePath}
 										imagePath={itm.imagePath}
@@ -101,14 +101,14 @@ const RequestDetailsPage = () => {
 						<div className="max-md:w-full w-3/5 flex flex-col flex-wrap max-md:pl-0 max-md:pt-6 pl-12 mb-3">
 							<SectionTitle icon="package_2" content="Request Item" />
 							<div className="inline-flex max-md:text-2xl text-3xl font-bold mb-2">
-								{details.item}
+								{memoizedDetails.item}
 							</div>
 							<div className="flex justify-between items-start mb-5">
 								<div className="flex gap-2">
-									<PillBadge content={details.locationName} />
-									<PillBadge content={details.categoryName} />
+									<PillBadge content={memoizedDetails.locationName} />
+									<PillBadge content={memoizedDetails.categoryName} />
 								</div>
-								<DateBadge date={details.updatedAt} />
+								<DateBadge date={memoizedDetails.updatedAt} />
 							</div>
 							<div className="flex justify-end">
 								<PrimaryButton
@@ -127,13 +127,13 @@ const RequestDetailsPage = () => {
 										<span className="text-slate-400/80 flex items-center gap-1 font-roboto tracking-wide text-xs leading-none">
 											Created By
 										</span>
-										{details.createdBy}
+										{memoizedDetails.createdBy}
 									</div>
 								</div>
 							</div>
 
 							<hr className="border-base-300 my-4" />
-							<DetailInfoDisplay {...details} />
+							<DetailInfoDisplay {...memoizedDetails} />
 							{role === AuthorizeLevels.PROVIDER && (
 								<PrimaryButton
 									icon="note_stack_add"
@@ -156,7 +156,9 @@ const RequestDetailsPage = () => {
 							.map((request) => (
 								<RequestCard key={request.requestId} {...request} />
 							))
-					: Array(RECOMMENDATION_NUM).fill(<RequestCardSkeleton />)}
+					: Array(RECOMMENDATION_NUM)
+							.fill(null)
+							.map((_, index) => <RequestCardSkeleton key={index} />)}
 			</div>
 
 			<ControlModalContext.Provider
