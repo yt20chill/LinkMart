@@ -106,6 +106,12 @@ routeConfigMap
 		authorizeLevel: AuthorizeLevels.PUBLIC,
 		component: RequestDetailsPage,
 	})
+	.set(RouteEnum.ProviderProfile, {
+		name: "Profile",
+		path: "profile/:providerId",
+		authorizeLevel: AuthorizeLevels.PUBLIC,
+		component: ProviderProfilePage,
+	})
 	.set(RouteEnum.Profile, {
 		name: "Profile",
 		path: "profile",
@@ -154,12 +160,6 @@ routeConfigMap
 		path: "provider/register",
 		authorizeLevel: AuthorizeLevels.USER,
 		component: ProviderRegisterPage,
-	})
-	.set(RouteEnum.ProviderProfile, {
-		name: "Profile",
-		path: "profile",
-		authorizeLevel: AuthorizeLevels.PROVIDER,
-		component: ProviderProfilePage,
 	})
 	.set(RouteEnum.MyOffer, {
 		// offer management
