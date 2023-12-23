@@ -48,10 +48,11 @@ const RequestDetailsPage = () => {
 	const [showPostOfferModal, setShowPostOfferModal] = useState(false);
 	useEffect(() => {
 		if (memoizedDetails) {
-			// if (username === memoizedDetails.createdBy)
-			// 	navigate(`${siteMap(RouteEnum.UserRequestDetail)}/${requestId}`, {
-			// 		replace: true,
-			// 	});
+			// still redirect here for manual typing url
+			if (username === memoizedDetails.createdBy)
+				navigate(`${siteMap(RouteEnum.UserRequestDetail)}/${requestId}`, {
+					replace: true,
+				});
 			setCurrentImage(memoizedDetails.primaryImage);
 		}
 	}, [memoizedDetails, username, requestId, navigate]);
