@@ -108,7 +108,7 @@ routeConfigMap
 	})
 	.set(RouteEnum.ProviderProfile, {
 		name: "Profile",
-		path: "profile/:providerId",
+		path: "provider-profile/:providerId",
 		authorizeLevel: AuthorizeLevels.PUBLIC,
 		component: ProviderProfilePage,
 	})
