@@ -15,7 +15,7 @@ const ProgressBar = <T extends string[]>({
 	children,
 }: ProgressBarProps<T>) => {
 	// if currentStep not in steps, default to 0
-	const found = Math.max(steps.indexOf(currentStep), 0);
+	const stepIndex = Math.max(steps.indexOf(currentStep), 0);
 	return (
 		<>
 			<OrderSectionTitle label="Order Status" className="active" />
@@ -28,7 +28,7 @@ const ProgressBar = <T extends string[]>({
 								<hr
 									className={twMerge(
 										className,
-										index < found ? "bg-primary-400" : ""
+										index <= stepIndex ? "bg-primary-400" : ""
 									)}
 								/>
 							)}
@@ -36,24 +36,24 @@ const ProgressBar = <T extends string[]>({
 								<i
 									className={twMerge(
 										"bi bi-check-circle-fill",
-										index <= found ? "text-primary-400" : ""
+										index <= stepIndex ? "text-primary-400" : ""
 									)}
 								></i>
 							</div>
 							<div
 								className={twMerge(
 									"timeline-end ps-4",
-									index <= found ? "step-primary" : ""
+									index <= stepIndex ? "step-primary" : ""
 								)}
 							>
 								<h5 className="text-sm text-gray-400 capitalize">{step}</h5>
-								{found === index && children}
+								{stepIndex === index && children}
 							</div>
-							{index < steps.length - 1 && (
+							{index < steps.length && (
 								<hr
 									className={twMerge(
 										className,
-										index <= found ? "bg-primary-400" : ""
+										index < stepIndex ? "bg-primary-400" : ""
 									)}
 								/>
 							)}
