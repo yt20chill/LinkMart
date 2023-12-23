@@ -12,6 +12,7 @@ export type {
 	ApplyProviderDto,
 	GetApplicationStatusDto,
 	GetProviderProfileDto,
+	GetReviewDto,
 };
 
 const postProviderDtoSchema = z.object({
@@ -43,6 +44,8 @@ const getReviewsSchema = z.object({
 	attitude: z.number().min(0).max(5),
 	comments: z.string().nullish(),
 });
+
+type GetReviewDto = z.infer<typeof getReviewsSchema>;
 
 const getProviderProfileSchema = editProviderProfileSchema.extend({
 	reviews: z.array(getReviewsSchema).nullish(),

@@ -6,6 +6,7 @@ import FormModal from "../../components/modal/FormModal";
 import Loading from "../../components/ui/Loading";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import ProviderProfileForm from "../../features/forms/ProviderProfileForm";
+import ProviderProfileDisplay from "../../features/providerProfile/providerProfileDisplay";
 import { getProviderProfileAJAX } from "../../services/api/providerApi";
 import { ControlModalContext } from "../../services/context/ControlModalContext";
 import { queryKey } from "../../services/query.config";
@@ -25,6 +26,7 @@ const ProviderProfilePage = () => {
 	if (isGettingProfile) return <Loading />;
 	return (
 		<>
+			{profile && <ProviderProfileDisplay dto={profile} />}
 			{role === AuthorizeLevels.PROVIDER && username === profile?.username && (
 				<PrimaryButton
 					label="🖋️"
