@@ -15,10 +15,12 @@ import { RequestCardSkeleton } from "../../components/card/RequestCardSkeleton";
 import FormModal from "../../components/modal/FormModal";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import OfferForm from "../../features/forms/OfferForm";
-import { useQueryContainer } from "../../features/hooks/useQueryContainer";
+import {
+	useGetRecommendations,
+	useGetRequestDetails,
+} from "../../features/hooks/useQueryContainer";
 import useRedirectOnCondition from "../../features/hooks/useRedirectOnCondition";
 import { checkHasOfferedAJAX } from "../../services/api/offerApi";
-import { getAllRequestsAJAX } from "../../services/api/requestApi";
 import { ControlModalContext } from "../../services/context/ControlModalContext";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
@@ -44,22 +46,18 @@ const RequestDetailsPage = () => {
 		enabled: role === AuthorizeLevels.PROVIDER,
 	});
 	const searchParams = useRef(new URLSearchParams());
-	const { useGetRequestDetails } = useQueryContainer();
 	const { data: details } = useGetRequestDetails({ requestId: requestId! });
 	const memoizedDetails = useMemo<RequestDetailsDto | undefined>(
 		() => details,
 		[details]
 	);
-	const { data: recommendations } = useQuery({
-		queryKey: [
-			queryKey.REQUEST,
-			{
-				searchParams: searchParams.current.toString(),
-			},
-		],
-		queryFn: () => getAllRequestsAJAX(searchParams.current),
-		enabled: !!memoizedDetails,
+
+	const { recommendations } = useGetRecommendations({
+		location: memoizedDetails?.locationName,
+		category: memoizedDetails?.categoryName,
+		limit: RECOMMENDATION_NUM,
 	});
+
 	const [currentImage, setCurrentImage] = useState<string>("");
 	const [showPostOfferModal, setShowPostOfferModal] = useState(false);
 	useEffect(() => {
@@ -150,17 +148,36 @@ const RequestDetailsPage = () => {
 				</div>
 			</div>
 			<div>
-				{recommendations
-					? recommendations
-							.filter((_, index) => index < RECOMMENDATION_NUM)
-							.map((request) => (
-								<RequestCard key={request.requestId} {...request} />
-							))
-					: Array(RECOMMENDATION_NUM)
+				<div className="">
+					<h2 className="font-bold text-lg mt-2">You may also like: </h2>
+					{recommendations ? (
+						<div className="mt-3 flex">
+							{recommendations
+								.filter((_, index) => index < RECOMMENDATION_NUM)
+								.map((request) => (
+									<RequestCard key={request.requestId} {...request} />
+								))}
+						</div>
+					) : (
+						Array(RECOMMENDATION_NUM)
 							.fill(null)
-							.map((_, index) => <RequestCardSkeleton key={index} />)}
+							.map((_, index) => <RequestCardSkeleton key={index} />)
+					)}
+				</div>
+				<span
+					className="text-end me-10 text-lg cursor-pointer text-primary-400 hover:text-primary-500"
+					onClick={(e) => {
+						e.preventDefault();
+						navigate(
+							`${siteMap(RouteEnum.Requests)}?location=${
+								memoizedDetails.locationName
+							}&category=${memoizedDetails.categoryName}`
+						);
+					}}
+				>
+					More...
+				</span>
 			</div>
-
 			<ControlModalContext.Provider
 				value={{
 					isShow: showPostOfferModal,
