@@ -4,6 +4,7 @@ import { editProviderProfileSchema } from "../requestSchema";
 
 export {
 	getApplicationStatusResponseSchema,
+	getProviderDashboardSchema,
 	getProviderProfileSchema,
 	postProviderDtoSchema,
 };
@@ -13,6 +14,7 @@ export type {
 	GetApplicationStatusDto,
 	GetProviderProfileDto,
 	GetReviewDto,
+	ProviderDashboardDto,
 };
 
 const postProviderDtoSchema = z.object({
@@ -56,3 +58,14 @@ const getProviderProfileSchema = editProviderProfileSchema.extend({
 });
 
 type GetProviderProfileDto = z.infer<typeof getProviderProfileSchema>;
+
+const getProviderDashboardSchema = z.object({
+	balance: z.number().nonnegative(),
+	reviewCount: z.number().nonnegative(),
+	offerCount: z.number().nonnegative(),
+	taskCount: z.number().nonnegative(),
+	averageEfficiency: z.number().min(0).max(5),
+	averageAttitude: z.number().min(0).max(5),
+});
+
+type ProviderDashboardDto = z.infer<typeof getProviderDashboardSchema>;

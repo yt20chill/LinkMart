@@ -8,7 +8,9 @@ import {
 	ApplyProviderDto,
 	GetApplicationStatusDto,
 	GetProviderProfileDto,
+	ProviderDashboardDto,
 	getApplicationStatusResponseSchema,
+	getProviderDashboardSchema,
 	getProviderProfileSchema,
 	postProviderDtoSchema,
 } from "../../schemas/responseSchema";
@@ -18,6 +20,7 @@ export {
 	applyProviderAJAX,
 	editProviderProfileAJAX,
 	getProviderApplicationStatusAJAX,
+	getProviderDashboardAJAX,
 	getProviderProfileAJAX,
 };
 
@@ -25,6 +28,7 @@ const providerApiRoutes = {
 	PROVIDER: "/api/provider",
 	PROFILE: "/api/provider/profile",
 	PUBLIC_PROFILE: "/provider/profile",
+	DASHBOARD: "/api/provider/dashboard",
 };
 
 const applyProviderAJAX = async (form: TApplyProviderForm) => {
@@ -75,6 +79,15 @@ const editProviderProfileAJAX = async (form: EditProviderProfileForm) => {
 		{
 			method: "put",
 			data: form,
+		}
+	);
+};
+
+const getProviderDashboardAJAX = async () => {
+	return await axiosWrapper<void, ProviderDashboardDto>(
+		providerApiRoutes.DASHBOARD,
+		{
+			schema: getProviderDashboardSchema,
 		}
 	);
 };
