@@ -1,21 +1,29 @@
 import { axiosWrapper } from "../../lib/apiUtils";
 import { appendFormData } from "../../lib/formUtils";
-import { TApplyProviderForm } from "../../schemas/requestSchema";
+import {
+	EditProviderProfileForm,
+	TApplyProviderForm,
+} from "../../schemas/requestSchema";
 import {
 	ApplyProviderDto,
 	GetApplicationStatusDto,
+	GetProviderProfileDto,
 	getApplicationStatusResponseSchema,
+	getProviderProfileSchema,
 	postProviderDtoSchema,
 } from "../../schemas/responseSchema";
 
 export {
 	abortApplicationAJAX,
 	applyProviderAJAX,
+	editProviderProfileAJAX,
 	getProviderApplicationStatusAJAX,
+	getProviderProfileAJAX,
 };
 
 const providerApiRoutes = {
 	PROVIDER: "/api/provider",
+	PROFILE: "/api/provider/profile",
 };
 
 const applyProviderAJAX = async (form: TApplyProviderForm) => {
@@ -42,4 +50,23 @@ const abortApplicationAJAX = async () => {
 	return await axiosWrapper(providerApiRoutes.PROVIDER, {
 		method: "delete",
 	});
+};
+
+const getProviderProfileAJAX = async (providerId: string) => {
+	return await axiosWrapper<void, GetProviderProfileDto>(
+		`${providerApiRoutes.PROFILE}/${providerId}`,
+		{
+			schema: getProviderProfileSchema,
+		}
+	);
+};
+
+const editProviderProfileAJAX = async (form: EditProviderProfileForm) => {
+	return await axiosWrapper<EditProviderProfileForm>(
+		providerApiRoutes.PROFILE,
+		{
+			method: "put",
+			data: form,
+		}
+	);
 };
