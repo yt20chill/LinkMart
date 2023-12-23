@@ -27,7 +27,7 @@ const ProviderInfoDisplay = ({
 				<Rating name="" score={averageAttitude} />
 			</div>
 			<p>Bio</p>
-			<textarea>{biography}</textarea>
+			<textarea defaultValue={biography ?? ""} readOnly></textarea>
 		</div>
 	);
 };
