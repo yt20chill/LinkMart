@@ -1,8 +1,19 @@
 import { z } from "zod";
 import { ulid } from "../../lib/schemaUtils";
+import { editProviderProfileSchema } from "../requestSchema";
 
-export { getApplicationStatusResponseSchema, postProviderDtoSchema };
-export type { ApplicationStatus, ApplyProviderDto, GetApplicationStatusDto };
+export {
+	getApplicationStatusResponseSchema,
+	getProviderProfileSchema,
+	postProviderDtoSchema,
+};
+export type {
+	ApplicationStatus,
+	ApplyProviderDto,
+	GetApplicationStatusDto,
+	GetProviderProfileDto,
+	GetReviewDto,
+};
 
 const postProviderDtoSchema = z.object({
 	providerId: ulid,
@@ -25,3 +36,23 @@ const getApplicationStatusResponseSchema = z.object({
 type GetApplicationStatusDto = z.infer<
 	typeof getApplicationStatusResponseSchema
 >;
+
+const getReviewsSchema = z.object({
+	primaryImage: z.string().url(),
+	item: z.string().min(1),
+	efficiency: z.number().min(0).max(5),
+	attitude: z.number().min(0).max(5),
+	comments: z.string().nullish(),
+});
+
+type GetReviewDto = z.infer<typeof getReviewsSchema>;
+
+const getProviderProfileSchema = editProviderProfileSchema.extend({
+	reviews: z.array(getReviewsSchema).nullish(),
+	username: z.string().min(1),
+	averageEfficiency: z.number().min(0).max(5),
+	averageAttitude: z.number().min(0).max(5),
+	totalReviews: z.number().nonnegative(),
+});
+
+type GetProviderProfileDto = z.infer<typeof getProviderProfileSchema>;

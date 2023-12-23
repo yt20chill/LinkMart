@@ -12,6 +12,7 @@ import { UserModule } from './user/user.module';
 import { OfferModule } from './offer/offer.module';
 import { OrderModule } from './order/order.module';
 import { LogisticCompanyModule } from './logistic-company/logistic-company.module';
+import { ProviderModule } from './provider/provider.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { LogisticCompanyModule } from './logistic-company/logistic-company.modul
     OfferModule,
     OrderModule,
     LogisticCompanyModule,
+    ProviderModule,
   ],
   controllers: [AppController, RequestController, ApiController],
   providers: [AppService],
