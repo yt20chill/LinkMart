@@ -45,18 +45,23 @@ const ProgressBar = <T extends string[]>({
               </div>
               <div
                 className={twMerge(
-                  "timeline-end ps-10 max-md:ps-2",
+                  "timeline-end ms-10 max-md:ps-2 w-full max-w-[350px]",
                   index <= stepIndex ? "step-primary" : ""
                 )}
               >
                 <h5
                   className={twMerge(
-                    "text-sm capitalize my-[0.35rem]",
+                    "text-md font-roboto bcapitalize my-[0.35rem]",
                     stepIndex === index
                       ? "text-primary-400 font-bold"
                       : "text-gray-400"
                   )}
                 >
+                  {stepIndex === index ? (
+                    <i className="bi bi-caret-right-fill me-1"></i>
+                  ) : (
+                    <i className="bi bi-caret-right me-1"></i>
+                  )}
                   {step}
                 </h5>
                 {stepIndex > index && <OrderProgressDisplay step={step} />}

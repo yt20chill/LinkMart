@@ -26,7 +26,7 @@ const OrderStatusActions = () => {
     case "Review":
       return <Review orderId={orderId} />;
     case "Completed":
-      return <div className="text-5xl">🥰</div>;
+      return null;
     default:
       return null;
   }

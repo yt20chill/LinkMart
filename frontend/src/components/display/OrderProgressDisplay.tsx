@@ -17,31 +17,33 @@ export function OrderProgressDisplay(props: OrderProgressDisplayProps) {
       );
     case "Shipping":
       return (
-        <div className="min-w-96 max-w-full mb-2">
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <div className="text-xs text-gray-400">Carrier</div>
-              <div className="text-gray-400 font-bold">
-                {shipmentInfoDto.companyName}
+        <>
+          <div className="min-w-96 max-w-full mb-2">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <div className="text-xs text-gray-400">Carrier</div>
+                <div className="text-gray-400 font-bold">
+                  {shipmentInfoDto.companyName}
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="text-xs text-gray-400">Shipment No.</div>
-              <div className="text-gray-400 font-bold">
-                {shipmentInfoDto.shippingOrderNo}
+              <div>
+                <div className="text-xs text-gray-400">Shipment No.</div>
+                <div className="text-gray-400 font-bold">
+                  {shipmentInfoDto.shippingOrderNo}
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="text-xs text-gray-400">Shipping Address</div>
-              <div className="text-gray-400 font-bold">
-                {shipmentInfoDto.address}
+              <div>
+                <div className="text-xs text-gray-400">Shipping Address</div>
+                <div className="text-gray-400 font-bold">
+                  {shipmentInfoDto.address}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       );
     case "Review":
-      return null;
+      return <div className="text-gray-400 font-bold">Review Submitted</div>;
     case "Completed":
       return null;
     default:

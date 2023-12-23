@@ -11,8 +11,9 @@ export class OrderController {
     return {
       orderId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
       //orderStatus: 'In progress',
-      orderStatus: 'Review',
       //orderStatus: 'Shipping',
+      orderStatus: 'Review',
+      //orderStatus: 'Completed',
       providerId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
       providerName: 'Jason',
       item: 'This',
