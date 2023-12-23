@@ -28,4 +28,15 @@ export class ProviderController {
       ],
     };
   }
+  @Get('dashboard')
+  getDashboard() {
+    return {
+      balance: 9999,
+      reviewCount: 64,
+      offerCount: 2,
+      taskCount: 3,
+      averageEfficiency: 4.5,
+      averageAttitude: 5,
+    };
+  }
 }
