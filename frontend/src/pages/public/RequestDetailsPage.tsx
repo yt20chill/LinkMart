@@ -15,6 +15,7 @@ import FormModal from "../../components/modal/FormModal";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import OfferForm from "../../features/forms/OfferForm";
 import { useQueryContainer } from "../../features/hooks/useQueryContainer";
+import useRedirectOnCondition from "../../features/hooks/useRedirectOnCondition";
 import { checkHasOfferedAJAX } from "../../services/api/offerApi";
 import { ControlModalContext } from "../../services/context/ControlModalContext";
 import { queryKey } from "../../services/query.config";
@@ -25,7 +26,7 @@ import { AuthorizeLevels } from "../../types/authModels";
 const RequestDetailsPage = () => {
 	const { requestId } = useParams();
 	const navigate = useNavigate();
-	if (requestId === undefined) navigate("/404", { replace: true });
+	useRedirectOnCondition(!requestId, RouteEnum.Requests, "invalid request");
 	const { role, username } = useAuthStore(
 		useShallow((state) => ({
 			role: state.role,
@@ -47,10 +48,10 @@ const RequestDetailsPage = () => {
 	const [showPostOfferModal, setShowPostOfferModal] = useState(false);
 	useEffect(() => {
 		if (memoizedDetails) {
-			if (username === memoizedDetails.createdBy)
-				navigate(`${siteMap(RouteEnum.UserRequestDetail)}/${requestId}`, {
-					replace: true,
-				});
+			// if (username === memoizedDetails.createdBy)
+			// 	navigate(`${siteMap(RouteEnum.UserRequestDetail)}/${requestId}`, {
+			// 		replace: true,
+			// 	});
 			setCurrentImage(memoizedDetails.primaryImage);
 		}
 	}, [memoizedDetails, username, requestId, navigate]);
@@ -126,18 +127,17 @@ const RequestDetailsPage = () => {
 					</main>
 				</div>
 			</div>
-			{showPostOfferModal && (
-				<ControlModalContext.Provider
-					value={{
-						isShow: showPostOfferModal,
-						setIsShow: setShowPostOfferModal,
-					}}
-				>
-					<FormModal>
-						<OfferForm requestId={requestId!} />
-					</FormModal>
-				</ControlModalContext.Provider>
-			)}
+
+			<ControlModalContext.Provider
+				value={{
+					isShow: showPostOfferModal,
+					setIsShow: setShowPostOfferModal,
+				}}
+			>
+				<FormModal>
+					<OfferForm requestId={requestId!} />
+				</FormModal>
+			</ControlModalContext.Provider>
 		</>
 	) : (
 		<RequestCardSkeleton />

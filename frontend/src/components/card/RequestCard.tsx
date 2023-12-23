@@ -2,7 +2,9 @@ import { RequestDto } from "@/schemas/responseSchema";
 import { RouteEnum, siteMap } from "@/services/routes.config";
 import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 import { mapDate } from "../../lib/formattingUtils";
+import { useAuthStore } from "../../services/stores/authStore";
 
 export function RequestCard({
 	requestId,
@@ -14,9 +16,16 @@ export function RequestCard({
 	updatedAt,
 }: RequestDto) {
 	const navigate = useNavigate();
+	const { username } = useAuthStore(
+		useShallow((state) => ({ username: state.username }))
+	);
 	return (
 		<div
-			onClick={() => navigate(`/request-detail/${requestId}`)}
+			onClick={() =>
+				username === createdBy
+					? navigate(`${siteMap(RouteEnum.UserRequestDetail)}/${requestId}`)
+					: navigate(`${siteMap(RouteEnum.RequestDetail)}/${requestId}`)
+			}
 			className="inline-box relative bg-base-100/75 backdrop-blur-lg icn-hvr-fill rounded-xl [&_button]:hover:flex p-2 hover:shadow-xl hover:-translate-y-1 transition-all h-fit border border-slate-300 select-none overflow-hidden"
 		>
 			<figure className="rounded-t-lg h-48 flex justify-center bg-slate-300 overflow-hidden border border-gray-200">
