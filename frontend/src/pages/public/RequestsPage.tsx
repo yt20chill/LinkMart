@@ -2,6 +2,7 @@ import { RequestCard } from "@/components/card/RequestCard";
 import { RequestCardSkeleton } from "@/components/card/RequestCardSkeleton";
 import { useInfiniteQuery } from "react-query";
 import { Link, useSearchParams } from "react-router-dom";
+import Pagination from "../../components/ui/Pagination";
 import { Filter } from "../../features/filter/Filter";
 import { useSearchParamsWrapper } from "../../features/hooks/useSearchParamsWrapper";
 import { getAllRequestsAJAX } from "../../services/api/requestApi";
@@ -19,7 +20,7 @@ const RequestsPage = () => {
 			return getAllRequestsAJAX(searchParams);
 		},
 		getNextPageParam: (lastPage, allPages): number | undefined => {
-			return lastPage && lastPage.length === 0
+			return lastPage && allPages.length < lastPage.totalPages
 				? allPages.length + 1
 				: undefined;
 		},
@@ -36,7 +37,7 @@ const RequestsPage = () => {
 					{requests && requests.pages.length > 0 ? (
 						requests.pages.map((data) => {
 							if (!data) return null;
-							return data.map((item) => (
+							return data.requests.map((item) => (
 								<RequestCard key={item.requestId} {...item} />
 							));
 						})
@@ -58,7 +59,11 @@ const RequestsPage = () => {
 					)}
 				</div>
 			</div>
-
+			<Pagination
+				page={1}
+				totalPages={20}
+				onClick={(currentPage: number) => console.log(currentPage)}
+			/>
 			<Link
 				to={siteMap(RouteEnum.PostRequest)}
 				className="fixed text-base-100 bottom-0 right-0 mb-3 mr-3 md:mb-12 md:mr-12"
