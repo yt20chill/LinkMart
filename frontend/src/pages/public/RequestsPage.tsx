@@ -1,6 +1,6 @@
 import { RequestCard } from "@/components/card/RequestCard";
 import { RequestCardSkeleton } from "@/components/card/RequestCardSkeleton";
-import { useInfiniteQuery } from "react-query";
+import { useQuery } from "react-query";
 import { Link, useSearchParams } from "react-router-dom";
 import Pagination from "../../components/ui/Pagination";
 import { Filter } from "../../features/filter/Filter";
@@ -12,19 +12,19 @@ import { RouteEnum, siteMap } from "../../services/routes.config";
 
 const RequestsPage = () => {
 	const searchParamsWrapper = useSearchParamsWrapper(useSearchParams());
-	const { searchParams } = searchParamsWrapper;
-	const { data: requests, isFetchingNextPage } = useInfiniteQuery({
+	const { searchParams, setSearchParams } = searchParamsWrapper;
+	const { data } = useQuery({
 		queryKey: [queryKey.REQUEST, { searchParams: searchParams.toString() }],
-		queryFn: ({ pageParam = 1 }) => {
-			searchParams.set("p", (pageParam as number).toString());
+		queryFn: () => {
 			return getAllRequestsAJAX(searchParams);
 		},
-		getNextPageParam: (lastPage, allPages): number | undefined => {
-			return lastPage && allPages.length < lastPage.totalPages
-				? allPages.length + 1
-				: undefined;
-		},
 	});
+
+	const updatePage = (page: number) => {
+		searchParams.set("p", page + "");
+		const newSearchParams = new URLSearchParams(searchParams.toString());
+		setSearchParams(newSearchParams);
+	};
 
 	return (
 		<SearchParamsWrapperContext.Provider value={searchParamsWrapper}>
@@ -34,22 +34,11 @@ const RequestsPage = () => {
 			<div className="my-5 max-w-7xl flex mx-auto">
 				<Filter className="inline-flex flex-col min-w-[250px] max-lg:hidden" />
 				<div className="px-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 grow mb-auto w-screen">
-					{requests && requests.pages.length > 0 ? (
-						requests.pages.map((data) => {
-							if (!data) return null;
-							return data.requests.map((item) => (
-								<RequestCard key={item.requestId} {...item} />
-							));
-						})
+					{data ? (
+						data.requests.map((request) => (
+							<RequestCard key={request.requestId} {...request} />
+						))
 					) : (
-						<>
-							<RequestCardSkeleton />
-							<RequestCardSkeleton />
-							<RequestCardSkeleton />
-							<RequestCardSkeleton />
-						</>
-					)}
-					{isFetchingNextPage && (
 						<>
 							<RequestCardSkeleton />
 							<RequestCardSkeleton />
@@ -60,9 +49,11 @@ const RequestsPage = () => {
 				</div>
 			</div>
 			<Pagination
-				page={1}
+				page={searchParams.has("p") ? parseInt(searchParams.get("p")!) : 1}
+				// totalPages={data?.totalPages ?? 1}
 				totalPages={20}
-				onClick={(currentPage: number) => console.log(currentPage)}
+				pageToShow={5}
+				onClick={updatePage}
 			/>
 			<Link
 				to={siteMap(RouteEnum.PostRequest)}
@@ -73,9 +64,6 @@ const RequestsPage = () => {
 					<span className="max-md:hidden">Create Request</span>
 				</div>
 			</Link>
-			{isFetchingNextPage && (
-				<span className="loading loading-dots loading-lg"></span>
-			)}
 		</SearchParamsWrapperContext.Provider>
 	);
 };

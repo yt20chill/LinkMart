@@ -11,7 +11,7 @@ import {
 	LocationDto,
 	PostRequestResponseDto,
 	RequestDetailsDto,
-	RequestDto,
+	RequestsDto,
 	categoriesResponseSchema,
 	categoryFieldsResponseSchema,
 	locationsResponseSchema,
@@ -106,12 +106,10 @@ const putRequestAJAX = async (requestId: string, formData: FormData) => {
  * @returns brief info of requests
  */
 const getAllRequestsAJAX = async (searchParams: URLSearchParams) => {
-	return (
-		(await axiosWrapper<void, RequestDto[]>(requestApiRoutes.REQUEST, {
-			schema: requestsResponseSchema,
-			params: searchParams,
-		})) ?? []
-	);
+	return await axiosWrapper<void, RequestsDto>(requestApiRoutes.REQUEST, {
+		schema: requestsResponseSchema,
+		params: searchParams,
+	});
 };
 
 const getRequestDetailsAJAX = async ({ requestId }: RequestId) => {

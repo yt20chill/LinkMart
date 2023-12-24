@@ -30,6 +30,7 @@ export const useSearchParamsWrapper = ([searchParams, setSearchParams]: [
 					.forEach((v) => searchParams.append(name, v));
 				setSearchParams(searchParams);
 			}
+			searchParams.delete("p");
 			return setSearchParams(searchParams);
 		};
 

@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent } from "react";
 import { twMerge } from "tailwind-merge";
 
 type PaginationProps = {
@@ -21,22 +21,20 @@ const Pagination = ({
 	page,
 	totalPages,
 	pageToShow = 5,
-	onClick,
+	onClick: setPage,
 }: PaginationProps) => {
-	const [currentPage, setCurrentPage] = useState(page);
 	const toPrevPage = (e: MouseEvent) => {
 		e.preventDefault();
-		setCurrentPage((prev) => Math.max(1, --prev));
+		if (page === 1) return;
+		setPage(Math.max(1, --page));
 	};
 	const toNextPage = (e: MouseEvent) => {
 		e.preventDefault();
-		setCurrentPage((prev) => Math.min(totalPages, ++prev));
+		if (page === totalPages) return;
+		setPage(Math.min(totalPages, ++page));
 	};
 
-	useEffect(() => {
-		onClick(currentPage);
-	}, [currentPage, onClick]);
-
+	console.log({ totalPages, pageToShow, page });
 	return (
 		<ol className="flex justify-center gap-1 text-xs font-medium">
 			{/* to prev page */}
@@ -44,7 +42,7 @@ const Pagination = ({
 				<div
 					onClick={toPrevPage}
 					className={
-						currentPage === 1
+						page === 1
 							? twMerge(prevOrNextPageStyle, disabledStyle)
 							: prevOrNextPageStyle
 					}
@@ -64,27 +62,52 @@ const Pagination = ({
 					</svg>
 				</div>
 			</li>
-			{/* Many pages && current pages > page to show => pagination with {...} */}
-			{totalPages > pageToShow && currentPage <= pageToShow ? (
-				<PaginationWithoutEllipsis
-					pageToShow={pageToShow}
-					currentPage={currentPage}
-					onClick={setCurrentPage}
-				/>
-			) : (
-				<PaginationWithEllipsis
-					totalPages={totalPages}
-					pageToShow={pageToShow}
-					currentPage={currentPage}
-					onClick={setCurrentPage}
-				/>
+
+			<li
+				className={page === 1 ? activePageStyle : inactivePageStyle}
+				onClick={(e) => {
+					e.preventDefault();
+					setPage(1);
+				}}
+			>
+				1
+			</li>
+			{page > Math.floor(pageToShow - 1) / 2 && (
+				<li className={twMerge(inactivePageStyle, disabledStyle)}>...</li>
 			)}
+			{Array(totalPages)
+				.fill(null)
+				.map((_, index) => {
+					// skip first page, show only pages within range
+					return index &&
+						// odd pages => in middle, even pages => middle - 1
+						index + 1 >= page - Math.floor((pageToShow - 1) / 2) &&
+						index + 1 <= page + Math.ceil((pageToShow - 1) / 2) ? (
+						<li
+							key={index}
+							onClick={(e) => {
+								e.preventDefault();
+								setPage(index + 1);
+							}}
+							className={
+								index + 1 === page ? activePageStyle : inactivePageStyle
+							}
+						>
+							{index + 1}
+						</li>
+					) : null;
+				})}
+			{/* Last page was not print out, print ... */}
+			{page + Math.ceil((pageToShow - 1) / 2) < totalPages && (
+				<li className={twMerge(inactivePageStyle, disabledStyle)}>...</li>
+			)}
+
 			{/* to next page */}
 			<li>
 				<div
 					onClick={toNextPage}
 					className={
-						currentPage === totalPages
+						page === totalPages
 							? twMerge(prevOrNextPageStyle, disabledStyle)
 							: prevOrNextPageStyle
 					}
@@ -109,79 +132,3 @@ const Pagination = ({
 };
 
 export default Pagination;
-
-type PagesProps = {
-	pageToShow: number;
-	currentPage: number;
-	onClick: (targetPage: number) => void;
-};
-
-const PaginationWithoutEllipsis = ({
-	pageToShow,
-	currentPage,
-	onClick,
-}: PagesProps) => {
-	return (
-		<>
-			{Array(pageToShow)
-				.fill(null)
-				.map((_, index) => (
-					<li
-						key={index}
-						onClick={(e) => {
-							e.preventDefault();
-							onClick(index + 1);
-						}}
-						className={
-							index + 1 === currentPage ? activePageStyle : inactivePageStyle
-						}
-					>
-						{index + 1}
-					</li>
-				))}
-		</>
-	);
-};
-
-const PaginationWithEllipsis = ({
-	totalPages,
-	pageToShow,
-	currentPage,
-	onClick,
-}: PagesProps & { totalPages: number }) => {
-	return (
-		<>
-			<li
-				className={currentPage === 1 ? activePageStyle : inactivePageStyle}
-				onClick={(e) => {
-					e.preventDefault();
-					onClick(1);
-				}}
-			>
-				1
-			</li>
-			<li className={twMerge(inactivePageStyle, disabledStyle)}>...</li>
-			{Array(totalPages)
-				.fill(null)
-				.map((_, index) => {
-					// skip first page, show only pages within range
-					return index &&
-						index >= currentPage - Math.floor(pageToShow / 2) &&
-						index < currentPage + Math.floor(pageToShow / 2) ? (
-						<li
-							key={index}
-							onClick={(e) => {
-								e.preventDefault();
-								onClick(index + 1);
-							}}
-							className={
-								index + 1 === currentPage ? activePageStyle : inactivePageStyle
-							}
-						>
-							{index + 1}
-						</li>
-					) : null;
-				})}
-		</>
-	);
-};
