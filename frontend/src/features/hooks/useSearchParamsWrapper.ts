@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { SetURLSearchParams } from "react-router-dom";
 import { URLSearchParams } from "url";
+import { ignoreCaseAndPlural } from "../../lib/formattingUtils";
 
 export type UseSearchParamsWrapper = ([searchParams, setSearchParams]: [
 	URLSearchParams,
@@ -36,7 +37,10 @@ export const useSearchParamsWrapper = ([searchParams, setSearchParams]: [
 
 		const hasSearchParams = (name: string, value: string): boolean => {
 			const values = searchParams.getAll(name);
-			return values.includes(value);
+			return (
+				values.includes(value) ||
+				ignoreCaseAndPlural(value, values) !== undefined
+			);
 		};
 
 		return {
