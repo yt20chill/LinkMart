@@ -11,7 +11,7 @@ export function OrderDetailsDisplay({ className }: OrderCardProps) {
   const isCompleted = /complete/i.test(orderDto.orderStatus);
   return (
     <div className={twMerge("", className ?? "")}>
-      <div className="w-full border-b p-6 pb-2 text text-slate-500 tracking-tight flex items-center">
+      <div className="w-full border-b p-6 pb-2 text text-slate-500 tracking-tight flex items-center border-slate-500/20">
         Order
       </div>
 
@@ -78,7 +78,7 @@ export function OrderDetailsDisplay({ className }: OrderCardProps) {
           </div>
         </div>
       </div>
-      <div className="border-b flex w-screen"></div>
+      <div className="border-b flex w-screen border-slate-500/20"></div>
       <div className="rounded-none">
         <OrderSectionTitle label="Details" />
         <div className="grid grid-cols-3 px-6 gap-4 max-h-0 overflow-hidden transition-all">
@@ -106,7 +106,7 @@ export function OrderDetailsDisplay({ className }: OrderCardProps) {
         </div>
       </div>
 
-      <div className="border-b flex w-screen"></div>
+      <div className="border-b flex w-screen border-slate-500/20"></div>
       <div className="flex flex-col">
         <OrderSectionTitle label="Payment" />
         <div className="flex flex-col px-6 max-h-0 overflow-hidden transition-all">
@@ -124,7 +124,7 @@ export function OrderDetailsDisplay({ className }: OrderCardProps) {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b">
+                <tr className="border-b border-slate-500/20">
                   <td>{orderDto.item}</td>
                   <td>{orderDto.quantity}</td>
                   <td>HK${orderDto.price.toLocaleString("en")}</td>
