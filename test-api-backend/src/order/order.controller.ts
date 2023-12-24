@@ -10,9 +10,9 @@ export class OrderController {
   getOrderDetails() {
     return {
       orderId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
-      //orderStatus: 'In progress',
+      orderStatus: 'In progress',
       //orderStatus: 'Shipping',
-      orderStatus: 'Review',
+      //orderStatus: 'Review',
       //orderStatus: 'Completed',
       providerId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
       providerName: 'Jason',
