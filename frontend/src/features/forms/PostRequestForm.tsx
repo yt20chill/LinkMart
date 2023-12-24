@@ -66,7 +66,13 @@ const PostRequestForm = () => {
 		onSuccess: async (result) => {
 			if (!result) return toast.error("Something went wrong");
 			toast.success("Request posted!");
-			await queryClient.invalidateQueries([queryKey.REQUEST]);
+			// clone or post => invalidate whole request list,
+			// edit => invalidate only that particular request
+			const key =
+				requestId && !isClone
+					? [queryKey.REQUEST, { requestId }]
+					: [queryKey.REQUEST];
+			await queryClient.invalidateQueries(key);
 			navigate(`${siteMap(RouteEnum.RequestDetail)}/${result.requestId}`, {
 				replace: true,
 			});
