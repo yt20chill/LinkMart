@@ -34,7 +34,6 @@ const Pagination = ({
 		setPage(Math.min(totalPages, ++page));
 	};
 
-	console.log({ totalPages, pageToShow, page });
 	return (
 		<ol className="flex justify-center gap-1 text-xs font-medium">
 			{/* to prev page */}

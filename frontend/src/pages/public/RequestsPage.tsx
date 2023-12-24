@@ -22,8 +22,7 @@ const RequestsPage = () => {
 
 	const updatePage = (page: number) => {
 		searchParams.set("p", page + "");
-		const newSearchParams = new URLSearchParams(searchParams.toString());
-		setSearchParams(newSearchParams);
+		setSearchParams(searchParams);
 	};
 
 	return (
