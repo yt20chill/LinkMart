@@ -609,17 +609,20 @@
 
 ```js
 🟢 [200]  OK
-[
 {
-    "requestId" : string (ulid),
-    "createdBy": string(user.username),
-    "locationName" : string(location.name),
-    "item" : string,
-    "primaryImage" : string,
-    "offerPrice"? : float,
-    "createdAt": DateTime,
-    "updatedAt": DateTime
-},.../* Max 30 Requests */]
+totalRecords: int
+totalPages: int
+requests: [
+	{
+	    "requestId" : string (ulid),
+	    "createdBy": string(user.username),
+	    "locationName" : string(location.name),
+	    "item" : string,
+	    "primaryImage" : string,
+	    "offerPrice"? : float,
+	    "createdAt": DateTime,
+	    "updatedAt": DateTime
+	},.../* Max 30 Requests */]
 }
 ```
 
@@ -1476,9 +1479,8 @@ Success
 ```
 
 ### 📍 10.2 Create Provider
-**Please change the key name to match the col name for your convenience**
 
-| [POST] | /api/provider/|
+| [POST] | /api/provider|
 | ----- | --------------------- |
 "jwt" :
 > ⬇️ Req Body:
@@ -1487,9 +1489,9 @@ Success
 ```
 {
     "locationId": int
-    "addressDoc": File
-    "identityDoc": File
-    "bankDoc": File
+    "addressDocument": File
+    "idDocument": File
+    "bankDocument": File
 }
 ```
 
@@ -1508,6 +1510,111 @@ Success
     "message" : string
 }
 ```
+### 📍 10.3 Get Application Status
+
+| [GET] | /api/provider|
+| ----- | --------------------- |
+"jwt" :
+> ⬇️ Req Body:
+
+```
+
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+data: {
+	"verificationId": string ulid (provider.id)
+	"statusName": string
+	"idDocument": string url
+	"addressDocument": string url
+	"bankDocument": string url
+	} | null
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : string
+}
+```
+### 📍 10.4 Get Provider Profile
+**Two Routes: 1 guarded 1 public**
+
+| [GET] | /api/provider/profile|
+| [GET] | /provider/profile/:providerId
+| ----- | --------------------- |
+"jwt" :
+> ⬇️ Req Body:
+
+```
+
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"username" : string
+	"averageEfficiency" : float 0-5
+	"averageAttitude" : float 0-5
+	"reviewCount" : int
+	"reviews" : [{
+	"primaryImage" : string url
+	"item" : string
+	"efficiency" : 0-5
+	"attitude" : 0-5
+	"comments": string
+}
+,...]
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : string
+}
+```
+### 📍 10.5 Get Provider Dashboard
+
+| [GET] | /api/provider/dashboard|
+| ----- | --------------------- |
+"jwt" :
+> ⬇️ Req Body:
+
+```
+
+```
+
+> ⬆️ Resp:
+
+```js
+🟢 [200]  OK
+{
+	"balance" : float
+	"averageEfficiency" : float 0-5
+	"averageAttitude" : float 0-5
+	"reviewCount" : int
+	"offerCount": int
+	"taskCount": int
+}
+,...]
+}
+```
+
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : string
+}
+```
+
 
 ---
 ## 📎 11. For Nic
