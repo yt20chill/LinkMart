@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 import { useShallow } from "zustand/react/shallow";
 import { FormInput, FormSubmitButton } from "../../components/form";
 import {
@@ -23,6 +24,7 @@ const PutUserProfileForm = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm<UpdateProfileForm>({
 		resolver: zodResolver(putProfileSchema),
 		defaultValues,
@@ -31,11 +33,13 @@ const PutUserProfileForm = () => {
 	const { mutateAsync: updateProfile, isLoading } = useMutation({
 		mutationFn: updateProfileAJAX,
 		onSuccess: async () => {
-			await queryClient.invalidateQueries(queryKey.USER);
+			toast.success("Profile updated");
+			await queryClient.invalidateQueries(queryKey.AUTH);
 		},
 	});
 	const onSubmit = async (data: UpdateProfileForm) => {
 		await updateProfile(data);
+		reset();
 	};
 	return (
 		<>
