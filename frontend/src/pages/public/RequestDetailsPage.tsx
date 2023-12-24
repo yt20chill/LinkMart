@@ -177,21 +177,21 @@ const Recommendations = ({
 	currentRequestId,
 	searchParams,
 }: RecommendationsProps) => {
-	const { recommendations, searchParams: recommendSearchParams } =
-		useGetRecommendations({
-			location: searchParams.get("location") ?? undefined,
-			category: searchParams.get("category") ?? undefined,
-			limit: RECOMMENDATION_NUM,
-		});
+	const { recommendations } = useGetRecommendations({
+		location: searchParams.get("location") ?? undefined,
+		category: searchParams.get("category") ?? undefined,
+		limit: RECOMMENDATION_NUM,
+	});
 	// return skeleton if recommendation is undefined (error or loading)
 	if (!recommendations)
 		return Array(RECOMMENDATION_NUM)
 			.fill(null)
 			.map((_, index) => <RequestCardSkeleton key={index} />);
-	// TODO: get unrelated requests if no recommendations
+	// trigger rerendering by mutating searchParams
 	if (recommendations.length === 0) {
-		recommendSearchParams.delete("location");
-		console.log(recommendations);
+		if (searchParams.has("location")) searchParams.delete("location");
+		else if (searchParams.has("category")) searchParams.delete("category");
+		else return <div>No recommendation yet...</div>;
 	}
 	return (
 		<div className="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-2">
