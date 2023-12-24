@@ -12,11 +12,11 @@ export function OrderCard(props: OrderCardProps) {
   return (
     <div
       className={twMerge(
-        "bg-base-100 rounded-2xl shadow flex flex-wrap overflow-hidden mb-4  hover:ring-2 hover:ring-offset-2 ring-secondary-400 hover:shadow-lg hover:-translate-y-1 transition-all border",
+        "bg-base-100 rounded-2xl shadow flex flex-wrap overflow-hidden mb-4  hover:ring-2 hover:ring-offset-2 ring-secondary-400 hover:shadow-lg hover:-translate-y-1 transition-all border border-slate-500/20",
         props.className ?? ""
       )}
     >
-      <div className="w-full border-b py-2 pl-4 text-sm text-slate-500 tracking-tight flex items-center">
+      <div className="w-full border-b py-2 pl-4 text-sm text-slate-500 tracking-tight flex items-center border-slate-500/20">
         # {props.orderId}
         <span className="material-symbols-rounded text-sm h-6 ml-1 text-slate-300 hover:text-slate-50">
           content_copy
