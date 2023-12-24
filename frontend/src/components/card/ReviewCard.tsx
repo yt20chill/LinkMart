@@ -21,9 +21,7 @@ const ReviewCard = ({
 					<div>Attitude</div>
 					<Rating name="" score={attitude} />
 					<div>Comments</div>
-					<textarea className="w-96 h-96" readOnly>
-						{comments}
-					</textarea>
+					<textarea className="w-96 h-96" value={comments ?? ""} readOnly />
 				</div>
 			</div>
 		</div>

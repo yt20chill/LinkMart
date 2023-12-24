@@ -10,7 +10,7 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('provider/profile')
+  @Get('provider/profile/:id')
   getProfile() {
     return {
       biography: 'I am a provider',

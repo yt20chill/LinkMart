@@ -20,7 +20,7 @@ const DashboardPage = () => {
 	return (
 		<>
 			<div className="flex items-center text-2xl">
-				<IconCircleFrame username={username!} />
+				<IconCircleFrame username={username!} className="w-16 h-16" />
 				<span>{username}</span>
 			</div>
 			{data && (
@@ -94,15 +94,19 @@ type CounterProps = {
 
 const Counter = ({ offerCount, taskCount }: CounterProps) => {
 	return (
-		<>
-			<div className="uppercase font-bold text-lg">Offer</div>
-			<div className="mask mask-circle flex items-center justify-center">
-				{offerCount}
+		<div className="flex">
+			<div className="flex flex-col items-center m-10">
+				<div className="uppercase font-bold text-lg">Offer</div>
+				<div className="mask mask-circle p-10 bg-primary-300/50 flex items-center justify-center">
+					{offerCount}
+				</div>
 			</div>
-			<div className="uppercase font-bold text-lg">Task</div>
-			<div className="mask mask-circle flex items-center justify-center">
-				{taskCount}
+			<div className="flex flex-col items-center m-10">
+				<div className="uppercase font-bold text-lg">Task</div>
+				<div className="mask mask-circle p-10 bg-primary-300/50 flex items-center justify-center">
+					{taskCount}
+				</div>
 			</div>
-		</>
+		</div>
 	);
 };
