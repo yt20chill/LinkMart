@@ -1,14 +1,15 @@
+import { z } from "zod";
 import { axiosWrapper } from "../../lib/apiUtils";
 import { PostAddressDto, UpdateProfileForm } from "../../schemas/requestSchema";
 import {
 	AddressDto,
 	GetOrderDto,
 	PostAddressResponseDto,
-	RequestDto,
+	RequestDtoV1,
 	addressesResponseSchema,
 	getOrdersSchema,
 	postAddressResponseSchema,
-	requestsResponseSchema,
+	requestDtoV1Schema,
 } from "../../schemas/responseSchema";
 const baseUserApiRoute = `/api/user`;
 
@@ -67,8 +68,8 @@ const getOrdersByUserAJAX = async () => {
 };
 
 const getRequestsByUserAJAX = async () => {
-	return await axiosWrapper<void, RequestDto[]>(userApiRoutes.REQUEST, {
-		schema: requestsResponseSchema,
+	return await axiosWrapper<void, RequestDtoV1[]>(userApiRoutes.REQUEST, {
+		schema: z.array(requestDtoV1Schema),
 	});
 };
 
