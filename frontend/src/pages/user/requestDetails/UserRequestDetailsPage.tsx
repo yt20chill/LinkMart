@@ -9,15 +9,21 @@ import { SectionTitle } from "@/components/title/SectionTitle";
 import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
 import AcceptOfferForm from "@/features/forms/AcceptOfferForm";
 import { useGetRequestDetails } from "@/features/hooks/useQueryContainer";
-import { MouseEvent, useEffect, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import EditButton from "../../../components/ui/EditButton";
+import Tooltip from "../../../components/ui/Tooltip";
 import useRedirectOnCondition from "../../../features/hooks/useRedirectOnCondition";
 import { fireAlert, sweetAlertDefaultOptions } from "../../../lib/formUtils";
+import {
+	declineOfferAJAX,
+	getAllOffersByRequestIdAJAX,
+} from "../../../services/api/offerApi";
 import { deleteRequestAJAX } from "../../../services/api/requestApi";
 import { ControlModalContext } from "../../../services/context/ControlModalContext";
+import { OfferDetailsContext } from "../../../services/context/OfferDetailsContext";
 import { queryKey } from "../../../services/query.config";
 import { RouteEnum, siteMap } from "../../../services/routes.config";
 import OfferDetailsList from "./components/OfferDetailsList";
@@ -31,21 +37,23 @@ const UserRequestDetailsPage = () => {
 	const { requestId } = useParams();
 	const [offerId, setOfferId] = useState("");
 	const [isShow, setIsShow] = useState(false);
-	const navigate = useNavigate();
 	useRedirectOnCondition(!requestId, RouteEnum.UserRequests, "invalid request");
 	const { data: details } = useGetRequestDetails({ requestId: requestId! });
 	const [currentImage, setCurrentImage] = useState<string>("");
 	useEffect(() => {
 		if (details) setCurrentImage(details.primaryImage);
 	}, [details]);
-
 	const queryClient = useQueryClient();
-	const { mutateAsync: deleteRequest } = useMutation({
-		mutationFn: deleteRequestAJAX,
+	const { data: offers, isLoading: isGettingOffers } = useQuery({
+		queryKey: [queryKey.OFFER, { requestId }],
+		queryFn: () => getAllOffersByRequestIdAJAX({ requestId: requestId! }),
+	});
+
+	const { mutateAsync: onDecline } = useMutation({
+		mutationFn: declineOfferAJAX,
 		onSuccess: async () => {
-			toast.success("Deleted request");
-			await queryClient.invalidateQueries([queryKey.REQUEST]);
-			navigate(siteMap(RouteEnum.UserRequests), { replace: true });
+			toast.success("Offer has been declined");
+			await queryClient.invalidateQueries([queryKey.OFFER, { requestId }]);
 		},
 	});
 	const onAccept = (offerId: string) => {
@@ -75,26 +83,10 @@ const UserRequestDetailsPage = () => {
 								<DateBadge date={details.updatedAt} />
 							</div>
 							<div className="flex gap-2">
-								<EditButton
-									label="Edit Request"
-									onClick={(e: MouseEvent) => {
-										e.preventDefault();
-										navigate(
-											`${siteMap(RouteEnum.PostRequest)}?requestId=${requestId}`
-										);
-									}}
+								<UpdateButtons
+									disabled={!!offers?.length ?? false}
+									requestId={requestId!}
 								/>
-								<button
-									className="p-2 border border-rose-400 hover:bg-rose-400 [&_span]:hover:text-white rounded-btn hover:-translate-y-1 overflow-hidden h-12 w-12 transition-all hover:ring-4 ring-rose-200"
-									onClick={fireAlert({
-										options: sweetAlertOptions,
-										onConfirmed: () => deleteRequest({ requestId: requestId! }),
-									})}
-								>
-									<span className="material-symbols-rounded text-rose-400 text-2xl">
-										delete
-									</span>
-								</button>
 							</div>
 
 							<hr className="border-base-300 my-4" />
@@ -119,17 +111,25 @@ const UserRequestDetailsPage = () => {
 							<hr className="border-base-300 my-4" />
 						</div>
 						{/*OFFER LIST*/}
-						<div className="max-lg:w-full w-1/2 flex flex-col items-center max-lg:pl-0 pl-12 overflow-hidden">
-							<div className="bg-base-100/50 w-full rounded-lg border overflow-hidden">
-								<div className="border-b px-4 pt-4 pb-2">Offer</div>
-								<div className="p-4 bg-base-200">
-									<OfferDetailsList
-										requestId={requestId!}
-										onAccept={onAccept}
-									/>
+						{offers && (
+							<OfferDetailsContext.Provider
+								value={{
+									offersDetails: offers,
+									onDecline,
+									onAccept,
+									isLoading: isGettingOffers,
+								}}
+							>
+								<div className="max-lg:w-full w-1/2 flex flex-col items-center max-lg:pl-0 pl-12 overflow-hidden">
+									<div className="bg-base-100/50 w-full rounded-lg border overflow-hidden">
+										<div className="border-b px-4 pt-4 pb-2">Offer</div>
+										<div className="p-4 bg-base-200">
+											<OfferDetailsList />
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
+							</OfferDetailsContext.Provider>
+						)}
 					</main>
 				</div>
 			</div>
@@ -145,3 +145,65 @@ const UserRequestDetailsPage = () => {
 };
 
 export default UserRequestDetailsPage;
+
+type UpdateButtonsProps = {
+	disabled: boolean;
+	requestId: string;
+};
+const UpdateButtons = ({ disabled, requestId }: UpdateButtonsProps) => {
+	const navigate = useNavigate();
+	const queryClient = useQueryClient();
+	const { mutateAsync: deleteRequest } = useMutation({
+		mutationFn: deleteRequestAJAX,
+		onSuccess: async () => {
+			toast.success("Deleted request");
+			await queryClient.invalidateQueries([queryKey.REQUEST]);
+			navigate(siteMap(RouteEnum.UserRequests), { replace: true });
+		},
+	});
+	const disableAlert = fireAlert({
+		options: {
+			title: "Cannot edit request",
+			text: "Decline all the offers to edit this request",
+			icon: "error",
+			showConfirmButton: false,
+			showCancelButton: true,
+			cancelButtonText: "Back",
+		},
+		onConfirmed: () => {},
+	});
+	return (
+		<>
+			{disabled ? (
+				<Tooltip message="Decline all the offers to edit this request">
+					<EditButton
+						className="bg-slate-400 user-select-none pointer-events-none"
+						label="Edit Request"
+						onClick={disableAlert}
+					/>
+				</Tooltip>
+			) : (
+				<EditButton
+					label="Edit Request"
+					onClick={(e) => {
+						e.preventDefault();
+						navigate(
+							`${siteMap(RouteEnum.PostRequest)}?requestId=${requestId}`
+						);
+					}}
+				/>
+			)}
+			<button
+				className="p-2 border border-rose-400 hover:bg-rose-400 [&_span]:hover:text-white rounded-btn hover:-translate-y-1 overflow-hidden h-12 w-12 transition-all hover:ring-4 ring-rose-200"
+				onClick={fireAlert({
+					options: sweetAlertOptions,
+					onConfirmed: () => deleteRequest({ requestId }),
+				})}
+			>
+				<span className="material-symbols-rounded text-rose-400 text-2xl">
+					delete
+				</span>
+			</button>
+		</>
+	);
+};

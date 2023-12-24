@@ -1,9 +1,11 @@
 import { memo } from "react";
+import { useNavigate } from "react-router-dom";
 import { IconCircleFrame } from "../../../../components/frame/IconCircleFrame";
 import CancelButton from "../../../../components/ui/CancelButton";
 import PrimaryButton from "../../../../components/ui/PrimaryButton";
 import { fireAlert, sweetAlertDefaultOptions } from "../../../../lib/formUtils";
 import { useOfferDetailsContext } from "../../../../services/context/OfferDetailsContext";
+import { RouteEnum, siteMap } from "../../../../services/routes.config";
 import Rating from "./Rating";
 
 type OfferDetailsProps = {
@@ -17,6 +19,7 @@ const sweetAlertOptions = {
 
 const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 	const { offerDetails, onDecline, onAccept } = useOfferDetailsContext(offerId);
+	const navigate = useNavigate();
 	if (!offerDetails) return null;
 	// TODO: missing a page show provider details
 	const {
@@ -32,19 +35,20 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 	return (
 		<>
 			<div className="bg-base-100 rounded-lg w-full mb-2 shadow">
-				<div className="flex items-center border-b p-2">
+				<div
+					className="flex items-center border-b p-2 cursor-pointer hover:shadow"
+					onClick={(e) => {
+						e.preventDefault();
+						navigate(`${siteMap(RouteEnum.ProviderProfile)}/${providerId}`);
+					}}
+				>
 					<IconCircleFrame username={providerName} />
 					<span>{providerName}</span>
 					<div className="ms-auto flex items-center gap-1">
 						{reviewCount ? (
 							<>
 								<span className="text-sm">{score.toFixed(1)}</span>
-								<Rating
-									name={`${providerId}-score`}
-									label=""
-									score={score}
-									readOnly={true}
-								/>
+								<Rating name="" score={score} />
 								<span className="text-sm">({reviewCount})</span>
 							</>
 						) : (
