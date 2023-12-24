@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import { toast } from "react-toastify";
 import SweetAlert, { SweetAlertOptions } from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -139,7 +140,7 @@ const fireAlert =
 		onConfirmed,
 		onCancelled,
 	}: FireAlertParams) =>
-	async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+	async (e: MouseEvent) => {
 		try {
 			e.preventDefault();
 			const option = await withReactContent(SweetAlert).fire(options);
