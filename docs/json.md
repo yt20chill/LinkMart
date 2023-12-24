@@ -1367,7 +1367,10 @@ Success
 "jwt"
 > ⬇️ Req Body:
 
-```Note: Please use EventSourse and the eventSourse.onmessage for reciving the event
+```
+{
+Note: Please use EventSourse and the eventSourse.onmessage for reciving the event
+}
 ```
 
 > ⬆️ Resp:
