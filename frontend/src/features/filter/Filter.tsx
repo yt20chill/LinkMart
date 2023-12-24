@@ -42,7 +42,7 @@ export function Filter(props: FilterProps) {
       </div>
       {/* Clear all */}
       <button
-        className="rounded-box py-2 shadow hover:shadow-lg w-full overflow-hidden transition-all bg-primary-400 hover:-translate-y-1 hover:bg-primary-500 text-white border hover:ring-1 ring-primary-500/50 hover:ring-offset-1"
+        className="rounded-box py-2 shadow hover:shadow-lg w-full overflow-hidden transition-all bg-primary-400 hover:-translate-y-1 hover:bg-primary-500 text-white hover:ring-1 ring-primary-500/50 hover:ring-offset-1"
         onClick={(e) => {
           e.preventDefault();
           setSearchParams();

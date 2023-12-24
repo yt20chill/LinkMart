@@ -16,7 +16,7 @@ export function OrderCard(props: OrderCardProps) {
         props.className ?? ""
       )}
     >
-      <div className="w-full border-b py-2 pl-4 text-sm text-slate-500 tracking-tight flex items-center">
+      <div className="w-full border-b py-2 pl-4 text-sm text-slate-500 tracking-tight flex items-center border-slate-500/20">
         # {props.orderId}
         <span className="material-symbols-rounded text-sm h-6 ml-1 text-slate-300 hover:text-slate-50">
           content_copy
