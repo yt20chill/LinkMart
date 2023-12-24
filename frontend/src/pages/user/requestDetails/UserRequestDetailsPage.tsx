@@ -8,7 +8,7 @@ import FormModal from "@/components/modal/FormModal";
 import { SectionTitle } from "@/components/title/SectionTitle";
 import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
 import AcceptOfferForm from "@/features/forms/AcceptOfferForm";
-import { useQueryContainer } from "@/features/hooks/useQueryContainer";
+import { useGetRequestDetails } from "@/features/hooks/useQueryContainer";
 import { MouseEvent, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
@@ -33,7 +33,6 @@ const UserRequestDetailsPage = () => {
 	const [isShow, setIsShow] = useState(false);
 	const navigate = useNavigate();
 	useRedirectOnCondition(!requestId, RouteEnum.UserRequests, "invalid request");
-	const { useGetRequestDetails } = useQueryContainer();
 	const { data: details } = useGetRequestDetails({ requestId: requestId! });
 	const [currentImage, setCurrentImage] = useState<string>("");
 	useEffect(() => {
