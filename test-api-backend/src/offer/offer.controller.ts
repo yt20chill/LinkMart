@@ -2,7 +2,7 @@ import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
 
 @Controller('api/offer')
 export class OfferController {
-  @Get('/request/:id')
+  @Get('request/:id')
   getAllOffersByRequestId() {
     return [
       {
@@ -32,12 +32,12 @@ export class OfferController {
     ];
   }
 
-  @Delete('/:id')
+  @Delete(':id')
   declineOffer() {
     return { success: true };
   }
 
-  @Post('/:id')
+  @Post(':id')
   acceptOffer(@Param('id') id: string) {
     return {
       url: `/user/payment/${id}?addressId=1&price=100`,
@@ -45,5 +45,31 @@ export class OfferController {
       userAddressId: 1,
       price: 100,
     };
+  }
+
+  @Get('myOffer')
+  getMyOffers() {
+    return [
+      {
+        item: 'This',
+        offerStatus: 'Active',
+        estimatedProcessTime: 14,
+        createdBy: 'Jason',
+        primaryImage: 'https://picsum.photos/200',
+        requestId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
+        offerId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
+        price: 200,
+      },
+      {
+        item: 'This 2',
+        offerStatus: 'Active',
+        estimatedProcessTime: 5,
+        createdBy: 'Jason',
+        primaryImage: 'https://picsum.photos/200',
+        requestId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
+        offerId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
+        price: 200,
+      },
+    ];
   }
 }

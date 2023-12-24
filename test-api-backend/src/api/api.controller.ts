@@ -47,6 +47,12 @@ export class ApiController {
     return { requestId: '01HHHJBZXAT9TGB4H0JCE9BGPV' };
   }
 
+  @Get('request/provider/:id')
+  checkHasOffer() {
+    return { hasOffer: true };
+    // return { hasOffer: false };
+  }
+
   @Post('logisticCompany')
   addCompany() {
     return { logisticCompanyId: 3 };
