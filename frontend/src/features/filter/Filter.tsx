@@ -19,7 +19,7 @@ export function Filter(props: FilterProps) {
   );
   const { setSearchParams } = useSearchParamsContext();
   return (
-    <div className={twMerge("ml-3", props.className ?? "")}>
+    <div className={twMerge("", props.className ?? "")}>
       <div className="">
         {categoriesName ? (
           <FilterGroup

@@ -30,9 +30,9 @@ const RequestsPage = () => {
       <div className="mt-5 max-w-7xl max-lg:px-2 mx-auto ">
         <h1 className="text-black text-xl"></h1>
       </div>
-      <div className="my-5 max-w-7xl flex mx-auto">
-        <Filter className="inline-flex flex-col min-w-[250px] max-lg:hidden" />
-        <div className="px-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 grow mb-auto w-screen">
+      <div className="my-5 max-w-7xl flex mx-auto w-full">
+        <Filter className="inline-flex flex-col max-lg:hidden pr-2 w-[200px]" />
+        <div className="px-2 grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mb-auto grow">
           {data ? (
             data.requests.map((request) => (
               <RequestCard key={request.requestId} {...request} />
