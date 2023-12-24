@@ -62,5 +62,9 @@ const useGetRecommendations = ({
 		queryFn: () => getAllRequestsAJAX(searchParams),
 		enabled: !!location || !!category,
 	});
-	return { getRecommendations, recommendations: getRecommendations.data };
+	return {
+		getRecommendations,
+		recommendations: getRecommendations.data?.requests,
+		searchParams,
+	};
 };
