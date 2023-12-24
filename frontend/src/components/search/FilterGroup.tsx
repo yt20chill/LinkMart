@@ -16,7 +16,7 @@ const FilterGroup = ({ displayName, name, items }: FilterGroupProps) => {
   if (filterKeys.length === 0) return null;
   return (
     <>
-      <div className="truncate indent-2 mb-1 text-slate-500 font-roboto flex items-center">
+      <div className="truncate indent-2 mb-1 text-slate-400 font-roboto flex items-center">
         <i className="material-symbols-rounded text-base font-bold">
           filter_none
         </i>
@@ -24,7 +24,7 @@ const FilterGroup = ({ displayName, name, items }: FilterGroupProps) => {
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] p-2 shadow bg-base-100/75 backdrop-blur-lg rounded-box transition-all border-2 border-slate-100 mb-3"
+        className="dropdown-content z-[1] p-2 shadow bg-base-100/75 backdrop-blur-lg rounded-box transition-all border-2 border-base-100 mb-3"
       >
         {filterKeys}
       </ul>

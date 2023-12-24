@@ -23,7 +23,7 @@ function HomePage() {
               <span className="font-bold text-primary-400">Link</span>
               <span className="text-slate-400 font-light">mart</span>
             </h1>
-            <p className="text-gray-500 font-roboto text-justify">
+            <p className="text-base-content font-roboto text-justify">
               <b className="text-primary-400 font-bold">Our</b> platform is a
               matching platform for shoppers and overseas personal shoppers! You
               can freely post the items you want to purchase from overseas, and
@@ -32,7 +32,7 @@ function HomePage() {
               coolest items from around the world and deliver them to your
               doorstep!
             </p>
-            <p className="text-gray-500 font-roboto mb-5">
+            <p className="text-base-content font-roboto mb-5">
               Let&#39;s start your journey！
             </p>
             <button
@@ -42,7 +42,7 @@ function HomePage() {
               Explore
             </button>
           </div>
-          <div className="w-1/2 flex items-center justify-center max-lg:absolute right-0 -bottom-16  -z-10 mb-4">
+          <div className="w-1/2 flex items-center justify-center max-lg:absolute right-0 -bottom-16 -z-10 mb-4">
             <img src="/image/tags/tag_shopping_bag.png" />
           </div>
         </div>

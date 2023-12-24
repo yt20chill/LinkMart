@@ -13,63 +13,63 @@ import { useAuth } from "../hooks/useAuth";
 const defaultValues: TSignInForm = generateDefaultValues(signInSchema);
 
 const SignInForm = () => {
-	const {
-		register,
-		formState: { errors },
-		handleSubmit,
-	} = useForm<TSignInForm>({
-		resolver: zodResolver(signInSchema),
-		defaultValues,
-	});
-	const { signInHandler } = useAuth();
-	const {
-		mutateAsync: signIn,
-		isLoading,
-		error,
-	} = useMutation({
-		mutationFn: (signInForm: TSignInForm) => signInAJAX(signInForm),
-		onSuccess: (result) => {
-			signInHandler(result?.jwt);
-		},
-	});
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<TSignInForm>({
+    resolver: zodResolver(signInSchema),
+    defaultValues,
+  });
+  const { signInHandler } = useAuth();
+  const {
+    mutateAsync: signIn,
+    isLoading,
+    error,
+  } = useMutation({
+    mutationFn: (signInForm: TSignInForm) => signInAJAX(signInForm),
+    onSuccess: (result) => {
+      signInHandler(result?.jwt);
+    },
+  });
 
-	const onSubmit = async (signInForm: TSignInForm) => {
-		await signIn(signInForm);
-	};
+  const onSubmit = async (signInForm: TSignInForm) => {
+    await signIn(signInForm);
+  };
 
-	return (
-		<form className="mx-auto bg-base-100 w-96 flex flex-col shadow-lg rounded-xl py-6 mt-24">
-			<div className="px-9 pb-4 border-b font-bold text-primary-400 text-lg">
-				SIGN IN
-			</div>
-			<div className="bg-gradient-to-tr from-primary-400 to-secondary-100 flex items-center justify-center py-16 border-b">
-				<img
-					src="/image/Linkmart-mono@512.png"
-					className="w-2/3 drop-shadow"
-					alt=""
-				/>
-			</div>
-			<div className="px-9 pt-6 pb-3 flex flex-col gap-4">
-				{Object.keys(defaultValues).map((name) => (
-					<FormInput
-						key={name}
-						name={name as keyof TSignInForm}
-						register={register}
-						errors={errors}
-					/>
-				))}
-				{error instanceof FetchError && (
-					<ErrorMessage message={error.message} />
-				)}
-				<FormSubmitButton
-					color="primary"
-					label="Sign In"
-					onClick={handleSubmit(onSubmit)}
-					disabled={isLoading}
-				/>
-			</div>
-		</form>
-	);
+  return (
+    <form className="mx-auto bg-base-100/50 backdrop-blur w-96 flex flex-col shadow-lg rounded-xl py-6 mt-24 border border-base-300">
+      <div className="px-9 pb-4 border-b border-base-300 font-bold text-primary-400 text-lg">
+        SIGN IN
+      </div>
+      <div className="bg-gradient-to-tr from-primary-400 to-secondary-100 flex items-center justify-center py-16 border-b border-base-300">
+        <img
+          src="/image/Linkmart-white@512.png"
+          className="w-2/3 drop-shadow"
+          alt=""
+        />
+      </div>
+      <div className="px-9 pt-6 pb-3 flex flex-col gap-4">
+        {Object.keys(defaultValues).map((name) => (
+          <FormInput
+            key={name}
+            name={name as keyof TSignInForm}
+            register={register}
+            errors={errors}
+          />
+        ))}
+        {error instanceof FetchError && (
+          <ErrorMessage message={error.message} />
+        )}
+        <FormSubmitButton
+          color="primary"
+          label="Sign In"
+          onClick={handleSubmit(onSubmit)}
+          disabled={isLoading}
+        />
+      </div>
+    </form>
+  );
 };
 
 export default SignInForm;

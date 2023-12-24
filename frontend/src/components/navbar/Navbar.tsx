@@ -9,7 +9,10 @@ import { ButtonWithIcon } from "../button/ButtonWithIcon";
 import { IconCircleFrame } from "../frame/IconCircleFrame";
 import { twMerge } from "tailwind-merge";
 
-export function Navbar() {
+type NavbarProps = {
+  onThemeClick: () => void;
+};
+export function Navbar(props: NavbarProps) {
   const navigate = useNavigate();
   const { isAuthenticated, role, username } = useAuthStore(
     useShallow((state) => ({
@@ -50,7 +53,6 @@ export function Navbar() {
             />
           </Link>
         </div>
-
         {/* nav_desktop */}
         <div className="flex justify-between max-w-7xl max-xl:px-2 mx-auto max-md:hidden">
           {/* logo -> home page*/}
@@ -85,6 +87,15 @@ export function Navbar() {
           </div>
           {/* nav_login_info */}
           <div className="flex gap-10 items-center">
+            <ButtonWithIcon
+              onClick={() => props.onThemeClick()}
+              icon={
+                localStorage.getItem("darkMode") === "T"
+                  ? "light_mode"
+                  : "dark_mode"
+              }
+              label=""
+            />
             {isAuthenticated ? (
               <>
                 <div className="dropdown dropdown-end">
@@ -215,8 +226,21 @@ export function Navbar() {
               </div>
             )}
 
-            {username && (
-              <div className="mt-auto flex flex-col pt-2 border-t">
+            <div className="mt-auto flex flex-col pt-2 border-t border-base-300">
+              <ButtonWithIcon
+                className=""
+                icon={
+                  localStorage.getItem("darkMode") === "T"
+                    ? "light_mode"
+                    : "dark_mode"
+                }
+                label="Change Theme"
+                onClick={() => {
+                  setNavIsShow(false);
+                  props.onThemeClick();
+                }}
+              />
+              {username && (
                 <ButtonWithIcon
                   className=""
                   icon="logout"
@@ -226,8 +250,8 @@ export function Navbar() {
                     signOut;
                   }}
                 />
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
         <div

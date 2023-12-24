@@ -165,7 +165,7 @@ const RequestDetailsPage = () => {
                 );
               }}
             >
-              <span className="drop-shadow">More</span>
+              <span className="drop-shadow text-white">More</span>
             </div>
           </div>
 

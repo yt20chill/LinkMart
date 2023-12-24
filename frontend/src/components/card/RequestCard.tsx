@@ -29,7 +29,7 @@ export function RequestCard({
           : navigate(`${siteMap(RouteEnum.RequestDetail)}/${requestId}`)
       }
       className={twMerge(
-        "inline-box relative bg-base-100/75 backdrop-blur-lg icn-hvr-fill rounded-xl [&_button]:hover:flex p-2 hover:shadow-xl hover:-translate-y-1 transition-all h-fit border border-slate-300 select-none overflow-hidden",
+        "inline-box relative bg-base-100/75 backdrop-blur-lg icn-hvr-fill rounded-xl [&_button]:hover:flex p-2 hover:shadow-xl hover:-translate-y-1 transition-all h-fit border border-base-300 select-none overflow-hidden",
         className
       )}
     >

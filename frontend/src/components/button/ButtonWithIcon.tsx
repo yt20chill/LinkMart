@@ -37,7 +37,7 @@ export function ButtonWithIcon({
       <button onClick={clickFn}>
         <div
           className={twMerge(
-            "flex items-center p-3 rounded-lg hover:bg-slate-200/50 hover:shadow transition-all duration-300 [&>span]:hover:text-slate-500 hover:text-slate-600",
+            "flex items-center p-3 rounded-lg hover:bg-slate-500/10 hover:shadow transition-all duration-300 [&>span]:hover:text-slate-500 hover:text-slate-500",
             className ?? ""
           )}
         >
