@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import SignUpForm from "../../features/forms/SignUpForm";
 import { useLoggedInRedirect } from "../../features/hooks/useLoggedInRedirect";
 import { RouteEnum, siteMap } from "../../services/routes.config";
+import { SignPageAnimatedBG } from "@/features/animatedBackground/SignPageAnimatedBG";
 
 const SignUpPage = () => {
   useLoggedInRedirect();
@@ -14,6 +15,7 @@ const SignUpPage = () => {
           Sign In
         </Link>
       </p>
+      <SignPageAnimatedBG />
     </>
   );
 };

@@ -143,7 +143,7 @@ export function Navbar() {
           navIsShow ? "max-w-[2000px]" : "max-w-[0px]"
         )}
       >
-        <div className="w-11/12 bg-base-100 min-h-screen">
+        <div className="w-11/12 bg-base-100 h-screen flex flex-col">
           <div className="p-6 border-b-8 border-primary-400">
             {username ? (
               <>
@@ -165,7 +165,7 @@ export function Navbar() {
               </div>
             )}
           </div>
-          <div className="p-6">
+          <div className="p-6 flex flex-col grow">
             <ButtonWithIcon
               onClick={() => {
                 setNavIsShow(false);
@@ -192,12 +192,46 @@ export function Navbar() {
                   icon="all_inbox"
                   label="Order"
                 />
+                <ButtonWithIcon
+                  onClick={() => {
+                    setNavIsShow(false);
+                    navigate(siteMap(RouteEnum.Profile));
+                  }}
+                  icon="person"
+                  label="Profile"
+                />
               </>
+            )}
+            {role === AuthorizeLevels.PROVIDER && (
+              <div className="mt-auto flex flex-col pt-2 border-t">
+                <ButtonWithIcon
+                  onClick={() => {
+                    setNavIsShow(false);
+                    navigate(siteMap(RouteEnum.Dashboard));
+                  }}
+                  icon="local_mall"
+                  label="Provider"
+                />
+              </div>
+            )}
+
+            {username && (
+              <div className="mt-auto flex flex-col pt-2 border-t">
+                <ButtonWithIcon
+                  className=""
+                  icon="logout"
+                  label="Sign Out"
+                  onClick={() => {
+                    setNavIsShow(false);
+                    signOut;
+                  }}
+                />
+              </div>
             )}
           </div>
         </div>
         <div
-          className="grow min-h-screen bg-slate-950/0 backdrop-blur-sm"
+          className="grow h-screen bg-transparent backdrop-blur-sm"
           onClick={() => {
             setNavIsShow(false);
           }}
@@ -223,24 +257,7 @@ export function Navbar() {
 							  tabIndex={0}
 							  className="menu dropdown-content z-[1] shadow bg-base-100/50 backdrop-blur-lg rounded-box w-52 mt-1"
 							>
-							  {role === AuthorizeLevels.PROVIDER && (
-								<ButtonWithIcon
-								  linkTo={RouteEnum.Dashboard}
-								  icon="local_mall"
-								  label="Provider"
-								/>
-							  )}
-							  <ButtonWithIcon
-								linkTo={RouteEnum.Profile}
-								icon="person"
-								label="Profile"
-							  />
-							  <ButtonWithIcon
-								icon="logout"
-								label="Sign Out"
-								onClick={signOut}
-							  />
-							</div>
+
 						  </div>
 						</>
 					  ) : (

@@ -69,3 +69,21 @@ b.emo {
 		transform: rotate(-1turn) translate(-150px) rotate(1turn);
 	}
 }
+
+.bg-animate-blur {
+	animation: loopBlur 8s linear infinite;
+}
+
+@keyframes loopBlur {
+	0% {
+		filter: blur(0px);
+	}
+
+	50% {
+		filter: blur(12px);
+	}
+
+	100% {
+		filter: blur(0px);
+	}
+}
