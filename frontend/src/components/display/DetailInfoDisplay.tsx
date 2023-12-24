@@ -20,7 +20,7 @@ export function DetailInfoDisplay(
 			<div className="grid max-md:grid-cols-2 grid-cols-3 gap-2 p-5 pb-0">
 				<DetailDisplay
 					title={props.locationName}
-					label={"From"}
+					label="From"
 					value={props.locationName.split(" ").slice(1, 10).join(" ")}
 				/>
 				{Object.entries(props.itemDetail ?? []).map(([key, val]) => {
