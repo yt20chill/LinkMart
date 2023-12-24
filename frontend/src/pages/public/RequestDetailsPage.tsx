@@ -27,7 +27,7 @@ import { RouteEnum, siteMap } from "../../services/routes.config";
 import { useAuthStore } from "../../services/stores/authStore";
 import { AuthorizeLevels } from "../../types/authModels";
 
-const RECOMMENDATION_NUM = 4;
+const RECOMMENDATION_NUM = 5;
 
 const RequestDetailsPage = () => {
 	const { requestId } = useParams();
@@ -129,7 +129,11 @@ const RequestDetailsPage = () => {
 							{role === AuthorizeLevels.PROVIDER && (
 								<PrimaryButton
 									icon="note_stack_add"
-									className="py-3"
+									className={`py-3 ${
+										checkOffer?.hasOffer
+											? "bg-slate-400 pointer-events-none border-none"
+											: ""
+									}`}
 									// if checkOffer === undefined, still allow offer, validate by backend
 									label={!checkOffer?.hasOffer ? "Make An Offer" : "Offered"}
 									onClick={() => setShowPostOfferModal(true)}
@@ -180,7 +184,7 @@ const Recommendations = ({
 	const { recommendations } = useGetRecommendations({
 		location: searchParams.get("location") ?? undefined,
 		category: searchParams.get("category") ?? undefined,
-		limit: RECOMMENDATION_NUM,
+		limit: RECOMMENDATION_NUM + 1, //+1 for potential filtering current request
 	});
 	// return skeleton if recommendation is undefined (error or loading)
 	if (!recommendations)
