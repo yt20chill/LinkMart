@@ -1564,14 +1564,15 @@ data: {
 	"averageEfficiency" : float 0-5
 	"averageAttitude" : float 0-5
 	"reviewCount" : int
-	"reviews" : [{
+
+	"reviews" :
+	[{
 	"primaryImage" : string url
 	"item" : string
 	"efficiency" : 0-5
 	"attitude" : 0-5
 	"comments": string
-}
-,...]
+	},...]
 }
 ```
 
