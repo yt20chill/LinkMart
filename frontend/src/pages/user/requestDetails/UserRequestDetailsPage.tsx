@@ -84,7 +84,7 @@ const UserRequestDetailsPage = () => {
 							</div>
 							<div className="flex gap-2">
 								<UpdateButtons
-									disabled={!!offers?.length ?? false}
+									disabled={!!offers?.length}
 									requestId={requestId!}
 								/>
 							</div>
