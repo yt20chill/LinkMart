@@ -34,7 +34,10 @@ const TaskDetailsPage = () => {
           <div className="border-b border-slate-500/20 w-100"></div>
           <ProgressBar
             steps={[...orderStatuses]}
-            currentStep={details.orderStatus as OrderStatuses}
+            currentStep={
+              ignoreCaseAndPlural(details.orderStatus, [...orderStatuses]) ??
+              orderStatuses[0]
+            }
           >
             <TaskStatusActions />
           </ProgressBar>
