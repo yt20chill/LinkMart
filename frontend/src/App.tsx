@@ -33,7 +33,7 @@ function App() {
       className="min-w-[360px] min-h-screen flex flex-col bg-transparent transition-all"
       data-theme={darkMode ? "dark" : "light"}
     >
-      <AnimatedBG className={darkMode ? "invert hue-rotate-180" : ""} />
+      <AnimatedBG className={darkMode ? "invert-[85%] hue-rotate-180" : ""} />
       <Navbar
         onThemeClick={() => {
           onThemeClick();
