@@ -43,11 +43,17 @@ function HomePage() {
             </button>
           </div>
           <div className="max-lg:w-full w-1/2 flex items-center justify-center -z-10 mb-4 max-lg:justify-end">
-            <img src="/image/tags/tag_shopping_bag.png" />
-            <div className="mockup-window bg-base-300">
+            {/* <img src="/image/tags/tag_shopping_bag.png" /> */}
+            <div className="relative">
+              <div className="mockup-window bg-base-300 h-72 w-96 shadow-lg border-4 border-base-300/20">
+                <img
+                  src="/image/screenShot/Linkmart-Screen-Shot-02.png"
+                  className=""
+                />
+              </div>
               <img
-                src="/image/screenShot/Linkmart-Screen-Shot-02.png"
-                className=""
+                src="/image/tags/tag_shopping_bag.png"
+                className="absolute -bottom-6 -right-6 w-20 h-20"
               />
             </div>
           </div>
