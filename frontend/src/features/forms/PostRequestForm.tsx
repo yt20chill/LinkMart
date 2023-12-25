@@ -18,6 +18,7 @@ import { appendFormData } from "../../lib/formUtils";
 import {
 	RequestForm,
 	allowedFileTypes,
+	editRequestSchema,
 	postRequestSchema,
 } from "../../schemas/requestSchema";
 import { ImageDto } from "../../schemas/responseSchema";
@@ -97,13 +98,9 @@ const PostRequestForm = () => {
 		setValue,
 		reset,
 	} = useForm<RequestForm>({
-		resolver: zodResolver(
-			requestId
-				? postRequestSchema.omit({ imageFile: true })
-				: postRequestSchema
-		),
+		resolver: zodResolver(requestId ? editRequestSchema : postRequestSchema),
 		defaultValues,
-		mode: "onSubmit",
+		mode: "onBlur",
 	});
 
 	// reset form on defaultValue change
@@ -136,7 +133,9 @@ const PostRequestForm = () => {
 		if (isClone)
 			appendFormData(
 				{
-					imageUrl: imagesClone.map((img) => img.imagePath),
+					imageUrl: imagesClone
+						.map((img) => img.imagePath)
+						.concat(primaryImage ?? []),
 				},
 				formData
 			);

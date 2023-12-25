@@ -40,6 +40,7 @@ type GetApplicationStatusDto = z.infer<
 >;
 
 const getReviewsSchema = z.object({
+	username: z.string().min(1),
 	primaryImage: z.string().url(),
 	item: z.string().min(1),
 	efficiency: z.number().min(0).max(5),
@@ -50,11 +51,11 @@ const getReviewsSchema = z.object({
 type GetReviewDto = z.infer<typeof getReviewsSchema>;
 
 const getProviderProfileSchema = editProviderProfileSchema.extend({
-	reviews: z.array(getReviewsSchema).nullish(),
+	reviews: z.array(getReviewsSchema),
 	username: z.string().min(1),
-	averageEfficiency: z.number().min(0).max(5),
-	averageAttitude: z.number().min(0).max(5),
-	totalReviews: z.number().nonnegative(),
+	starOfEfficiency: z.number().min(0).max(5),
+	startOfAttitude: z.number().min(0).max(5),
+	numberOfReviews: z.number().nonnegative(),
 });
 
 type GetProviderProfileDto = z.infer<typeof getProviderProfileSchema>;
