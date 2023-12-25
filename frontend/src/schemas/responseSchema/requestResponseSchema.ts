@@ -63,6 +63,7 @@ const requestDtoV1Schema = z.object({
 		.nullable(),
 	createdBy: z.string().min(1),
 	updatedAt: z.string(),
+	offerCount: z.number().nonnegative(),
 });
 
 type RequestDtoV1 = z.infer<typeof requestDtoV1Schema>;
