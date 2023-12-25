@@ -1339,7 +1339,7 @@ Success
 }
 ```
 
-### 📍 7.7 Review Order
+### 📍 7.7 Review Order 
 | [POST]| /api/order/:orderId/review |
 | ----- | ------------- |
 "jwt"
@@ -1360,7 +1360,7 @@ Success
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : failed to update order shipping detail
+    "message" : failed to review
 }
 ```
 ### 📍 7.8 SSE Order Status Done
