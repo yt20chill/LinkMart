@@ -28,15 +28,27 @@ const DashboardPage = () => {
       {data && (
         <>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 px-6">
-            <div className="bg-base-300 p-4 rounded-lg flex flex-col gap-">
-              <Balance balance={data.balance} />
-            </div>
-            <div className="bg-base-300 p-4 rounded-lg">
-              <ReviewSummary
-                reviewCount={data.reviewCount}
-                averageAttitude={data.averageAttitude}
-                averageEfficiency={data.averageEfficiency}
+            <div className="border-slate-500/10 border shadow p-4 rounded-lg flex gap-2 items-center">
+              <img
+                src="/image/tags/tag_coin_front.png"
+                className="w-12 h-12 object-cover"
               />
+              <div className="">
+                <Balance balance={data.balance} />
+              </div>
+            </div>
+            <div className="border-slate-500/10 border shadow p-4 rounded-lg flex gap-2 items-center">
+              <img
+                src="/image/tags/tag_like_front.png"
+                className="w-12 h-12 object-cover"
+              />
+              <div className="">
+                <ReviewSummary
+                  reviewCount={data.reviewCount}
+                  averageAttitude={data.averageAttitude}
+                  averageEfficiency={data.averageEfficiency}
+                />
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 px-6 mt-6">
@@ -119,14 +131,14 @@ const Counter = ({ offerCount, taskCount }: CounterProps) => {
     <div className="flex flex-col gap-2">
       <div className="text-gray-400 text-sm">Overview</div>
       <div
-        className="flex justify-between bg-base-300 px-4 py-2 rounded-lg"
+        className="flex justify-between border-slate-500/10 border shadow px-4 py-2 rounded-lg"
         onClick={() => navigate(siteMap(RouteEnum.MyOffer))}
       >
         <span>Offer</span>
         {offerCount}
       </div>
       <div
-        className="flex justify-between bg-base-300 px-4 py-2 rounded-lg"
+        className="flex justify-between border-slate-500/10 border shadow px-4 py-2 rounded-lg"
         onClick={() => navigate(siteMap(RouteEnum.Task))}
       >
         <span>Task</span>
