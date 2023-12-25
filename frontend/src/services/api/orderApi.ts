@@ -121,7 +121,7 @@ const reviewOrderAJAX = async (orderId: string, form: TReviewOrderForm) => {
 	return await axiosWrapper<TReviewOrderForm>(
 		`${orderApiRoutes.ORDER}/${orderId}/review`,
 		{
-			method: "put",
+			method: "post",
 			data: form,
 		}
 	);
