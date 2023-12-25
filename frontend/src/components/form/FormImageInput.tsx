@@ -46,7 +46,7 @@ function FormImageInput<T extends FieldValues>({
         />
         {error && <ErrorMessage message={error} />}
       </label>
-      <div className="grid grid-cols-3 md:grid-cols-5">
+      <div className="grid grid-cols-3 md:grid-cols-5 gap-1">
         {base64Images.map((image) => (
           <ImagePreview key={image.name} {...image} onDelete={onDelete} />
         ))}

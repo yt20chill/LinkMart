@@ -56,7 +56,7 @@ export function Navbar(props: NavbarProps) {
         {/* nav_desktop */}
         <div className="flex justify-between max-w-7xl max-xl:px-2 mx-auto max-md:hidden">
           {/* logo -> home page*/}
-          <div className="flex gap-10 items-center">
+          <div className="flex gap-4 items-center">
             <Link to={siteMap(RouteEnum.Home)} className="max-w-[200px]">
               <img
                 src="/image/Linkmart@512.png"
@@ -86,7 +86,7 @@ export function Navbar(props: NavbarProps) {
             )}
           </div>
           {/* nav_login_info */}
-          <div className="flex gap-10 items-center">
+          <div className="flex gap-2 items-center">
             <ButtonWithIcon
               onClick={() => props.onThemeClick()}
               icon={
