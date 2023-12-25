@@ -1097,7 +1097,9 @@ url: BACKEND_DOMAIN/api/offer/paymentInfo/" + offerId + "/" + addressId
 
 ### 📍 6.4 Reject offer
 
-| [DELETE] | /api/offer/:offerId |
+| [DELETE] | /api/offer/:offerId/oborted |
+| ----- | ------------------ |
+| [DELETE] | /api/offer/:offerId/rejected |
 | ----- | ------------------ |
 
 "jwt"
@@ -1337,7 +1339,7 @@ Success
 }
 ```
 
-### 📍 7.7 Review Order
+### 📍 7.7 Review Order 
 | [POST]| /api/order/:orderId/review |
 | ----- | ------------- |
 "jwt"
@@ -1358,7 +1360,7 @@ Success
 ```js
 🔴 [400] BAD REQUEST
 {
-    "message" : failed to update order shipping detail
+    "message" : failed to review
 }
 ```
 ### 📍 7.8 SSE Order Status Done
@@ -1384,6 +1386,51 @@ Note: Please use EventSourse and the eventSourse.onmessage for reciving the even
 🔴 [400] BAD REQUEST
 {
     "message" : failed to update order shipping detail
+}
+```
+
+7.9 Create Report Case
+| [POST] | /api/order/report/:orderId |
+| --- | --- |
+"jwt"
+> ⬇️ Req Body:
+
+```
+{
+    "subject": string
+    "content": string
+}
+
+```
+
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+```
+{
+    "reportId": string ulid
+}
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to post
+}
+```
+
+7.10 Order Complete clicked by user
+| [PUT] | /api/order/{orderId}/received |
+| --- | --- |
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+```
+{
+}
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to post
 }
 ```
 
