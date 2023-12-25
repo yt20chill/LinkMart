@@ -1417,6 +1417,23 @@ Note: Please use EventSourse and the eventSourse.onmessage for reciving the even
 }
 ```
 
+7.10 Order Complete clicked by user
+| [PUT] | /api/order/{orderId}/received |
+| --- | --- |
+"jwt"
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+```
+{
+}
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to post
+}
+```
+
 ## 📎 8. Location Route Done~
 
 ### 8.1 Order Request
