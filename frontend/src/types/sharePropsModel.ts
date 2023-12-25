@@ -19,10 +19,10 @@ const orderStatusTabs = ["inProgress", "complete"] as const;
 type OrderStatusTabs = (typeof orderStatusTabs)[number];
 
 const orderStatuses = [
-	"In progress",
-	"Shipping",
-	"Review",
+	"In Progress",
+	"Shipped",
 	"Completed",
+	"Reviewed",
 ] as const;
 
 type OrderStatuses = (typeof orderStatuses)[number];

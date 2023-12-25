@@ -14,11 +14,11 @@ const TaskStatusActions = () => {
 		shipmentInfoDto,
 	} = useOrderDetailsContext();
 	switch (orderStatus as OrderStatuses) {
-		case "In progress":
+		case "In Progress":
 			return <UpdateShipment orderId={orderId} />;
-		case "Shipping":
+		case "Shipped":
 			return <Shipping {...shipmentInfoDto} />;
-		case "Review":
+		case "Reviewed":
 			return <Review />;
 		case "Completed":
 			return <Completed />;

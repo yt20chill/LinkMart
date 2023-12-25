@@ -8,10 +8,11 @@ import ReportForm from "../../../features/forms/ReportForm";
 import { useGuardedQueryContainer } from "../../../features/hooks/useGuardedQueryContainer";
 import useRedirectOnCondition from "../../../features/hooks/useRedirectOnCondition";
 import { OrderDetailsDisplay } from "../../../features/order/OrderDetailsDisplay";
+import { ignoreCaseAndPlural } from "../../../lib/formattingUtils";
 import { ControlModalContext } from "../../../services/context/ControlModalContext";
 import { OrderDetailsContext } from "../../../services/context/OrderDetailsContext";
 import { RouteEnum } from "../../../services/routes.config";
-import { OrderStatuses, orderStatuses } from "../../../types/sharePropsModel";
+import { orderStatuses } from "../../../types/sharePropsModel";
 import OrderStatusActions from "./OrderStatusActions";
 
 const UserOrderDetailsPage = () => {
@@ -36,7 +37,10 @@ const UserOrderDetailsPage = () => {
 						<div className="border-b border-slate-500/20 w-100"></div>
 						<ProgressBar
 							steps={[...orderStatuses]}
-							currentStep={details.orderStatus as OrderStatuses}
+							currentStep={
+								ignoreCaseAndPlural(details.orderStatus, [...orderStatuses]) ??
+								orderStatuses[0]
+							}
 						>
 							<OrderStatusActions />
 						</ProgressBar>
