@@ -9,7 +9,7 @@ import { SectionTitle } from "@/components/title/SectionTitle";
 import { NodeHorizonLine } from "@/components/ui/NodeHorizonLine";
 import AcceptOfferForm from "@/features/forms/AcceptOfferForm";
 import { useGetRequestDetails } from "@/features/hooks/useQueryContainer";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -17,11 +17,15 @@ import EditButton from "../../../components/ui/EditButton";
 import Tooltip from "../../../components/ui/Tooltip";
 import useRedirectOnCondition from "../../../features/hooks/useRedirectOnCondition";
 import { fireAlert, sweetAlertDefaultOptions } from "../../../lib/formUtils";
+import { ImageDto } from "../../../schemas/responseSchema";
 import {
 	declineOfferAJAX,
 	getAllOffersByRequestIdAJAX,
 } from "../../../services/api/offerApi";
-import { deleteRequestAJAX } from "../../../services/api/requestApi";
+import {
+	deleteRequestAJAX,
+	setRequestPrimaryImageAJAX,
+} from "../../../services/api/requestApi";
 import { ControlModalContext } from "../../../services/context/ControlModalContext";
 import { OfferDetailsContext } from "../../../services/context/OfferDetailsContext";
 import { queryKey } from "../../../services/query.config";
@@ -33,15 +37,26 @@ const sweetAlertOptions = {
 	text: "Are you sure you want to delete this?",
 };
 
+type CurrentImage = ImageDto & {
+	isPrimary: boolean;
+};
+
 const UserRequestDetailsPage = () => {
 	const { requestId } = useParams();
 	const [offerId, setOfferId] = useState("");
 	const [isShow, setIsShow] = useState(false);
 	useRedirectOnCondition(!requestId, RouteEnum.UserRequests, "invalid request");
 	const { data: details } = useGetRequestDetails({ requestId: requestId! });
-	const [currentImage, setCurrentImage] = useState<string>("");
+	const [currentImage, setCurrentImage] = useState<CurrentImage | undefined>(
+		undefined
+	);
 	useEffect(() => {
-		if (details) setCurrentImage(details.primaryImage);
+		if (details) {
+			const primaryImage = details.images.find(
+				(image) => image.imagePath === details.primaryImage
+			);
+			if (primaryImage) setCurrentImage({ ...primaryImage, isPrimary: true });
+		}
 	}, [details]);
 	const queryClient = useQueryClient();
 	const { data: offers, isLoading: isGettingOffers } = useQuery({
@@ -60,6 +75,20 @@ const UserRequestDetailsPage = () => {
 		setOfferId(offerId);
 		setIsShow(true);
 	};
+	const { mutateAsync: updatePrimary, isLoading: isUpdatingPrimary } =
+		useMutation({
+			mutationFn: setRequestPrimaryImageAJAX,
+			onSuccess: async () => {
+				toast.success("Primary image has been changed");
+				await queryClient.invalidateQueries([queryKey.REQUEST, { requestId }]);
+			},
+		});
+	const onUpdate = async (e: MouseEvent) => {
+		e.preventDefault();
+		if (!currentImage || currentImage.isPrimary) return;
+		await updatePrimary(currentImage.imageId);
+	};
+
 	return details ? (
 		<>
 			<div className="bg-base-200/80 backdrop-blur-3xl py-12 border-y border-base-300">
@@ -92,18 +121,39 @@ const UserRequestDetailsPage = () => {
 							<hr className="border-base-300 my-4" />
 							<DetailInfoDisplay {...details} />
 							{/*Request Img */}
-							<MainImageFrame
-								title={details.item}
-								imagePath={currentImage}
-								className="max-lg:hidden"
-							/>
+							<div className="relative">
+								<MainImageFrame
+									title={details.item}
+									imagePath={currentImage?.imagePath ?? ""}
+									className="max-lg:hidden"
+								/>
+								{isUpdatingPrimary ? (
+									<span className="absolute m-2 top-1 right-1 text-2xl  text-secondary-400 loading loading-spinner loading-sm"></span>
+								) : (
+									<button
+										className="absolute m-2 top-1 right-1 text-2xl text-secondary-400 hover:text-secondary-500 transition-all"
+										onClick={onUpdate}
+									>
+										<i
+											className={`bi ${
+												currentImage?.imagePath === details.primaryImage
+													? "bi-star-fill"
+													: "bi-star"
+											}`}
+										></i>
+									</button>
+								)}
+							</div>
 							<div className="mt-2 grid grid-cols-5 relative gap-2">
 								{details.images.map((itm) => (
 									<SubImageFrame
-										key={itm.imagePath}
+										key={itm.imageId}
 										imagePath={itm.imagePath}
-										onClick={(e) =>
-											setCurrentImage((e.target as HTMLImageElement).src)
+										onClick={() =>
+											setCurrentImage({
+												...itm,
+												isPrimary: itm.imagePath === details.primaryImage,
+											})
 										}
 									/>
 								))}

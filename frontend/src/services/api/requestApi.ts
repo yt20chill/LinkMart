@@ -40,6 +40,7 @@ export {
 	getRequestDetailsAJAX,
 	postRequestAJAX,
 	putRequestAJAX,
+	setRequestPrimaryImageAJAX,
 };
 
 const getAllCategoriesAJAX = async () => {
@@ -128,5 +129,12 @@ const deleteRequestAJAX = async ({ requestId }: RequestId) => {
 const deleteRequestImageAJAX = async ({ imageId }: DeleteImageParams) => {
 	return await axiosWrapper(`${requestApiRoutes.IMAGE}/${imageId}`, {
 		method: "delete",
+	});
+};
+
+const setRequestPrimaryImageAJAX = async (imageId: number) => {
+	return await axiosWrapper(`${requestApiRoutes.IMAGE}`, {
+		method: "put",
+		data: JSON.stringify({ imageId }),
 	});
 };
