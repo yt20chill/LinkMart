@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
@@ -37,10 +38,14 @@ const PutUserProfileForm = () => {
 			await queryClient.invalidateQueries(queryKey.AUTH);
 		},
 	});
+	// get the latest username and reset the form on username change
+	useEffect(() => {
+		reset({ username });
+	}, [username, reset]);
 	const onSubmit = async (data: UpdateProfileForm) => {
 		await updateProfile(data);
-		reset();
 	};
+
 	return (
 		<>
 			{Object.keys(defaultValues).map((key) => (
