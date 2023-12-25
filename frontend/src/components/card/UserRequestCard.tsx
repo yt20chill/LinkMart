@@ -11,6 +11,7 @@ export function UserRequestCard({
 	locationName,
 	offerPrice,
 	updatedAt,
+	offerCount,
 }: RequestDtoV1) {
 	const navigate = useNavigate();
 	return (
@@ -20,9 +21,11 @@ export function UserRequestCard({
 			}
 			className="flex gap-3 w-full mb-2 bg-base-100/75 backdrop-blur-lg icn-hvr-fill rounded-xl p-2 hover:shadow-xl hover:-translate-y-1 transition-all h-fit border border-slate-500/20 select-none overflow-hidden hover:ring-2 ring-secondary-400 relative"
 		>
-			<div className="absolute top-1 right-1">
-				<CounterBadge count="999+" />
-			</div>
+			{offerCount > 0 && (
+				<div className="absolute top-1 right-1">
+					<CounterBadge count={offerCount} />
+				</div>
+			)}
 			<figure className="aspect-square rounded-lg h-24 flex justify-center bg-slate-300 overflow-hidden border border-gray-200">
 				<img className="object-cover w-full" title={item} src={primaryImage} />
 			</figure>

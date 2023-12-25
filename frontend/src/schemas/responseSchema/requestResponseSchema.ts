@@ -50,7 +50,6 @@ const categoryFieldsResponseSchema = z.array(categoryFieldResponseSchema);
 
 type CategoryFieldDto = z.infer<typeof categoryFieldResponseSchema>;
 
-// TODO: Can include offer count?
 const requestDtoV1Schema = z.object({
 	requestId: ulid,
 	locationName: z.string().min(1),
@@ -63,6 +62,7 @@ const requestDtoV1Schema = z.object({
 		.nullable(),
 	createdBy: z.string().min(1),
 	updatedAt: z.string(),
+	offerCount: z.number().nonnegative(),
 });
 
 type RequestDtoV1 = z.infer<typeof requestDtoV1Schema>;
