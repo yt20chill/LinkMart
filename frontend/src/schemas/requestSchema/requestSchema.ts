@@ -39,6 +39,24 @@ export const postRequestSchema = z.object({
 	itemDetail: z.record(z.string()).nullish(),
 });
 
+export const editRequestSchema = postRequestSchema.extend({
+	imageFile: z
+		.instanceof(FileList)
+		.transform((files) => Array.from(files))
+		.refine(
+			(files) => {
+				for (const file of files) {
+					if (!allowedFileTypes.includes(file.type)) return false;
+				}
+				return true;
+			},
+			{
+				message: "image must be in png or jpeg format",
+			}
+		)
+		.nullish(),
+});
+
 export const requestIdSchema = z.object({
 	requestId: z.string().ulid(),
 });
