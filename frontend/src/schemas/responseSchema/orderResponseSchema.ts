@@ -45,7 +45,7 @@ const orderDetailsSchema = getOrderResponseSchema.extend({
 	locationName: z.string().min(1),
 	createdBy: z.string().min(1),
 	images: z.array(z.string().url()),
-	itemDetail: z.record(z.string()).nullable(),
+	itemDetail: z.record(z.string().nullable()).nullable(),
 	url: z.string().url().nullable(),
 	requestRemark: z.string().nullable(),
 	address: z.string().min(1),
