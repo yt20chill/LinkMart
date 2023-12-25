@@ -1,5 +1,5 @@
 type CounterBadgeProps = {
-	count: number;
+	count: number | string;
 };
 
 const CounterBadge = ({ count }: CounterBadgeProps) => {

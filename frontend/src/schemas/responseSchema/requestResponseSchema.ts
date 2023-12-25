@@ -50,6 +50,7 @@ const categoryFieldsResponseSchema = z.array(categoryFieldResponseSchema);
 
 type CategoryFieldDto = z.infer<typeof categoryFieldResponseSchema>;
 
+// TODO: Can include offer count?
 const requestDtoV1Schema = z.object({
 	requestId: ulid,
 	locationName: z.string().min(1),
