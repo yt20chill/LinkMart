@@ -1,6 +1,6 @@
-import { RequestDtoV1 } from "@/schemas/responseSchema";
 import { useNavigate } from "react-router-dom";
 import { mapDate } from "../../lib/formattingUtils";
+import { RequestDtoV2 } from "../../schemas/responseSchema";
 import { RouteEnum, siteMap } from "../../services/routes.config";
 import CounterBadge from "../badge/CounterBadge";
 
@@ -12,7 +12,7 @@ export function UserRequestCard({
 	offerPrice,
 	updatedAt,
 	offerCount,
-}: RequestDtoV1) {
+}: RequestDtoV2) {
 	const navigate = useNavigate();
 	return (
 		<div

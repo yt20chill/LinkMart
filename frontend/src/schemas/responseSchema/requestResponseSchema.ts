@@ -8,6 +8,7 @@ export {
 	postRequestResponseSchema,
 	requestDetailsResponseSchema,
 	requestDtoV1Schema,
+	requestDtoV2Schema,
 	requestsResponseSchema,
 };
 
@@ -19,6 +20,7 @@ export type {
 	PostRequestResponseDto,
 	RequestDetailsDto,
 	RequestDtoV1,
+	RequestDtoV2,
 	RequestsDto,
 };
 
@@ -62,15 +64,19 @@ const requestDtoV1Schema = z.object({
 		.nullable(),
 	createdBy: z.string().min(1),
 	updatedAt: z.string(),
+});
+
+const requestDtoV2Schema = requestDtoV1Schema.extend({
 	offerCount: z.number().nonnegative(),
 });
 
 type RequestDtoV1 = z.infer<typeof requestDtoV1Schema>;
+type RequestDtoV2 = z.infer<typeof requestDtoV2Schema>;
 
 const requestsResponseSchema = z.object({
 	totalRecords: z.number().nonnegative(),
 	totalPages: z.number().nonnegative(),
-	requests: z.array(requestDtoV1Schema.omit({ offerCount: true })),
+	requests: z.array(requestDtoV1Schema),
 });
 
 type RequestsDto = z.infer<typeof requestsResponseSchema>;

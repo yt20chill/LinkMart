@@ -5,11 +5,11 @@ import {
 	AddressDto,
 	GetOrderDto,
 	PostAddressResponseDto,
-	RequestDtoV1,
+	RequestDtoV2,
 	addressesResponseSchema,
 	getOrdersSchema,
 	postAddressResponseSchema,
-	requestDtoV1Schema,
+	requestDtoV2Schema,
 } from "../../schemas/responseSchema";
 const baseUserApiRoute = `/api/user`;
 
@@ -68,8 +68,8 @@ const getOrdersByUserAJAX = async () => {
 };
 
 const getRequestsByUserAJAX = async () => {
-	return await axiosWrapper<void, RequestDtoV1[]>(userApiRoutes.REQUEST, {
-		schema: z.array(requestDtoV1Schema),
+	return await axiosWrapper<void, RequestDtoV2[]>(userApiRoutes.REQUEST, {
+		schema: z.array(requestDtoV2Schema),
 	});
 };
 
