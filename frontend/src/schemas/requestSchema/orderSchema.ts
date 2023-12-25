@@ -8,12 +8,14 @@ import {
 export {
 	createOrderParamsSchema,
 	postLogisticCompanyFormSchema,
+	reportFormSchema,
 	reviewOrderFormSchema,
 	uploadShippingFormSchema,
 };
 export type {
 	CreateOrderParams,
 	TPostLogisticCompanyForm,
+	TReportForm,
 	TReviewOrderForm,
 	TUploadShippingForm,
 };
@@ -68,3 +70,10 @@ type TReviewOrderForm = Record<
 	keyof z.infer<typeof reviewOrderFormSchema>,
 	string
 >;
+
+const reportFormSchema = z.object({
+	subject: z.string(),
+	content: z.string().min(1),
+});
+
+type TReportForm = z.infer<typeof reportFormSchema>;

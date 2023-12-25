@@ -3,6 +3,7 @@ import { appendFormData } from "../../lib/formUtils";
 import {
 	CreateOrderParams,
 	TPostLogisticCompanyForm,
+	TReportForm,
 	TReviewOrderForm,
 	TUploadShippingForm,
 } from "../../schemas/requestSchema";
@@ -12,11 +13,13 @@ import {
 	LogisticsDto,
 	OrderDetailsDto,
 	PostLogisticDto,
+	PostReportDto,
 	createOrderResponseSchema,
 	getLogisticsSchema,
 	getOrdersSchema,
 	orderDetailsSchema,
 	postLogisticsSchema,
+	postReportSchema,
 } from "../../schemas/responseSchema";
 
 const orderApiRoutes = Object.freeze({
@@ -25,6 +28,7 @@ const orderApiRoutes = Object.freeze({
 	PROVIDER_TASK: "/api/provider/order",
 	LOGISTIC_COMPANY: "/logisticCompany",
 	POST_LOGISTIC_COMPANY: "/api/logisticCompany",
+	REPORT: "/api/order/report",
 });
 
 export {
@@ -35,6 +39,7 @@ export {
 	getProviderTasksAJAX,
 	getUserOrdersAJAX,
 	orderDetailsAJAX,
+	postReportAJAX,
 	reviewOrderAJAX,
 	uploadShippingAJAX,
 };
@@ -115,6 +120,17 @@ const reviewOrderAJAX = async (orderId: string, form: TReviewOrderForm) => {
 		{
 			method: "put",
 			data: form,
+		}
+	);
+};
+
+const postReportAJAX = async (orderId: string, form: TReportForm) => {
+	return await axiosWrapper<TReportForm, PostReportDto>(
+		`${orderApiRoutes.REPORT}/${orderId}`,
+		{
+			method: "post",
+			data: form,
+			schema: postReportSchema,
 		}
 	);
 };

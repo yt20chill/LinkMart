@@ -1,6 +1,8 @@
 import { twMerge } from "tailwind-merge";
 import { OrderSectionTitle } from "../../components/title/OrderSectionTitle";
+import CancelButton from "../../components/ui/CancelButton";
 import { camelToTitleCase } from "../../lib/utils";
+import { useControlModalContext } from "../../services/context/ControlModalContext";
 import { useOrderDetailsContext } from "../../services/context/OrderDetailsContext";
 
 type OrderCardProps = {
@@ -10,6 +12,7 @@ export function OrderDetailsDisplay({ className }: OrderCardProps) {
 	const { requestInfoDto, orderDto, shipmentInfoDto } =
 		useOrderDetailsContext();
 	const isCompleted = /complete/i.test(orderDto.orderStatus);
+	const { setIsShow } = useControlModalContext();
 	return (
 		<div className={twMerge("", className ?? "")}>
 			<div className="w-full border-b p-6 pb-2 text text-slate-500 tracking-tight flex items-center border-slate-500/20">
@@ -57,7 +60,7 @@ export function OrderDetailsDisplay({ className }: OrderCardProps) {
 							</div>
 						</div>
 					</div>
-					<div className="leading-none inline-flex flex-col">
+					<div className="leading-none inline-flex gap-12">
 						<div className="leading-none flex flex-col">
 							<span className="text-gray-400 text-xs flex items-center gap-1">
 								<span className="material-symbols-rounded text-base">
@@ -76,6 +79,7 @@ export function OrderDetailsDisplay({ className }: OrderCardProps) {
 								</div>
 							</div>
 						</div>
+						<CancelButton label="Report" onClick={() => setIsShow(true)} />
 					</div>
 				</div>
 			</div>

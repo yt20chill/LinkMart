@@ -7,6 +7,7 @@ export {
 	getOrdersSchema,
 	orderDetailsSchema,
 	postLogisticsSchema,
+	postReportSchema,
 };
 export type {
 	CreateOrderDto,
@@ -14,6 +15,7 @@ export type {
 	LogisticsDto,
 	OrderDetailsDto,
 	PostLogisticDto,
+	PostReportDto,
 };
 
 const createOrderResponseSchema = z.object({
@@ -70,3 +72,9 @@ const postLogisticsSchema = z.object({
 });
 
 type PostLogisticDto = z.infer<typeof postLogisticsSchema>;
+
+const postReportSchema = z.object({
+	reportId: ulid,
+});
+
+type PostReportDto = z.infer<typeof postReportSchema>;
