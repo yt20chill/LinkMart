@@ -27,9 +27,9 @@ const OrderStatusActions = () => {
 			return <InProgress />;
 		case "Shipped":
 			return <Shipping orderId={orderId} />;
-		case "Reviewed":
-			return <Review orderId={orderId} />;
 		case "Completed":
+			return <Review orderId={orderId} />;
+		case "Reviewed":
 			return null;
 		default:
 			return null;
