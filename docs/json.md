@@ -1097,7 +1097,9 @@ url: BACKEND_DOMAIN/api/offer/paymentInfo/" + offerId + "/" + addressId
 
 ### 📍 6.4 Reject offer
 
-| [DELETE] | /api/offer/:offerId |
+| [DELETE] | /api/offer/:offerId/oborted |
+| ----- | ------------------ |
+| [DELETE] | /api/offer/:offerId/rejected |
 | ----- | ------------------ |
 
 "jwt"
