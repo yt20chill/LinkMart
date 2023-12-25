@@ -82,7 +82,7 @@ export const ignoreCaseAndPlural = <T extends string>(
 				.toLowerCase() ===
 			value
 				.trim()
-				.replace(/[\s\-_]s$/g, "")
+				.replace(/[\s\-_]/g, "")
 				.replace(/s$/, "")
 				.toLowerCase()
 	);
