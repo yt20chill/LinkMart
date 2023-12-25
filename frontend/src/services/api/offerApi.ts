@@ -26,6 +26,7 @@ export {
 	acceptOfferAJAX,
 	checkHasOfferedAJAX,
 	declineOfferAJAX,
+	deleteOfferAJAX,
 	getAllOffersByRequestIdAJAX,
 	getProviderOfferDetailAJAX,
 	getProviderOffersAJAX,
@@ -89,7 +90,13 @@ const getAllOffersByRequestIdAJAX = async ({
 };
 
 const declineOfferAJAX = async (offerId: string): Promise<void> => {
-	return await axiosWrapper(`${offerApiRoutes.OFFER}/${offerId}`, {
+	return await axiosWrapper(`${offerApiRoutes.OFFER}/${offerId}/rejected`, {
+		method: "delete",
+	});
+};
+
+const deleteOfferAJAX = async (offerId: string) => {
+	return await axiosWrapper(`${offerApiRoutes.OFFER}/${offerId}/aborted`, {
 		method: "delete",
 	});
 };

@@ -1,5 +1,6 @@
 import Table from "../../../components/ui/Table";
 import UploadShippingForm from "../../../features/forms/UploadShippingForm";
+import { ignoreCaseAndPlural } from "../../../lib/formattingUtils";
 import { useOrderDetailsContext } from "../../../services/context/OrderDetailsContext";
 import { ShipmentInfoDto } from "../../../types/orderModels";
 import {

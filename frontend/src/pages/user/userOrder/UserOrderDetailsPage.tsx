@@ -8,10 +8,11 @@ import ReportForm from "../../../features/forms/ReportForm";
 import { useGuardedQueryContainer } from "../../../features/hooks/useGuardedQueryContainer";
 import useRedirectOnCondition from "../../../features/hooks/useRedirectOnCondition";
 import { OrderDetailsDisplay } from "../../../features/order/OrderDetailsDisplay";
+import { ignoreCaseAndPlural } from "../../../lib/formattingUtils";
 import { ControlModalContext } from "../../../services/context/ControlModalContext";
 import { OrderDetailsContext } from "../../../services/context/OrderDetailsContext";
 import { RouteEnum } from "../../../services/routes.config";
-import { OrderStatuses, orderStatuses } from "../../../types/sharePropsModel";
+import { orderStatuses } from "../../../types/sharePropsModel";
 import OrderStatusActions from "./OrderStatusActions";
 
 const UserOrderDetailsPage = () => {

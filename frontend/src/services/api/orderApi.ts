@@ -109,9 +109,12 @@ const uploadShippingAJAX = async (
 };
 
 const confirmReceivedAJAX = async (orderId: string) => {
-	return await axiosWrapper<void>(`${orderApiRoutes.ORDER}/${orderId}`, {
-		method: "put",
-	});
+	return await axiosWrapper<void>(
+		`${orderApiRoutes.ORDER}/${orderId}/received`,
+		{
+			method: "put",
+		}
+	);
 };
 
 const reviewOrderAJAX = async (orderId: string, form: TReviewOrderForm) => {

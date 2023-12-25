@@ -32,11 +32,11 @@ type UploadShippingFormProps = {
 };
 
 const stringValues = generateDefaultValues(uploadShippingFormSchema, {
-	exclude: ["shippingInvoice"],
+	exclude: ["shipmentProof"],
 });
 const defaultValues: TUploadShippingForm = {
 	...stringValues,
-	shippingInvoice: null,
+	shipmentProof: null,
 };
 
 const UploadShippingForm = ({ orderId }: UploadShippingFormProps) => {
@@ -123,7 +123,7 @@ const UploadShippingForm = ({ orderId }: UploadShippingFormProps) => {
 						/>
 					))}
 				<FormImageInput
-					name="shippingInvoice"
+					name="shipmentProof"
 					placeholder="Please Upload Your Shipping Prove Here"
 					register={register}
 					errors={errors}

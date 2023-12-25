@@ -1,3 +1,5 @@
+import { ControlModalContext } from "@/services/context/ControlModalContext";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Skeleton from "../../../components/skeletons/Skeleton";
@@ -5,11 +7,10 @@ import Loading from "../../../components/ui/Loading";
 import ProgressBar from "../../../components/ui/ProgressBar";
 import { useGuardedQueryContainer } from "../../../features/hooks/useGuardedQueryContainer";
 import { OrderDetailsDisplay } from "../../../features/order/OrderDetailsDisplay";
+import { ignoreCaseAndPlural } from "../../../lib/formattingUtils";
 import { OrderDetailsContext } from "../../../services/context/OrderDetailsContext";
-import { OrderStatuses, orderStatuses } from "../../../types/sharePropsModel";
+import { orderStatuses } from "../../../types/sharePropsModel";
 import TaskStatusActions from "./TaskStatusActions";
-import { ControlModalContext } from "@/services/context/ControlModalContext";
-import { useState } from "react";
 
 const TaskDetailsPage = () => {
   const { orderId } = useParams();
