@@ -16,7 +16,7 @@ const Tab = <T extends string[]>({
   return (
     <div
       className={`border-b-4 hover:border-primary-300/50 px-12 py-2 capitalize  ${
-        activeTab === status ? "border-primary-300" : " border-slate-300"
+        activeTab === status ? "border-primary-300" : " border-slate-300/50"
       }`}
       onClick={(e) => {
         e.preventDefault();

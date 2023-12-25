@@ -33,12 +33,12 @@ const FormRadioInput = <T extends FieldValues>({
           <label key={item.value} className="cursor-pointer">
             <input
               type="radio"
-              className="hidden [&+span]:checked:text-primary-400 [&+span]:checked:bg-base-100 [&+span]:checked:ring-2 [&+span]:checked:ring-offset-2"
+              className="hidden [&+span]:checked:text-primary-400 [&+span]:checked:bg-base-100 [&+span]:checked:ring-4"
               value={item.value}
               defaultChecked={index === 0}
               {...register(name)}
             />
-            <span className="flex flex-col w-full border-2 rounded-lg p-4 shadow-primary-200 text-gray-400 bg-base-200 ring-primary-400/50">
+            <span className="flex flex-col w-full border-2 border-slate-500/20 rounded-lg p-4 shadow-primary-200 text-gray-400 bg-base-200 ring-primary-400/50">
               <span className="text-gray-400 text-xs">Address {index + 1}</span>
               {item.displayValue}
             </span>

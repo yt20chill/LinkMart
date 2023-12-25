@@ -19,7 +19,7 @@ const UserOrderPage = () => {
     >
       <div className="mt-12 max-w-5xl w-full flex flex-col mx-auto px-6 mb-6">
         <div className="flex flex-col bg-base-100/50 border border-slate-500/20 rounded-xl overflow-hidden shadow">
-          <div className="flex w-full pt-4 text-slate-500 bg-base-100 border-slate-300 ring-b-[4px]">
+          <div className="flex w-full pt-4 text-slate-500 bg-base-100">
             {orderStatusTabs.map((tab) => (
               <Tab
                 key={tab}
@@ -30,7 +30,7 @@ const UserOrderPage = () => {
                 }
               />
             ))}
-            <div className="border-b-4 border-slate-300 grow">
+            <div className="border-b-4 border-slate-300/50 grow">
               {/*Tab gap border*/}
             </div>
           </div>
