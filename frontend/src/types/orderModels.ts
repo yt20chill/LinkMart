@@ -9,7 +9,7 @@ export type {
 
 type RequestInfoDto = {
 	locationName: string;
-	itemDetail: Record<string, string> | null;
+	itemDetail: Record<string, string | null> | null;
 	requestRemark: string | null;
 	url: string | null;
 };
