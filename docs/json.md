@@ -1387,6 +1387,34 @@ Note: Please use EventSourse and the eventSourse.onmessage for reciving the even
 }
 ```
 
+7.9 Create Report Case
+| [POST] | /api/order/report/:orderId |
+| --- | --- |
+"jwt"
+> ⬇️ Req Body:
+
+```
+{
+    "subject": string
+    "content": string
+}
+
+```
+
+> ⬆️ Resp:
+```js
+🟢 [200]  OK
+```
+{
+    "reportId": string ulid
+}
+```js
+🔴 [400] BAD REQUEST
+{
+    "message" : failed to post
+}
+```
+
 ## 📎 8. Location Route Done~
 
 ### 8.1 Order Request
