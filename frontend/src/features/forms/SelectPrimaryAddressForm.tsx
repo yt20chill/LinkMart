@@ -89,14 +89,17 @@ const SelectPrimaryAddressForm = () => {
 				onClick={handleSubmit(onUpdate)}
 				disabled={isUpdating}
 			/>
-			<CancelButton
-				label="Delete"
-				onClick={fireAlert({
-					options: sweetAlertOptions,
-					onConfirmed: handleSubmit(onDelete),
-				})}
-				disabled={isDeleting}
-			/>
+			{/* Hide delete button if only one address left */}
+			{addresses && addresses.length > 1 && (
+				<CancelButton
+					label="Delete"
+					onClick={fireAlert({
+						options: sweetAlertOptions,
+						onConfirmed: handleSubmit(onDelete),
+					})}
+					disabled={isDeleting}
+				/>
+			)}
 		</form>
 	);
 };
