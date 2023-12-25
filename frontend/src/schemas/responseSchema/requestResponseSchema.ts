@@ -70,7 +70,7 @@ type RequestDtoV1 = z.infer<typeof requestDtoV1Schema>;
 const requestsResponseSchema = z.object({
 	totalRecords: z.number().nonnegative(),
 	totalPages: z.number().nonnegative(),
-	requests: z.array(requestDtoV1Schema),
+	requests: z.array(requestDtoV1Schema.omit({ offerCount: true })),
 });
 
 type RequestsDto = z.infer<typeof requestsResponseSchema>;
