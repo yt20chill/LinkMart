@@ -24,7 +24,7 @@ const ProviderInfoDisplay = ({
   );
   const { setIsShow } = useControlModalContext();
   return (
-    <div className="flex flex-col p-6 bg-base-100 rounded-xl mb-6">
+    <div className="flex flex-col p-6 bg-base-100 rounded-xl mb-6 border border-slate-500/20">
       <div className="flex gap-1 items-center mb-6">
         <IconCircleFrame username={providerUsername} className="w-24 h-24" />
         <div className="flex flex-col text-3xl ">

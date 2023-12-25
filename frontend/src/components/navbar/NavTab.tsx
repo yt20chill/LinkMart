@@ -23,9 +23,9 @@ const NavTab = <T extends string[]>({
           <div
             key={tab}
             className={twMerge(
-              "flex justify-center items-center px-12 py-3 hover:text-primary-400 hover:bg-base-200/80 m-2 rounded-none hover:rounded-lg transition-all",
+              "flex justify-start items-center px-12 py-1 hover:text-primary-400 hover:bg-base-200/80 m-2 rounded-none hover:rounded-lg transition-all font-normal text-sm",
               activeTab === tab
-                ? "bg-primary-400 text-white rounded-lg select-none pointer-events-none"
+                ? "bg-slate-500/20 text-white rounded-lg select-none pointer-events-none"
                 : ""
             )}
             onClick={(e) => {
