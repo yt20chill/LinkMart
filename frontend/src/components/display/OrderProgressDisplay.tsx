@@ -12,7 +12,10 @@ export function OrderProgressDisplay(props: OrderProgressDisplayProps) {
           <div className="text-xs text-gray-400">
             {new Date(orderDto.createdAt).toLocaleDateString()}
           </div>
-          <div className="text-gray-400">Payment Success</div>
+          <div className="text-gray-400 font-bold">
+            <i className="bi bi-check-lg me-1 text-green-600"></i>Payment
+            Success
+          </div>
         </>
       );
     case "Shipping":
@@ -43,7 +46,11 @@ export function OrderProgressDisplay(props: OrderProgressDisplayProps) {
         </>
       );
     case "Review":
-      return <div className="text-gray-400 font-bold">Review Submitted</div>;
+      return (
+        <div className="text-gray-400 font-bold">
+          <i className="bi bi-check-lg me-1 text-green-600"></i>Review Submitted
+        </div>
+      );
     case "Completed":
       return null;
     default:

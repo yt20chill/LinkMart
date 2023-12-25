@@ -24,19 +24,22 @@ const TaskDetailsPage = () => {
   if (isLoading) return <Loading />;
   if (!details) return <Skeleton />;
   return (
-    <OrderDetailsContext.Provider value={details}>
-      <ControlModalContext.Provider
-        value={{ isShow: showReportForm, setIsShow: setShowReportForm }}
-      >
-        <OrderDetailsDisplay />
-        <ProgressBar
-          steps={[...orderStatuses]}
-          currentStep={details.orderStatus as OrderStatuses}
-        >
-          <TaskStatusActions />
-        </ProgressBar>
-      </ControlModalContext.Provider>
-    </OrderDetailsContext.Provider>
+    <ControlModalContext.Provider
+      value={{ isShow: showReportForm, setIsShow: setShowReportForm }}
+    >
+      <div className="my-5 max-w-7xl w-full flex flex-col mx-auto bg-base-100 overflow-hidden rounded-3xl shadow [&_.active+div]:max-h-[2000px] [&_.active+div]:pb-6 mb-6">
+        <OrderDetailsContext.Provider value={details}>
+          <OrderDetailsDisplay />
+          <div className="border-b border-slate-500/20 w-100"></div>
+          <ProgressBar
+            steps={[...orderStatuses]}
+            currentStep={details.orderStatus as OrderStatuses}
+          >
+            <TaskStatusActions />
+          </ProgressBar>
+        </OrderDetailsContext.Provider>
+      </div>
+    </ControlModalContext.Provider>
   );
 };
 
