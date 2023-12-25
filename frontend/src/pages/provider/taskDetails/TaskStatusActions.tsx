@@ -1,10 +1,11 @@
 import Table from "../../../components/ui/Table";
 import UploadShippingForm from "../../../features/forms/UploadShippingForm";
+import { ignoreCaseAndPlural } from "../../../lib/formattingUtils";
 import { useOrderDetailsContext } from "../../../services/context/OrderDetailsContext";
 import { ShipmentInfoDto } from "../../../types/orderModels";
 import {
 	BaseOrderActionProps,
-	OrderStatuses,
+	orderStatuses,
 } from "../../../types/sharePropsModel";
 
 const TaskStatusActions = () => {
@@ -13,7 +14,8 @@ const TaskStatusActions = () => {
 		orderDto: { orderStatus, orderId },
 		shipmentInfoDto,
 	} = useOrderDetailsContext();
-	switch (orderStatus as OrderStatuses) {
+	console.log(ignoreCaseAndPlural(orderStatus, [...orderStatuses]));
+	switch (ignoreCaseAndPlural(orderStatus, [...orderStatuses])) {
 		case "In Progress":
 			return <UpdateShipment orderId={orderId} />;
 		case "Shipped":

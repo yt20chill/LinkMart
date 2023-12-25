@@ -44,15 +44,15 @@ type TPostLogisticCompanyForm = z.infer<typeof postLogisticCompanyFormSchema>;
 const uploadShippingFormSchema = z.object({
 	logisticCompanyId: requiredId,
 	shippingOrderNo: z.string().min(1),
-	shippingInvoice: z
+	shipmentProof: z
 		.instanceof(FileList)
 		.refine((fileList) => fileList.length > 0, { message: "required" }),
 });
 
 type TUploadShippingForm = Record<
-	Exclude<keyof z.infer<typeof uploadShippingFormSchema>, "shippingInvoice">,
+	Exclude<keyof z.infer<typeof uploadShippingFormSchema>, "shipmentProof">,
 	string
-> & { shippingInvoice: File | null };
+> & { shipmentProof: File | null };
 
 const reviewOrderFormSchema = z.object({
 	efficiency: z
