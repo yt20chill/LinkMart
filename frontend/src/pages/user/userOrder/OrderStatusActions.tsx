@@ -3,10 +3,14 @@ import { SweetAlertOptions } from "sweetalert2";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import ReviewForm from "../../../features/forms/ReviewForm";
 import { fireAlert, sweetAlertDefaultOptions } from "../../../lib/formUtils";
+import { ignoreCaseAndPlural } from "../../../lib/formattingUtils";
 import { confirmReceivedAJAX } from "../../../services/api/orderApi";
 import { useOrderDetailsContext } from "../../../services/context/OrderDetailsContext";
 import { queryKey } from "../../../services/query.config";
-import { BaseOrderActionProps } from "../../../types/sharePropsModel";
+import {
+	BaseOrderActionProps,
+	orderStatuses,
+} from "../../../types/sharePropsModel";
 
 const sweetAlertOption: SweetAlertOptions = {
 	...sweetAlertDefaultOptions,
@@ -18,12 +22,12 @@ const OrderStatusActions = () => {
 	const {
 		orderDto: { orderId, orderStatus },
 	} = useOrderDetailsContext();
-	switch (orderStatus) {
-		case "In progress":
+	switch (ignoreCaseAndPlural(orderStatus, [...orderStatuses])) {
+		case "In Progress":
 			return <InProgress />;
-		case "Shipping":
+		case "Shipped":
 			return <Shipping orderId={orderId} />;
-		case "Review":
+		case "Reviewed":
 			return <Review orderId={orderId} />;
 		case "Completed":
 			return null;
