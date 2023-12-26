@@ -10,6 +10,7 @@ import {
 } from "../../schemas/requestSchema";
 import { addLogisticCompanyAJAX } from "../../services/api/orderApi";
 import { queryKey } from "../../services/query.config";
+import { FormLayout } from "@/components/ui/FormLayout";
 
 type PostLogisticCompanyFormProps = {
   onSubmitCallback?: (companyId: number) => void;
@@ -43,12 +44,8 @@ const PostLogisticCompanyForm = ({
     defaultValues,
   });
   return (
-    <>
-      <h2 className="text-xl inline-flex gap-2 text-primary-400 font-bold p-6 pb-3 border-b border-primary-400 shadow-3xl">
-        <i className="bi bi-building-add"></i>
-        Add Logistic Company
-      </h2>
-      <form className="p-6 flex flex-col gap-6">
+    <FormLayout bootstrapIcon="bi-building-add" title="Add Logistic Company">
+      <form>
         {Object.keys(defaultValues).map((key) => (
           <FormInput
             key={key}
@@ -63,7 +60,7 @@ const PostLogisticCompanyForm = ({
           disabled={isLoading}
         />
       </form>
-    </>
+    </FormLayout>
   );
 };
 
