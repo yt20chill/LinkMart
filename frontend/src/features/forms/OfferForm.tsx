@@ -18,6 +18,7 @@ type TPostOfferFormProps = {
 	requestId: string;
 };
 type TPutOfferFormProps = {
+	requestId: string;
 	offerId: string;
 	defaultValues: TOfferForm;
 };
@@ -50,9 +51,10 @@ const OfferForm = (props: OfferFormProps) => {
 		onSuccess: async () => {
 			toast.success(`Offer has been made successfully!`);
 			isEdit
-				? await queryClient.invalidateQueries([
+				? // TODO: should pass requestId
+				  await queryClient.invalidateQueries([
 						queryKey.OFFER,
-						{ offerId: props.offerId },
+						{ requestId: props.requestId },
 				  ])
 				: await queryClient.invalidateQueries([queryKey.OFFER]);
 			setIsShow(false);
