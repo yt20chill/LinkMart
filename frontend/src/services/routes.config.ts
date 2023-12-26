@@ -6,7 +6,6 @@ import {
 } from "../pages/admin";
 import {
 	DashboardPage,
-	OfferDetailsPage,
 	OfferPage,
 	ProviderProfilePage,
 	TaskDetailsPage,
@@ -64,7 +63,6 @@ export enum RouteEnum {
 	ProviderRegister,
 	MyProviderProfile,
 	MyOffer,
-	OfferDetail,
 	Task,
 	TaskDetail,
 	Dashboard,
@@ -174,12 +172,6 @@ routeConfigMap
 		path: "offer",
 		authorizeLevel: AuthorizeLevels.PROVIDER,
 		component: OfferPage,
-	})
-	.set(RouteEnum.OfferDetail, {
-		name: "Offer Details",
-		path: "offer-details/:offerId",
-		authorizeLevel: AuthorizeLevels.PROVIDER,
-		component: OfferDetailsPage,
 	})
 	.set(RouteEnum.Task, {
 		name: "task",

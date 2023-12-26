@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { resultId, ulid } from "../../lib/schemaUtils";
-import { requestDetailsResponseSchema } from "./requestResponseSchema";
 export {
 	acceptOfferResponseSchema,
 	hasOfferedResponseSchema,
@@ -10,6 +9,7 @@ export {
 };
 export type {
 	AcceptOfferResponseDto,
+	BriefOfferResponseDto,
 	HasOfferedDto,
 	OfferDetailsDto,
 	ProviderOfferDetailDto,
@@ -58,17 +58,26 @@ const providerOffersResponseSchema = z.array(providerOfferResponseSchema);
 
 type ProviderOfferDto = z.infer<typeof providerOfferResponseSchema>;
 
-const providerOfferDetailSchema = requestDetailsResponseSchema.extend({
-	offerStatus: z.string().min(1),
-	estimatedProcessTime: z.number().positive(),
-	price: z.number().positive(),
+const providerOfferDetailSchema = providerOfferResponseSchema.extend({
 	offerRemark: z.string().nullable(),
 });
 
 type ProviderOfferDetailDto = z.infer<typeof providerOfferDetailSchema>;
 
-const hasOfferedResponseSchema = z.object({
-	hasOffer: z.boolean(),
+const offerDtoSchema = z.object({
+	offerId: ulid,
+	estimatedProcessTime: z.number().positive(),
+	price: z.number().positive(),
+	offerRemark: z.string().nullable(),
 });
 
+const hasOfferedResponseSchema = z
+	.object({
+		hasOffer: z.literal(true),
+		offer: offerDtoSchema,
+	})
+	.or(z.object({ hasOffer: z.literal(false), offer: z.null() }));
+
 type HasOfferedDto = z.infer<typeof hasOfferedResponseSchema>;
+
+type BriefOfferResponseDto = z.infer<typeof offerDtoSchema>;

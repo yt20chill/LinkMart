@@ -49,7 +49,15 @@ export class ApiController {
 
   @Get('request/provider/:id')
   checkHasOffer() {
-    return { hasOffer: true };
+    return {
+      hasOffer: true,
+      offer: {
+        offerId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
+        price: 100,
+        estimatedProcessTime: 1,
+        offerRemark: 'Jason is Handsome',
+      },
+    };
     // return { hasOffer: false };
   }
 

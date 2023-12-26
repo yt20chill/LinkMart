@@ -72,4 +72,19 @@ export class OfferController {
       },
     ];
   }
+
+  @Get(':id')
+  getOfferDetails() {
+    return {
+      requestId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
+      offerId: '01BX5ZZKBKACTAV9WEVGEMMVRZ',
+      item: 'That',
+      offerStatus: 'pending',
+      createdBy: 'Jason',
+      price: 100,
+      estimatedProcessTime: 10,
+      primaryImage: 'https://picsum.photos/200',
+      offerRemark: 'Jason is handsome',
+    };
+  }
 }

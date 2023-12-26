@@ -5,14 +5,27 @@ import { IconCircleFrame } from "@/components/frame/IconCircleFrame";
 import { MainImageFrame } from "@/components/imageFrame/MainImageFrame";
 import { SubImageFrame } from "@/components/imageFrame/SubImageFrame";
 import { SectionTitle } from "@/components/title/SectionTitle";
-import { RequestDetailsDto } from "@/schemas/responseSchema";
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { useQuery } from "react-query";
+import {
+	BriefOfferResponseDto,
+	RequestDetailsDto,
+} from "@/schemas/responseSchema";
+import {
+	MouseEvent,
+	ReactNode,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import { SweetAlertOptions } from "sweetalert2";
 import { useShallow } from "zustand/react/shallow";
 import { RequestCard } from "../../components/card/RequestCard";
 import { RequestCardSkeleton } from "../../components/card/RequestCardSkeleton";
 import FormModal from "../../components/modal/FormModal";
+import CancelButton from "../../components/ui/CancelButton";
+import EditButton from "../../components/ui/EditButton";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import OfferForm from "../../features/forms/OfferForm";
 import {
@@ -20,7 +33,11 @@ import {
 	useGetRequestDetails,
 } from "../../features/hooks/useQueryContainer";
 import useRedirectOnCondition from "../../features/hooks/useRedirectOnCondition";
-import { checkHasOfferedAJAX } from "../../services/api/offerApi";
+import { dtoToString, fireAlert } from "../../lib/formUtils";
+import {
+	checkHasOfferedAJAX,
+	deleteOfferAJAX,
+} from "../../services/api/offerApi";
 import { ControlModalContext } from "../../services/context/ControlModalContext";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
@@ -126,20 +143,19 @@ const RequestDetailsPage = () => {
 
 							<hr className="border-base-300 my-4" />
 							<DetailInfoDisplay {...memoizedDetails} />
-							{role === AuthorizeLevels.PROVIDER && (
-								<PrimaryButton
-									icon="note_stack_add"
-									className={`py-3 ${
-										checkOffer?.hasOffer
-											? "bg-slate-400 pointer-events-none border-none"
-											: ""
-									}`}
-									// if checkOffer === undefined, still allow offer, validate by backend
-									label={!checkOffer?.hasOffer ? "Make An Offer" : "Offered"}
-									onClick={() => setShowPostOfferModal(true)}
-									disabled={checkingOffer}
-								/>
-							)}
+							{/* fail to check offer will assume the provider has no prev offers */}
+							{role === AuthorizeLevels.PROVIDER &&
+								(checkOffer?.hasOffer ? (
+									<MyOffer {...checkOffer.offer} />
+								) : (
+									<PrimaryButton
+										icon="note_stack_add"
+										className={`py-3`}
+										label={"Make An Offer"}
+										onClick={() => setShowPostOfferModal(true)}
+										disabled={checkingOffer}
+									/>
+								))}
 						</div>
 						<hr className="border-base-300 my-4" />
 					</main>
@@ -250,5 +266,107 @@ const RecommendationsLayout = ({
 				{children}
 			</div>
 		</div>
+	);
+};
+
+const sweetAlertOptions: SweetAlertOptions = {
+	title: "Confirm Delete This Offer?",
+	text: "This action cannot be undone",
+	icon: "warning",
+	showCancelButton: true,
+};
+
+const MyOffer = ({
+	offerId,
+	price,
+	estimatedProcessTime,
+	offerRemark,
+}: BriefOfferResponseDto) => {
+	const [showEditForm, setShowEditForm] = useState(false);
+	const queryClient = useQueryClient();
+	const { mutateAsync: deleteOffer, isLoading } = useMutation({
+		mutationFn: deleteOfferAJAX,
+		onSuccess: async () => {
+			await queryClient.invalidateQueries([queryKey.OFFER]);
+		},
+	});
+	const defaultValues = dtoToString({
+		price,
+		estimatedProcessTime,
+		offerRemark,
+	});
+	const onEdit = (e: MouseEvent) => {
+		e.preventDefault();
+		setShowEditForm(true);
+	};
+	const onDelete = async () => {
+		await deleteOffer(offerId);
+	};
+	return (
+		<>
+			<div className="bg-base-100 rounded-lg w-full mb-2 shadow">
+				<div className="flex items-center justify-center text-lg border-b p-2 border-slate-500/20">
+					My Offer
+				</div>
+				<div className="max-md:px-3 px-6 py-3">
+					<div className="flex flex-wrap gap-12 mb-2">
+						<div
+							className="flex items-center gap-[2px] tooltip"
+							data-tip="Offer Price"
+						>
+							<span className="material-symbols-rounded icn-fill text-slate-300 text-lg">
+								attach_money
+							</span>
+							<b className="font-normal">{price.toLocaleString("en")}</b>
+						</div>
+						<div
+							className="flex items-center gap-[2px] tooltip"
+							data-tip="Estimated Process Time"
+						>
+							<span className="material-symbols-rounded icn-fill text-slate-300 text-lg">
+								schedule
+							</span>
+							<b className="font-normal">
+								{estimatedProcessTime}
+								<span className="pl-1 text-sm text-slate-400">Days</span>
+							</b>
+						</div>
+					</div>
+
+					{offerRemark && (
+						<div
+							className="inline-flex items-center gap-[2px] tooltip"
+							data-tip="Provider Remarks"
+						>
+							<span className="material-symbols-rounded icn-fill text-slate-300 text-lg">
+								contact_support
+							</span>
+							<span className="truncate">{offerRemark}</span>
+						</div>
+					)}
+
+					<div className="">
+						<div className="flex justify-end items-center gap-2">
+							<EditButton label="Edit" onClick={onEdit} />
+							<CancelButton
+								label="Delete"
+								onClick={fireAlert({
+									options: sweetAlertOptions,
+									onConfirmed: onDelete,
+								})}
+								disabled={isLoading}
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<ControlModalContext.Provider
+				value={{ isShow: showEditForm, setIsShow: setShowEditForm }}
+			>
+				<FormModal>
+					<OfferForm offerId={offerId} defaultValues={defaultValues} />
+				</FormModal>
+			</ControlModalContext.Provider>
+		</>
 	);
 };

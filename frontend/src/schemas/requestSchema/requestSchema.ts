@@ -74,7 +74,11 @@ export const deleteImageParamsSchema = z.object({
 
 export type DeleteImageParams = z.infer<typeof deleteImageParamsSchema>;
 
-type PostRequestDto = z.infer<typeof postRequestSchema>;
+export type PostRequestDto = z.infer<typeof postRequestSchema>;
+
+export type EditRequestDto = z.infer<typeof editRequestSchema>;
+
+// For defaultValues to match type
 export type RequestForm = Record<
 	Exclude<keyof PostRequestDto, "imageFile" | "itemDetail">,
 	string
