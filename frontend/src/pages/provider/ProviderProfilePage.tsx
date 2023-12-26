@@ -18,7 +18,7 @@ const ProviderProfilePage = () => {
   });
   if (isGettingProfile) return <Loading />;
   return (
-    <div className="mt-12">
+    <div className="mt-6 sm:mt-12">
       <ControlModalContext.Provider
         value={{ isShow: showEditProfile, setIsShow: setShowEditProfile }}
       >
