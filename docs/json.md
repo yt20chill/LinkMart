@@ -806,6 +806,12 @@ requests: [
 [
 {
 	"hasOffered": boolean
+	"offer": {
+		"offerId" : String,
+		"estimatedProcessTime" : Integer,
+		"price" : Integer,
+		"offerRemark" : String}
+		|| null
 }
 ```
 
