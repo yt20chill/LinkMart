@@ -34,7 +34,7 @@ const DashboardPage = () => {
 								className="w-12 h-12 object-cover"
 							/>
 							<div className="">
-								<Balance balance={data.balance} />
+								<Balance balance={data.balance ?? 0} />
 							</div>
 						</div>
 						<div className="border-slate-500/10 border shadow p-4 rounded-lg flex gap-2 items-center">
@@ -145,19 +145,5 @@ const Counter = ({ offerCount, taskCount }: CounterProps) => {
 				{taskCount}
 			</div>
 		</div>
-		/*    <div className="flex">
-      <div className="flex flex-col items-center m-10">
-        <div className="mask mask-circle p-10 bg-base-100 shadow flex items-center justify-center">
-          {offerCount}
-        </div>
-        <div className="uppercase font-bold text-lg">Offer</div>
-      </div>
-      <div className="flex flex-col items-center m-10">
-        <div className="rounded-full w-24 h-24 bg-base-100 shadow ring-slate-500/50 ring-2 flex items-center justify-center">
-          {taskCount}
-        </div>
-        <div className="uppercase font-bold text-lg">Task</div>
-      </div>
-  </div>*/
 	);
 };

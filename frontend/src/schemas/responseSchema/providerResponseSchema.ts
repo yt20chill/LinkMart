@@ -61,7 +61,7 @@ const getProviderProfileSchema = editProviderProfileSchema.extend({
 type GetProviderProfileDto = z.infer<typeof getProviderProfileSchema>;
 
 const getProviderDashboardSchema = z.object({
-	balance: z.number().nonnegative(),
+	balance: z.number().nonnegative().nullable(),
 	reviewCount: z.number().nonnegative(),
 	offerCount: z.number().nonnegative(),
 	taskCount: z.number().nonnegative(),
