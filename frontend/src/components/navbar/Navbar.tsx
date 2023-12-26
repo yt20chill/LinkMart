@@ -157,12 +157,12 @@ export function Navbar(props: NavbarProps) {
         <div className="w-11/12 max-w-[300px] bg-base-100 h-screen flex flex-col">
           <div className="p-6 border-b-8 border-primary-400">
             {username ? (
-              <>
+              <div className="flex items-center">
                 <IconCircleFrame username={username} />
                 <div className="font-normal flex justify-center items-center">
                   {username}
                 </div>
-              </>
+              </div>
             ) : (
               <div className="flex">
                 <ButtonWithIcon

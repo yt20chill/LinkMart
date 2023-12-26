@@ -17,8 +17,8 @@ const UserOrderPage = () => {
     <OrderStatusTabContext.Provider
       value={{ activeTab: tab, setActiveTab: setTab }}
     >
-      <div className="mt-12 max-w-5xl w-full flex flex-col mx-auto px-6 mb-6">
-        <div className="flex flex-col bg-base-100/50 border md:border-slate-500/20 rounded-xl overflow-hidden md:shadow">
+      <div className="mt-6 sm:mt-12 max-w-5xl w-full flex flex-col mx-auto sm:px-6 mb-6">
+        <div className="flex flex-col bg-base-100/50 sm:border border-slate-500/20 rounded-xl overflow-hidden md:shadow">
           <div className="flex w-full pt-4 text-slate-500 bg-base-100">
             {orderStatusTabs.map((tab) => (
               <Tab

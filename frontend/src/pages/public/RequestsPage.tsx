@@ -31,7 +31,7 @@ const RequestsPage = () => {
         <h1 className="text-black text-xl"></h1>
         <div className="flex justify-start">
           <span className="whitespace-nowrap rounded-full bg-base-100 px-2.5 py-0.5 text-sm text-primary-400">
-            Total Record: {data?.totalRecords ?? ""}
+            Amount of Result: {data?.totalRecords ?? ""} Requests
           </span>
         </div>
       </div>

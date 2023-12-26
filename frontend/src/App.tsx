@@ -34,7 +34,7 @@ function App() {
       data-theme={darkMode ? "dark" : "light"}
     >
       <AnimatedBG
-        className={darkMode ? "md:invert-[85%] md:hue-rotate-180" : ""}
+        className={darkMode ? "sm:invert-[85%] sm:hue-rotate-180" : ""}
       />
       <Navbar
         onThemeClick={() => {
