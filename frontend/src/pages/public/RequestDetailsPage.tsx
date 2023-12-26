@@ -34,6 +34,7 @@ import {
 } from "../../features/hooks/useQueryContainer";
 import useRedirectOnCondition from "../../features/hooks/useRedirectOnCondition";
 import { dtoToString, fireAlert } from "../../lib/formUtils";
+import { moveImageToFront } from "../../lib/formattingUtils";
 import {
 	checkHasOfferedAJAX,
 	deleteOfferAJAX,
@@ -95,7 +96,10 @@ const RequestDetailsPage = () => {
 								imagePath={currentImage}
 							/>
 							<div className="mt-2 grid grid-cols-5 relative gap-2">
-								{memoizedDetails.images.map((itm) => (
+								{moveImageToFront(
+									memoizedDetails.images,
+									memoizedDetails.primaryImage
+								).map((itm) => (
 									<SubImageFrame
 										key={itm.imagePath}
 										imagePath={itm.imagePath}

@@ -1,3 +1,5 @@
+import { ImageDto } from "../schemas/responseSchema";
+
 export { calculateETA, enumToMap, mapDate, removeParams };
 
 const mapDate = (date: Date | string) => {
@@ -86,4 +88,13 @@ export const ignoreCaseAndPlural = <T extends string>(
 				.replace(/s$/, "")
 				.toLowerCase()
 	);
+};
+
+export const moveImageToFront = (images: ImageDto[], imagePath: string) => {
+	const copy = [...images];
+	const index = images.findIndex((image) => image.imagePath === imagePath);
+	if (index === -1) return images;
+	const [image] = copy.splice(index, 1);
+	copy.unshift(image);
+	return copy;
 };
