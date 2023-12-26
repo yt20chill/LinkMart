@@ -52,7 +52,7 @@ type GetReviewDto = z.infer<typeof getReviewsSchema>;
 
 const getProviderProfileSchema = editProviderProfileSchema.extend({
 	reviews: z.array(getReviewsSchema),
-	username: z.string().min(1),
+	providerName: z.string().min(1),
 	starOfEfficiency: z.number().min(0).max(5),
 	starOfAttitude: z.number().min(0).max(5),
 	numberOfReviews: z.number().nonnegative(),
