@@ -45,12 +45,15 @@ export function OrderProgressDisplay(props: OrderProgressDisplayProps) {
               </div>
             </div>
           </div>
+          <div className="text-gray-400 font-bold">
+            <i className="bi bi-check-lg me-1 text-green-600"></i>Item Received
+          </div>
         </>
       );
     case "Completed":
       return (
         <div className="text-gray-400 font-bold">
-          <i className="bi bi-check-lg me-1 text-green-600"></i>Item Received
+          <i className="bi bi-check-lg me-1 text-green-600"></i>Review Submitted
         </div>
       );
     case "Reviewed":
