@@ -1617,9 +1617,9 @@ data: {
 🟢 [200]  OK
 {
 	"username" : string
-	"averageEfficiency" : float 0-5
-	"averageAttitude" : float 0-5
-	"reviewCount" : int
+	"starOfEfficiency" : float 0-5
+	"starOfAttitude" : float 0-5
+	"numberOfReviews" : int
 
 	"reviews" :
 	[{
