@@ -5,11 +5,11 @@ import {
 	AddressDto,
 	GetOrderDto,
 	PostAddressResponseDto,
-	RequestDtoV2,
+	RequestExtendOfferCountDto,
 	addressesResponseSchema,
 	getOrdersSchema,
 	postAddressResponseSchema,
-	requestDtoV2Schema,
+	requestExtendOfferDtoCountSchema,
 } from "../../schemas/responseSchema";
 const baseUserApiRoute = `/api/user`;
 
@@ -68,9 +68,12 @@ const getOrdersByUserAJAX = async () => {
 };
 
 const getRequestsByUserAJAX = async () => {
-	return await axiosWrapper<void, RequestDtoV2[]>(userApiRoutes.REQUEST, {
-		schema: z.array(requestDtoV2Schema),
-	});
+	return await axiosWrapper<void, RequestExtendOfferCountDto[]>(
+		userApiRoutes.REQUEST,
+		{
+			schema: z.array(requestExtendOfferDtoCountSchema),
+		}
+	);
 };
 
 const updateProfileAJAX = async (data: UpdateProfileForm) => {
