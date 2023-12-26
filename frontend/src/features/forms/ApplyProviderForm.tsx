@@ -48,6 +48,7 @@ const ApplyProviderForm = () => {
 		<form>
 			<FormSelect
 				name="locationId"
+				label="Location"
 				register={register}
 				errors={errors}
 				optionItems={locations.map(({ locationId, locationName }) => ({
