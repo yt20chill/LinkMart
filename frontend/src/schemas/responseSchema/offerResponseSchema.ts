@@ -71,10 +71,13 @@ const offerDtoSchema = z.object({
 	offerRemark: z.string().nullable(),
 });
 
-const hasOfferedResponseSchema = z.object({
-	hasOffer: z.boolean(),
-	offer: offerDtoSchema.nullable(),
-});
+const hasOfferedResponseSchema = z
+	.object({
+		hasOffer: z.literal(true),
+		offer: offerDtoSchema,
+	})
+	.or(z.object({ hasOffer: z.literal(false), offer: z.null() }));
 
 type HasOfferedDto = z.infer<typeof hasOfferedResponseSchema>;
+
 type BriefOfferResponseDto = z.infer<typeof offerDtoSchema>;

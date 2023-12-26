@@ -144,17 +144,18 @@ const RequestDetailsPage = () => {
 							<hr className="border-base-300 my-4" />
 							<DetailInfoDisplay {...memoizedDetails} />
 							{/* fail to check offer will assume the provider has no prev offers */}
-							{role === AuthorizeLevels.PROVIDER && !checkOffer?.hasOffer ? (
-								<PrimaryButton
-									icon="note_stack_add"
-									className={`py-3`}
-									label={"Make An Offer"}
-									onClick={() => setShowPostOfferModal(true)}
-									disabled={checkingOffer}
-								/>
-							) : (
-								checkOffer?.offer && <MyOffer {...checkOffer.offer} />
-							)}
+							{role === AuthorizeLevels.PROVIDER &&
+								(checkOffer?.hasOffer ? (
+									<MyOffer {...checkOffer.offer} />
+								) : (
+									<PrimaryButton
+										icon="note_stack_add"
+										className={`py-3`}
+										label={"Make An Offer"}
+										onClick={() => setShowPostOfferModal(true)}
+										disabled={checkingOffer}
+									/>
+								))}
 						</div>
 						<hr className="border-base-300 my-4" />
 					</main>
