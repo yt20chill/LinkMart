@@ -42,10 +42,10 @@ function HomePage() {
               Explore
             </button>
           </div>
-          <div className="max-lg:w-full w-1/2 flex items-center justify-center -z-10 mb-12 max-lg:justify-end">
+          <div className="max-lg:w-full px-3 w-1/2 flex items-center justify-center -z-10 my-12">
             {/* <img src="/image/tags/tag_shopping_bag.png" /> */}
-            <div className="relative">
-              <div className="mockup-window bg-base-300 h-72 w-96 shadow-lg border-4 border-base-300/20">
+            <div className="relative w-full">
+              <div className="w-full mockup-window bg-base-300 aspect-[4/3] shadow-lg border-4 border-base-300/20">
                 <img
                   src="/image/screenShot/Linkmart-Screen-Shot-02.png"
                   className=""

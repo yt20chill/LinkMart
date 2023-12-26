@@ -31,20 +31,23 @@ const UserOrderDetailsPage = () => {
       <ControlModalContext.Provider
         value={{ isShow: showReportForm, setIsShow: setShowReportForm }}
       >
-        <div className="my-5 max-w-5xl w-full flex flex-col mx-auto bg-base-100 overflow-hidden rounded-3xl md:shadow [&_.active+div]:max-h-[2000px] [&_.active+div]:pb-6 mb-6">
-          <OrderDetailsContext.Provider value={details}>
-            <OrderDetailsDisplay />
-            <div className="border-b border-slate-500/20 w-100"></div>
-            <ProgressBar
-              steps={[...orderStatuses]}
-              currentStep={
-                ignoreCaseAndPlural(details.orderStatus, [...orderStatuses]) ??
-                orderStatuses[0]
-              }
-            >
-              <OrderStatusActions />
-            </ProgressBar>
-          </OrderDetailsContext.Provider>
+        <div className="mt-6 sm:mt-12 max-w-5xl w-full flex flex-col mx-auto sm:px-6">
+          <div className="bg-base-100 overflow-hidden rounded-3xl sm:shadow [&_.active+div]:max-h-[2000px] [&_.active+div]:pb-6 mb-6">
+            <OrderDetailsContext.Provider value={details}>
+              <OrderDetailsDisplay />
+              <div className="border-b border-slate-500/20 w-100"></div>
+              <ProgressBar
+                steps={[...orderStatuses]}
+                currentStep={
+                  ignoreCaseAndPlural(details.orderStatus, [
+                    ...orderStatuses,
+                  ]) ?? orderStatuses[0]
+                }
+              >
+                <OrderStatusActions />
+              </ProgressBar>
+            </OrderDetailsContext.Provider>
+          </div>
         </div>
         <FormModal>
           <ReportForm orderId={orderId!} />

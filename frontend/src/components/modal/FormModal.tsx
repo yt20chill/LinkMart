@@ -22,8 +22,10 @@ const FormModal = ({ children }: FormModalProps) => {
           <>{children}</>
         </div>
         <div
-          className="inset-0 fixed bg-black/50 select-all pointer-events-auto z-10 h-full"
-          onClick={() => setIsShow(false)}
+          className="inset-0 fixed bg-black/50 select-none  z-10 h-full has-[body]:overflow-hidden"
+          onClick={() => {
+            setIsShow(false);
+          }}
         ></div>
       </div>
     )
