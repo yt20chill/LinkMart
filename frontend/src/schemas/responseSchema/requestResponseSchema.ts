@@ -8,7 +8,7 @@ export {
 	postRequestResponseSchema,
 	requestDetailsResponseSchema,
 	requestDtoV1Schema,
-	requestDtoV2Schema,
+	requestExtendOfferDtoCountSchema,
 	requestsResponseSchema,
 };
 
@@ -20,7 +20,7 @@ export type {
 	PostRequestResponseDto,
 	RequestDetailsDto,
 	RequestDtoV1,
-	RequestDtoV2,
+	RequestExtendOfferCountDto,
 	RequestsDto,
 };
 
@@ -66,12 +66,14 @@ const requestDtoV1Schema = z.object({
 	updatedAt: z.string(),
 });
 
-const requestDtoV2Schema = requestDtoV1Schema.extend({
+const requestExtendOfferDtoCountSchema = requestDtoV1Schema.extend({
 	offerCount: z.number().nonnegative(),
 });
 
 type RequestDtoV1 = z.infer<typeof requestDtoV1Schema>;
-type RequestDtoV2 = z.infer<typeof requestDtoV2Schema>;
+type RequestExtendOfferCountDto = z.infer<
+	typeof requestExtendOfferDtoCountSchema
+>;
 
 const requestsResponseSchema = z.object({
 	totalRecords: z.number().nonnegative(),
