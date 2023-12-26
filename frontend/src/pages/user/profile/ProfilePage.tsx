@@ -42,7 +42,7 @@ const ProfilePage = () => {
               </div>
             </UserInfoTabContext.Provider>
           </div>
-          <div className="p-12">
+          <div className="px-12 py-6">
             {/general/i.test(activeTab) && <GeneralProfile />}
             {/address/i.test(activeTab) && <AddressProfile />}
             {/apply/i.test(activeTab) && <ApplyProviderProfile />}
