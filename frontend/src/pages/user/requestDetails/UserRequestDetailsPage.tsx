@@ -121,42 +121,44 @@ const UserRequestDetailsPage = () => {
               <hr className="border-base-300 my-4" />
               <DetailInfoDisplay {...details} />
               {/*Request Img */}
-              <div className="relative">
-                <MainImageFrame
-                  title={details.item}
-                  imagePath={currentImage?.imagePath ?? ""}
-                  className="max-lg:hidden"
-                />
-                {isUpdatingPrimary ? (
-                  <span className="absolute m-2 top-1 right-1 text-2xl  text-secondary-400 loading loading-spinner loading-sm"></span>
-                ) : (
-                  <button
-                    className="absolute m-2 top-1 right-1 text-2xl text-secondary-400 hover:text-secondary-500 transition-all"
-                    onClick={onUpdate}
-                  >
-                    <i
-                      className={`bi ${
-                        currentImage?.imagePath === details.primaryImage
-                          ? "bi-star-fill"
-                          : "bi-star"
-                      }`}
-                    ></i>
-                  </button>
-                )}
-              </div>
-              <div className="mt-2 grid grid-cols-5 relative gap-2">
-                {details.images.map((itm) => (
-                  <SubImageFrame
-                    key={itm.imageId}
-                    imagePath={itm.imagePath}
-                    onClick={() =>
-                      setCurrentImage({
-                        ...itm,
-                        isPrimary: itm.imagePath === details.primaryImage,
-                      })
-                    }
+              <div className="grid grid-cols-2 gap-2">
+                <div className="relative">
+                  <MainImageFrame
+                    title={details.item}
+                    imagePath={currentImage?.imagePath ?? ""}
+                    className=""
                   />
-                ))}
+                  {isUpdatingPrimary ? (
+                    <span className="absolute m-2 top-1 right-1 text-2xl  text-secondary-400 loading loading-spinner loading-sm"></span>
+                  ) : (
+                    <button
+                      className="absolute m-2 top-1 right-1 text-2xl text-secondary-400 hover:text-secondary-500 transition-all"
+                      onClick={onUpdate}
+                    >
+                      <i
+                        className={`bi ${
+                          currentImage?.imagePath === details.primaryImage
+                            ? "bi-star-fill"
+                            : "bi-star"
+                        }`}
+                      ></i>
+                    </button>
+                  )}
+                </div>
+                <div className="grid grid-cols-4 relative gap-2 grow">
+                  {details.images.map((itm) => (
+                    <SubImageFrame
+                      key={itm.imageId}
+                      imagePath={itm.imagePath}
+                      onClick={() =>
+                        setCurrentImage({
+                          ...itm,
+                          isPrimary: itm.imagePath === details.primaryImage,
+                        })
+                      }
+                    />
+                  ))}
+                </div>
               </div>
               <hr className="border-base-300 my-4" />
             </div>
