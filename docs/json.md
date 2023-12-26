@@ -805,7 +805,13 @@ requests: [
 🟢 [200]  OK
 [
 {
-	"hasOffered": boolean
+	"hasOffer": boolean
+	"offer": {
+		"offerId" : String,
+		"estimatedProcessTime" : Integer,
+		"price" : Integer,
+		"offerRemark" : String}
+		|| null
 }
 ```
 
@@ -1611,9 +1617,9 @@ data: {
 🟢 [200]  OK
 {
 	"username" : string
-	"averageEfficiency" : float 0-5
-	"averageAttitude" : float 0-5
-	"reviewCount" : int
+	"starOfEfficiency" : float 0-5
+	"starOfAttitude" : float 0-5
+	"numberOfReviews" : int
 
 	"reviews" :
 	[{
@@ -1651,9 +1657,9 @@ data: {
 	"balance" : float
 	"averageEfficiency" : float 0-5
 	"averageAttitude" : float 0-5
-	"reviewCount" : int
-	"offerCount": int
-	"taskCount": int
+	"reviewCount" : int ()
+	"offerCount": int (Active)
+	"taskCount": int (Order complete)
 }
 ,...]
 }
