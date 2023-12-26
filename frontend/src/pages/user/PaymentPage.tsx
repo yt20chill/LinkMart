@@ -142,9 +142,9 @@ const PaymentPage = () => {
                   </div>
                   <input
                     type="text"
-                    placeholder="DD/YY"
+                    placeholder="MM/YY"
                     defaultValue={"12/25"}
-                    maxLength={3}
+                    maxLength={5}
                     className="input input-bordered w-full ordinal slashed-zero tabular-nums font-sans"
                   />
                 </label>
