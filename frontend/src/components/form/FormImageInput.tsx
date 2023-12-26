@@ -31,7 +31,7 @@ function FormImageInput<T extends FieldValues>({
   );
   return (
     <>
-      <label className="form-control w-full max-w-lg h-12 outline-slate-400 outline-2 outline-dashed rounded-btn my-6 py-16 bg-base-100/10 hover:bg-base-100/50 flex items-center justify-center cursor-pointer">
+      <label className="form-control w-full max-w-lg h-12 outline-slate-400 outline-2 outline-dashed rounded-btn py-16 bg-base-100/10 hover:bg-base-100/50 flex items-center justify-center cursor-pointer mt-3">
         <i className="bi bi-images text-slate-400 text-5xl"></i>
         <div className="text-slate-400">Upload Image</div>
         <div className="label hidden">
@@ -46,10 +46,12 @@ function FormImageInput<T extends FieldValues>({
         />
         {error && <ErrorMessage message={error} />}
       </label>
-      <div className="grid grid-cols-3 md:grid-cols-5 gap-1">
-        {base64Images.map((image) => (
-          <ImagePreview key={image.name} {...image} onDelete={onDelete} />
-        ))}
+      <div className="my-3">
+        <div className="grid grid-cols-3 md:grid-cols-5 gap-1">
+          {base64Images.map((image) => (
+            <ImagePreview key={image.name} {...image} onDelete={onDelete} />
+          ))}
+        </div>
       </div>
     </>
   );

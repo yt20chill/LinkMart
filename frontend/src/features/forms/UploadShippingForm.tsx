@@ -81,7 +81,9 @@ const UploadShippingForm = ({ orderId }: UploadShippingFormProps) => {
     <>
       <form>
         <FormSelect
+          label="Carrier"
           name="logisticCompanyId"
+          placeholder="Select carrier"
           register={register}
           optionItems={logistics.map((logistic) => ({
             value: logistic.logisticCompanyId + "",
@@ -89,36 +91,54 @@ const UploadShippingForm = ({ orderId }: UploadShippingFormProps) => {
           }))}
           errors={errors}
         />
-        <div className="px-6 pt-3 flex">
+        {/* display company url */}
+        <div>
+          {companyId ? (
+            <>
+              <a
+                className="font-normal text-xs leading-none hover:text-base-content/50 hover:decoration-base-content/50 decoration-dashed decoration-base-content cursor-pointer underline"
+                href={
+                  logistics.find(
+                    (logistic) => logistic.logisticCompanyId === companyId
+                  )?.companyUrl
+                }
+                target="_blank"
+                rel="noreferrer"
+              >
+                <i className="me-1 bi bi-link-45deg"></i>
+                {
+                  logistics.find(
+                    (logistic) => logistic.logisticCompanyId === companyId
+                  )?.companyUrl
+                }
+              </a>
+            </>
+          ) : null}
+        </div>
+        <div className="flex">
           <div
             className="ms-auto inline-flex rounded-badge text-sm text-gray-400 hover:text-secondary-400"
             onClick={() => setShowAddCompany(true)}
           >
             <div className="me-2">Not on the list?</div>
-            <i className="bi bi-plus-square-dotted me-2"></i>Add New One
+            Add<i className="bi bi-plus-square-dotted ms-1"></i>
           </div>
-        </div>
-        {/* display company url */}
-        <div>
-          <p>Company Url</p>
-          <span>
-            {
-              logistics.find(
-                (logistic) => logistic.logisticCompanyId === companyId
-              )?.companyUrl
-            }
-          </span>
         </div>
         {Object.keys(stringValues)
           .filter((key) => key !== "logisticCompanyId")
           .map((name) => (
             <FormInput
+              label="Shipment No."
+              placeholder="Input Tracking Number"
               key={name}
               name={name as keyof TUploadShippingForm}
               register={register}
               errors={errors}
             />
           ))}
+        <div className="label">
+          <span className="label-text">Upload Shipment Proof</span>
+        </div>
         <FormImageInput
           name="shipmentProof"
           placeholder="Please Upload Your Shipping Prove Here"
