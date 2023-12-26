@@ -45,7 +45,7 @@ export function Navbar(props: NavbarProps) {
               )}
             </div>
           </div>
-          <Link to={siteMap(RouteEnum.Home)} className="w-full">
+          <Link to={siteMap(RouteEnum.Home)} className="max-w-[150px]">
             <img
               src="/image/Linkmart@512.png"
               className="object-contain"
@@ -56,8 +56,8 @@ export function Navbar(props: NavbarProps) {
         {/* nav_desktop */}
         <div className="flex justify-between max-w-7xl max-xl:px-2 mx-auto max-md:hidden">
           {/* logo -> home page*/}
-          <div className="flex gap-4 items-center">
-            <Link to={siteMap(RouteEnum.Home)} className="max-w-[200px]">
+          <div className="flex gap-2 items-center">
+            <Link to={siteMap(RouteEnum.Home)} className="max-w-[150px]">
               <img
                 src="/image/Linkmart@512.png"
                 title="Linkmart"
@@ -154,7 +154,7 @@ export function Navbar(props: NavbarProps) {
           navIsShow ? "max-w-[2000px]" : "max-w-[0px]"
         )}
       >
-        <div className="w-11/12 bg-base-100 h-screen flex flex-col">
+        <div className="w-11/12 max-w-[300px] bg-base-100 h-screen flex flex-col">
           <div className="p-6 border-b-8 border-primary-400">
             {username ? (
               <>
@@ -214,7 +214,7 @@ export function Navbar(props: NavbarProps) {
               </>
             )}
             {role === AuthorizeLevels.PROVIDER && (
-              <div className="mt-auto flex flex-col pt-2 border-t">
+              <div className="flex flex-col pt-2 border-t">
                 <ButtonWithIcon
                   onClick={() => {
                     setNavIsShow(false);

@@ -13,7 +13,7 @@ export function AnimatedBG(props: AnimatedBG) {
     >
       <img
         src="/image/BG-1.jpeg"
-        className="object-cover blur-3xl scale-150 select-none pointer-events-none h-full w-screen brightness-110 hidden md:block"
+        className="object-cover blur-3xl scale-150 select-none pointer-events-none h-full w-screen brightness-110 hidden sm:block"
         title="LinkMart"
       />
     </div>

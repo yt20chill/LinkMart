@@ -38,7 +38,7 @@ const SignInForm = () => {
   };
 
   return (
-    <form className="mx-auto bg-base-100/50 backdrop-blur w-96 flex flex-col shadow-lg rounded-xl py-6 mt-24 border border-base-300 ring-2 ring-base-100">
+    <form className="mx-auto bg-base-100/50 backdrop-blur w-screen sm:w-96 flex flex-col sm:shadow-lg rounded-xl py-6 mt-6 sm:mt-24 sm:border border-base-300 ring-2 ring-base-100">
       <div className="px-9 pb-4 border-b border-base-300 font-bold text-primary-400 text-lg">
         SIGN IN
       </div>
