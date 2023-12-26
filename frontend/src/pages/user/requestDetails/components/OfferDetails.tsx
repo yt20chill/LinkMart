@@ -48,7 +48,7 @@ const OfferDetails = ({ offerId }: OfferDetailsProps) => {
 						{reviewCount ? (
 							<>
 								<span className="text-sm">{score.toFixed(1)}</span>
-								<Rating name="" score={score} />
+								<Rating score={score} />
 								<span className="text-sm">({reviewCount})</span>
 							</>
 						) : (

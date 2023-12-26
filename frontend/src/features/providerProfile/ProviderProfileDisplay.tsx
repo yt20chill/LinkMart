@@ -8,7 +8,7 @@ type ProviderProfileDisplayProps = {
 
 const ProviderProfileDisplay = ({
 	dto: {
-		username,
+		providerName,
 		starOfAttitude,
 		starOfEfficiency,
 		numberOfReviews,
@@ -21,7 +21,7 @@ const ProviderProfileDisplay = ({
 			{/* Info */}
 			<ProviderInfoDisplay
 				dto={{
-					username,
+					providerName,
 					starOfAttitude,
 					starOfEfficiency,
 					numberOfReviews,
