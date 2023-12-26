@@ -25,7 +25,7 @@ export function PriceDisplay(props: PriceDisplayProps) {
           {props.price.toLocaleString("en")}
         </span>
       ) : (
-        <span className="text-3xl">Please Offer</span>
+        <span className="">Please Offer</span>
       )}
     </>
   );

@@ -40,10 +40,28 @@ const RequestsPage = () => {
       <div className="my-5 max-w-7xl flex mx-auto w-full">
         <Filter className="inline-flex flex-col max-lg:hidden pr-2 min-w-[200px] ml-2" />
         <div>
-          <span className="indent-3">
-            <i className="bi bi-files me-2"></i>Records Found:{" "}
-            {data?.totalRecords ?? ""}
-          </span>
+          <header className="rounded-lg px-6 mb-6">
+            <span className="leading-none text-primary-400">Linkmart</span>
+            <h1 className="text-3xl font-bold leading-none mb-2">Request</h1>
+            <p className="text-slate-400">
+              You may explore what people are currently seeking or create a
+              request to let others make you offers.
+            </p>
+          </header>
+          {data && (
+            <span className="indent-3">
+              {data.totalRecords ? (
+                <>
+                  <i className="bi bi-files me-2"></i>Records Found:
+                  {data.totalRecords}
+                </>
+              ) : (
+                <>
+                  <i className="bi bi-files me-2"></i>No Record
+                </>
+              )}
+            </span>
+          )}
           <div className="px-2 grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mb-auto grow">
             {data ? (
               data.requests.map((request) => (

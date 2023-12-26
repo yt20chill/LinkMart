@@ -310,7 +310,7 @@ const MyOffer = ({
 	return (
 		<>
 			<div className="bg-base-100 rounded-lg w-full mb-2 shadow">
-				<div className="flex items-center justify-start indent-3 text-lg border-b p-2 border-slate-500/20">
+				<div className="flex items-center justify-start indent-3 border-b p-2 border-slate-500/20">
 					My Offer
 				</div>
 				<div className="max-md:px-3 px-6 py-3">

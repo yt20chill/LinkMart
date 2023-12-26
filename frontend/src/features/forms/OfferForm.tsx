@@ -50,13 +50,10 @@ const OfferForm = (props: OfferFormProps) => {
 			isEdit ? putOfferAJAX(id, data) : postOfferAJAX(id, data),
 		onSuccess: async () => {
 			toast.success(`Offer has been made successfully!`);
-			isEdit
-				? // TODO: should pass requestId
-				  await queryClient.invalidateQueries([
-						queryKey.OFFER,
-						{ requestId: props.requestId },
-				  ])
-				: await queryClient.invalidateQueries([queryKey.OFFER]);
+			await queryClient.invalidateQueries([
+				queryKey.OFFER,
+				{ requestId: props.requestId },
+			]);
 			setIsShow(false);
 		},
 	});
