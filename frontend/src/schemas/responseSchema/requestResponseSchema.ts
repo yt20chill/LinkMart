@@ -7,7 +7,7 @@ export {
 	locationsResponseSchema,
 	postRequestResponseSchema,
 	requestDetailsResponseSchema,
-	requestDtoV1Schema,
+	requestDtoSchema as requestDtoV1Schema,
 	requestExtendOfferDtoCountSchema,
 	requestsResponseSchema,
 };
@@ -19,7 +19,7 @@ export type {
 	LocationDto,
 	PostRequestResponseDto,
 	RequestDetailsDto,
-	RequestDtoV1,
+	RequestDto,
 	RequestExtendOfferCountDto,
 	RequestsDto,
 };
@@ -52,7 +52,7 @@ const categoryFieldsResponseSchema = z.array(categoryFieldResponseSchema);
 
 type CategoryFieldDto = z.infer<typeof categoryFieldResponseSchema>;
 
-const requestDtoV1Schema = z.object({
+const requestDtoSchema = z.object({
 	requestId: ulid,
 	locationName: z.string().min(1),
 	item: z.string().min(1),
@@ -66,11 +66,11 @@ const requestDtoV1Schema = z.object({
 	updatedAt: z.string(),
 });
 
-const requestExtendOfferDtoCountSchema = requestDtoV1Schema.extend({
+const requestExtendOfferDtoCountSchema = requestDtoSchema.extend({
 	offerCount: z.number().nonnegative(),
 });
 
-type RequestDtoV1 = z.infer<typeof requestDtoV1Schema>;
+type RequestDto = z.infer<typeof requestDtoSchema>;
 type RequestExtendOfferCountDto = z.infer<
 	typeof requestExtendOfferDtoCountSchema
 >;
@@ -78,7 +78,7 @@ type RequestExtendOfferCountDto = z.infer<
 const requestsResponseSchema = z.object({
 	totalRecords: z.number().nonnegative(),
 	totalPages: z.number().nonnegative(),
-	requests: z.array(requestDtoV1Schema),
+	requests: z.array(requestDtoSchema),
 });
 
 type RequestsDto = z.infer<typeof requestsResponseSchema>;
@@ -90,7 +90,7 @@ const imageSchema = z.object({
 
 type ImageDto = z.infer<typeof imageSchema>;
 
-const requestDetailsResponseSchema = requestDtoV1Schema.extend({
+const requestDetailsResponseSchema = requestDtoSchema.extend({
 	itemDetail: z.record(z.string().nullable()).nullable(),
 	locationId: resultId,
 	categoryId: resultId,
