@@ -28,7 +28,7 @@ const TaskDetailsPage = () => {
     <ControlModalContext.Provider
       value={{ isShow: showReportForm, setIsShow: setShowReportForm }}
     >
-      <div className="my-5 max-w-7xl w-full flex flex-col mx-auto bg-base-100 overflow-hidden rounded-3xl shadow [&_.active+div]:max-h-[2000px] [&_.active+div]:pb-6 mb-6">
+      <div className="my-5 max-w-7xl w-full flex flex-col mx-auto bg-base-100 overflow-hidden rounded-3xl md:shadow [&_.active+div]:max-h-[2000px] [&_.active+div]:pb-6 mb-6">
         <OrderDetailsContext.Provider value={details}>
           <OrderDetailsDisplay />
           <div className="border-b border-slate-500/20 w-100"></div>
