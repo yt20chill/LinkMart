@@ -7,11 +7,12 @@ export class ProviderController {
     return {
       biography: 'I am a provider',
       username: 'Jason',
-      averageEfficiency: 4.5,
-      averageAttitude: 5,
-      totalReviews: 22,
+      starOfEfficiency: 4.5,
+      starOfAttitude: 5,
+      numberOfReviews: 22,
       reviews: [
         {
+          username: 'Jason',
           primaryImage: 'https://loremflickr.com/320/240?random=1',
           item: 'Asuka',
           efficiency: 4.5,
@@ -19,6 +20,7 @@ export class ProviderController {
           comments: 'Good',
         },
         {
+          username: 'Jason',
           primaryImage: 'https://loremflickr.com/320/240?random=1',
           item: 'Eva 2',
           efficiency: 5,
