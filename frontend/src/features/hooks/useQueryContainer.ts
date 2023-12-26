@@ -1,4 +1,6 @@
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { FetchError } from "../../lib/apiUtils";
 import { RequestId } from "../../schemas/requestSchema";
 import { RequestDetailsDto } from "../../schemas/responseSchema";
 import {
@@ -8,6 +10,7 @@ import {
 	getRequestDetailsAJAX,
 } from "../../services/api/requestApi";
 import { queryKey } from "../../services/query.config";
+import { RouteEnum, siteMap } from "../../services/routes.config";
 
 type UseGetRecommendationsParams = {
 	location?: string;
@@ -39,10 +42,16 @@ const useQueryContainer = () => {
 };
 
 const useGetRequestDetails = (requestId: RequestId) => {
-	return useQuery<RequestDetailsDto | undefined>({
+	const navigate = useNavigate();
+	const { data, isLoading, isError, error } = useQuery<
+		RequestDetailsDto | undefined
+	>({
 		queryKey: [queryKey.REQUEST, requestId],
 		queryFn: () => getRequestDetailsAJAX(requestId),
 	});
+	if (isError && error instanceof FetchError && error.status === 404)
+		navigate(siteMap(RouteEnum.Requests), { replace: true });
+	return { data, isLoading };
 };
 
 const useGetRecommendations = ({

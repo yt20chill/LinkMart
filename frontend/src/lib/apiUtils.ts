@@ -1,4 +1,4 @@
-import axios, { AxiosError, isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { ZodError, ZodType } from "zod";
 import { ErrorResponseDto } from "../schemas/responseSchema";
@@ -96,17 +96,15 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 		)
 			return options.schema.parse(response.data);
 	} catch (error) {
-		if (error instanceof AxiosError && error.status === 401) {
-			toast.error("Permission denied");
-			throw new FetchError(401, "Permission denied");
-		}
-		toast.error("Something went wrong");
 		if (isAxiosError<ErrorResponseDto>(error)) {
+			if (error.response?.status === 401) toast.error("Permission denied");
+			else if (error.response?.status === 404) toast.error("Not Found");
 			throw new FetchError(
 				error.response?.status,
 				error.response?.data.message ?? error.code ?? error.message
 			);
 		}
+		toast.error("Something went wrong");
 		if (error instanceof ZodError)
 			throw new FetchError(
 				400,
