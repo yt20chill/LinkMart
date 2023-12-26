@@ -10,6 +10,7 @@ import {
 } from "../../schemas/requestSchema";
 import { editProviderProfileAJAX } from "../../services/api/providerApi";
 import { queryKey } from "../../services/query.config";
+import { FormLayout } from "@/components/ui/FormLayout";
 
 type ProviderProfileFormProps = {
   defaultValues?: EditProviderProfileForm;
@@ -39,12 +40,8 @@ const ProviderProfileForm = ({
     await edit(form);
   };
   return (
-    <>
-      <h2 className="text-xl inline-flex gap-2 text-primary-400 font-bold p-6 pb-3 border-b border-primary-400 shadow-3xl">
-        <i className="bi bi-chat-square-text"></i>
-        Edit Biography
-      </h2>
-      <form className="p-8 pt-4 flex flex-col gap-6">
+    <FormLayout bootstrapIcon="bi-chat-square-text" title="Edit Biography">
+      <form>
         <FormTextAreaInput
           name="biography"
           register={register}
@@ -55,7 +52,7 @@ const ProviderProfileForm = ({
           disabled={isLoading}
         />
       </form>
-    </>
+    </FormLayout>
   );
 };
 

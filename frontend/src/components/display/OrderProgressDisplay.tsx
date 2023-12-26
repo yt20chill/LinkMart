@@ -1,12 +1,14 @@
 import { useOrderDetailsContext } from "@/services/context/OrderDetailsContext";
+import { OrderStatuses } from "@/types/sharePropsModel";
 
 type OrderProgressDisplayProps = {
-  step: string;
+  step: OrderStatuses;
 };
 export function OrderProgressDisplay(props: OrderProgressDisplayProps) {
   const { orderDto, shipmentInfoDto } = useOrderDetailsContext();
+  console.log(props.step);
   switch (props.step) {
-    case "In progress":
+    case "In Progress":
       return (
         <>
           <div className="text-xs text-gray-400">
@@ -18,7 +20,7 @@ export function OrderProgressDisplay(props: OrderProgressDisplayProps) {
           </div>
         </>
       );
-    case "Shipping":
+    case "Shipped":
       return (
         <>
           <div className="min-w-96 max-w-full mb-2">
@@ -45,14 +47,18 @@ export function OrderProgressDisplay(props: OrderProgressDisplayProps) {
           </div>
         </>
       );
-    case "Review":
+    case "Completed":
       return (
         <div className="text-gray-400 font-bold">
-          <i className="bi bi-check-lg me-1 text-green-600"></i>Review Submitted
+          <i className="bi bi-check-lg me-1 text-green-600"></i>Item Received
         </div>
       );
-    case "Completed":
-      return null;
+    case "Reviewed":
+      return (
+        <div className="text-gray-400 font-bold">
+          <i className="bi bi-check-lg me-1 text-green-600"></i>Order Completed
+        </div>
+      );
     default:
       return null;
   }
