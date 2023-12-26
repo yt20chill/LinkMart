@@ -1657,9 +1657,9 @@ data: {
 	"balance" : float
 	"averageEfficiency" : float 0-5
 	"averageAttitude" : float 0-5
-	"reviewCount" : int
-	"offerCount": int
-	"taskCount": int
+	"reviewCount" : int ()
+	"offerCount": int (Active)
+	"taskCount": int (Order complete)
 }
 ,...]
 }
