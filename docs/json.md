@@ -805,7 +805,7 @@ requests: [
 🟢 [200]  OK
 [
 {
-	"hasOffered": boolean
+	"hasOffer": boolean
 	"offer": {
 		"offerId" : String,
 		"estimatedProcessTime" : Integer,
