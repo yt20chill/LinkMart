@@ -57,7 +57,8 @@ const DashboardPage = () => {
 						<div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 px-6 mt-6">
 							<Counter
 								offerCount={data?.offerCount}
-								taskCount={data?.taskCount}
+								activeTaskCount={data?.activeTaskCount}
+								completedTaskCount={data?.completedTaskCount}
 							/>
 						</div>
 					</>
@@ -130,10 +131,15 @@ const ReviewSummary = ({
 
 type CounterProps = {
 	offerCount: number;
-	taskCount: number;
+	activeTaskCount: number;
+	completedTaskCount: number;
 };
 
-const Counter = ({ offerCount, taskCount }: CounterProps) => {
+const Counter = ({
+	offerCount,
+	activeTaskCount,
+	completedTaskCount,
+}: CounterProps) => {
 	const navigate = useNavigate();
 	const { setActiveTab } = useProviderTabContext();
 	return (
@@ -157,7 +163,9 @@ const Counter = ({ offerCount, taskCount }: CounterProps) => {
 				}}
 			>
 				<span>Task</span>
-				{taskCount}
+				<span>
+					{activeTaskCount}/{activeTaskCount + completedTaskCount}
+				</span>
 			</div>
 		</div>
 	);

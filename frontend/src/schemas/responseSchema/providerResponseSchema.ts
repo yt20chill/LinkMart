@@ -64,7 +64,8 @@ const getProviderDashboardSchema = z.object({
 	balance: z.number().nonnegative().nullable(),
 	reviewCount: z.number().nonnegative(),
 	offerCount: z.number().nonnegative(),
-	taskCount: z.number().nonnegative(),
+	activeTaskCount: z.number().nonnegative(),
+	completedTaskCount: z.number().nonnegative(),
 	averageEfficiency: z.number().min(0).max(5),
 	averageAttitude: z.number().min(0).max(5),
 });
