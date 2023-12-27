@@ -5,14 +5,12 @@ import {
 	TApplyProviderForm,
 } from "../../schemas/requestSchema";
 import {
-	ApplyProviderDto,
 	GetApplicationStatusDto,
 	GetProviderProfileDto,
 	ProviderDashboardDto,
 	getApplicationStatusResponseSchema,
 	getProviderDashboardSchema,
 	getProviderProfileSchema,
-	postProviderDtoSchema,
 } from "../../schemas/responseSchema";
 
 export {
@@ -32,14 +30,10 @@ const providerApiRoutes = {
 };
 
 const applyProviderAJAX = async (form: TApplyProviderForm) => {
-	return await axiosWrapper<FormData, ApplyProviderDto>(
-		providerApiRoutes.PROVIDER,
-		{
-			method: "post",
-			data: appendFormData(form),
-			schema: postProviderDtoSchema,
-		}
-	);
+	return await axiosWrapper<FormData>(providerApiRoutes.PROVIDER, {
+		method: "post",
+		data: appendFormData(form),
+	});
 };
 
 const getProviderApplicationStatusAJAX = async () => {

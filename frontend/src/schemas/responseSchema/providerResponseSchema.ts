@@ -6,22 +6,14 @@ export {
 	getApplicationStatusResponseSchema,
 	getProviderDashboardSchema,
 	getProviderProfileSchema,
-	postProviderDtoSchema,
 };
 export type {
 	ApplicationStatus,
-	ApplyProviderDto,
 	GetApplicationStatusDto,
 	GetProviderProfileDto,
 	GetReviewDto,
 	ProviderDashboardDto,
 };
-
-const postProviderDtoSchema = z.object({
-	providerId: ulid,
-});
-
-type ApplyProviderDto = z.infer<typeof postProviderDtoSchema>;
 
 const applicationStatusSchema = z.object({
 	verificationId: ulid,
