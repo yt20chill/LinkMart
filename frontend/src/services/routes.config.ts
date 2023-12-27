@@ -230,8 +230,8 @@ const authorizedLevelToPrefix = (authorizedLevel: AuthorizeLevels): string => {
 
 // TODO: generate from array, object has no order
 const providerTabs = Object.freeze({
-	Profile: RouteEnum.MyProviderProfile,
 	Dashboard: RouteEnum.Dashboard,
+	Profile: RouteEnum.MyProviderProfile,
 	Offers: RouteEnum.MyOffer,
 	Tasks: RouteEnum.Task,
 });

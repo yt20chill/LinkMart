@@ -27,7 +27,7 @@ const orderStatuses = [
 
 type OrderStatuses = (typeof orderStatuses)[number];
 
-const userInfoTabs = ["General", "Address", "Apply Provider"] as const;
+const userInfoTabs = ["General", "Address", "Provider Application"] as const;
 type UserInfoTabs = (typeof userInfoTabs)[number];
 
 type BaseOrderActionProps = {

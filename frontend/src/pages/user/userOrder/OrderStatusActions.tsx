@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import { SweetAlertOptions } from "sweetalert2";
+import { FormLayout } from "../../../components/ui/FormLayout";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import ReviewForm from "../../../features/forms/ReviewForm";
 import { fireAlert } from "../../../lib/formUtils";
@@ -101,5 +102,9 @@ const Shipping = ({ orderId }: BaseOrderActionProps) => {
 };
 
 const Review = ({ orderId }: BaseOrderActionProps) => {
-	return <ReviewForm orderId={orderId} />;
+	return (
+		<FormLayout title="Review" bootstrapIcon="chat-left-heart">
+			<ReviewForm orderId={orderId} />
+		</FormLayout>
+	);
 };
