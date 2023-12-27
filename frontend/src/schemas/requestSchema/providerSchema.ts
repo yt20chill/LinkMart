@@ -8,7 +8,7 @@ type FileInputKeys = "addressDocument" | "idDocument" | "bankDocument";
 
 const applyProviderSchema = z.object({
 	locationId: requiredId,
-	addressDocument: requiredFile,
+	addressDocument: requiredFile.nullable(),
 	idDocument: requiredFile,
 	bankDocument: requiredFile,
 });
