@@ -30,7 +30,12 @@ const FormSelect = <T extends FieldValues>({
         defaultValue={defaultValue}
         required={required}
       >
-        <option disabled value={undefined}>
+        <option
+          disabled
+          selected={defaultValue === undefined}
+          hidden
+          value={undefined}
+        >
           {placeholder}
         </option>
         {optionItems.map((item) => (

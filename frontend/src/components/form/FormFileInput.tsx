@@ -18,7 +18,7 @@ function FormFileInput<T extends FieldValues>({
 }: FormFileInputProps<T>) {
   const error = errors?.[name]?.message as string | undefined;
   return (
-    <>
+    <div>
       <div className="label mt-2">
         <span className="label-text">{label}</span>
       </div>
@@ -35,10 +35,10 @@ function FormFileInput<T extends FieldValues>({
         multiple={multiple}
         accept={accept}
         {...register(name)}
-        className="file:me-3 w-full text-black text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-2 file:px-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-slate-500 rounded"
+        className="file:me-3 w-full text-sm bg-base-100 border border-slate-500/20 file:cursor-pointer cursor-pointer file:border-0 file:py-2 file:px-4 file:bg-base-200 file:hover:bg-base-100 file:text-slate-500 rounded"
       />
       {error && <ErrorMessage message={error} />}
-    </>
+    </div>
   );
 }
 
