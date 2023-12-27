@@ -34,7 +34,7 @@ const FileInputLabels = Object.freeze([
       "Your ID card or passport copy that can be used to verify your identity.",
   },
   {
-    label: "Bank Verification",
+    label: "Bank Information",
     description:
       "Document that clearly shows your account details and name, which is required for payment purposes and to authenticate your banking information",
   },
