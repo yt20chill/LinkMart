@@ -5,6 +5,7 @@ import { useShallow } from "zustand/react/shallow";
 import { IconCircleFrame } from "../../components/frame/IconCircleFrame";
 import Loading from "../../components/ui/Loading";
 import useRedirectOnCondition from "../../features/hooks/useRedirectOnCondition";
+import NoReviewsDisplay from "../../features/providerProfile/NoReviewsDisplay";
 import { getProviderDashboardAJAX } from "../../services/api/providerApi";
 import { useProviderTabContext } from "../../services/context/TabsContext";
 import { queryKey } from "../../services/query.config";
@@ -121,7 +122,7 @@ const ReviewSummary = ({
 					</div>
 				</div>
 			) : (
-				<div className="text-slate-400">No Reviews Available Yet</div>
+				<NoReviewsDisplay />
 			)}
 		</>
 	);

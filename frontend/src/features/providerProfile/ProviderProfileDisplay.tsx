@@ -1,5 +1,6 @@
 import ReviewCard from "../../components/card/ReviewCard";
 import { GetProviderProfileDto } from "../../schemas/responseSchema";
+import NoReviewsDisplay from "./NoReviewsDisplay";
 import ProviderInfoDisplay from "./ProviderInfoDisplay";
 
 type ProviderProfileDisplayProps = {
@@ -40,7 +41,9 @@ const ProviderProfileDisplay = ({
 							<ReviewCard key={`${review.item}-${index}`} dto={review} />
 						))
 					) : (
-						<p className="p-6 capitalize">No Reviews Available Yet</p>
+						<div className="p-6">
+							<NoReviewsDisplay />
+						</div>
 					)}
 				</div>
 			</div>

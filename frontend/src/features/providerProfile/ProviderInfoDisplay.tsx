@@ -5,6 +5,7 @@ import { AuthorizeLevels } from "@/types/authModels";
 import { useShallow } from "zustand/react/shallow";
 import Rating from "../../pages/user/requestDetails/components/Rating";
 import { GetProviderProfileDto } from "../../schemas/responseSchema";
+import NoReviewsDisplay from "./NoReviewsDisplay";
 
 type ProviderInfoDisplayProps = {
 	dto: Omit<GetProviderProfileDto, "reviews">;
@@ -55,9 +56,7 @@ const ProviderInfoDisplay = ({
 						</div>
 					</>
 				) : (
-					<div className="text-slate-400 capitalize">
-						No Reviews Available Yet
-					</div>
+					<NoReviewsDisplay />
 				)}
 			</div>
 			<div className="flex gap-2 text-primary-400 ps-2 font-bold">
