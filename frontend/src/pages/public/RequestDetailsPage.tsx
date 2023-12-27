@@ -26,6 +26,7 @@ import { RequestCardSkeleton } from "../../components/card/RequestCardSkeleton";
 import FormModal from "../../components/modal/FormModal";
 import CancelButton from "../../components/ui/CancelButton";
 import EditButton from "../../components/ui/EditButton";
+import { FormLayout } from "../../components/ui/FormLayout";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import OfferForm from "../../features/forms/OfferForm";
 import {
@@ -181,7 +182,9 @@ const RequestDetailsPage = () => {
 				}}
 			>
 				<FormModal>
-					<OfferForm requestId={requestId!} />
+					<FormLayout title="Make an Offer" bootstrapIcon="bi-sticky">
+						<OfferForm requestId={requestId!} />
+					</FormLayout>
 				</FormModal>
 			</ControlModalContext.Provider>
 		</>
@@ -370,11 +373,13 @@ const MyOffer = ({
 				value={{ isShow: showEditForm, setIsShow: setShowEditForm }}
 			>
 				<FormModal>
-					<OfferForm
-						requestId={requestId}
-						offerId={offerId}
-						defaultValues={defaultValues}
-					/>
+					<FormLayout title="Edit Offer" bootstrapIcon="bi-sticky">
+						<OfferForm
+							requestId={requestId}
+							offerId={offerId}
+							defaultValues={defaultValues}
+						/>
+					</FormLayout>
 				</FormModal>
 			</ControlModalContext.Provider>
 		</>

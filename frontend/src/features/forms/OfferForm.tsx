@@ -61,40 +61,32 @@ const OfferForm = (props: OfferFormProps) => {
 		await mutateOffer(form);
 	};
 	return (
-		<>
-			<h2 className="text-xl inline-flex gap-2 text-primary-400 font-bold p-6 pb-3 border-b border-primary-400 shadow-3xl">
-				<i className="bi bi-sticky"></i>
-				Make Offer
-			</h2>
-			<form className="p-6">
-				{Object.keys(defaultValues).map((name) => {
-					return /remark/gi.test(name) ? (
-						<FormTextAreaInput
-							key={name}
-							name={name as keyof TOfferForm}
-							register={register}
-							errors={errors}
-						/>
-					) : (
-						<FormInput
-							key={name}
-							name={name as keyof TOfferForm}
-							register={register}
-							errors={errors}
-						/>
-					);
-				})}
-				{error instanceof FetchError && (
-					<ErrorMessage message={error.message} />
-				)}
-				<FormSubmitButton
-					className="flex items-center justify-center mt-4 ms-auto"
-					label="Confirm"
-					onClick={handleSubmit(onSubmit)}
-					disabled={isLoading}
-				/>
-			</form>
-		</>
+		<form>
+			{Object.keys(defaultValues).map((name) => {
+				return /remark/gi.test(name) ? (
+					<FormTextAreaInput
+						key={name}
+						name={name as keyof TOfferForm}
+						register={register}
+						errors={errors}
+					/>
+				) : (
+					<FormInput
+						key={name}
+						name={name as keyof TOfferForm}
+						register={register}
+						errors={errors}
+					/>
+				);
+			})}
+			{error instanceof FetchError && <ErrorMessage message={error.message} />}
+			<FormSubmitButton
+				className="flex items-center justify-center mt-4 ms-auto"
+				label="Confirm"
+				onClick={handleSubmit(onSubmit)}
+				disabled={isLoading}
+			/>
+		</form>
 	);
 };
 

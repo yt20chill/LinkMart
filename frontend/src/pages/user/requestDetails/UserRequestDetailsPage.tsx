@@ -14,6 +14,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import EditButton from "../../../components/ui/EditButton";
+import { FormLayout } from "../../../components/ui/FormLayout";
 import Tooltip from "../../../components/ui/Tooltip";
 import useRedirectOnCondition from "../../../features/hooks/useRedirectOnCondition";
 import { fireAlert, sweetAlertDefaultOptions } from "../../../lib/formUtils";
@@ -192,7 +193,9 @@ const UserRequestDetailsPage = () => {
 			</div>
 			<ControlModalContext.Provider value={{ isShow, setIsShow }}>
 				<FormModal>
-					<AcceptOfferForm offerId={offerId} />
+					<FormLayout title="Accept Offer" bootstrapIcon="bi-person-check">
+						<AcceptOfferForm offerId={offerId} />
+					</FormLayout>
 				</FormModal>
 			</ControlModalContext.Provider>
 		</>

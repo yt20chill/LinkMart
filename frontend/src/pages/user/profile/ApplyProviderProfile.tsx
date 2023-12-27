@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { SweetAlertOptions } from "sweetalert2";
 import CancelButton from "../../../components/ui/CancelButton";
+import { FormLayout } from "../../../components/ui/FormLayout";
 import Table from "../../../components/ui/Table";
 import ApplyProviderForm from "../../../features/forms/ApplyProviderForm";
 import SkeletonForm from "../../../features/forms/SkeletonForm";
@@ -19,7 +20,12 @@ const ApplyProviderProfile = () => {
 		queryFn: getProviderApplicationStatusAJAX,
 	});
 	if (isLoading) return <SkeletonForm />;
-	if (status?.data === null) return <ApplyProviderForm />;
+	if (status?.data === null)
+		return (
+			<FormLayout title="Apply as a Provider" bootstrapIcon="bi-check2-circle">
+				<ApplyProviderForm />
+			</FormLayout>
+		);
 	return status && status.data && <PendingApproval {...status.data} />;
 };
 
