@@ -162,10 +162,15 @@ const Counter = ({
 					navigate(siteMap(RouteEnum.Task));
 				}}
 			>
-				<span>Task</span>
-				<span>
-					{activeTaskCount}/{activeTaskCount + completedTaskCount}
-				</span>
+				<div className="flex">
+					<span>Task</span>
+				</div>
+				<div className="grow">
+					<span>{activeTaskCount}</span>
+					<span className="text-slate-400">
+						/({activeTaskCount + completedTaskCount})
+					</span>
+				</div>
 			</div>
 		</div>
 	);
