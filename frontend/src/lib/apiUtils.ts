@@ -98,13 +98,14 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 	} catch (error) {
 		if (isAxiosError<ErrorResponseDto>(error)) {
 			if (error.response?.status === 401) toast.error("Permission denied");
-			else if (error.response?.status === 404) toast.error("Not Found");
+			else if (error.response?.status !== 404)
+				toast.error("Something went wrong");
 			throw new FetchError(
 				error.response?.status,
 				error.response?.data.message ?? error.code ?? error.message
 			);
 		}
-		toast.error("Something went wrong");
+
 		if (error instanceof ZodError)
 			throw new FetchError(
 				400,
