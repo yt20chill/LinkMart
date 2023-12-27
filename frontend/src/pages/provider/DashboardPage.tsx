@@ -103,22 +103,26 @@ const ReviewSummary = ({
 					content={reviewCount.toString()}
 				/>
 			</div>
-			<div className="flex gap-12">
-				<div className="flex flex-col">
-					<h2 className="text-3xl">{averageEfficiency.toFixed(1)}</h2>
-					<div className="text-xs text-base-content">Efficiency</div>
-					<div>
-						<Rating size="sm" score={averageEfficiency} />
+			{reviewCount > 0 ? (
+				<div className="flex gap-12">
+					<div className="flex flex-col">
+						<h2 className="text-3xl">{averageEfficiency.toFixed(1)}</h2>
+						<div className="text-xs text-base-content">Efficiency</div>
+						<div>
+							<Rating size="sm" score={averageEfficiency} />
+						</div>
+					</div>
+					<div className="flex flex-col">
+						<h2 className="text-3xl">{averageAttitude.toFixed(1)}</h2>
+						<div className="text-xs text-base-content">Attitude</div>
+						<div>
+							<Rating size="sm" score={averageAttitude} />
+						</div>
 					</div>
 				</div>
-				<div className="flex flex-col">
-					<h2 className="text-3xl">{averageAttitude.toFixed(1)}</h2>
-					<div className="text-xs text-base-content">Attitude</div>
-					<div>
-						<Rating size="sm" score={averageAttitude} />
-					</div>
-				</div>
-			</div>
+			) : (
+				<div className="text-slate-400">No Reviews Available Yet</div>
+			)}
 		</>
 	);
 };
