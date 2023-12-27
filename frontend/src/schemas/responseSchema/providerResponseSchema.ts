@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { ulid } from "../../lib/schemaUtils";
-import { editProviderProfileSchema } from "../requestSchema";
 
 export {
 	getApplicationStatusResponseSchema,
@@ -42,7 +41,8 @@ const getReviewsSchema = z.object({
 
 type GetReviewDto = z.infer<typeof getReviewsSchema>;
 
-const getProviderProfileSchema = editProviderProfileSchema.extend({
+const getProviderProfileSchema = z.object({
+	biography: z.string().nullable(),
 	reviews: z.array(getReviewsSchema),
 	providerName: z.string().min(1),
 	starOfEfficiency: z.number().min(0).max(5),
@@ -54,7 +54,7 @@ type GetProviderProfileDto = z.infer<typeof getProviderProfileSchema>;
 
 const getProviderDashboardSchema = z.object({
 	balance: z.number().nonnegative().nullable(),
-	reviewCount: z.number().nonnegative(),
+	reviewCount: z.number().nonnegative().nullable(),
 	offerCount: z.number().nonnegative(),
 	activeTaskCount: z.number().nonnegative(),
 	completedTaskCount: z.number().nonnegative(),

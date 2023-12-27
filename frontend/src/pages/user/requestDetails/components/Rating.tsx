@@ -21,7 +21,7 @@ const Rating = ({ score, maxScore = 5, size = "sm" }: RatingProps) => {
 							key={index}
 							type="radio"
 							defaultChecked={Math.floor(score * 2) === index + 1}
-							readOnly={true}
+							disabled
 						/>
 					))}
 			</div>
