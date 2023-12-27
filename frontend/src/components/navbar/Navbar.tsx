@@ -75,12 +75,12 @@ export function Navbar(props: NavbarProps) {
                 <ButtonWithIcon
                   linkTo={RouteEnum.UserRequests}
                   icon="receipt_long"
-                  label="Request"
+                  label="My Request"
                 />
                 <ButtonWithIcon
                   linkTo={RouteEnum.UserOrder}
                   icon="all_inbox"
-                  label="Order"
+                  label="My Order"
                 />
               </>
             )}
@@ -193,7 +193,7 @@ export function Navbar(props: NavbarProps) {
                     navigate(siteMap(RouteEnum.UserRequests));
                   }}
                   icon="receipt_long"
-                  label="Request"
+                  label="My Request"
                 />
                 <ButtonWithIcon
                   onClick={() => {
@@ -201,7 +201,7 @@ export function Navbar(props: NavbarProps) {
                     navigate(siteMap(RouteEnum.UserOrder));
                   }}
                   icon="all_inbox"
-                  label="Order"
+                  label="My Order"
                 />
                 <ButtonWithIcon
                   onClick={() => {

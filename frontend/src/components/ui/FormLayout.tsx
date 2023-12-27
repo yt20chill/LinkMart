@@ -17,7 +17,7 @@ export function FormLayout({
     <>
       <h2
         className={twMerge(
-          "text-xl inline-flex gap-2 text-primary-400 font-bold p-6 pb-3 border-b border-primary-400 shadow-3xl",
+          "text-xl inline-flex gap-2 text-primary-400 font-bold p-6 pb-3 border-b border-primary-400 shadow-3xl w-full",
           className ?? ""
         )}
       >

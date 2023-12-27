@@ -18,7 +18,7 @@ const UserOrderPage = () => {
       value={{ activeTab: tab, setActiveTab: setTab }}
     >
       <div className="mt-6 sm:mt-12 max-w-5xl w-full flex flex-col mx-auto sm:px-6">
-        <div className="flex flex-col sm:border border-slate-500/20 rounded-xl overflow-hidden sm:shadow">
+        <div className="flex flex-col sm:border border-slate-500/20 rounded-xl overflow-hidden sm:shadow bg-base-100/50 backdrop-blur-3xl">
           <div className="flex w-full pt-4 text-slate-500 bg-base-100">
             {orderStatusTabs.map((tab) => (
               <Tab

@@ -43,7 +43,7 @@ const RequestsPage = () => {
           <header className="rounded-lg px-6 mb-6">
             <span className="leading-none text-primary-400">Linkmart</span>
             <h1 className="text-3xl font-bold leading-none mb-2">Request</h1>
-            <p className="text-slate-400">
+            <p className="text-base-content">
               You may explore what people are currently seeking or create a
               request to let others make you offers.
             </p>
