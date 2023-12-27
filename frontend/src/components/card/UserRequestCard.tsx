@@ -23,7 +23,10 @@ export function UserRequestCard({
     >
       {offerCount > 0 && (
         <div className="absolute top-1 right-1">
-          <CounterBadge count={offerCount} />
+          <CounterBadge
+            count={offerCount}
+            bootstrapIcon="bi-chat-square-dots-fill"
+          />
         </div>
       )}
       <figure className="aspect-square rounded-lg h-24 flex justify-center bg-slate-300 overflow-hidden border border-gray-200">
