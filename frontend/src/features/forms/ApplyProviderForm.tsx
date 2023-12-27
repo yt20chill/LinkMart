@@ -25,15 +25,18 @@ const defaultValues: TApplyProviderForm = {
 const FileInputLabels = Object.freeze([
   {
     label: "Proof of Address",
-    description: "Document that clearly show your name and address",
+    description:
+      "Document that clearly shows your name and address, serving as evidence of your residential location",
   },
   {
-    label: "User Verification",
-    description: "ID card or passport",
+    label: "ID Verification",
+    description:
+      "Your ID card or passport copy that can be used to verify your identity.",
   },
   {
-    label: "Bank Document",
-    description: "For payment purposes",
+    label: "Bank Verification",
+    description:
+      "Document that clearly shows your account details and name, which is required for payment purposes and to authenticate your banking information",
   },
 ]);
 
