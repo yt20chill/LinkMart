@@ -69,7 +69,7 @@ const RequestsPage = () => {
 							{data.totalRecords ? (
 								<>
 									<i className="bi bi-files me-2"></i>Records Found:
-									{data.totalRecords}
+									{` ${data.totalRecords}`}
 								</>
 							) : (
 								<>
