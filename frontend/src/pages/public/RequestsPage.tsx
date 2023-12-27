@@ -49,7 +49,7 @@ const RequestsPage = () => {
             </p>
           </header>
           {data && (
-            <span className="indent-3">
+            <div className="indent-3 text-base-content/75 mb-2">
               {data.totalRecords ? (
                 <>
                   <i className="bi bi-files me-2"></i>Records Found:
@@ -60,7 +60,7 @@ const RequestsPage = () => {
                   <i className="bi bi-files me-2"></i>No Record
                 </>
               )}
-            </span>
+            </div>
           )}
           <div className="px-2 grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mb-auto grow">
             {data ? (
