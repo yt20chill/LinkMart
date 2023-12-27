@@ -92,14 +92,15 @@ const RequestsPage = () => {
 							</>
 						)}
 					</div>
+					<Pagination
+						page={searchParams.has("p") ? parseInt(searchParams.get("p")!) : 1}
+						totalPages={memoizedTotalPages}
+						pageToShow={5}
+						onClick={updatePage}
+					/>
 				</div>
 			</div>
-			<Pagination
-				page={searchParams.has("p") ? parseInt(searchParams.get("p")!) : 1}
-				totalPages={memoizedTotalPages}
-				pageToShow={5}
-				onClick={updatePage}
-			/>
+
 			<Link
 				to={siteMap(RouteEnum.PostRequest)}
 				className="fixed text-base-100 bottom-0 right-0 mb-3 mr-3 md:mb-12 md:mr-12"
