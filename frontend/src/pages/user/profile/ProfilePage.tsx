@@ -20,7 +20,7 @@ const ProfilePage = () => {
     <>
       <div className="mt-6 sm:mt-12 max-w-xl w-full flex flex-col mx-auto sm:px-6 mb-6">
         <div className="flex flex-col bg-base-100/50 sm:border border-slate-500/20 rounded-xl overflow-hidden sm:shadow">
-          <div className="flex w-full pt-4 text-slate-500 bg-base-100 border-slate-300/50">
+          <div className="flex w-full pt-3 text-slate-500 bg-base-100 border-slate-300/50">
             <UserInfoTabContext.Provider value={{ activeTab, setActiveTab }}>
               {/* Skip apply as provider tab if already is a provider*/}
               {userInfoTabs

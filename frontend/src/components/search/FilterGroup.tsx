@@ -16,7 +16,7 @@ const FilterGroup = ({ displayName, name, items }: FilterGroupProps) => {
   if (filterKeys.length === 0) return null;
   return (
     <>
-      <div className="truncate indent-2 mb-1 text-slate-400 font-roboto flex items-center">
+      <div className="truncate indent-2 mb-1 text-base-content/75  font-roboto flex items-center">
         <i className="material-symbols-rounded text-base font-bold">
           filter_none
         </i>
