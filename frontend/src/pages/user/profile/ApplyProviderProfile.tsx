@@ -86,7 +86,7 @@ const PendingApproval = (data: ApplicationStatus) => {
   return (
     <div>
       <h2 className="text-xl inline-flex gap-2 text-primary-400 font-bold p-6 pb-3 border-b border-primary-400 shadow-3xl w-full">
-        Provider Validation
+        <i className="bi bi-person-lines-fill"></i>Provider Validation
       </h2>
       <div className="pt-6 px-6 inline-flex">
         <i className="bi bi-file-earmark-person text-7xl me-2 text-primary-400"></i>
