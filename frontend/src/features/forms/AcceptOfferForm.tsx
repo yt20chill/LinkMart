@@ -51,6 +51,8 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 		onSuccess: async (result) => {
 			if (!result) return;
 			await queryClient.invalidateQueries([queryKey.OFFER, { offerId }]);
+			// invalidate request key as it should be removed from "Explore"
+			await queryClient.invalidateQueries([queryKey.REQUEST]);
 			navigate(result.url, { replace: true });
 		},
 	});
