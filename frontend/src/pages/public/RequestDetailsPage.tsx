@@ -224,7 +224,7 @@ const Recommendations = ({
 		<div className="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-2">
 			{recommendations
 				.filter((request) => request.requestId !== currentRequestId)
-				.slice(0, RECOMMENDATION_NUM - 1)
+				.slice(0, RECOMMENDATION_NUM)
 				.map((request) => (
 					<RequestCard
 						key={request.requestId}
