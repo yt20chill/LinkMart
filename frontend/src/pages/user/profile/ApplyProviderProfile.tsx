@@ -84,16 +84,69 @@ const PendingApproval = (data: ApplicationStatus) => {
     await abortApplication();
   };
   return (
-    <>
-      <Table data={[data]} />
-      <CancelButton
-        label="Abort"
-        onClick={fireAlert({
-          options: sweetAlertOptions,
-          onConfirmed: onConfirmed,
-        })}
-        disabled={isLoading}
-      />
-    </>
+    <div>
+      <h2 className="text-xl inline-flex gap-2 text-primary-400 font-bold p-6 pb-3 border-b border-primary-400 shadow-3xl w-full">
+        Provider Validation
+      </h2>
+      <div className="pt-6 px-6 inline-flex">
+        <i className="bi bi-file-earmark-person text-7xl me-2 text-primary-400"></i>
+        <div className="flex flex-col">
+          <div className="text-lg">Your Submission</div>
+          <span className="text-sm text-gray-400">Validation Status</span>
+          <span className="text-center uppercase px-2 bg-gray-400 text-white rounded-full">
+            {data.statusName}
+          </span>
+        </div>
+      </div>
+      <div className="py-6 px-6">
+        <ul className="flex flex-col gap-2 mb-3">
+          <li className="flex justify-between bg-base-100 p-3 rounded-lg shadow">
+            Proof of Address
+            <a
+              href={data.addressDocument}
+              target="_blank"
+              rel="noreferrer"
+              className="text-indigo-800"
+            >
+              <i className="bi bi-file-earmark-arrow-down me-1"></i>View
+            </a>
+          </li>
+
+          <li className="flex justify-between bg-base-100 p-3 rounded-lg shadow">
+            ID Verification
+            <a
+              href={data.idDocument}
+              target="_blank"
+              rel="noreferrer"
+              className="text-indigo-800"
+            >
+              <i className="bi bi-file-earmark-arrow-down me-1"></i>View
+            </a>
+          </li>
+          <li className="flex justify-between bg-base-100 p-3 rounded-lg shadow">
+            Bank Information
+            <a
+              href={data.bankDocument}
+              target="_blank"
+              rel="noreferrer"
+              className="text-indigo-800"
+            >
+              <i className="bi bi-file-earmark-arrow-down me-1"></i>
+              View
+            </a>
+          </li>
+        </ul>
+        <div className="flex justify-end">
+          <CancelButton
+            label="Abort"
+            onClick={fireAlert({
+              options: sweetAlertOptions,
+              onConfirmed: onConfirmed,
+            })}
+            disabled={isLoading}
+          />
+        </div>
+      </div>
+    </div>
   );
 };

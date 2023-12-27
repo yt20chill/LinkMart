@@ -15,7 +15,7 @@ import GeneralProfile from "./GeneralProfile";
 
 const ProfilePage = () => {
   const role = useAuthStore(useShallow((state) => state.role));
-  const [activeTab, setActiveTab] = useState<UserInfoTabs>("General");
+  const [activeTab, setActiveTab] = useState<UserInfoTabs>("Become Provider");
   return (
     <>
       <div className="mt-6 sm:mt-12 max-w-xl w-full flex flex-col mx-auto sm:px-6 mb-6">
