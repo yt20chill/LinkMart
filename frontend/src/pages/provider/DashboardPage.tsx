@@ -142,6 +142,10 @@ const Counter = ({
 }: CounterProps) => {
 	const navigate = useNavigate();
 	const { setActiveTab } = useProviderTabContext();
+	const completionPercentage =
+		completedTaskCount + activeTaskCount === 0
+			? 0
+			: (completedTaskCount / (completedTaskCount + activeTaskCount)) * 100;
 	return (
 		<div className="flex flex-col  w-full">
 			<div className="text-gray-400 text-sm">Overview</div>
@@ -150,9 +154,7 @@ const Counter = ({
 					className="radial-progress text-primary-400 shadow-lg bg-base-200/50 border border-slate-500/20"
 					style={
 						{
-							"--value":
-								(completedTaskCount / (completedTaskCount + activeTaskCount)) *
-								100,
+							"--value": completionPercentage,
 							"--size": "12rem",
 							"--thickness": "6px",
 						} as React.CSSProperties
@@ -160,10 +162,7 @@ const Counter = ({
 					role="progressbar"
 				>
 					<div className="items-center flex flex-col text-3xl">
-						{`${
-							(completedTaskCount / (completedTaskCount + activeTaskCount)) *
-							100
-						}%`}
+						{`${completionPercentage}%`}
 						<span className="text-sm text-center">Task In progress</span>
 					</div>
 				</div>
