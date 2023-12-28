@@ -6,7 +6,7 @@ type ReviewCardProps = {
 };
 
 const ReviewCard = ({
-	dto: { primaryImage, item, efficiency, attitude, comments },
+	dto: { primaryImage, item, efficiency, attitude, comments, username },
 }: ReviewCardProps) => {
 	return (
 		<div className="flex p-4">
@@ -17,7 +17,8 @@ const ReviewCard = ({
 				<div>
 					<div className="font-bold">
 						<i className="bi bi-box-seam me-1"></i>
-						{item}
+						<span>{item}</span>
+						<span className="text-primary-400/80 ms-2">@{username}</span>
 					</div>
 					<div className="flex gap-4">
 						<div>
