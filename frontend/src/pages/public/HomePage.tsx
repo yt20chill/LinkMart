@@ -44,13 +44,14 @@ function HomePage() {
           </div>
           <div className="max-lg:w-full px-3 w-1/2 flex items-center justify-center -z-10 my-12">
             {/* <img src="/image/tags/tag_shopping_bag.png" /> */}
-            <div className="relative w-full">
+            <div className="relative w-full max-lg:p-4">
               <div className="w-full mockup-window bg-base-300 aspect-[4/3] shadow-lg border-4 border-base-300/20">
-                <img
-                  src="/image/screenShot/Linkmart-Screen-Shot-02.png"
-                  className=""
-                />
+                <img src="/image/screenShot/Linkmart-Screen-Shot-02.png" />
               </div>
+              <div className="absolute -bottom-2 left-12 lg:-bottom-6 lg:-left-12 w-1/4">
+                <img src="/image/screenShot/Linkmart-mob_mu.png" className="" />
+              </div>
+
               <img
                 src="/image/tags/tag_shopping_bag.png"
                 className="absolute -bottom-6 -right-6 w-20 h-20"

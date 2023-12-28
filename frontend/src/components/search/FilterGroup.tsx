@@ -22,7 +22,7 @@ const FilterGroup = ({ displayName, name, items }: FilterGroupProps) => {
         </i>
         {displayName}
       </div>
-      <div className="max-h-96 overflow-scroll no-scrollbar rounded-lg shadow relative w-full bg-base-100">
+      <div className="max-h-96 overflow-scroll no-scrollbar rounded-lg shadow relative w-full bg-base-100 mb-5 border border-slate-500/20">
         <ul
           tabIndex={0}
           className="dropdown-content z-[1] p-2 bg-base-100/75 backdrop-blur-lg rounded-box transition-all border-2 border-base-100 mb-3"
