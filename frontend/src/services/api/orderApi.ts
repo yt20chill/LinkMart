@@ -13,13 +13,11 @@ import {
 	LogisticsDto,
 	OrderDetailsDto,
 	PostLogisticDto,
-	PostReportDto,
 	createOrderResponseSchema,
 	getLogisticsSchema,
 	getOrdersSchema,
 	orderDetailsSchema,
 	postLogisticsSchema,
-	postReportSchema,
 } from "../../schemas/responseSchema";
 
 const orderApiRoutes = Object.freeze({
@@ -128,12 +126,12 @@ const reviewOrderAJAX = async (orderId: string, form: TReviewOrderForm) => {
 };
 
 const postReportAJAX = async (orderId: string, form: TReportForm) => {
-	return await axiosWrapper<TReportForm, PostReportDto>(
+	return await axiosWrapper<TReportForm>(
 		`${orderApiRoutes.REPORT}/${orderId}`,
 		{
 			method: "post",
 			data: form,
-			schema: postReportSchema,
+			// schema: postReportSchema,
 		}
 	);
 };
