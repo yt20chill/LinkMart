@@ -23,7 +23,7 @@ const NavTab = <T extends string[]>({
 			<ExpandButton isExpanded={expand} setIsExpanded={setExpand} />
 			<div
 				className={twMerge(
-					"flex-col flex w-72 gap-2 bg-base-100 shadow me-6",
+					"inline-flex flex-col pr-2 min-w-[200px] lg:ml-2 max-lg:w-screen max-lg:fixed max-lg:top-0 max-lg:left-0 max-lg:z-10 max-lg:bg-base-100/10 backdrop-blur-3xl max-lg:h-screen max-lg:overflow-y-auto max-lg:pt-[15%] max-lg:px-6",
 					!expand && "max-lg:hidden"
 				)}
 			>
