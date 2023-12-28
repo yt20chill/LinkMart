@@ -8,6 +8,15 @@
 	font-family: "Ubuntu", "Noto Sans HK", sans-serif;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+	display: none
+}
+
+.no-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
 b.emo {
 	font-family: "Noto Color Emoji", sans-serif !important;
 }
