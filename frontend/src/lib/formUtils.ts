@@ -148,7 +148,6 @@ const fireAlert =
 				return onCancelled ? await onCancelled() : undefined;
 			return await onConfirmed();
 		} catch (error) {
-			console.error(error);
 			toast.error("Something went wrong");
 		}
 	};

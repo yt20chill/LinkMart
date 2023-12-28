@@ -29,6 +29,7 @@ const axiosInit = () => {
 	setCommonContentTypeHeader();
 	setCommonAuthorizationHeader();
 	axios.defaults.baseURL = import.meta.env.VITE_API_URL as string;
+	axios.defaults.timeout = 5000;
 };
 
 axiosInit();
@@ -97,7 +98,8 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 			return options.schema.parse(response.data);
 	} catch (error) {
 		if (isAxiosError<ErrorResponseDto>(error)) {
-			if (error.response?.status === 401) toast.error("Permission denied");
+			if (error.code === "ECONNABORTED") toast.error("Connection timeout");
+			else if (error.response?.status === 401) toast.error("Permission denied");
 			else if (error.response?.status !== 404)
 				toast.error("Something went wrong");
 			throw new FetchError(

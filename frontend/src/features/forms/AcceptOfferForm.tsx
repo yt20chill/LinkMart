@@ -64,7 +64,6 @@ const AcceptOfferForm = ({ offerId }: AcceptOfferFormProps) => {
 			offerId,
 		});
 		if (!dto.success) {
-			console.error(dto.error);
 			return toast.error("Something went wrong! Please try again later");
 		}
 		setIsShow(false);
