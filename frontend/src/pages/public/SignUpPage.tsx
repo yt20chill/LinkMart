@@ -1,4 +1,3 @@
-import { SignPageAnimatedBG } from "@/features/animatedBackground/SignPageAnimatedBG";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import FormModal from "../../components/modal/FormModal";
@@ -41,7 +40,7 @@ const SignUpPage = () => {
 					<TermsOfService />
 				</FormModal>
 			</ControlModalContext.Provider>
-			<SignPageAnimatedBG />
+			{/* <SignPageAnimatedBG /> */}
 		</div>
 	);
 };
