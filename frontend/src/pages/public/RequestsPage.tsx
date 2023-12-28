@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link, useSearchParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import ExpandButton from "../../components/button/ExpandButton";
 import Pagination from "../../components/ui/Pagination";
 import { Filter } from "../../features/filter/Filter";
 import { useSearchParamsWrapper } from "../../features/hooks/useSearchParamsWrapper";
@@ -33,6 +34,7 @@ const RequestsPage = () => {
     setSearchParams(searchParams);
   };
 
+<<<<<<< Updated upstream
   return (
     <SearchParamsWrapperContext.Provider value={searchParamsWrapper}>
       <div className="mt-5 max-w-7xl max-lg:px-2 mx-auto ">
@@ -104,6 +106,67 @@ const RequestsPage = () => {
           />
         </div>
       </div>
+=======
+	return (
+		<SearchParamsWrapperContext.Provider value={searchParamsWrapper}>
+			<div className="mt-5 max-w-7xl max-lg:px-2 mx-auto ">
+				<h1 className="text-black text-xl"></h1>
+				<div className="flex justify-start"></div>
+			</div>
+			<ExpandButton isExpanded={expandFilter} setIsExpanded={setExpandFilter} />
+			<div className="my-5 max-w-7xl flex mx-auto w-full">
+				<Filter
+					className={twMerge(
+						"inline-flex flex-col pr-2 min-w-[200px] ml-2",
+						!expandFilter && "max-lg:hidden"
+					)}
+				/>
+				<div>
+					<header className="rounded-lg px-6 mb-6">
+						<span className="leading-none text-primary-400">Linkmart</span>
+						<h1 className="text-3xl font-bold leading-none mb-2">Request</h1>
+						<p className="text-base-content">
+							You may explore what people are currently seeking or create a
+							request to let others make you offers.
+						</p>
+					</header>
+					{data && (
+						<div className="indent-3 text-base-content/75 mb-2">
+							{data.totalRecords ? (
+								<>
+									<i className="bi bi-files me-2"></i>Records Found:
+									{` ${data.totalRecords}`}
+								</>
+							) : (
+								<>
+									<i className="bi bi-files me-2"></i>No Record
+								</>
+							)}
+						</div>
+					)}
+					<div className="px-2 grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mb-auto grow">
+						{data ? (
+							data.requests.map((request) => (
+								<RequestCard key={request.requestId} {...request} />
+							))
+						) : (
+							<>
+								<RequestCardSkeleton />
+								<RequestCardSkeleton />
+								<RequestCardSkeleton />
+								<RequestCardSkeleton />
+							</>
+						)}
+					</div>
+					<Pagination
+						page={searchParams.has("p") ? parseInt(searchParams.get("p")!) : 1}
+						totalPages={memoizedTotalPages}
+						pageToShow={5}
+						onClick={updatePage}
+					/>
+				</div>
+			</div>
+>>>>>>> Stashed changes
 
       <Link
         to={siteMap(RouteEnum.PostRequest)}
