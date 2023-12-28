@@ -145,7 +145,7 @@ const Counter = ({
 	const completionPercentage =
 		completedTaskCount + activeTaskCount === 0
 			? 0
-			: Math.ceil(
+			: Math.round(
 					(completedTaskCount / (completedTaskCount + activeTaskCount)) * 100
 			  );
 	return (
