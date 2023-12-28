@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { TabContextType } from "../../services/context/TabsContext";
 import { RouteEnum, siteMap } from "../../services/routes.config";
+import ExpandButton from "../button/ExpandButton";
 
 // tabs should contain tabName and its path
 type NavTabProps<T extends string[]> = {
@@ -19,18 +20,7 @@ const NavTab = <T extends string[]>({
 	const [expand, setExpand] = useState(false);
 	return (
 		<>
-			<button
-				className={twMerge(
-					"hidden max-lg:block rounded-full w-10 h-10 bg-primary-400/80 text-white shadow-lg hover:shadow-xl fixed left-0 top-1/2",
-					expand ? "transform rotate-180" : ""
-				)}
-				onClick={(e) => {
-					e.preventDefault();
-					setExpand(!expand);
-				}}
-			>
-				{">"}
-			</button>
+			<ExpandButton isExpanded={expand} setIsExpanded={setExpand} />
 			<div
 				className={twMerge(
 					"flex-col flex w-72 gap-2 bg-base-100 shadow me-6",
