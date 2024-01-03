@@ -16,7 +16,7 @@ jobs:
         working-directory: frontend
         env:
           VITE_NODE_ENV: production
-          VITE_API_URL: "https://api.fight2gether.com"
+          VITE_API_URL: "https://test.ricer.me"
         run: |
           npm install
           npm run build
