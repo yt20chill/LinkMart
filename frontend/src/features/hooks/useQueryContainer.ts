@@ -20,6 +20,7 @@ type UseGetRecommendationsParams = {
 
 export { useGetRecommendations, useGetRequestDetails, useQueryContainer };
 
+// should be called useCategoriesAndLocations
 const useQueryContainer = () => {
 	const getAllCategories = useQuery({
 		queryKey: [queryKey.REQUEST, "categories"],

@@ -72,6 +72,8 @@ export enum RouteEnum {
 	NotFound,
 }
 
+type Route = "Home" | "SignUp" | "SignIn" | "Requests" 
+
 const routeConfigMap = new Map<RouteEnum, TRouteConfig>();
 routeConfigMap
 	.set(RouteEnum.Home, {

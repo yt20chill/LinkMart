@@ -154,11 +154,23 @@ const UploadShippingForm = ({ orderId }: UploadShippingFormProps) => {
 					disabled={isLoading}
 				/>
 			</form>
+			{
+				showAddCompany && 
+				<FormModal>
+					<PostLogisticCompanyForm onSubmitCallback={(companyId)=>{
+						setShowAddCompany(false)
+						onAddCompany(companyId)
+					}} />
+				</FormModal>
+			}
 			<ControlModalContext.Provider
 				value={{ isShow: showAddCompany, setIsShow: setShowAddCompany }}
-			>
+			>	
 				<FormModal>
-					<PostLogisticCompanyForm onSubmitCallback={onAddCompany} />
+					<PostLogisticCompanyForm onSubmitCallback={(companyId)=>{
+						setShowAddCompany(false)
+						onAddCompany(companyId)
+					}} />
 				</FormModal>
 			</ControlModalContext.Provider>
 		</>

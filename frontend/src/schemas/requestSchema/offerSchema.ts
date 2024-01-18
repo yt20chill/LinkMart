@@ -42,3 +42,13 @@ const acceptOfferDtoSchema = acceptOfferSchema.extend({
 type TAcceptOfferForm = Record<keyof z.infer<typeof acceptOfferSchema>, string>;
 type AcceptOfferDto = z.infer<typeof acceptOfferDtoSchema>;
 type AcceptOfferPayload = Omit<AcceptOfferDto, "offerId">;
+
+/**
+ * {
+ * 	price: 10
+ * }
+ * 
+ * {
+ * 	price: "10"
+ * }
+ */

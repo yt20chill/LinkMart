@@ -16,6 +16,21 @@ import { RouteEnum, siteMap } from "../../services/routes.config";
 const RequestsPage = () => {
 	const searchParamsWrapper = useSearchParamsWrapper(useSearchParams());
 	const { searchParams, setSearchParams } = searchParamsWrapper;
+
+	// Example to trigger Error Boundary
+	if(localStorage.getItem('abc') === "123"){
+		throw new Error("2131")
+	}
+
+	
+	const [search, setSearch] = useSearchParams()
+
+	const categories = search.getAll('category')
+	const locations = search.getAll('location')
+
+	console.log(categories)
+	console.log(locations)
+
 	const [memoizedTotalPages, setMemoizedTotalPages] = useState(1);
 	const [expandFilter, setExpandFilter] = useState(false);
 	const { data } = useQuery({

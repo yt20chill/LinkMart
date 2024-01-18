@@ -113,6 +113,21 @@ const getAllRequestsAJAX = async (searchParams: URLSearchParams) => {
 	});
 };
 
+export async function getRequestBasedOnFilter(categories:string[], locations: string[]){
+	const res = await fetch(`${requestApiRoutes.REQUEST}`,{
+		method:"POST",
+		headers:{
+			"Content-Type":"application/json"
+		},
+		body: JSON.stringify({
+			categories,
+			locations
+		})
+	})
+	const data = await res.json()
+	return data
+}
+
 const getRequestDetailsAJAX = async ({ requestId }: RequestId) => {
 	return await axiosWrapper<void, RequestDetailsDto>(
 		`${requestApiRoutes.REQUEST}/${requestId}`,

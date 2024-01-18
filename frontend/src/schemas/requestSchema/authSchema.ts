@@ -24,3 +24,9 @@ export const signUpSchema = z
 export type TSignInForm = z.infer<typeof signInSchema>;
 
 export type TSignUpForm = z.infer<typeof signUpSchema>;
+
+
+interface SignUp{
+	email:string
+	password:string
+}

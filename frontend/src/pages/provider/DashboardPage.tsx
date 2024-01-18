@@ -1,6 +1,6 @@
 import { PillBadge } from "@/components/badge/PillBadge";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 import { IconCircleFrame } from "../../components/frame/IconCircleFrame";
 import Loading from "../../components/ui/Loading";
@@ -15,11 +15,17 @@ import Rating from "../user/requestDetails/components/Rating";
 
 const DashboardPage = () => {
 	const username = useAuthStore(useShallow((state) => state.username));
+
+
 	useRedirectOnCondition(!username, RouteEnum.Home, "Forbidden");
 	const { data, isLoading } = useQuery({
 		queryKey: [queryKey.PROVIDER, "dashboard"],
 		queryFn: getProviderDashboardAJAX,
 	});
+
+	if ( !username) {
+		return <Navigate to={"/"} />
+	}
 	if (isLoading) return <Loading />;
 	return (
 		<>

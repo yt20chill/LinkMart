@@ -19,6 +19,8 @@ type RoutesByRoleProps = {
 // 		));
 // };
 
+
+// For each role + For each Route
 const RoutesByRole = ({ authorizeLevel }: RoutesByRoleProps) => {
 	const level = authorizedLevelMap.get(authorizeLevel);
 	const prefix =

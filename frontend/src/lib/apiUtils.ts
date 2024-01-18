@@ -88,7 +88,9 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 			data: options?.data,
 			params: options?.params,
 		});
-		if (isFormData) setCommonContentTypeHeader();
+		if (isFormData){
+			setCommonContentTypeHeader();
+		}
 		if (
 			isObjOfType<AxiosWrapperSchemaOptions<PayloadType, ResultType>>(
 				options,
@@ -119,3 +121,29 @@ export const axiosWrapper = async <PayloadType = void, ResultType = void>(
 		throw new FetchError();
 	}
 };
+
+
+export async function authFetch(input: URL | RequestInfo, init?: RequestInit){
+	let initOptions:RequestInit = {
+		"headers":{
+			"Authorization": `Bearer ${localStorage.getItem("access_token")}`,
+			"Content-Type": "application/json"
+		},
+		...(init ? init : {})
+	} 
+	if(init){
+		initOptions = init
+	}
+	const res = await fetch(input, initOptions)
+	
+	if(res.status === 401){
+		// Unauthorized
+	}
+	if(res.status === 403){
+
+	}
+	if(res.status === 404){
+
+	}
+	return await res.json()
+}

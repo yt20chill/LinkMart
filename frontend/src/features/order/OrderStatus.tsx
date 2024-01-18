@@ -9,6 +9,7 @@ import {
 import { useOrderStatusTabContext } from "../../services/context/TabsContext";
 import { queryKey } from "../../services/query.config";
 import { RouteEnum, siteMap } from "../../services/routes.config";
+import { useOrderStatus } from "../hooks/useOrderStatus";
 
 type OrderStatusProps = {
 	role: "user" | "provider";
@@ -16,13 +17,9 @@ type OrderStatusProps = {
 
 const OrderStatus = ({ role }: OrderStatusProps) => {
 	const { activeTab } = useOrderStatusTabContext();
-	const { data: orders, isLoading } = useQuery({
-		queryKey: [queryKey.ORDER, activeTab, { role }],
-		queryFn:
-			role === "user"
-				? () => getUserOrdersAJAX(activeTab)
-				: () => getProviderTasksAJAX(activeTab),
-	});
+
+	// Can help hide the API call logic. But not very useful in this case 
+	const {orders, isLoading} = useOrderStatus(activeTab, role)
 	const navigate = useNavigate();
 	return (
 		<div className="p-4">
