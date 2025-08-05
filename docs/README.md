@@ -1,14 +1,15 @@
 # LinkMart
 
-This Project was deployed to: [LinkMart](https://linkmart.yt20chill.me)
+![Landing page](./LandingPage.png)
 
+~~This Project was deployed to: [LinkMart](https://linkmart.yt20chill.me)~~
 
 Two dev branches (You may create as many sub-branches as you want)
 
 - frontend
 - backend
 
-#### Initial setup:
+#### Initial setup
 
 ```bash
 # if you don't already have a local branch
@@ -18,7 +19,7 @@ git checkout -b {branch_name}
 git pull -u origin {branch_name}
 ```
 
-#### Update main branch without leaving current branch:
+#### Update main branch without leaving current branch
 
 ```bash
 git fetch origin main
